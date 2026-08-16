@@ -1,0 +1,18 @@
+# PEAK Game Wiki
+
+> An independent, source-aware PEAK reference for map rotation notes, item categories, badge and achievement context, co-op questions, and official update links.
+
+## Core Content
+- [PEAK Game Wiki homepage](https://peak-game.wiki/): The main reference hub for map planning, items, updates, progress tracking, co-op notes, and FAQ answers.
+- [Map rotation section](https://peak-game.wiki/#maps): A practical daily-map entry point that explains what to verify in-game before a climb.
+- [Item database section](https://peak-game.wiki/#database): A searchable prototype index for gear, food, and utility items.
+- [Update desk](https://peak-game.wiki/#updates): A dated summary of the 2.01.a and Final Ascent update context.
+
+## Common Resources
+- [About](https://peak-game.wiki/about.html): Project purpose, source policy, and independence statement.
+- [Privacy policy](https://peak-game.wiki/privacy.html): Analytics, advertising, cookie, and third-party-link disclosure.
+- [Terms and disclaimer](https://peak-game.wiki/terms.html): Fan-site, accuracy, and external-source limitations.
+
+## Latest Updates
+- [Patch 2.01.a context](https://peak-game.wiki/#updates): Current as of August 2026, with an official Steam news link.
+- [Final Ascent context](https://peak-game.wiki/#updates): August 2026 update anchor for future map, item, and badge pages.

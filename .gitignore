@@ -1,0 +1,4 @@
+dist/
+output/playwright/
+node_modules/
+.wrangler/

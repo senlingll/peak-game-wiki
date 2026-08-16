@@ -1,0 +1,11 @@
+{
+  "name": "PEAK Game Wiki",
+  "short_name": "PEAK Wiki",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f3ed",
+  "theme_color": "#17212d",
+  "icons": [
+    { "src": "/assets/peak-wiki-logo.png", "sizes": "256x256", "type": "image/png" }
+  ]
+}
