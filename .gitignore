@@ -1,4 +1,5 @@
 dist/
 output/playwright/
+output/seo/
 node_modules/
 .wrangler/
