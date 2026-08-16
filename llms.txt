@@ -9,9 +9,9 @@
 - [Update desk](https://peak-game.wiki/#updates): A dated summary of the 2.01.a and Final Ascent update context.
 
 ## Common Resources
-- [About](https://peak-game.wiki/about.html): Project purpose, source policy, and independence statement.
-- [Privacy policy](https://peak-game.wiki/privacy.html): Analytics, advertising, cookie, and third-party-link disclosure.
-- [Terms and disclaimer](https://peak-game.wiki/terms.html): Fan-site, accuracy, and external-source limitations.
+- [About](https://peak-game.wiki/about): Project purpose, source policy, and independence statement.
+- [Privacy policy](https://peak-game.wiki/privacy): Analytics, advertising, cookie, and third-party-link disclosure.
+- [Terms and disclaimer](https://peak-game.wiki/terms): Fan-site, accuracy, and external-source limitations.
 
 ## Latest Updates
 - [Patch 2.01.a context](https://peak-game.wiki/#updates): Current as of August 2026, with an official Steam news link.
