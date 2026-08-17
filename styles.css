@@ -465,6 +465,20 @@ img {
   color: #fffdf9;
 }
 
+.native-ad-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(calc(100% - 32px), 1200px);
+  min-height: 90px;
+  margin: 18px auto 28px;
+  overflow: hidden;
+}
+
+.native-ad-slot > div {
+  width: 100%;
+}
+
 .signal-grid {
   display: grid;
   min-height: 92px;
