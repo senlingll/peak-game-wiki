@@ -196,6 +196,65 @@ img {
   color: var(--coral-dark);
 }
 
+.language-menu {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.language-menu summary {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 10px;
+  color: var(--ink-soft);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 850;
+  list-style: none;
+}
+
+.language-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.language-menu summary:hover,
+.language-menu[open] summary {
+  color: var(--coral-dark);
+  border-color: var(--coral);
+}
+
+.language-menu-list {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  right: 0;
+  display: grid;
+  min-width: 142px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+}
+
+.language-menu-list a {
+  padding: 9px 10px;
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.language-menu-list a:hover,
+.language-menu-list a:focus-visible {
+  color: var(--ink);
+  background: var(--paper);
+}
+
 .menu-toggle {
   display: none;
   padding: 8px 11px;
@@ -1280,6 +1339,10 @@ img {
     gap: 15px;
   }
 
+  .language-menu summary {
+    padding-inline: 8px;
+  }
+
   .hero-grid {
     grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
     gap: 40px;
@@ -1329,6 +1392,10 @@ img {
 
   .header-source {
     display: none;
+  }
+
+  .language-menu {
+    order: 2;
   }
 
   .site-nav {

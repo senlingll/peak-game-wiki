@@ -3,3 +3,4 @@ output/playwright/
 output/seo/
 node_modules/
 .wrangler/
+.playwright-cli/
