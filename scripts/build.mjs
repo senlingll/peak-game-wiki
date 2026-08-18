@@ -1,6 +1,6 @@
 import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { localeOrder, renderHome, renderLegal, renderSitemap } from './locales.mjs';
+import { localeOrder, renderHome, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const outputRoot = resolve(projectRoot, 'dist');
@@ -18,6 +18,7 @@ for (const page of ['about', 'privacy', 'terms']) {
   await writeFile(resolve(outputRoot, `${page}.html`), renderLegal('en', page), 'utf8');
 }
 await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(), 'utf8');
+await writeFile(resolve(outputRoot, 'map-rotation.html'), renderMapGuide('en'), 'utf8');
 
 for (const locale of localeOrder.filter((code) => code !== 'en')) {
   const localeRoot = resolve(outputRoot, locale);
@@ -28,6 +29,9 @@ for (const locale of localeOrder.filter((code) => code !== 'en')) {
     await mkdir(pageRoot, { recursive: true });
     await writeFile(resolve(pageRoot, 'index.html'), renderLegal(locale, page), 'utf8');
   }
+  const guideRoot = resolve(localeRoot, 'map-rotation');
+  await mkdir(guideRoot, { recursive: true });
+  await writeFile(resolve(guideRoot, 'index.html'), renderMapGuide(locale), 'utf8');
 }
 
 console.log(`Built static site to ${outputRoot}`);

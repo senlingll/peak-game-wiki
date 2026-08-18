@@ -16,6 +16,10 @@ Official Steam store information, Steam screenshots, and Steam news posts are th
 
 The map section is a planning entry point, not a fabricated live tracker. It explains that PEAK uses a changing map rotation and gives players a short checklist: confirm the active route in-game, pack around the expected hazard, and log the result for future attempts. A future `/daily-map/` route can add dated history once a stable maintenance source is available.
 
+### PEAK Map Rotation Guide (https://peak-game.wiki/map-rotation)
+
+The map rotation guide separates the evergreen informational intent of `PEAK map rotation` from the time-sensitive navigation intent of `PEAK map today`. It explains how to verify the active route in-game, plan rope, piton, food, and recovery utility, distinguish biomes from route stages, and record version-aware field notes. It does not invent a live biome result or publish an unsupported fixed map schedule.
+
 ### Item Database (https://peak-game.wiki/#database)
 
 The item section separates gear, food, and utility categories and provides browser-side search and filters. The current entries are concise field-note stubs for Piton, Anti-Rope Cannon, Bugle of Friendship, Energy Drink, Portable Stove, and Backpack. The page explicitly labels this as prototype data rather than claiming complete effects or drop tables.

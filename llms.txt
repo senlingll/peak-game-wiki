@@ -5,6 +5,7 @@
 ## Core Content
 - [PEAK Game Wiki homepage](https://peak-game.wiki/): The main reference hub for map planning, items, updates, progress tracking, co-op notes, and FAQ answers.
 - [Map rotation section](https://peak-game.wiki/#maps): A practical daily-map entry point that explains what to verify in-game before a climb.
+- [PEAK map rotation guide](https://peak-game.wiki/map-rotation): An evergreen guide to route context, biome checks, equipment planning, and the limits of live-map claims.
 - [Item database section](https://peak-game.wiki/#database): A searchable prototype index for gear, food, and utility items.
 - [Update desk](https://peak-game.wiki/#updates): A dated summary of the 2.01.a and Final Ascent update context.
 
