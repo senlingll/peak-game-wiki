@@ -479,6 +479,10 @@ img {
   width: 100%;
 }
 
+.native-ad-slot:not(:has(> div:not(:empty))) {
+  display: none;
+}
+
 .signal-grid {
   display: grid;
   min-height: 92px;

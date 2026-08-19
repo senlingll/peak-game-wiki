@@ -1,0 +1,13 @@
+{
+  "allowed_terms": {
+    "zh": ["FAQ", "PEAK map rotation", "PEAK map today"],
+    "es": ["FAQ"],
+    "ja": ["FAQ", "PEAK map rotation", "PEAK map today"],
+    "fr": ["FAQ", "Guide"],
+    "de": ["FAQ"],
+    "pt": ["FAQ", "Download"],
+    "ko": ["FAQ", "PEAK map rotation", "PEAK map today"],
+    "it": ["FAQ", "Download"]
+  },
+  "localized_terms": {}
+}
