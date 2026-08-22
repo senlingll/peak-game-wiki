@@ -221,6 +221,21 @@ function extractSkydlerAsset(script, biome) {
   return assetPaths.find((path) => path.toLowerCase().includes(`/${biome.toLowerCase()}-`)) || null;
 }
 
+function extractSkydlerMedia(script, maps, buildDate, source) {
+  return maps.map((biome) => {
+    const assetPath = extractSkydlerAsset(script, biome);
+    if (!assetPath) return null;
+    const label = biomeDisplayNames[biome] || biome;
+    return {
+      type: 'image',
+      biome: label,
+      alt: `${label} map from today's rotation`,
+      caption: `${label} map image from PEAK Map Today, fetched ${buildDate}.`,
+      url: new URL(assetPath, source.url).toString(),
+    };
+  }).filter(Boolean);
+}
+
 function nextResetAt(buildDate, fetchedAt) {
   const reset = new Date(`${buildDate}T17:00:00.000Z`);
   const observed = new Date(fetchedAt);
@@ -245,7 +260,7 @@ function mapResultFromSequence(maps, buildDate, fetchedAt, source, media = null)
       : source.id === 'steam'
         ? { label: defaultSources[0].label, url: defaultSources[0].url }
         : null,
-    media,
+    media: Array.isArray(media) ? media : media ? [media] : [],
   };
 }
 
@@ -256,15 +271,7 @@ async function parseSkydlerSource(rootHtml, buildDate, fetchedAt, source) {
   const scriptResponse = await fetchSource(scriptUrl);
   const maps = extractSkydlerMaps(scriptResponse.text);
   if (!maps) return null;
-  const assetPath = extractSkydlerAsset(scriptResponse.text, maps[0]);
-  const media = assetPath
-    ? {
-      type: 'image',
-      url: new URL(assetPath, source.url).toString(),
-      alt: `PEAK ${maps[0]} map from today's rotation`,
-      caption: `Map image from PEAK Map Today, fetched ${buildDate}.`,
-    }
-    : null;
+  const media = extractSkydlerMedia(scriptResponse.text, maps, buildDate, source);
   return mapResultFromSequence(maps, buildDate, fetchedAt, source, media);
 }
 
@@ -476,6 +483,6 @@ async function main() {
   }
 }
 
-export { emptyTodayMap, extractSkydlerMaps, parseRedditJson, parseRssFeed, parseSkydlerSource, parseSteamSource, selectTodayMap };
+export { emptyTodayMap, extractSkydlerMaps, extractSkydlerMedia, parseRedditJson, parseRssFeed, parseSkydlerSource, parseSteamSource, selectTodayMap };
 
 if (import.meta.url === pathToFileURL(resolve(process.argv[1] || '')).href) await main();

@@ -286,9 +286,10 @@ function normalizeTodayMap(data, buildDate, buildTimestamp) {
   const hasLocation = [data?.map, data?.route, data?.biome].some((value) => typeof value === 'string' && value.trim());
   const datedSource = data?.date === buildDate && isSafeHttpUrl(source?.url);
   const available = datedSource && hasLocation;
-  const media = datedSource && data?.media && ['image', 'video'].includes(data.media.type) && isSafeMediaUrl(data.media.url)
-    ? data.media
-    : null;
+  const mediaValues = Array.isArray(data?.media) ? data.media : data?.media ? [data.media] : [];
+  const media = datedSource
+    ? mediaValues.filter((item) => item && ['image', 'video'].includes(item.type) && isSafeMediaUrl(item.url))
+    : [];
   return {
     available,
     date: datedSource ? data.date : buildDate,
@@ -322,13 +323,17 @@ function formatCountdown(locale, resetAt, buildTimestamp) {
 
 function renderTodayMapMedia(locale, data) {
   const copy = todayMapCopy[locale] ?? todayMapCopy.en;
-  if (!data.media) {
+  if (!data.media.length) {
     return `<div class="today-map-media today-map-media-pending" role="img" aria-label="${escapeHtml(copy.mediaPending)}"><strong>${escapeHtml(copy.mediaPending)}</strong><span>${escapeHtml(copy.mediaPendingNote)}</span></div>`;
   }
-  const media = data.media.type === 'video'
-    ? `<video controls preload="metadata" width="1200" height="675"><source src="${escapeHtml(data.media.url)}"${data.media.mimeType ? ` type="${escapeHtml(data.media.mimeType)}"` : ''} /></video>`
-    : `<img src="${escapeHtml(data.media.url)}" alt="${escapeHtml(data.media.alt || copy.title)}" width="1200" height="675" loading="lazy" />`;
-  return `<div class="today-map-media">${media}<p>${escapeHtml(data.media.caption || data.source?.label || copy.title)}</p></div>`;
+  const cards = data.media.map((item, index) => {
+    const label = item.biome || `${copy.title} ${index + 1}`;
+    const media = item.type === 'video'
+      ? `<video controls preload="metadata" width="1200" height="675"><source src="${escapeHtml(item.url)}"${item.mimeType ? ` type="${escapeHtml(item.mimeType)}"` : ''} /></video>`
+      : `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.alt || label)}" width="1200" height="675" loading="eager" />`;
+    return `<figure class="today-map-media-card">${media}<figcaption><strong>${escapeHtml(label)}</strong><span>${escapeHtml(item.caption || data.source?.label || copy.title)}</span></figcaption></figure>`;
+  }).join('');
+  return `<div class="today-map-media-gallery" aria-label="${escapeHtml(copy.title)}">${cards}</div>`;
 }
 
 function renderTodayMap(locale, data, buildDate, buildTimestamp) {

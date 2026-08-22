@@ -1347,6 +1347,54 @@ img {
   line-height: 1.55;
 }
 
+.today-map-media-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-content: start;
+}
+
+.today-map-media-card {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 5px;
+}
+
+.today-map-media-card:first-child {
+  grid-column: 1 / -1;
+}
+
+.today-map-media-card img,
+.today-map-media-card video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.today-map-media-card figcaption {
+  display: grid;
+  gap: 3px;
+  padding: 9px 11px 11px;
+}
+
+.today-map-media-card figcaption strong {
+  color: #fffdf9;
+  font-size: 12px;
+}
+
+.today-map-media-card figcaption span {
+  overflow: hidden;
+  color: rgba(255, 253, 249, 0.68);
+  font-size: 10px;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .today-map-media-pending {
   display: grid;
   min-height: 100%;

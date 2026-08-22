@@ -4,8 +4,8 @@
   "route": "Daily biome sequence",
   "biome": "Shore, Tropics, Alpine, Gloom, Citadel",
   "resetAt": "2026-08-22T17:00:00.000Z",
-  "updatedAt": "2026-08-22T05:06:55.257Z",
-  "sourceFetchedAt": "2026-08-22T05:06:55.257Z",
+  "updatedAt": "2026-08-22T06:01:34.958Z",
+  "sourceFetchedAt": "2026-08-22T06:01:34.958Z",
   "source": {
     "label": "PEAK Map Today",
     "url": "https://peak.skydler.me/"
@@ -14,10 +14,41 @@
     "label": "Steam Community daily map guide",
     "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3553972295"
   },
-  "media": {
-    "type": "image",
-    "url": "https://peak.skydler.me/assets/shore-C4RgtyBr.jpg",
-    "alt": "PEAK SHORE map from today's rotation",
-    "caption": "Map image from PEAK Map Today, fetched 2026-08-22."
-  }
+  "media": [
+    {
+      "type": "image",
+      "biome": "Shore",
+      "alt": "Shore map from today's rotation",
+      "caption": "Shore map image from PEAK Map Today, fetched 2026-08-22.",
+      "url": "https://peak.skydler.me/assets/shore-C4RgtyBr.jpg"
+    },
+    {
+      "type": "image",
+      "biome": "Tropics",
+      "alt": "Tropics map from today's rotation",
+      "caption": "Tropics map image from PEAK Map Today, fetched 2026-08-22.",
+      "url": "https://peak.skydler.me/assets/tropics-MT9xyuK_.jpg"
+    },
+    {
+      "type": "image",
+      "biome": "Alpine",
+      "alt": "Alpine map from today's rotation",
+      "caption": "Alpine map image from PEAK Map Today, fetched 2026-08-22.",
+      "url": "https://peak.skydler.me/assets/alpine-DcYpCYQl.jpg"
+    },
+    {
+      "type": "image",
+      "biome": "Gloom",
+      "alt": "Gloom map from today's rotation",
+      "caption": "Gloom map image from PEAK Map Today, fetched 2026-08-22.",
+      "url": "https://peak.skydler.me/assets/gloom-DiJ8cuaL.jpg"
+    },
+    {
+      "type": "image",
+      "biome": "Citadel",
+      "alt": "Citadel map from today's rotation",
+      "caption": "Citadel map image from PEAK Map Today, fetched 2026-08-22.",
+      "url": "https://peak.skydler.me/assets/citadel-DzceUvzD.jpg"
+    }
+  ]
 }
