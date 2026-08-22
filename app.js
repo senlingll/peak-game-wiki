@@ -81,8 +81,6 @@ function bindFilters() {
 }
 
 function bindTodayMapCarousels() {
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
   document.querySelectorAll('[data-today-carousel]').forEach((carousel) => {
     const track = carousel.querySelector('[data-carousel-track]');
     const slides = [...carousel.querySelectorAll('[data-carousel-slide]')];
@@ -115,7 +113,6 @@ function bindTodayMapCarousels() {
     };
 
     const start = () => {
-      if (reducedMotion.matches) return;
       stop();
       timerId = window.setInterval(() => setSlide(activeIndex + 1), 5000);
     };
@@ -141,8 +138,6 @@ function bindTodayMapCarousels() {
       setSlide(activeIndex + (event.key === 'ArrowRight' ? 1 : -1));
       start();
     });
-    carousel.addEventListener('mouseenter', stop);
-    carousel.addEventListener('mouseleave', start);
     carousel.addEventListener('focusin', stop);
     carousel.addEventListener('focusout', (event) => {
       if (!carousel.contains(event.relatedTarget)) start();
