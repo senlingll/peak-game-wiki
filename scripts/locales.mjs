@@ -282,6 +282,7 @@ function isSafeMediaUrl(value) {
 
 function normalizeTodayMap(data, buildDate, buildTimestamp) {
   const source = data?.source;
+  const fallbackSource = data?.fallbackSource;
   const hasLocation = [data?.map, data?.route, data?.biome].some((value) => typeof value === 'string' && value.trim());
   const datedSource = data?.date === buildDate && isSafeHttpUrl(source?.url);
   const available = datedSource && hasLocation;
@@ -297,6 +298,7 @@ function normalizeTodayMap(data, buildDate, buildTimestamp) {
     resetAt: datedSource && parseDateValue(data.resetAt) ? data.resetAt : null,
     updatedAt: datedSource ? (data.updatedAt || data.sourceFetchedAt || buildTimestamp) : buildTimestamp,
     source: datedSource ? { label: source.label || '', url: source.url } : null,
+    fallbackSource: datedSource && isSafeHttpUrl(fallbackSource?.url) ? { label: fallbackSource.label || '', url: fallbackSource.url } : null,
     media,
   };
 }
@@ -337,7 +339,7 @@ function renderTodayMap(locale, data, buildDate, buildTimestamp) {
   const biomeValue = snapshot.biome || copy.pending;
   const countdown = formatCountdown(locale, snapshot.resetAt, buildTimestamp);
   const sourceMarkup = snapshot.source
-    ? `<a href="${escapeHtml(snapshot.source.url)}" target="_blank" rel="noopener">${escapeHtml(snapshot.source.label || copy.source)} <span aria-hidden="true">\u2192</span></a>`
+    ? `<a href="${escapeHtml(snapshot.source.url)}" target="_blank" rel="noopener">${escapeHtml(snapshot.source.label || copy.source)} <span aria-hidden="true">\u2192</span></a>${snapshot.fallbackSource ? `<a href="${escapeHtml(snapshot.fallbackSource.url)}" target="_blank" rel="noopener">${escapeHtml(snapshot.fallbackSource.label || copy.source)} <span aria-hidden="true">\u2192</span></a>` : ''}`
     : `<span>${escapeHtml(copy.pending)}</span>`;
   const status = snapshot.available ? copy.verified : copy.pending;
   const panel = snapshot.available

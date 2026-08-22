@@ -1,11 +1,23 @@
 {
   "date": "2026-08-22",
-  "map": null,
-  "route": null,
-  "biome": null,
-  "resetAt": null,
-  "updatedAt": "2026-08-22T04:20:41.426Z",
-  "sourceFetchedAt": "2026-08-22T04:20:41.426Z",
-  "source": null,
-  "media": null
+  "map": "Shore → Tropics → Alpine → Gloom → Citadel",
+  "route": "Daily biome sequence",
+  "biome": "Shore, Tropics, Alpine, Gloom, Citadel",
+  "resetAt": "2026-08-22T17:00:00.000Z",
+  "updatedAt": "2026-08-22T05:06:55.257Z",
+  "sourceFetchedAt": "2026-08-22T05:06:55.257Z",
+  "source": {
+    "label": "PEAK Map Today",
+    "url": "https://peak.skydler.me/"
+  },
+  "fallbackSource": {
+    "label": "Steam Community daily map guide",
+    "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3553972295"
+  },
+  "media": {
+    "type": "image",
+    "url": "https://peak.skydler.me/assets/shore-C4RgtyBr.jpg",
+    "alt": "PEAK SHORE map from today's rotation",
+    "caption": "Map image from PEAK Map Today, fetched 2026-08-22."
+  }
 }

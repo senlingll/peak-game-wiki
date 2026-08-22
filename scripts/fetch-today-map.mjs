@@ -6,15 +6,15 @@ import { promisify } from 'node:util';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const dataPath = resolve(projectRoot, 'data/today-map.json');
-const defaultSourceUrls = [
-  'https://www.reddit.com/r/PeakGame/new.json?raw_json=1&limit=50',
-  // Reddit's public JSON endpoint may return 403 while the public Atom feed remains available.
-  'https://www.reddit.com/r/PeakGame/.rss?limit=50',
-  'https://old.reddit.com/r/PeakGame/new/.rss?limit=50',
+const defaultSources = [
+  { id: 'skydler', label: 'PEAK Map Today', url: 'https://peak.skydler.me/' },
+  { id: 'steam', label: 'Steam Community daily map guide', url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3553972295' },
 ];
 const userAgent = 'peak-game-wiki-daily-map/1.0 (+https://peak-game.wiki/map-rotation)';
 const maxResponseBytes = 4 * 1024 * 1024;
 const execFile = promisify(execFileCallback);
+const supportedBiomes = new Set(['SHORE', 'TROPICS', 'ROOTS', 'ALPINE', 'MESA', 'CALDERA', 'KILN', 'GLOOM', 'CITADEL']);
+const biomeDisplayNames = { SHORE: 'Shore', TROPICS: 'Tropics', ROOTS: 'Roots', ALPINE: 'Alpine', MESA: 'Mesa', CALDERA: 'Caldera', KILN: 'The Kiln', GLOOM: 'Gloom', CITADEL: 'Citadel' };
 
 const mapLabels = "current map|map name|today[’']s map|today map|map";
 const routeLabels = 'current route|route|path|stage';
@@ -207,6 +207,103 @@ function parseRssFeed(xml) {
   }).filter(Boolean);
 }
 
+function extractSkydlerMaps(script) {
+  const match = script.match(/\b(?:rf|[A-Za-z_$][\w$]*)\s*=\s*\{\s*maps:\s*\[([^\]]+)\]/);
+  if (!match) return null;
+  const maps = [...match[1].matchAll(/[`'"]([A-Za-z][A-Za-z0-9 _-]*)[`'"]/g)]
+    .map((item) => item[1].trim().toUpperCase())
+    .filter((map) => supportedBiomes.has(map));
+  return maps.length >= 2 ? maps : null;
+}
+
+function extractSkydlerAsset(script, biome) {
+  const assetPaths = [...script.matchAll(/[`'"](\/assets\/[^`'"]+)[`'"]/g)].map((item) => item[1]);
+  return assetPaths.find((path) => path.toLowerCase().includes(`/${biome.toLowerCase()}-`)) || null;
+}
+
+function nextResetAt(buildDate, fetchedAt) {
+  const reset = new Date(`${buildDate}T17:00:00.000Z`);
+  const observed = new Date(fetchedAt);
+  if (!Number.isNaN(observed.getTime()) && observed >= reset) reset.setUTCDate(reset.getUTCDate() + 1);
+  return reset.toISOString();
+}
+
+function mapResultFromSequence(maps, buildDate, fetchedAt, source, media = null) {
+  const displayMaps = maps.map((map) => biomeDisplayNames[map] || map);
+  const sequence = displayMaps.join(' \u2192 ');
+  return {
+    date: buildDate,
+    map: sequence,
+    route: 'Daily biome sequence',
+    biome: displayMaps.join(', '),
+    resetAt: nextResetAt(buildDate, fetchedAt),
+    updatedAt: fetchedAt,
+    sourceFetchedAt: fetchedAt,
+    source: { label: source.label, url: source.url },
+    fallbackSource: source.id === 'skydler'
+      ? { label: defaultSources[1].label, url: defaultSources[1].url }
+      : source.id === 'steam'
+        ? { label: defaultSources[0].label, url: defaultSources[0].url }
+        : null,
+    media,
+  };
+}
+
+async function parseSkydlerSource(rootHtml, buildDate, fetchedAt, source) {
+  const scriptPath = rootHtml.match(/<script[^>]+src=["']([^"']+index-[^"']+\.js)["']/i)?.[1];
+  if (!scriptPath) return null;
+  const scriptUrl = new URL(scriptPath, source.url).toString();
+  const scriptResponse = await fetchSource(scriptUrl);
+  const maps = extractSkydlerMaps(scriptResponse.text);
+  if (!maps) return null;
+  const assetPath = extractSkydlerAsset(scriptResponse.text, maps[0]);
+  const media = assetPath
+    ? {
+      type: 'image',
+      url: new URL(assetPath, source.url).toString(),
+      alt: `PEAK ${maps[0]} map from today's rotation`,
+      caption: `Map image from PEAK Map Today, fetched ${buildDate}.`,
+    }
+    : null;
+  return mapResultFromSequence(maps, buildDate, fetchedAt, source, media);
+}
+
+function hasCurrentSteamCycle(html, buildDate) {
+  const monthNames = 'January|February|March|April|May|June|July|August|September|October|November|December';
+  const pattern = new RegExp(`\\b\\d{1,2}\\s*(?:->|→)\\s*(\\d{1,2})\\s+(${monthNames})\\s+(20\\d{2})\\b`, 'gi');
+  return [...cleanText(html).matchAll(pattern)].some((match) => {
+    const month = new Date(`${match[2]} 1, ${match[3]} UTC`).getUTCMonth() + 1;
+    return dateFromParts(match[3], month, match[1]) === buildDate;
+  });
+}
+
+function extractExplicitBiomeSequence(html) {
+  const text = cleanText(html);
+  const pattern = /(?:today(?:['’´]s)?\s+biomes?|current\s+biomes?|today(?:['’´]s)?\s+map(?:\s+sequence)?)\s*[:=-]\s*([^\n<]{8,180})/i;
+  const value = text.match(pattern)?.[1] || '';
+  const maps = value.split(/\s*(?:,|\/|->|→)\s*/)
+    .map((item) => item.trim().toUpperCase())
+    .filter((item) => supportedBiomes.has(item));
+  return maps.length >= 2 ? maps : null;
+}
+
+function extractSteamMedia(html) {
+  const tags = [...html.matchAll(/<img\b[^>]*>/gi)].map((match) => match[0]);
+  const tag = tags.find((value) => /sharedFilePreviewImage/i.test(value));
+  const url = tag?.match(/\bsrc=["']([^"']+)["']/i)?.[1];
+  const safeUrl = url ? mediaUrl(url) : null;
+  return safeUrl
+    ? { type: 'image', url: safeUrl, alt: 'Steam community daily PEAK map guide', caption: 'Image from the dated Steam community map guide.' }
+    : null;
+}
+
+function parseSteamSource(html, buildDate, fetchedAt, source) {
+  if (!hasCurrentSteamCycle(html, buildDate)) return null;
+  const maps = extractExplicitBiomeSequence(html);
+  if (!maps) return null;
+  return mapResultFromSequence(maps, buildDate, fetchedAt, source, extractSteamMedia(html));
+}
+
 function extractResetAt(text) {
   const value = extractField(text, resetLabels);
   if (!value) return null;
@@ -263,6 +360,7 @@ function selectTodayMap(posts, buildDate, fetchedAt) {
     updatedAt: fetchedAt,
     sourceFetchedAt: fetchedAt,
     source: { label: 'r/PeakGame community post', url: selected.post.url },
+    fallbackSource: null,
     media,
   };
 }
@@ -277,6 +375,7 @@ function emptyTodayMap(buildDate, fetchedAt) {
     updatedAt: fetchedAt,
     sourceFetchedAt: fetchedAt,
     source: null,
+    fallbackSource: null,
     media: null,
   };
 }
@@ -288,7 +387,7 @@ async function fetchSource(url) {
   const timeout = setTimeout(() => controller.abort(), Number(process.env.TODAY_MAP_FETCH_TIMEOUT_MS) || 15000);
   try {
     const response = await fetch(url, {
-      headers: { accept: 'application/json, application/rss+xml, text/xml;q=0.9', 'user-agent': userAgent },
+      headers: { accept: 'text/html, application/javascript, application/json, application/rss+xml, text/xml;q=0.9', 'user-agent': userAgent },
       redirect: 'follow',
       signal: controller.signal,
     });
@@ -331,6 +430,14 @@ function parseSource(text, contentType, url) {
   return parseRssFeed(text);
 }
 
+async function parseConfiguredSource(source, buildDate, fetchedAt) {
+  const response = await fetchSource(source.url);
+  if (source.id === 'skydler') return parseSkydlerSource(response.text, buildDate, fetchedAt, source);
+  if (source.id === 'steam') return parseSteamSource(response.text, buildDate, fetchedAt, source);
+  const posts = parseSource(response.text, response.contentType, source.url);
+  return selectTodayMap(posts, buildDate, fetchedAt);
+}
+
 async function writeTodayMap(value) {
   await writeFile(dataPath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
 }
@@ -339,23 +446,24 @@ async function main() {
   const buildDate = resolveBuildDate();
   const fetchedAt = new Date().toISOString();
   const configuredUrl = process.env.TODAY_MAP_SOURCE_URL;
-  const sourceUrls = configuredUrl ? [configuredUrl] : defaultSourceUrls;
+  const sources = configuredUrl
+    ? [{ id: 'custom', label: 'Configured map source', url: configuredUrl }]
+    : defaultSources;
   const errors = [];
   let result = null;
 
-  for (const url of sourceUrls) {
+  for (const [index, source] of sources.entries()) {
     try {
-      const response = await fetchSource(url);
-      const posts = parseSource(response.text, response.contentType, url);
-      result = selectTodayMap(posts, buildDate, fetchedAt);
+      if (index > 0) console.log(`Primary map source unavailable; trying fallback: ${source.label}`);
+      result = await parseConfiguredSource(source, buildDate, fetchedAt);
       if (result) {
         const detail = [result.map, result.route, result.biome].some(Boolean) ? 'with location fields' : 'with media only';
-        console.log(`Found a dated PEAK community post ${detail}: ${result.source.url}`);
+        console.log(`Found today's PEAK map ${detail} from ${result.source.label}: ${result.source.url}`);
         break;
       }
-      errors.push(`${url}: no matching dated post with explicit map fields`);
+      errors.push(`${source.url}: no current map with explicit fields`);
     } catch (error) {
-      errors.push(`${url}: ${error instanceof Error ? error.message : String(error)}`);
+      errors.push(`${source.url}: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
@@ -368,6 +476,6 @@ async function main() {
   }
 }
 
-export { emptyTodayMap, parseRedditJson, parseRssFeed, selectTodayMap };
+export { emptyTodayMap, extractSkydlerMaps, parseRedditJson, parseRssFeed, parseSkydlerSource, parseSteamSource, selectTodayMap };
 
 if (import.meta.url === pathToFileURL(resolve(process.argv[1] || '')).href) await main();
