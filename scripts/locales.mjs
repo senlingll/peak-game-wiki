@@ -331,9 +331,17 @@ function renderTodayMapMedia(locale, data) {
     const media = item.type === 'video'
       ? `<video controls preload="metadata" width="1200" height="675"><source src="${escapeHtml(item.url)}"${item.mimeType ? ` type="${escapeHtml(item.mimeType)}"` : ''} /></video>`
       : `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.alt || label)}" width="1200" height="675" loading="eager" />`;
-    return `<figure class="today-map-media-card">${media}<figcaption><strong>${escapeHtml(label)}</strong><span>${escapeHtml(item.caption || data.source?.label || copy.title)}</span></figcaption></figure>`;
+    const active = index === 0;
+    return `<figure id="today-map-slide-${index}" class="today-map-media-card${active ? ' is-active' : ''}" data-carousel-slide role="group" aria-roledescription="slide" aria-label="${index + 1} of ${data.media.length}" aria-hidden="${active ? 'false' : 'true'}">${media}<figcaption><strong>${escapeHtml(label)}</strong><span>${escapeHtml(item.caption || data.source?.label || copy.title)}</span></figcaption></figure>`;
   }).join('');
-  return `<div class="today-map-media-gallery" aria-label="${escapeHtml(copy.title)}">${cards}</div>`;
+  const indicators = data.media.map((item, index) => {
+    const label = item.biome || `${copy.title} ${index + 1}`;
+    return `<button class="today-map-carousel-dot${index === 0 ? ' is-active' : ''}" data-carousel-index="${index}" type="button" aria-pressed="${index === 0 ? 'true' : 'false'}" aria-controls="today-map-slide-${index}" aria-label="Show ${escapeHtml(label)} map"><span aria-hidden="true"></span></button>`;
+  }).join('');
+  const controls = data.media.length > 1
+    ? `<button class="today-map-carousel-arrow today-map-carousel-prev" data-carousel-prev type="button" aria-label="Previous map" title="Previous map"><span aria-hidden="true">\u2190</span></button><button class="today-map-carousel-arrow today-map-carousel-next" data-carousel-next type="button" aria-label="Next map" title="Next map"><span aria-hidden="true">\u2192</span></button>`
+    : '';
+  return `<div class="today-map-carousel" data-today-carousel tabindex="0" aria-roledescription="carousel" aria-label="${escapeHtml(copy.title)}"><div class="today-map-carousel-viewport"><div class="today-map-carousel-track" data-carousel-track>${cards}</div>${controls}</div><div class="today-map-carousel-dots" role="group" aria-label="Map slides">${indicators}</div></div>`;
 }
 
 function renderTodayMap(locale, data, buildDate, buildTimestamp) {

@@ -80,6 +80,79 @@ function bindFilters() {
   });
 }
 
+function bindTodayMapCarousels() {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  document.querySelectorAll('[data-today-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector('[data-carousel-track]');
+    const slides = [...carousel.querySelectorAll('[data-carousel-slide]')];
+    const dots = [...carousel.querySelectorAll('[data-carousel-index]')];
+    const previous = carousel.querySelector('[data-carousel-prev]');
+    const next = carousel.querySelector('[data-carousel-next]');
+    if (!track || slides.length < 2) return;
+
+    let activeIndex = 0;
+    let timerId;
+
+    const setSlide = (value) => {
+      activeIndex = (value + slides.length) % slides.length;
+      track.style.transform = 'translate3d(-' + (activeIndex * 100) + '%, 0, 0)';
+      slides.forEach((slide, index) => {
+        const active = index === activeIndex;
+        slide.classList.toggle('is-active', active);
+        slide.setAttribute('aria-hidden', String(!active));
+      });
+      dots.forEach((dot, index) => {
+        const active = index === activeIndex;
+        dot.classList.toggle('is-active', active);
+        dot.setAttribute('aria-pressed', String(active));
+      });
+    };
+
+    const stop = () => {
+      window.clearInterval(timerId);
+      timerId = undefined;
+    };
+
+    const start = () => {
+      if (reducedMotion.matches) return;
+      stop();
+      timerId = window.setInterval(() => setSlide(activeIndex + 1), 5000);
+    };
+
+    previous?.addEventListener('click', () => {
+      setSlide(activeIndex - 1);
+      start();
+    });
+    next?.addEventListener('click', () => {
+      setSlide(activeIndex + 1);
+      start();
+    });
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        setSlide(index);
+        start();
+      });
+    });
+
+    carousel.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      event.preventDefault();
+      setSlide(activeIndex + (event.key === 'ArrowRight' ? 1 : -1));
+      start();
+    });
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', start);
+    carousel.addEventListener('focusin', stop);
+    carousel.addEventListener('focusout', (event) => {
+      if (!carousel.contains(event.relatedTarget)) start();
+    });
+
+    setSlide(0);
+    start();
+  });
+}
+
 function bindCopyAction() {
   const copyButton = document.querySelector('[data-copy]');
   const status = document.querySelector('.copy-status');
@@ -102,5 +175,6 @@ function bindCopyAction() {
 bindLogoFallbacks();
 bindMenu();
 bindFilters();
+bindTodayMapCarousels();
 bindCopyAction();
 updateItemResults();
