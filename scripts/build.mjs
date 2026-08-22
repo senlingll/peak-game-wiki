@@ -1,9 +1,29 @@
-import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { localeOrder, renderHome, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
+import { injectTodayMapSection, localeOrder, renderHome, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const outputRoot = resolve(projectRoot, 'dist');
+const buildTimestamp = new Date().toISOString();
+const buildDate = /^\d{4}-\d{2}-\d{2}$/.test(process.env.BUILD_DATE ?? '')
+  ? process.env.BUILD_DATE
+  : buildTimestamp.slice(0, 10);
+
+async function readTodayMap() {
+  try {
+    return JSON.parse(await readFile(resolve(projectRoot, 'data/today-map.json'), 'utf8'));
+  } catch (error) {
+    if (error?.code === 'ENOENT' || error instanceof SyntaxError) {
+      console.warn('No valid data/today-map.json found; building a pending daily-map card.');
+      return {};
+    }
+    throw error;
+  }
+}
+
+const todayMap = await readTodayMap();
+
+const renderMapGuidePage = (locale) => injectTodayMapSection(renderMapGuide(locale, { dateModified: buildDate }), locale, todayMap, buildDate, buildTimestamp);
 
 await rm(outputRoot, { recursive: true, force: true });
 await mkdir(outputRoot, { recursive: true });
@@ -17,8 +37,8 @@ await writeFile(resolve(outputRoot, 'index.html'), renderHome('en'), 'utf8');
 for (const page of ['about', 'privacy', 'terms']) {
   await writeFile(resolve(outputRoot, `${page}.html`), renderLegal('en', page), 'utf8');
 }
-await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(), 'utf8');
-await writeFile(resolve(outputRoot, 'map-rotation.html'), renderMapGuide('en'), 'utf8');
+await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(buildDate), 'utf8');
+await writeFile(resolve(outputRoot, 'map-rotation.html'), renderMapGuidePage('en'), 'utf8');
 
 for (const locale of localeOrder.filter((code) => code !== 'en')) {
   const localeRoot = resolve(outputRoot, locale);
@@ -31,7 +51,7 @@ for (const locale of localeOrder.filter((code) => code !== 'en')) {
   }
   const guideRoot = resolve(localeRoot, 'map-rotation');
   await mkdir(guideRoot, { recursive: true });
-  await writeFile(resolve(guideRoot, 'index.html'), renderMapGuide(locale), 'utf8');
+  await writeFile(resolve(guideRoot, 'index.html'), renderMapGuidePage(locale), 'utf8');
 }
 
 console.log(`Built static site to ${outputRoot}`);

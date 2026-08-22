@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "python -m http.server 4173 -d .",
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "fetch:today-map": "node scripts/fetch-today-map.mjs"
   }
 }

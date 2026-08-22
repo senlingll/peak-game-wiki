@@ -1,0 +1,40 @@
+name: Build and deploy daily PEAK map page
+
+on:
+  schedule:
+    # PEAK's observed reset is 18:00 +01:00 (17:00 UTC); fetch once after it settles.
+    - cron: '10 17 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      TODAY_MAP_FETCH_TIMEOUT_MS: 20000
+    steps:
+      - name: Check out the site
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Freeze UTC build date
+        run: echo "BUILD_DATE=$(date -u +%F)" >> "$GITHUB_ENV"
+
+      - name: Fetch today's verified map
+        run: npm run fetch:today-map
+
+      - name: Build static pages
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name peak-game-wiki --branch main
