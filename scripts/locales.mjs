@@ -5,6 +5,7 @@ import { achievementGuides } from './achievement-guide.mjs';
 const BASE_URL = 'https://peak-game.wiki';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
 const STEAM_NEWS_API_HTML_URL = 'https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json';
+const nativeBannerMarkup = '<section class="native-ad" aria-label="Advertisement"><div class="container native-ad-inner"><script async="async" data-cfasync="false" src="https://pl30883299.profitableratecpmnetwork.com/3531361214596141d25dc216fd8ebe0f/invoke.js"></script><div id="container-3531361214596141d25dc216fd8ebe0f"></div></div></section>';
 let activeGuideLocale = 'en';
 
 function normalizeSteamNewsLinks(html) {
@@ -539,7 +540,7 @@ export function renderHome(locale, options = {}) {
   const html = normalizeSteamNewsLinks(renderHomeBase(locale, options)).replace('datetime="2026-08-17"', `datetime="${escapeHtml(buildDate)}"`);
   const marker = '<section id="updates"';
   const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(guide.related.homeAnchor)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(guide.eyebrow)}</p><h2>${escapeHtml(guide.h1)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a><a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a></div></div></section>`;
-  return html.replace(marker, `${linkBand}${marker}`);
+  return html.replace(marker, `${linkBand}${nativeBannerMarkup}${marker}`);
 }
 
 function renderArticleImage(image) {
@@ -571,7 +572,9 @@ function renderMapGuideHtml(locale, options = {}) {
 }
 
 export function renderMapGuide(locale, options = {}) {
-  return normalizeSteamNewsLinks(renderMapGuideHtml(locale, options));
+  const html = normalizeSteamNewsLinks(renderMapGuideHtml(locale, options));
+  const marker = '<div class="container article-layout">';
+  return html.replace(marker, `${nativeBannerMarkup}${marker}`);
 }
 
 function renderAchievementGuideHtml(locale, options = {}) {
@@ -594,7 +597,9 @@ function renderAchievementGuideHtml(locale, options = {}) {
 }
 
 export function renderAchievementGuide(locale, options = {}) {
-  return normalizeSteamNewsLinks(renderAchievementGuideHtml(locale, options));
+  const html = normalizeSteamNewsLinks(renderAchievementGuideHtml(locale, options));
+  const marker = '<div class="container article-layout">';
+  return html.replace(marker, `${nativeBannerMarkup}${marker}`);
 }
 
 const privacyAdDisclosure = {
