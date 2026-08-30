@@ -1,6 +1,6 @@
 # PEAK Game Wiki: Complete Site Guide
 
-> PEAK Game Wiki is an independent English-language reference prototype for the Steam co-op climbing game PEAK. It organizes practical map, equipment, progress, multiplayer, and update questions into a source-aware homepage. It is not an official developer site and does not host the game or provide a browser-playable version.
+> PEAK Game Wiki is an independent multilingual reference prototype for the Steam co-op climbing game PEAK. It organizes practical map, equipment, progress, multiplayer, and update questions into a source-aware homepage. It is not an official developer site and does not host the game or provide a browser-playable version.
 
 ## Site Background
 
@@ -19,6 +19,10 @@ The map section is a planning entry point, not a fabricated live tracker. It exp
 ### PEAK Map Rotation Guide (https://peak-game.wiki/map-rotation)
 
 The map rotation guide separates the evergreen informational intent of `PEAK map rotation` from the time-sensitive navigation intent of `PEAK map today`. It explains how to verify the active route in-game, plan rope, piton, food, and recovery utility, distinguish biomes from route stages, and record version-aware field notes. It does not invent a live biome result or publish an unsupported fixed map schedule.
+
+### PEAK Achievements Guide (https://peak-game.wiki/achievements)
+
+The achievements guide targets the informational intent behind `PEAK achievements`, `PEAK achievement guide`, and `how to get all PEAK achievements`. It treats Steam achievements as platform progress and in-game badges as a separate system, then gives players a checklist method for exact names, route or mode, team members, evidence, and version. It also explains why custom runs, hidden achievements, new achievements, and missing unlocks should be verified against the current game and official Steam pages instead of being presented as permanent facts.
 
 ### Item Database (https://peak-game.wiki/#database)
 

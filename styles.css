@@ -1732,6 +1732,18 @@ img {
   line-height: 1.18;
 }
 
+.article-subsection {
+  margin-top: 30px;
+}
+
+.article-subsection h3 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 21px;
+  line-height: 1.25;
+}
+
 .article-section p {
   margin: 0 0 18px;
   color: var(--ink-soft);
@@ -1850,6 +1862,13 @@ img {
   align-items: center;
   justify-content: space-between;
   gap: 28px;
+}
+
+.article-link-band-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 13px 22px;
 }
 
 .article-link-band h2 {
@@ -2278,6 +2297,10 @@ img {
   .article-link-band-inner {
     display: grid;
     gap: 14px;
+  }
+
+  .article-link-band-actions {
+    align-items: flex-start;
   }
 
   .article-link-band h2 {

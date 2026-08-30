@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderHome, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
+import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderHome, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const outputRoot = resolve(projectRoot, 'dist');
@@ -40,6 +40,7 @@ for (const page of ['about', 'privacy', 'terms']) {
 }
 await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(buildDate), 'utf8');
 await writeFile(resolve(outputRoot, 'map-rotation.html'), renderMapGuidePage('en'), 'utf8');
+await writeFile(resolve(outputRoot, 'achievements.html'), renderAchievementGuide('en', renderOptions), 'utf8');
 
 for (const locale of localeOrder.filter((code) => code !== 'en')) {
   const localeRoot = resolve(outputRoot, locale);
@@ -53,6 +54,9 @@ for (const locale of localeOrder.filter((code) => code !== 'en')) {
   const guideRoot = resolve(localeRoot, 'map-rotation');
   await mkdir(guideRoot, { recursive: true });
   await writeFile(resolve(guideRoot, 'index.html'), renderMapGuidePage(locale), 'utf8');
+  const achievementRoot = resolve(localeRoot, 'achievements');
+  await mkdir(achievementRoot, { recursive: true });
+  await writeFile(resolve(achievementRoot, 'index.html'), renderAchievementGuide(locale, renderOptions), 'utf8');
 }
 
 console.log(`Built static site to ${outputRoot}`);

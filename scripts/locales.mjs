@@ -1,5 +1,6 @@
 import { mapGuides } from './map-guide.mjs';
 import { todayMapCopy } from './today-map-copy.mjs';
+import { achievementGuides } from './achievement-guide.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
@@ -472,6 +473,13 @@ function head(locale, page, title, description, schema, options = {}) {
     scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: guide.h1, item: canonical }] });
     scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: guide.faq.items.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) });
   }
+  if (page === 'achievements') {
+    const guide = achievementGuides[locale];
+    const images = [guide.heroImage, ...guide.sections.map((section) => section.image).filter(Boolean)].map((image) => `${BASE_URL}${image.src}`);
+    scripts.push({ '@context': 'https://schema.org', '@type': 'Article', headline: guide.h1, description: guide.meta.description, image: images, datePublished: guide.published, dateModified: options.dateModified || process.env.BUILD_DATE || new Date().toISOString().slice(0, 10), inLanguage: meta.lang, author: { '@type': 'Organization', name: 'PEAK Game Wiki' }, publisher: { '@type': 'Organization', name: 'PEAK Game Wiki' }, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical } });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: guide.related.homeAnchor, item: canonical }] });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: guide.faq.items.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) });
+  }
   return `<!doctype html>\n<html lang="${meta.lang}" data-locale="${locale}">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <title>${escapeHtml(title)}</title>\n    <meta name="description" content="${escapeHtml(description)}" />\n    <meta name="theme-color" content="#17212d" />\n    <link rel="canonical" href="${canonical}" />\n    ${alternateLinks(page)}\n    <link rel="icon" href="/assets/favicon.ico" sizes="any" />\n    <link rel="manifest" href="/manifest.webmanifest" />\n    \n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(description)}" />\n    <meta property="og:image" content="${BASE_URL}/media/peak-climb-ridge.webp" />\n    <meta property="og:url" content="${canonical}" />\n    <meta property="og:locale" content="${meta.lang}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:title" content="${escapeHtml(title)}" />\n    <meta name="twitter:description" content="${escapeHtml(description)}" />\n    <meta name="twitter:image" content="${BASE_URL}/media/peak-climb-ridge.webp" />\n    <link rel="stylesheet" href="/styles.css" />\n    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9042195580058659" crossorigin="anonymous"></script>\n    \n    <script>\n      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","y3c9ye040x");\n    </script>${scripts.map((value) => `\n    <script type="application/ld+json">${jsonLd(value)}</script>`).join('')}\n  </head>`;
 }
 
@@ -526,16 +534,21 @@ function renderHomeBase(locale, options = {}) {
 
 export function renderHome(locale, options = {}) {
   const guide = mapGuides[locale];
+  const achievementGuide = achievementGuides[locale];
   const buildDate = resolveBuildDate(options);
   const html = normalizeSteamNewsLinks(renderHomeBase(locale, options)).replace('datetime="2026-08-17"', `datetime="${escapeHtml(buildDate)}"`);
   const marker = '<section id="updates"';
-  const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(guide.related.homeAnchor)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(guide.eyebrow)}</p><h2>${escapeHtml(guide.h1)}</h2></div><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a></div></section>`;
+  const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(guide.related.homeAnchor)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(guide.eyebrow)}</p><h2>${escapeHtml(guide.h1)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a><a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a></div></div></section>`;
   return html.replace(marker, `${linkBand}${marker}`);
 }
 
 function renderArticleImage(image) {
   const localizedImage = image.src === '/media/peak-map-route.webp' ? { ...image, ...mapGuideHeroMedia[activeGuideLocale] } : image;
-  return `<figure class="media-frame article-image"><img src="${escapeHtml(localizedImage.src)}" alt="${escapeHtml(localizedImage.alt)}" width="1200" height="675" loading="lazy" /><figcaption>${escapeHtml(localizedImage.caption)}</figcaption></figure>`;
+  const width = localizedImage.width || 1200;
+  const height = localizedImage.height || 675;
+  const loading = localizedImage.loading || 'lazy';
+  const fetchPriority = localizedImage.fetchpriority ? ` fetchpriority="${escapeHtml(localizedImage.fetchpriority)}"` : '';
+  return `<figure class="media-frame article-image"><img src="${escapeHtml(localizedImage.src)}" alt="${escapeHtml(localizedImage.alt)}" width="${escapeHtml(width)}" height="${escapeHtml(height)}" loading="${escapeHtml(loading)}"${fetchPriority} /><figcaption>${escapeHtml(localizedImage.caption)}</figcaption></figure>`;
 }
 
 function renderMapGuideHtml(locale, options = {}) {
@@ -561,6 +574,29 @@ export function renderMapGuide(locale, options = {}) {
   return normalizeSteamNewsLinks(renderMapGuideHtml(locale, options));
 }
 
+function renderAchievementGuideHtml(locale, options = {}) {
+  const sourceCopy = locales[locale];
+  const copy = { ...sourceCopy, ui: { ...sourceCopy.ui, snapshot: formatSnapshotDate(locale, resolveBuildDate(options)) } };
+  const guide = achievementGuides[locale];
+  activeGuideLocale = locale;
+  const toc = guide.sections.map((section, index) => `<li><a href="#${escapeHtml(section.id)}">${index + 1}. ${escapeHtml(section.title)}</a></li>`).join('');
+  const sections = guide.sections.map((section) => {
+    const paragraphs = section.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('');
+    const subsections = (section.subsections || []).map((subsection) => `<div class="article-subsection"><h3>${escapeHtml(subsection.title)}</h3>${subsection.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div>`).join('');
+    const bullets = section.bullets ? `<ul class="article-bullets">${section.bullets.map(([lead, text]) => `<li><strong>${escapeHtml(lead)}</strong> ${escapeHtml(text)}</li>`).join('')}</ul>` : '';
+    const table = section.table ? `<div class="article-table-wrap"><table><caption>${escapeHtml(section.table.caption)}</caption><thead><tr>${section.table.headers.map((header) => `<th scope="col">${escapeHtml(header)}</th>`).join('')}</tr></thead><tbody>${section.table.rows.map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>` : '';
+    const image = section.image ? renderArticleImage(section.image) : '';
+    return `<section id="${escapeHtml(section.id)}" class="article-section"><h2>${escapeHtml(section.title)}</h2>${paragraphs}${subsections}${image}${bullets}${table}</section>`;
+  }).join('');
+  const faq = guide.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary>${escapeHtml(question)}</summary><p>${escapeHtml(answer)}</p></details>`).join('');
+  return `${head(locale, 'achievements', guide.meta.title, guide.meta.description, guide.meta.schema, options)}
+  <body class="article-page"><div id="top"></div>${header(locale, 'achievements', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(guide.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(guide.related.homeAnchor)}</p><h1 id="article-title">${escapeHtml(guide.h1)}</h1><p class="article-hero-lede">${escapeHtml(guide.intro)}</p></div>${renderArticleImage({ ...guide.heroImage, loading: 'eager', fetchpriority: 'high' })}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#achievements-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(guide.answerLabel)}</p><h2 id="answer-title">${escapeHtml(guide.answerLabel)}</h2><p>${escapeHtml(guide.answer)}</p></section>${sections}<section id="achievements-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://steamcommunity.com/stats/3527290/achievements/" target="_blank" rel="noopener">${escapeHtml(guide.source.achievement)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#badges">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.related.mapLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a></nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
+}
+
+export function renderAchievementGuide(locale, options = {}) {
+  return normalizeSteamNewsLinks(renderAchievementGuideHtml(locale, options));
+}
+
 const privacyAdDisclosure = {
   en: ['Third-party advertising technologies', 'Because ads may be served on this site, third parties may place or read cookies, or use web beacons, IP addresses, device identifiers, and similar technologies to collect or receive information. These signals may support ad delivery, measurement, fraud prevention, and personalized advertising where consent and law allow it. You can manage cookies through your browser or available consent controls.', 'How Google uses data on partner sites'],
   zh: ['第三方广告技术', '由于本网站可能展示广告，第三方可能会放置或读取 Cookie，或使用网络信标、IP 地址、设备标识符及类似技术来收集或接收信息。这些信息可能用于广告投放、效果衡量、防止欺诈，以及在获得同意并符合法律要求时提供个性化广告。你可以通过浏览器或可用的同意管理工具控制 Cookie。', 'Google 如何使用合作伙伴网站上的数据'],
@@ -584,8 +620,8 @@ export function renderLegal(locale, page, options = {}) {
 }
 
 export function renderSitemap(buildDate = '2026-08-19') {
-  const pages = ['home', 'about', 'privacy', 'terms', 'map-rotation'];
-  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'map-rotation'].map((page) => `${BASE_URL}${routeFor(code, page)}`)));
+  const pages = ['home', 'about', 'privacy', 'terms', 'map-rotation', 'achievements'];
+  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'map-rotation', 'achievements'].map((page) => `${BASE_URL}${routeFor(code, page)}`)));
   const urls = localeOrder.flatMap((code) => pages.map((page) => `${BASE_URL}${routeFor(code, page)}`));
   const rows = urls.map((url) => {
     const lastmod = updatedUrls.has(url) ? buildDate : '2026-08-17';
