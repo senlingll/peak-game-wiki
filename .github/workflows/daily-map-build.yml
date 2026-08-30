@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -29,6 +29,18 @@ jobs:
 
       - name: Fetch today's verified map
         run: npm run fetch:today-map
+
+      - name: Commit today's map data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/today-map.json
+          if git diff --cached --quiet; then
+            echo "No daily map data changes to commit."
+          else
+            git commit -m "Update daily map data"
+            git push origin HEAD:main
+          fi
 
       - name: Build static pages
         run: npm run build
