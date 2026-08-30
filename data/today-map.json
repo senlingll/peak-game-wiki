@@ -1,11 +1,11 @@
 {
-  "date": "2026-08-23",
-  "map": "Shore → Tropics → Mesa → Gloom → Citadel",
+  "date": "2026-08-30",
+  "map": "Shore → Tropics → Alpine → Gloom → Citadel",
   "route": "Daily biome sequence",
-  "biome": "Shore, Tropics, Mesa, Gloom, Citadel",
-  "resetAt": "2026-08-23T17:00:00.000Z",
-  "updatedAt": "2026-08-23T12:27:23.825Z",
-  "sourceFetchedAt": "2026-08-23T12:27:23.825Z",
+  "biome": "Shore, Tropics, Alpine, Gloom, Citadel",
+  "resetAt": "2026-08-30T17:00:00.000Z",
+  "updatedAt": "2026-08-30T04:48:44.276Z",
+  "sourceFetchedAt": "2026-08-30T04:48:44.276Z",
   "source": {
     "label": "PEAK Map Today",
     "url": "https://peak.skydler.me/"
@@ -19,35 +19,35 @@
       "type": "image",
       "biome": "Shore",
       "alt": "Shore map from today's rotation",
-      "caption": "Shore map image from PEAK Map Today, fetched 2026-08-23.",
+      "caption": "Shore map image from PEAK Map Today, fetched 2026-08-30.",
       "url": "https://peak.skydler.me/assets/shore-C4RgtyBr.jpg"
     },
     {
       "type": "image",
       "biome": "Tropics",
       "alt": "Tropics map from today's rotation",
-      "caption": "Tropics map image from PEAK Map Today, fetched 2026-08-23.",
+      "caption": "Tropics map image from PEAK Map Today, fetched 2026-08-30.",
       "url": "https://peak.skydler.me/assets/tropics-MT9xyuK_.jpg"
     },
     {
       "type": "image",
-      "biome": "Mesa",
-      "alt": "Mesa map from today's rotation",
-      "caption": "Mesa map image from PEAK Map Today, fetched 2026-08-23.",
-      "url": "https://peak.skydler.me/assets/mesa-COSGb-4Z.jpg"
+      "biome": "Alpine",
+      "alt": "Alpine map from today's rotation",
+      "caption": "Alpine map image from PEAK Map Today, fetched 2026-08-30.",
+      "url": "https://peak.skydler.me/assets/alpine-DcYpCYQl.jpg"
     },
     {
       "type": "image",
       "biome": "Gloom",
       "alt": "Gloom map from today's rotation",
-      "caption": "Gloom map image from PEAK Map Today, fetched 2026-08-23.",
+      "caption": "Gloom map image from PEAK Map Today, fetched 2026-08-30.",
       "url": "https://peak.skydler.me/assets/gloom-DiJ8cuaL.jpg"
     },
     {
       "type": "image",
       "biome": "Citadel",
       "alt": "Citadel map from today's rotation",
-      "caption": "Citadel map image from PEAK Map Today, fetched 2026-08-23.",
+      "caption": "Citadel map image from PEAK Map Today, fetched 2026-08-30.",
       "url": "https://peak.skydler.me/assets/citadel-DzceUvzD.jpg"
     }
   ]
