@@ -589,6 +589,113 @@ export const articleLocaleTranslations = {
       related: [['map-rotation', 'Heutige PEAK-Karte pruefen'], ['what-is-peak-game', 'Was PEAK ist'], ['peak-map-rotation-schedule', 'Rotationszeiten ansehen']],
       relatedLabel: 'Verwandte PEAK-Guides',
     },
+    'what-is-peak-game': {
+      meta: {
+        title: 'Was ist PEAK? Einsteiger-Guide zu Gameplay und Karten',
+        description: 'Neu bei PEAK? Erfahre, worum es im Spiel geht, wie das Klettern funktioniert, was die Kartenrotation bedeutet und wie du dich auf deinen ersten Aufstieg vorbereitest.',
+        schema: 'Ein Einsteiger-Guide zu PEAK, dem kooperativen Kletterablauf, Routen- und Ausrüstungsentscheidungen, den Begriffen der Kartenrotation und der täglichen Karte.',
+      },
+      primaryKeyword: 'was ist PEAK',
+      eyebrow: 'Einsteiger-Guide - der erste Aufstieg erklärt',
+      h1: 'Was ist PEAK?',
+      intro: 'Was ist PEAK? PEAK ist ein kooperatives Kletter- und Survival-Spiel auf Steam, in dem Spieler das Gelände lesen, Ressourcen verwalten und einander auf dem Weg zum Gipfel helfen. Dieser Guide erklärt den Spielablauf verständlich und zeigt dir anschließend [[link:map-rotation#today-map|die heute aktive Karte]] sowie die wichtigsten Begriffe für deinen ersten Lauf.',
+      answerLabel: 'Kurzantwort',
+      answer: 'PEAK ist ein kooperatives Kletterspiel für Windows auf Steam. Laut offizieller Shop-Beschreibung kannst du allein oder in einer Gruppe mit bis zu vier Spielern spielen. Die zentrale Herausforderung besteht nicht nur darin, nach oben zu gelangen: Das Team muss eine wechselnde Route lesen, Kletterhilfen im richtigen Moment einsetzen, Nahrung und Ausdauer verwalten und sich von Fehlern erholen. Karten und Biombezeichnungen liefern Orientierung, doch für die unmittelbar vor dir liegende Route ist die aktuelle Spielrunde maßgeblich.',
+      tocLabel: 'Auf dieser Seite',
+      tocFaq: 'FAQ für Einsteiger',
+      heroImage: {
+        alt: 'PEAK-Spieler koordinieren einen Aufstieg mit gemeinsam genutzter Ausrüstung',
+        caption: 'Offizieller Steam-Screenshot: In PEAK stehen das Lesen der Route und gemeinsame Entscheidungen im Mittelpunkt.',
+      },
+      sections: [
+        {
+          title: 'Was ist PEAK in einem Satz?',
+          paragraphs: [
+            'PEAK ist ein kooperatives Spiel mit Schwerpunkt auf dem Klettern, bei dem die Route selbst für den Druck sorgt. Die offizielle Steam-Seite nennt sowohl einen Einzelspielermodus als auch kooperativen Mehrspielermodus für Gruppen mit bis zu vier Personen. „Gemeinsam klettern“ fasst das Spiel zwar knapp zusammen, lässt aber den entscheidenden Teil aus: Bei jedem Aufstieg muss die Gruppe abwägen, wie weit sie geht, was sie mitnimmt und wer helfen kann, wenn ein Plan scheitert.',
+            'Dies ist ein unabhängiger Guide, deshalb werden offizielle Fakten und praktische Empfehlungen getrennt behandelt. Angaben zu Plattform, Koop-Einstufung und Spielerzahl stammen von Steam. Die folgenden Hinweise sind Methoden für Entscheidungen in einem routenbasierten Spiel; sie behaupten nicht, dass jedes Team dieselbe Ausrüstung oder denselben Weg verwenden muss.',
+          ],
+          bullets: [
+            ['Plattform', 'Der offizielle Shop führt PEAK für Windows auf Steam.'],
+            ['Spielmodi', 'Der Shop nennt Einzelspieler, Mehrspieler, Koop und Online-Koop.'],
+            ['Gruppengröße', 'Die offizielle Beschreibung unterstützt Gruppen mit bis zu vier Spielern.'],
+          ],
+        },
+        {
+          title: 'So funktioniert der Gameplay-Loop von PEAK',
+          paragraphs: [
+            'Ein typischer Lauf beginnt mit einer Routenentscheidung und nicht mit einem Kampf-Build. Die Gruppe betrachtet die nächste Kletterstelle, Lücke, Gefahr oder unklare Passage und entscheidet dann, wie viel Zeit sie in die Erkundung investiert. Kletterwerkzeuge und Erholungsoptionen sind wertvoll, weil sie Entscheidungen unter Druck absichern. Nahrung und Ausdauerhilfen spielen eine Rolle, weil ein kurz wirkender Weg teuer werden kann, wenn das Team einen Umweg nimmt oder auf einen sichereren Zug wartet.',
+            'Die Kommunikation im Team gehört zum Spielablauf, auch wenn das Spiel kein formelles Rollensystem vorgibt. Ein Spieler kann die Route vorauslesen, ein anderer ein nützliches Werkzeug tragen, und alle profitieren davon, wenn der nächste Haltepunkt vorher vereinbart wird. Eine gute Gewohnheit für Einsteiger ist, die nächste wichtige Entscheidung, die dafür vorgesehene Ressource und den Grund für einen Rückzug laut auszusprechen.',
+          ],
+          table: {
+            caption: 'Die Entscheidungen hinter einem Aufstieg in PEAK',
+            headers: ['Entscheidung', 'Leitfrage', 'Warum sie wichtig ist'],
+            rows: [
+              ['Route', 'Was ist die nächste wichtige Etappe?', 'Ein klares Ziel verhindert, dass das Team Ressourcen für jede sichtbare Möglichkeit verbraucht.'],
+              ['Ausrüstung', 'Wer kann das Werkzeug im richtigen Moment einsetzen?', 'Gemeinsame Ausrüstung hilft nur, wenn Zuständigkeit und Zeitpunkt geklärt sind.'],
+              ['Tempo', 'Wo liegt die nächste sichere Pause?', 'Eine geplante Pause schont die Ausdauer und gibt der Gruppe einen Sammelpunkt.'],
+              ['Erholung', 'Welche Regel gilt für den Rückzug?', 'Ein Rückzugsplan verhindert, dass aus einem Fehler eine Rettungsaktion für den ganzen Lauf wird.'],
+            ],
+          },
+        },
+        {
+          title: 'PEAK-Karten, Biome und das Rotationssystem',
+          paragraphs: [
+            'Neue Spieler suchen oft nach einer Erklärung, [[link:map-rotation#today-map|wie die Kartenrotation funktioniert]], weil die Begriffe Karte, Route und Biom leicht ineinander übergehen. Eine Karte ist der Raum, den du durchquerst; eine Route beschreibt den Weg oder die Abfolge; ein Biom ist eine übergeordnete regionale Bezeichnung. Durch die tägliche Rotation ist die Antwort zeitabhängig: Eine datierte Abfolge kann bei der Planung helfen, sollte aber niemals die Route ersetzen, die deine aktuelle Spielrunde zeigt.',
+            'Um [[link:map-rotation#today-map|die heute aktive Karte]] zu sehen, öffne den Tageseintrag und prüfe Datum, Quelle, Route und Reset-Status. Wenn Daten noch ausstehen, ist das aktuelle Spiel verlässlicher als ein undatierter Screenshot. Die Kartenseite erklärt außerdem, wie sich eine tägliche Antwort von dauerhaft nützlichen Planungshinweisen unterscheidet - eine wichtige Grundlage für ein hilfreiches PEAK-Wiki.',
+            'Für einen Überblick über die Begriffe kannst du unsere [[link:peak-biomes-list|Biome-Liste]] lesen. Sie nennt die derzeit durch Quellen belegte Auswahl und trennt klar zwischen einer Biombezeichnung und der Zuordnung zu einer vollständigen Karte.',
+          ],
+        },
+        {
+          title: 'So startest du deinen ersten Lauf in PEAK',
+          paragraphs: [
+            'Du brauchst keine auswendig gelernte Rangliste, um anzufangen. Nutze einen kurzen Ablauf, der sowohl bei einer bekannten als auch bei einer neuen Route funktioniert. Ziel ist es, immer nur eine gemeinsame Entscheidung zu treffen und genug Reserve für die Erholung zu behalten. Sobald die Gruppe einige datierte Beobachtungen gesammelt hat, kann sie ihre Routennotizen verbessern, ohne persönliche Erfahrung mit einer offiziellen Regel zu verwechseln.',
+            'Derselbe Ablauf funktioniert allein und im Koop, aber der Abstimmungsbedarf ist unterschiedlich. Allein musst du Routenwahl und Erholung selbst entscheiden. In einer Gruppe solltest du die nächste wichtige Etappe und den Haltepunkt laut nennen, damit gemeinsame Ressourcen nicht aufgrund unterschiedlicher Annahmen verbraucht werden. Ein Sammelpunkt ist eine Methode zur Koordination und keine Garantie dafür, dass das Gelände sicher ist.',
+          ],
+          bullets: [
+            ['1. Spielrunde prüfen', 'Kläre, wer mitspielt, welche Route das Spiel zeigt und ob alle das erste Ziel verstanden haben.'],
+            ['2. Vor dem Einsatz erkunden', 'Prüfe die erste bedeutende Kletterstelle oder Gefahr, bevor du den Gegenstand verbrauchst, der sie absichern könnte.'],
+            ['3. Hilfsmittel zuweisen', 'Legt fest, wer Routenhilfe, Nahrung oder die Verantwortung für Erholung übernimmt.'],
+            ['4. Pause festlegen', 'Bestimmt einen Sammelpunkt und eine klare Bedingung für den Rückzug.'],
+            ['5. Eine Notiz festhalten', 'Speichere nach dem Versuch Datum, Route, Version und die Entscheidung, die am wichtigsten war.'],
+          ],
+        },
+        {
+          title: 'Welche Rolle Updates für Einsteiger spielen',
+          paragraphs: [
+            'Wenn du wegen eines neuen Bioms oder Patches nach „Was ist PEAK?“ gesucht hast, beginne auf der Seite mit den [[link:peak-game-update|neuesten Updates]]. Dort werden offizielle Titel und Daten von der Interpretation der Community getrennt. So können Einsteiger erkennen, ob eine Meldung neue Inhalte ankündigt, eine Mechanik verändert oder lediglich einen Fehler behebt.',
+            'Wiederhole nach einem Update denselben Einsteiger-Ablauf: Lies den offiziellen Titel, prüfe die aktuelle Karte, teste eine Annahme zur Route und notiere, was sich verändert hat. Diese Methode bleibt länger nützlich als eine Empfehlung, die möglicherweise für eine ältere Version geschrieben wurde.',
+          ],
+        },
+      ],
+      faq: {
+        eyebrow: 'Schnelle Antworten',
+        title: 'Was ist PEAK? Häufige Fragen',
+        items: [
+          ['Ist PEAK ein Mehrspieler-Spiel?', 'Ja. Der offizielle Steam-Eintrag nennt Mehrspieler, Koop und Online-Koop; laut Beschreibung sind Gruppen mit bis zu vier Spielern möglich. Dieselbe Quelle führt PEAK auch als Einzelspieler-Spiel.'],
+          ['Was macht man in PEAK?', 'Du kletterst durch wechselnde Routenumgebungen, liest das Gelände, verwaltest Ausrüstung und Ressourcen und stimmst dich mit der Gruppe ab. Die genauen Gefahren und Gegenstandseffekte hängen von der aktuellen Spielversion und Runde ab.'],
+          ['Wie funktioniert die Kartenrotation in PEAK?', 'Eine datierte Route oder Biome-Abfolge kann sich mit der Zeit ändern. Sieh dir [[link:map-rotation#today-map|die tägliche Karte]] mit dem aktuellen Build-Eintrag an und bestätige die aktive Route anschließend in deiner Runde, da eine statische Seite den Spielzustand nicht ersetzen kann.'],
+          ['Wie viele Spieler können PEAK gemeinsam spielen?', 'Die offizielle Steam-Beschreibung unterstützt Gruppen mit bis zu vier Spielern. Prüfe den aktuellen Shop-Eintrag und die Patch-Informationen, falls sich Plattform- oder Mehrspielerunterstützung ändern.'],
+          ['Ist PEAK ein Survival-Spiel oder ein Kletterspiel?', 'Die treffendste Kurzbeschreibung ist kooperatives Kletter- und Survival-Spiel: Das Klettern ist die zentrale Bewegungsherausforderung, während Ressourcen- und Erholungsentscheidungen für den Überlebensdruck sorgen.'],
+          ['Was sollten Einsteiger in PEAK mitnehmen?', 'Beginne mit der kleinsten Auswahl, die die nächste sichtbare Entscheidung absichert: eine passende Routenhilfe, bei Bedarf Nahrung oder Ausdauerunterstützung und einen Erholungsplan. Behandle keine ungeprüfte Rangliste als allgemeingültig.'],
+        ],
+      },
+      source: {
+        eyebrow: 'Quellen und Grenzen',
+        title: 'Ein Einsteiger-Guide auf Grundlage aktueller Quellen',
+        body: 'Angaben zu Plattform, Spielmodi, Koop und Spielerzahl stammen von der offiziellen PEAK-Seite auf Steam. Karten- und Reset-Daten sind Build-Einträge, die für diese Website gepflegt werden. Praktische Kletterhinweise sind als Empfehlungen gekennzeichnet und sollten nach Updates oder bei Abweichungen in der aktuellen Spielrunde erneut geprüft werden.',
+        links: [
+          ['Offizielle PEAK-Seite auf Steam', 'https://store.steampowered.com/app/3527290/PEAK/'],
+          ['Offizielle Steam-News', 'https://store.steampowered.com/news/app/3527290'],
+        ],
+      },
+      related: [
+        ['map-rotation', 'Heute aktive Karte prüfen'],
+        ['peak-biomes-list', 'Biome-Liste ansehen'],
+        ['peak-game-update', 'Neueste Updates lesen'],
+        ['peak-map-rotation-schedule', 'Reset-Zeiten ansehen'],
+      ],
+      relatedLabel: 'Verwandte PEAK-Guides',
+    },
   },
   ja: {
     'peak-biomes-list': {

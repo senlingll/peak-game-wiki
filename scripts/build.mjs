@@ -48,6 +48,32 @@ const mapHistory = await readJsonFile('data/peak-map-history.json', []);
 
 const renderOptions = { buildDate, dateModified: buildDate, buildTimestamp, todayMap, updateData, mapHistory, publishedArticles: publishedArticleOrder };
 const renderMapGuidePage = (locale) => injectTodayMapSection(renderMapGuide(locale, renderOptions), locale, todayMap, buildDate, buildTimestamp);
+const notFoundHtml = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#17212d" />
+    <title>Page not found | PEAK Game Wiki</title>
+    <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="legal-page">
+    <main class="legal-main">
+      <div class="container">
+        <p class="eyebrow">404</p>
+        <h1>Page not found</h1>
+        <p class="legal-intro">The page you requested does not exist or may have moved.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/">Return home</a>
+          <a class="button button-primary" href="/map-rotation">Check today's map</a>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
+`;
 
 await rm(outputRoot, { recursive: true, force: true });
 await mkdir(outputRoot, { recursive: true });
@@ -58,6 +84,7 @@ for (const entry of ['styles.css', 'app.js', 'robots.txt', 'llms.txt', 'llms-ful
 
 await cp(resolve(projectRoot, 'public'), outputRoot, { recursive: true });
 await writeFile(resolve(outputRoot, 'index.html'), renderHome('en', renderOptions), 'utf8');
+await writeFile(resolve(outputRoot, '404.html'), notFoundHtml, 'utf8');
 for (const page of ['about', 'privacy', 'terms']) {
   await writeFile(resolve(outputRoot, `${page}.html`), renderLegal('en', page, renderOptions), 'utf8');
 }
