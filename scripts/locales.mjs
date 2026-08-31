@@ -620,16 +620,71 @@ function renderArticleHistory(locale, data, todayMap, buildDate, buildTimestamp)
   return `<div class="article-table-wrap article-data-table-wrap"><table><caption>Recent verified PEAK rotation records</caption><thead><tr><th scope="col">Date</th><th scope="col">Map or sequence</th><th scope="col">Biome context</th><th scope="col">Source</th></tr></thead><tbody>${rows}</tbody></table></div><p class="article-data-note">Rows are appended only when the build source has a matching date and enough location fields to identify the route context. They describe observations, not a guaranteed future cycle.</p>`;
 }
 
+const metaDescriptionOverrides = {
+  en: {
+    home: 'PEAK Game Wiki with daily map rotation checks, item references, badges, achievements, biomes, co-op tips, and update notes. Verify time-sensitive routes in-game.',
+    privacy: 'Privacy details for PEAK Game Wiki, including Cloudflare delivery data, Microsoft Clarity analytics, Google AdSense cookies, advertising controls, and external service links.',
+    terms: 'Terms for using the independent PEAK Game Wiki, including source limits, fan-site disclaimers, update-sensitive map information, external links, and acceptable use.',
+  },
+  zh: {
+    home: 'PEAK 游戏中文 Wiki，提供每日地图、地图轮换、道具、徽章、生物群系、Steam 成就、联机指南与版本更新信息，帮助玩家规划下一次登山，并在出发前于游戏内确认当前路线。',
+    about: '了解 PEAK 游戏 Wiki 如何整理每日地图、地图轮换、道具、徽章、生物群系、Steam 成就、联机资料和版本更新，并区分官方信息、版本记录、玩家经验与需要再次核对的内容。',
+    privacy: '查看 PEAK 游戏 Wiki 的隐私说明，了解 Cloudflare 交付数据、Microsoft Clarity 分析、Google AdSense Cookie、广告偏好和外部链接处理方式。',
+    terms: '查看 PEAK 游戏 Wiki 的使用条款，了解独立玩家站点声明、资料来源边界、版本敏感信息、外部链接、合理使用规则、纠错责任、不提供游戏下载以及补丁后信息可能变化的说明。',
+    'map-rotation': '查看 PEAK 今日地图、地图轮换和生物群系信息，了解每日更新状态、路线规划、重置时间与资料来源，并在开始长线攀登前于游戏内确认当前路线、版本背景和过期资料是否仍可参考。',
+    achievements: '查看 PEAK 成就攻略，追踪 Steam 成就、区分游戏内徽章，了解自定义局限制、版本变化、路线影响、解锁条件、资料来源、联机差异、来源核对和成就未解锁时的排查步骤。',
+    'peak-game-update': '跟进 PEAK 游戏更新，查看新地图、补丁说明、地图轮换变化、今日地图入口和官方 Steam 新闻来源，出发前核对当前版本、路线状态、旧攻略适用性和后续调整建议。',
+  },
+  es: {
+    privacy: 'Información de privacidad de PEAK Game Wiki sobre datos técnicos de Cloudflare, analítica de Microsoft Clarity, cookies de Google AdSense, controles de anuncios y enlaces externos.',
+    terms: 'Términos de uso de PEAK Game Wiki con límites de fuentes, aviso de sitio de fans independiente, datos sensibles a versiones, enlaces externos y uso aceptable.',
+  },
+  fr: {
+    terms: 'Conditions d utilisation de PEAK Game Wiki avec limites des sources, avertissement de site de fans indépendant, données sensibles aux versions, liens externes et usage acceptable.',
+  },
+  de: {
+    privacy: 'Datenschutzhinweise der PEAK Game Wiki zu Cloudflare-Auslieferungsdaten, Microsoft-Clarity-Analyse, Google-AdSense-Cookies, Werbesteuerung und externen Links.',
+    terms: 'Nutzungsbedingungen der unabhängigen PEAK Game Wiki mit Quellenlimits, Fan-Site-Hinweis, versionsabhängigen Kartendaten, externen Links und erlaubter Nutzung.',
+  },
+  ja: {
+    home: 'PEAK 日本語 Wiki。今日のマップ、マップローテーション、アイテム、バッジ、バイオーム、Steam実績、協力プレイ、更新情報を整理し、出発前の確認に使えます。',
+    about: 'PEAK Wiki が今日のマップ、ローテーション、アイテム、バッジ、実績、協力情報、更新メモを整理し、公式情報、バージョン記録、プレイヤー経験を分ける方法を紹介します。',
+    privacy: 'PEAK Wiki のプライバシー説明です。Cloudflare 配信データ、Microsoft Clarity 分析、Google AdSense Cookie、広告設定、外部リンクの扱いを確認できます。',
+    terms: 'PEAK Wiki の利用条件です。独立ファンサイトとしての立場、出典の範囲、更新で変わる情報、外部リンク、許可される利用方法、修正依頼、ゲーム配布を行わない点を説明します。',
+    'map-rotation': 'PEAK 今日のマップ、ローテーション、バイオーム、リセット時刻と出典を確認できます。毎日の更新状況を見ながら、長い登山を始める前にゲーム内のルートを確認してください。',
+    achievements: 'PEAK 実績攻略として Steam 実績、ゲーム内バッジ、カスタムランの注意点、バージョン変更、ルート差、解除条件、解除されない場合の確認手順を安全に整理します。',
+    'peak-game-update': 'PEAK のゲーム更新を追跡し、新マップ、パッチノート、ローテーション変更、今日のマップ入口、公式 Steam ニュース、出発前の確認ポイントと旧攻略の注意点を整理します。',
+  },
+  pt: {
+    privacy: 'Informações de privacidade da PEAK Game Wiki sobre dados técnicos da Cloudflare, análise Microsoft Clarity, cookies Google AdSense, controle de anúncios e links externos.',
+    terms: 'Termos de uso da PEAK Game Wiki com limites de fonte, aviso de site de fãs independente, dados sensíveis à versão, links externos e uso aceitável.',
+  },
+  ko: {
+    home: 'PEAK 한국어 위키에서 오늘의 맵, 지도 로테이션, 아이템, 배지, 생물군계, Steam 도전 과제, 협동 플레이와 업데이트 정보를 확인하고 게임 내 루트를 함께 점검하세요.',
+    about: 'PEAK 게임 위키가 오늘의 맵, 지도 로테이션, 아이템, 배지, 도전 과제, 협동 정보와 업데이트 노트를 정리하고 공식 정보와 플레이어 경험을 구분하는 방식을 설명합니다.',
+    privacy: 'PEAK 게임 위키의 개인정보 안내입니다. Cloudflare 전달 데이터, Microsoft Clarity 분석, Google AdSense 쿠키, 광고 설정과 외부 링크 처리 방식을 확인하세요.',
+    terms: 'PEAK 게임 위키 이용 조건입니다. 독립 팬 사이트 고지, 출처 범위, 버전에 따라 바뀌는 정보, 외부 링크와 허용되는 이용 방식을 설명합니다.',
+    'map-rotation': 'PEAK 오늘의 맵, 지도 로테이션, 생물군계, 리셋 시간과 출처를 확인하세요. 매일 업데이트 상태를 살피고 출발 전 게임 안에서 현재 루트를 다시 확인하세요.',
+    achievements: 'PEAK 도전 과제 공략으로 Steam 도전 과제, 게임 내 배지, 커스텀 런 제한, 버전 변화와 잠금 해제 오류 확인 절차를 한곳에서 정리합니다.',
+    'peak-game-update': 'PEAK 게임 업데이트를 따라가며 새 지도, 패치 노트, 로테이션 변경, 오늘의 맵 입구와 공식 Steam 뉴스 출처를 함께 확인하고 출발 전 현재 버전을 점검하세요.',
+  },
+  it: {
+    privacy: 'Informativa privacy di PEAK Game Wiki su dati tecnici Cloudflare, analisi Microsoft Clarity, cookie Google AdSense, controlli pubblicitari e link esterni.',
+    terms: 'Termini d uso di PEAK Game Wiki con limiti delle fonti, avviso di sito fan indipendente, dati sensibili alla versione, link esterni e uso accettabile.',
+  },
+};
+
 function head(locale, page, title, description, schema, options = {}) {
   const meta = localeMeta[locale];
   const copy = options.copy ?? locales[locale];
   const canonical = `${BASE_URL}${routeFor(locale, page)}`;
+  const pageDescription = metaDescriptionOverrides[locale]?.[page] ?? description;
   const scripts = [];
   const article = options.article ?? articleGuides[page];
   if (article) {
     const images = [article.heroImage, ...article.sections.map((section) => section.image).filter(Boolean)]
       .map((image) => `${BASE_URL}${image.src}`);
-    scripts.push({ '@context': 'https://schema.org', '@type': 'Article', headline: article.h1, description: article.meta.description, image: images, datePublished: article.published, dateModified: options.dateModified || process.env.BUILD_DATE || new Date().toISOString().slice(0, 10), inLanguage: meta.lang, author: { '@type': 'Organization', name: 'PEAK Game Wiki' }, publisher: { '@type': 'Organization', name: 'PEAK Game Wiki' }, articleSection: article.sections.map((section) => section.title), keywords: article.primaryKeyword, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical } });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'Article', headline: article.h1, description: pageDescription, image: images, datePublished: article.published, dateModified: options.dateModified || process.env.BUILD_DATE || new Date().toISOString().slice(0, 10), inLanguage: meta.lang, author: { '@type': 'Organization', name: 'PEAK Game Wiki' }, publisher: { '@type': 'Organization', name: 'PEAK Game Wiki' }, articleSection: article.sections.map((section) => section.title), keywords: article.primaryKeyword, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical } });
     scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: article.h1, item: canonical }] });
     scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: article.faq.items.map(([name, text]) => ({ '@type': 'Question', name: stripArticleTokens(name), acceptedAnswer: { '@type': 'Answer', text: stripArticleTokens(text) } })) });
   }
@@ -639,18 +694,18 @@ function head(locale, page, title, description, schema, options = {}) {
   }
   if (page === 'map-rotation') {
     const guide = mapGuides[locale];
-    scripts.push({ '@context': 'https://schema.org', '@type': 'Article', headline: guide.h1, description: guide.meta.description, image: [`${BASE_URL}/media/peak-map-route.webp`], datePublished: '2026-08-19', dateModified: options.dateModified || process.env.BUILD_DATE || new Date().toISOString().slice(0, 10), inLanguage: meta.lang, author: { '@type': 'Organization', name: 'PEAK Game Wiki' }, publisher: { '@type': 'Organization', name: 'PEAK Game Wiki' }, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical } });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'Article', headline: guide.h1, description: pageDescription, image: [`${BASE_URL}/media/peak-map-route.webp`], datePublished: '2026-08-19', dateModified: options.dateModified || process.env.BUILD_DATE || new Date().toISOString().slice(0, 10), inLanguage: meta.lang, author: { '@type': 'Organization', name: 'PEAK Game Wiki' }, publisher: { '@type': 'Organization', name: 'PEAK Game Wiki' }, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical } });
     scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: guide.h1, item: canonical }] });
     scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: guide.faq.items.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) });
   }
   if (page === 'achievements') {
     const guide = achievementGuides[locale];
     const images = [guide.heroImage, ...guide.sections.map((section) => section.image).filter(Boolean)].map((image) => `${BASE_URL}${image.src}`);
-    scripts.push({ '@context': 'https://schema.org', '@type': 'Article', headline: guide.h1, description: guide.meta.description, image: images, datePublished: guide.published, dateModified: options.dateModified || process.env.BUILD_DATE || new Date().toISOString().slice(0, 10), inLanguage: meta.lang, author: { '@type': 'Organization', name: 'PEAK Game Wiki' }, publisher: { '@type': 'Organization', name: 'PEAK Game Wiki' }, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical } });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'Article', headline: guide.h1, description: pageDescription, image: images, datePublished: guide.published, dateModified: options.dateModified || process.env.BUILD_DATE || new Date().toISOString().slice(0, 10), inLanguage: meta.lang, author: { '@type': 'Organization', name: 'PEAK Game Wiki' }, publisher: { '@type': 'Organization', name: 'PEAK Game Wiki' }, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical } });
     scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: guide.related.homeAnchor, item: canonical }] });
     scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: guide.faq.items.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) });
   }
-  return `<!doctype html>\n<html lang="${meta.lang}" data-locale="${locale}">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <title>${escapeHtml(title)}</title>\n    <meta name="description" content="${escapeHtml(description)}" />\n    <meta name="theme-color" content="#17212d" />\n    <link rel="canonical" href="${canonical}" />\n    ${alternateLinks(page)}\n    <link rel="icon" href="/assets/favicon.ico" sizes="any" />\n    <link rel="manifest" href="/manifest.webmanifest" />\n    \n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(description)}" />\n    <meta property="og:image" content="${BASE_URL}/media/peak-climb-ridge.webp" />\n    <meta property="og:url" content="${canonical}" />\n    <meta property="og:locale" content="${meta.lang}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:title" content="${escapeHtml(title)}" />\n    <meta name="twitter:description" content="${escapeHtml(description)}" />\n    <meta name="twitter:image" content="${BASE_URL}/media/peak-climb-ridge.webp" />\n    <link rel="stylesheet" href="/styles.css" />\n    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9042195580058659" crossorigin="anonymous"></script>\n    \n    <script>\n      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","y3c9ye040x");\n    </script>${scripts.map((value) => `\n    <script type="application/ld+json">${jsonLd(value)}</script>`).join('')}\n  </head>`;
+  return `<!doctype html>\n<html lang="${meta.lang}" data-locale="${locale}">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <title>${escapeHtml(title)}</title>\n    <meta name="description" content="${escapeHtml(pageDescription)}" />\n    <meta name="theme-color" content="#17212d" />\n    <link rel="canonical" href="${canonical}" />\n    ${alternateLinks(page)}\n    <link rel="icon" href="/assets/favicon.ico" sizes="any" />\n    <link rel="manifest" href="/manifest.webmanifest" />\n    \n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(pageDescription)}" />\n    <meta property="og:image" content="${BASE_URL}/media/peak-climb-ridge.webp" />\n    <meta property="og:url" content="${canonical}" />\n    <meta property="og:locale" content="${meta.lang}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:title" content="${escapeHtml(title)}" />\n    <meta name="twitter:description" content="${escapeHtml(pageDescription)}" />\n    <meta name="twitter:image" content="${BASE_URL}/media/peak-climb-ridge.webp" />\n    <link rel="stylesheet" href="/styles.css" />\n    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9042195580058659" crossorigin="anonymous"></script>\n    \n    <script>\n      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","y3c9ye040x");\n    </script>${scripts.map((value) => `\n    <script type="application/ld+json">${jsonLd(value)}</script>`).join('')}\n  </head>`;
 }
 
 function header(locale, page, copy) {
