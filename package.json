@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "python -m http.server 4173 -d .",
     "build": "node scripts/build.mjs",
-    "fetch:today-map": "node scripts/fetch-today-map.mjs"
+    "fetch:today-map": "node scripts/fetch-today-map.mjs",
+    "submit:indexnow": "node scripts/submit-indexnow.mjs"
   }
 }

@@ -4,6 +4,7 @@ import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchieveme
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const outputRoot = resolve(projectRoot, 'dist');
+const indexNowKeyFile = '486e54d85508048c925002fb4ab792b7.txt';
 const buildTimestamp = new Date().toISOString();
 const buildDate = /^\d{4}-\d{2}-\d{2}$/.test(process.env.BUILD_DATE ?? '')
   ? process.env.BUILD_DATE
@@ -29,7 +30,7 @@ const renderMapGuidePage = (locale) => injectTodayMapSection(renderMapGuide(loca
 await rm(outputRoot, { recursive: true, force: true });
 await mkdir(outputRoot, { recursive: true });
 
-for (const entry of ['styles.css', 'app.js', 'robots.txt', 'llms.txt', 'llms-full.txt']) {
+for (const entry of ['styles.css', 'app.js', 'robots.txt', 'llms.txt', 'llms-full.txt', indexNowKeyFile]) {
   await cp(resolve(projectRoot, entry), resolve(outputRoot, entry), { recursive: true });
 }
 
