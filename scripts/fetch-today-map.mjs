@@ -1,11 +1,12 @@
 import { execFile as execFileCallback } from 'node:child_process';
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { promisify } from 'node:util';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const dataPath = resolve(projectRoot, 'data/today-map.json');
+const historyPath = resolve(projectRoot, 'data/peak-map-history.json');
 const defaultSources = [
   { id: 'skydler', label: 'PEAK Map Today', url: 'https://peak.skydler.me/' },
   { id: 'steam', label: 'Steam Community daily map guide', url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3553972295' },
@@ -449,6 +450,26 @@ async function writeTodayMap(value) {
   await writeFile(dataPath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
 }
 
+async function appendMapHistory(value) {
+  let history = [];
+  try {
+    const parsed = JSON.parse(await readFile(historyPath, 'utf8'));
+    if (Array.isArray(parsed)) history = parsed;
+  } catch (error) {
+    if (error?.code !== 'ENOENT' && !(error instanceof SyntaxError)) throw error;
+  }
+  const entry = {
+    date: value.date,
+    map: value.map || null,
+    route: value.route || null,
+    biome: value.biome || null,
+    resetAt: value.resetAt || null,
+    source: value.source || null,
+  };
+  const next = [entry, ...history.filter((item) => item?.date !== entry.date)].slice(0, 30);
+  await writeFile(historyPath, `${JSON.stringify(next, null, 2)}\n`, 'utf8');
+}
+
 async function main() {
   const buildDate = resolveBuildDate();
   const fetchedAt = new Date().toISOString();
@@ -476,6 +497,7 @@ async function main() {
 
   await writeTodayMap(result || emptyTodayMap(buildDate, fetchedAt));
   if (result) {
+    await appendMapHistory(result);
     console.log(`Wrote today's PEAK map data for ${buildDate}.`);
   } else {
     console.warn(`No verified PEAK map data found for ${buildDate}; wrote a pending record.`);
@@ -483,6 +505,6 @@ async function main() {
   }
 }
 
-export { emptyTodayMap, extractSkydlerMaps, extractSkydlerMedia, parseRedditJson, parseRssFeed, parseSkydlerSource, parseSteamSource, selectTodayMap };
+export { appendMapHistory, emptyTodayMap, extractSkydlerMaps, extractSkydlerMedia, parseRedditJson, parseRssFeed, parseSkydlerSource, parseSteamSource, selectTodayMap };
 
 if (import.meta.url === pathToFileURL(resolve(process.argv[1] || '')).href) await main();

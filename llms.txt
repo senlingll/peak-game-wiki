@@ -4,11 +4,9 @@
 
 ## Core Content
 - [PEAK Game Wiki homepage](https://peak-game.wiki/): The main reference hub for map planning, items, updates, progress tracking, co-op notes, and FAQ answers.
-- [Map rotation section](https://peak-game.wiki/#maps): A practical daily-map entry point that explains what to verify in-game before a climb.
 - [PEAK map rotation guide](https://peak-game.wiki/map-rotation): An evergreen guide to route context, biome checks, equipment planning, and the limits of live-map claims.
+- [PEAK biomes list](https://peak-game.wiki/peak-biomes-list): A source-aware list of Shore, Tropics, Roots, Alpine, Mesa, Caldera, The Kiln, Gloom, and Citadel, with terrain-reading notes and a dated map entry.
 - [PEAK achievements guide](https://peak-game.wiki/achievements): A version-aware guide to Steam achievements, in-game badges, progress tracking, custom-run checks, and missing-unlock troubleshooting.
-- [Item database section](https://peak-game.wiki/#database): A searchable prototype index for gear, food, and utility items.
-- [Update desk](https://peak-game.wiki/#updates): A dated summary of the 2.01.a and Final Ascent update context.
 
 ## Common Resources
 - [About](https://peak-game.wiki/about): Project purpose, source policy, and independence statement.
@@ -16,5 +14,5 @@
 - [Terms and disclaimer](https://peak-game.wiki/terms): Fan-site, accuracy, and external-source limitations.
 
 ## Latest Updates
-- [Patch 2.01.a context](https://peak-game.wiki/#updates): Current as of August 2026, with an official Steam news link.
-- [Final Ascent context](https://peak-game.wiki/#updates): August 2026 update anchor for future map, item, and badge pages.
+- [Current daily map record](https://peak-game.wiki/map-rotation): The build-time map entry and route context for August 31, 2026.
+- [Official PEAK Steam news](https://store.steampowered.com/news/app/3527290): The first-party feed for Patch 2.03.a and other update titles dated August 27, 2026.

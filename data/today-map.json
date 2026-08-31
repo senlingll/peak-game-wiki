@@ -4,8 +4,8 @@
   "route": "Daily biome sequence",
   "biome": "Shore, Roots, Mesa, Gloom, Citadel",
   "resetAt": "2026-08-31T17:00:00.000Z",
-  "updatedAt": "2026-08-31T00:34:57.285Z",
-  "sourceFetchedAt": "2026-08-31T00:34:57.285Z",
+  "updatedAt": "2026-08-31T00:15:44.995Z",
+  "sourceFetchedAt": "2026-08-31T00:15:44.995Z",
   "source": {
     "label": "PEAK Map Today",
     "url": "https://peak.skydler.me/"

@@ -15,6 +15,7 @@ jobs:
     env:
       TODAY_MAP_FETCH_TIMEOUT_MS: 20000
       SITE_TIMEZONE: Asia/Shanghai
+      PUBLISHED_ARTICLES: peak-biomes-list
     steps:
       - name: Check out the site
         uses: actions/checkout@v4
@@ -30,15 +31,19 @@ jobs:
       - name: Fetch today's verified map
         run: npm run fetch:today-map
 
-      - name: Commit today's map data
+      - name: Fetch official PEAK update entries
+        run: npm run fetch:updates
+        continue-on-error: true
+
+      - name: Commit daily map and update data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/today-map.json
+          git add data/today-map.json data/peak-map-history.json data/peak-updates.json
           if git diff --cached --quiet; then
-            echo "No daily map data changes to commit."
+            echo "No daily map or update data changes to commit."
           else
-            git commit -m "Update daily map data"
+            git commit -m "Update daily map and news data"
             git push origin HEAD:main
           fi
 

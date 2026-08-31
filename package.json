@@ -7,6 +7,7 @@
     "dev": "python -m http.server 4173 -d .",
     "build": "node scripts/build.mjs",
     "fetch:today-map": "node scripts/fetch-today-map.mjs",
+    "fetch:updates": "node scripts/fetch-updates.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs",
     "ping:indexnow": "node scripts/ping-indexnow.mjs"
   }

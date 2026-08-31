@@ -1,0 +1,24 @@
+[
+  {
+    "date": "2026-08-31",
+    "map": "Shore -> Roots -> Mesa -> Gloom -> Citadel",
+    "route": "Daily biome sequence",
+    "biome": "Shore, Roots, Mesa, Gloom, Citadel",
+    "resetAt": "2026-08-31T17:00:00.000Z",
+    "source": {
+      "label": "PEAK Map Today",
+      "url": "https://peak.skydler.me/"
+    }
+  },
+  {
+    "date": "2026-08-30",
+    "map": "Shore -> Tropics -> Alpine -> Gloom -> Citadel",
+    "route": "Daily biome sequence",
+    "biome": "Shore, Tropics, Alpine, Gloom, Citadel",
+    "resetAt": "2026-08-30T17:00:00.000Z",
+    "source": {
+      "label": "PEAK Map Today",
+      "url": "https://peak.skydler.me/"
+    }
+  }
+]

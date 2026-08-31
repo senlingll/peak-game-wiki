@@ -1,6 +1,7 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderHome, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
+import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderHome, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
+import { articleOrder } from './article-guides.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const outputRoot = resolve(projectRoot, 'dist');
@@ -9,6 +10,13 @@ const buildTimestamp = new Date().toISOString();
 const buildDate = /^\d{4}-\d{2}-\d{2}$/.test(process.env.BUILD_DATE ?? '')
   ? process.env.BUILD_DATE
   : buildTimestamp.slice(0, 10);
+const publishedArticleOrder = process.env.PUBLISHED_ARTICLES
+  ? process.env.PUBLISHED_ARTICLES.split(',').map((slug) => slug.trim().toLowerCase()).filter((slug) => articleOrder.includes(slug))
+  : articleOrder;
+
+if (!publishedArticleOrder.length) {
+  throw new Error('PUBLISHED_ARTICLES must include at least one known article slug.');
+}
 
 async function readTodayMap() {
   try {
@@ -22,9 +30,23 @@ async function readTodayMap() {
   }
 }
 
-const todayMap = await readTodayMap();
+async function readJsonFile(file, fallback) {
+  try {
+    return JSON.parse(await readFile(resolve(projectRoot, file), 'utf8'));
+  } catch (error) {
+    if (error?.code === 'ENOENT' || error instanceof SyntaxError) {
+      console.warn(`No valid ${file} found; using an empty build-time data set.`);
+      return fallback;
+    }
+    throw error;
+  }
+}
 
-const renderOptions = { buildDate, dateModified: buildDate };
+const todayMap = await readTodayMap();
+const updateData = await readJsonFile('data/peak-updates.json', { entries: [] });
+const mapHistory = await readJsonFile('data/peak-map-history.json', []);
+
+const renderOptions = { buildDate, dateModified: buildDate, buildTimestamp, todayMap, updateData, mapHistory, publishedArticles: publishedArticleOrder };
 const renderMapGuidePage = (locale) => injectTodayMapSection(renderMapGuide(locale, renderOptions), locale, todayMap, buildDate, buildTimestamp);
 
 await rm(outputRoot, { recursive: true, force: true });
@@ -39,9 +61,12 @@ await writeFile(resolve(outputRoot, 'index.html'), renderHome('en', renderOption
 for (const page of ['about', 'privacy', 'terms']) {
   await writeFile(resolve(outputRoot, `${page}.html`), renderLegal('en', page, renderOptions), 'utf8');
 }
-await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(buildDate), 'utf8');
+await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(buildDate, publishedArticleOrder), 'utf8');
 await writeFile(resolve(outputRoot, 'map-rotation.html'), renderMapGuidePage('en'), 'utf8');
 await writeFile(resolve(outputRoot, 'achievements.html'), renderAchievementGuide('en', renderOptions), 'utf8');
+for (const slug of publishedArticleOrder) {
+  await writeFile(resolve(outputRoot, `${slug}.html`), renderArticlePage('en', slug, renderOptions), 'utf8');
+}
 
 for (const locale of localeOrder.filter((code) => code !== 'en')) {
   const localeRoot = resolve(outputRoot, locale);
@@ -58,6 +83,11 @@ for (const locale of localeOrder.filter((code) => code !== 'en')) {
   const achievementRoot = resolve(localeRoot, 'achievements');
   await mkdir(achievementRoot, { recursive: true });
   await writeFile(resolve(achievementRoot, 'index.html'), renderAchievementGuide(locale, renderOptions), 'utf8');
+  for (const slug of publishedArticleOrder) {
+    const articleRoot = resolve(localeRoot, slug);
+    await mkdir(articleRoot, { recursive: true });
+    await writeFile(resolve(articleRoot, 'index.html'), renderArticlePage(locale, slug, renderOptions), 'utf8');
+  }
 }
 
 console.log(`Built static site to ${outputRoot}`);

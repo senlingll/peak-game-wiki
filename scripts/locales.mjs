@@ -1,6 +1,7 @@
 import { mapGuides } from './map-guide.mjs';
 import { todayMapCopy } from './today-map-copy.mjs';
 import { achievementGuides } from './achievement-guide.mjs';
+import { articleGuides, articleOrder } from './article-guides.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
@@ -459,11 +460,133 @@ export function injectTodayMapSection(html, locale, data, buildDate, buildTimest
   return html.replace(marker, `</section>${renderTodayMap(locale, data, buildDate, buildTimestamp)}<div class="container article-layout">`);
 }
 
+const articleLinkPages = new Set(['map-rotation', 'achievements', ...articleOrder]);
+
+function renderArticleInline(value, locale, publishedArticles = articleOrder) {
+  const source = String(value ?? '');
+  const pattern = /\[\[link:([a-z0-9-]+)(#[a-z0-9-]+)?\|([\s\S]*?)\]\]/gi;
+  const publishedPages = new Set(['map-rotation', 'achievements', ...publishedArticles]);
+  let result = '';
+  let cursor = 0;
+  for (const match of source.matchAll(pattern)) {
+    result += escapeHtml(source.slice(cursor, match.index));
+    const page = match[1].toLowerCase();
+    if (!articleLinkPages.has(page)) {
+      result += escapeHtml(match[0]);
+    } else if (!publishedPages.has(page)) {
+      result += escapeHtml(match[3]);
+    } else {
+      const href = `${routeFor(locale, page)}${match[2] || ''}`;
+      result += `<a href="${escapeHtml(href)}">${escapeHtml(match[3])}</a>`;
+    }
+    cursor = match.index + match[0].length;
+  }
+  return result + escapeHtml(source.slice(cursor));
+}
+
+function stripArticleTokens(value) {
+  return String(value ?? '').replace(/\[\[link:[a-z0-9-]+(?:#[a-z0-9-]+)?\|([\s\S]*?)\]\]/gi, '$1');
+}
+
+function renderArticleTable(table, locale, publishedArticles = articleOrder) {
+  if (!table) return '';
+  const headers = table.headers.map((header) => `<th scope="col">${renderArticleInline(header, locale, publishedArticles)}</th>`).join('');
+  const rows = table.rows.map((row) => `<tr>${row.map((cell) => `<td>${renderArticleInline(cell, locale, publishedArticles)}</td>`).join('')}</tr>`).join('');
+  return `<div class="article-table-wrap"><table><caption>${renderArticleInline(table.caption, locale, publishedArticles)}</caption><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+function renderArticleBullets(bullets, locale, publishedArticles = articleOrder) {
+  if (!bullets?.length) return '';
+  return `<ul class="article-bullets">${bullets.map(([lead, text]) => `<li><strong>${renderArticleInline(lead, locale, publishedArticles)}</strong> ${renderArticleInline(text, locale, publishedArticles)}</li>`).join('')}</ul>`;
+}
+
+function renderArticleTodayMap(locale, data, buildDate, buildTimestamp) {
+  const snapshot = normalizeTodayMap(data, buildDate, buildTimestamp);
+  const status = snapshot.available ? 'Verified build data' : 'Data pending';
+  const mapValue = snapshot.map || 'Pending verification';
+  const routeValue = snapshot.route || 'Pending verification';
+  const biomeValue = snapshot.biome || 'Pending verification';
+  const sourceMarkup = snapshot.source
+    ? `<a href="${escapeHtml(snapshot.source.url)}" target="_blank" rel="noopener">${escapeHtml(snapshot.source.label || 'Verified source')} <span aria-hidden="true">\u2192</span></a>`
+    : '<span>Source pending</span>';
+  const note = snapshot.available
+    ? 'This snapshot is written during the build. Confirm the route in PEAK after a reset or update.'
+    : 'The source has not supplied enough dated location fields for this build. Confirm the active route in PEAK.';
+  return `<div class="article-live-snapshot"><div class="article-live-snapshot-top"><div><p class="eyebrow">Build-time daily map</p><h3>Today's PEAK map</h3></div><span class="today-map-status${snapshot.available ? ' is-verified' : ''}">${status}</span></div><div class="article-live-snapshot-route"><strong>${escapeHtml(mapValue)}</strong><span>${escapeHtml(routeValue)}</span></div><dl class="article-live-facts"><div><dt>Biome</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>Record date</dt><dd><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></dd></div><div><dt>Next reset</dt><dd>${escapeHtml(formatCountdown(locale, snapshot.resetAt, buildTimestamp))}</dd></div></dl><div class="article-live-source"><span>Source</span>${sourceMarkup}</div><p class="article-live-note">${note}</p></div>`;
+}
+
+function dateKeyAtZone(date, timeZone) {
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(date);
+  const values = Object.fromEntries(parts.filter((part) => part.type !== 'literal').map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+function timeAtZone(date, timeZone) {
+  return new Intl.DateTimeFormat('en-US', { timeZone, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(date);
+}
+
+function resetDayLabel(date, timeZone) {
+  const utcKey = dateKeyAtZone(date, 'UTC');
+  const localKey = dateKeyAtZone(date, timeZone);
+  if (localKey > utcKey) return ' next day';
+  if (localKey < utcKey) return ' previous day';
+  return '';
+}
+
+function renderArticleResetTimes(section, locale, data, buildDate, buildTimestamp) {
+  const snapshot = normalizeTodayMap(data, buildDate, buildTimestamp);
+  const resetDate = parseDateValue(snapshot.resetAt);
+  const zones = [
+    ['UTC', 'UTC', 'Stable source-time reference.'],
+    ['China Standard Time (UTC+8)', 'Asia/Shanghai', 'The current record reaches China after midnight.'],
+    ['Japan / Korea (UTC+9)', 'Asia/Tokyo', 'Japan and Korea share this offset.'],
+    ['Central Europe (summer UTC+2)', 'Europe/Berlin', 'Winter local time is one hour earlier.'],
+    ['United Kingdom (summer UTC+1)', 'Europe/London', 'Winter local time is one hour earlier.'],
+    ['US Eastern (daylight UTC-4)', 'America/New_York', 'Standard time is one hour earlier.'],
+    ['US Pacific (daylight UTC-7)', 'America/Los_Angeles', 'Standard time is one hour earlier.'],
+  ];
+  const table = resetDate
+    ? {
+      caption: 'Current build-time reset conversion for the verified map record',
+      headers: ['Reference zone', 'Reset time', 'Reading note'],
+      rows: zones.map(([label, timeZone, note]) => [label, `${timeAtZone(resetDate, timeZone)}${resetDayLabel(resetDate, timeZone)}`, note]),
+    }
+    : section.table;
+  return renderArticleTable(table, locale);
+}
+
+function renderArticleUpdates(locale, data) {
+  const entries = Array.isArray(data?.entries) ? [...data.entries].filter((entry) => entry?.date && entry?.title).sort((left, right) => right.date.localeCompare(left.date)) : [];
+  if (!entries.length) return '<p class="article-data-pending">No verified official update entries are available for this build.</p>';
+  const rows = entries.map((entry) => `<tr><td><time datetime="${escapeHtml(entry.date)}">${escapeHtml(formatDateLabel(locale, entry.date))}</time></td><td><span class="article-data-tag">${escapeHtml(entry.kind || 'UPDATE')}</span></td><td><a href="${escapeHtml(entry.url || STEAM_NEWS_URL)}" target="_blank" rel="noopener">${escapeHtml(entry.title)} <span aria-hidden="true">\u2192</span></a></td><td>${escapeHtml(entry.summary || 'Open the official Steam post for the complete details.')}</td></tr>`).join('');
+  return `<div class="article-table-wrap article-data-table-wrap"><table><caption>Confirmed official PEAK update entries</caption><thead><tr><th scope="col">Date</th><th scope="col">Type</th><th scope="col">Official entry</th><th scope="col">Source-backed summary</th></tr></thead><tbody>${rows}</tbody></table></div><p class="article-data-note">Titles and dates are read from the official Steam news data at build time. The linked post is the authority for exact patch details.</p>`;
+}
+
+function renderArticleHistory(locale, data, todayMap, buildDate, buildTimestamp) {
+  const history = Array.isArray(data) ? [...data] : [];
+  const current = normalizeTodayMap(todayMap, buildDate, buildTimestamp);
+  if (current.available && !history.some((entry) => entry?.date === current.date)) {
+    history.unshift({ date: current.date, map: current.map, route: current.route, biome: current.biome, resetAt: current.resetAt, source: current.source });
+  }
+  const entries = history.filter((entry) => entry?.date && (entry.map || entry.route || entry.biome)).sort((left, right) => right.date.localeCompare(left.date)).slice(0, 14);
+  if (!entries.length) return '<p class="article-data-pending">No verified rotation records are available for this build.</p>';
+  const rows = entries.map((entry) => `<tr><td><time datetime="${escapeHtml(entry.date)}">${escapeHtml(formatDateLabel(locale, entry.date))}</time></td><td>${escapeHtml(entry.map || entry.route || 'Pending')}</td><td>${escapeHtml(entry.biome || 'Pending')}</td><td>${entry.source?.url ? `<a href="${escapeHtml(entry.source.url)}" target="_blank" rel="noopener">${escapeHtml(entry.source.label || 'Verified source')} <span aria-hidden="true">\u2192</span></a>` : 'Source pending'}</td></tr>`).join('');
+  return `<div class="article-table-wrap article-data-table-wrap"><table><caption>Recent verified PEAK rotation records</caption><thead><tr><th scope="col">Date</th><th scope="col">Map or sequence</th><th scope="col">Biome context</th><th scope="col">Source</th></tr></thead><tbody>${rows}</tbody></table></div><p class="article-data-note">Rows are appended only when the build source has a matching date and enough location fields to identify the route context. They describe observations, not a guaranteed future cycle.</p>`;
+}
+
 function head(locale, page, title, description, schema, options = {}) {
   const meta = localeMeta[locale];
   const copy = options.copy ?? locales[locale];
   const canonical = `${BASE_URL}${routeFor(locale, page)}`;
   const scripts = [];
+  const article = articleGuides[page];
+  if (article) {
+    const images = [article.heroImage, ...article.sections.map((section) => section.image).filter(Boolean)]
+      .map((image) => `${BASE_URL}${image.src}`);
+    scripts.push({ '@context': 'https://schema.org', '@type': 'Article', headline: article.h1, description: article.meta.description, image: images, datePublished: article.published, dateModified: options.dateModified || process.env.BUILD_DATE || new Date().toISOString().slice(0, 10), inLanguage: meta.lang, author: { '@type': 'Organization', name: 'PEAK Game Wiki' }, publisher: { '@type': 'Organization', name: 'PEAK Game Wiki' }, articleSection: article.sections.map((section) => section.title), keywords: article.primaryKeyword, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical } });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: article.h1, item: canonical }] });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: article.faq.items.map(([name, text]) => ({ '@type': 'Question', name: stripArticleTokens(name), acceptedAnswer: { '@type': 'Answer', text: stripArticleTokens(text) } })) });
+  }
   if (page === 'home') {
     scripts.push({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'PEAK Game Wiki', url: canonical, inLanguage: meta.lang, description: schema, isPartOf: { '@type': 'VideoGame', name: 'PEAK', sameAs: 'https://store.steampowered.com/app/3527290/PEAK/' } });
     scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: copy.faq.items.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) });
@@ -539,12 +662,14 @@ export function renderHome(locale, options = {}) {
   const buildDate = resolveBuildDate(options);
   const html = normalizeSteamNewsLinks(renderHomeBase(locale, options)).replace('datetime="2026-08-17"', `datetime="${escapeHtml(buildDate)}"`);
   const marker = '<section id="updates"';
-  const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(guide.related.homeAnchor)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(guide.eyebrow)}</p><h2>${escapeHtml(guide.h1)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a><a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a></div></div></section>`;
+  const publishedArticles = options.publishedArticles ?? articleOrder;
+  const articleLinks = publishedArticles.map((slug) => `<a class="section-link" href="${routeFor(locale, slug)}">${escapeHtml(articleGuides[slug].h1)} <span aria-hidden="true">\u2192</span></a>`).join('');
+  const linkBand = `<section class="article-link-band" aria-label="PEAK field guides"><div class="container article-link-band-inner"><div><p class="eyebrow">PEAK field guides</p><h2>Start with the daily route, then go deeper.</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a><a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a>${articleLinks}</div></div></section>`;
   return html.replace(marker, `${linkBand}${nativeBannerMarkup}${marker}`);
 }
 
-function renderArticleImage(image) {
-  const localizedImage = image.src === '/media/peak-map-route.webp' ? { ...image, ...mapGuideHeroMedia[activeGuideLocale] } : image;
+function renderArticleImage(image, localizeMapMedia = true) {
+  const localizedImage = localizeMapMedia && image.src === '/media/peak-map-route.webp' ? { ...image, ...mapGuideHeroMedia[activeGuideLocale] } : image;
   const width = localizedImage.width || 1200;
   const height = localizedImage.height || 675;
   const loading = localizedImage.loading || 'lazy';
@@ -574,7 +699,11 @@ function renderMapGuideHtml(locale, options = {}) {
 export function renderMapGuide(locale, options = {}) {
   const html = normalizeSteamNewsLinks(renderMapGuideHtml(locale, options));
   const marker = '<div class="container article-layout">';
-  return html.replace(marker, `${nativeBannerMarkup}${marker}`);
+  const publishedArticles = options.publishedArticles ?? articleOrder;
+  const scheduleBand = publishedArticles.includes('peak-map-rotation-schedule')
+    ? `<section class="article-link-band" aria-label="PEAK schedule guide"><div class="container article-link-band-inner"><div><p class="eyebrow">PEAK schedule guide</p><h2>Need the reset time? Check the PEAK Map Rotation Schedule.</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'peak-map-rotation-schedule')}">Read the schedule <span aria-hidden="true">\u2192</span></a></div></div></section>`
+    : '';
+  return html.replace(marker, `${nativeBannerMarkup}${scheduleBand}${marker}`);
 }
 
 function renderAchievementGuideHtml(locale, options = {}) {
@@ -602,6 +731,37 @@ export function renderAchievementGuide(locale, options = {}) {
   return html.replace(marker, `${nativeBannerMarkup}${marker}`);
 }
 
+function renderNewArticleSection(locale, section, options) {
+  const publishedArticles = options.publishedArticles ?? articleOrder;
+  const paragraphs = (section.paragraphs || []).map((paragraph) => `<p>${renderArticleInline(paragraph, locale, publishedArticles)}</p>`).join('');
+  const image = section.image ? renderArticleImage(section.image, false) : '';
+  const bullets = renderArticleBullets(section.bullets, locale, publishedArticles);
+  let dataMarkup = '';
+  if (section.kind === 'today-map') dataMarkup = renderArticleTodayMap(locale, options.todayMap, options.buildDate, options.buildTimestamp);
+  if (section.kind === 'updates') dataMarkup = renderArticleUpdates(locale, options.updateData);
+  if (section.kind === 'reset-times') dataMarkup = renderArticleResetTimes(section, locale, options.todayMap, options.buildDate, options.buildTimestamp);
+  if (section.kind === 'history') dataMarkup = renderArticleHistory(locale, options.mapHistory, options.todayMap, options.buildDate, options.buildTimestamp);
+  const table = section.kind === 'reset-times' ? '' : renderArticleTable(section.table, locale, publishedArticles);
+  return `<section id="${escapeHtml(section.id)}" class="article-section"><h2>${escapeHtml(section.title)}</h2>${paragraphs}${dataMarkup}${image}${bullets}${table}</section>`;
+}
+
+export function renderArticlePage(locale, slug, options = {}) {
+  const article = articleGuides[slug];
+  if (!article) throw new Error(`Missing article configuration: ${slug}`);
+  const sourceCopy = locales[locale];
+  const buildDate = resolveBuildDate(options);
+  const publishedArticles = Array.isArray(options.publishedArticles) ? options.publishedArticles : articleOrder;
+  const copy = { ...sourceCopy, ui: { ...sourceCopy.ui, snapshot: formatSnapshotDate(locale, buildDate) } };
+  const toc = article.sections.map((section, index) => `<li><a href="#${escapeHtml(section.id)}">${index + 1}. ${escapeHtml(section.title)}</a></li>`).join('');
+  const sections = article.sections.map((section) => renderNewArticleSection(locale, section, { ...options, buildDate })).join('');
+  const faq = article.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary>${renderArticleInline(question, locale, publishedArticles)}</summary><p>${renderArticleInline(answer, locale, publishedArticles)}</p></details>`).join('');
+  const sourceLinks = article.source.links.filter(([, url]) => isSafeHttpUrl(url)).map(([label, url]) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
+  const related = article.related.filter(([page]) => page === 'map-rotation' || page === 'achievements' || publishedArticles.includes(page)).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
+  const pageHtml = `${head(locale, slug, article.meta.title, article.meta.description, article.meta.schema, { ...options, dateModified: buildDate })}
+  <body class="article-page"><div id="top"></div>${header(locale, slug, copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(article.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(article.h1)}</p><h1 id="article-title">${escapeHtml(article.h1)}</h1><p class="article-hero-lede">${renderArticleInline(article.intro, locale, publishedArticles)}</p></div>${renderArticleImage({ ...article.heroImage, loading: 'eager', fetchpriority: 'high' }, false)}</div></section>${nativeBannerMarkup}<div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(article.tocLabel)}"><p class="eyebrow">${escapeHtml(article.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#article-faq">${escapeHtml(article.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(article.answerLabel)}</p><h2 id="answer-title">${escapeHtml(article.answerLabel)}</h2><p>${renderArticleInline(article.answer, locale, publishedArticles)}</p></section>${sections}<section id="article-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(article.faq.eyebrow)}</p><h2>${escapeHtml(article.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(article.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(article.source.title)}</h2><p>${renderArticleInline(article.source.body, locale, publishedArticles)}</p><div class="source-links">${sourceLinks}</div></section><nav class="article-related" aria-label="Related PEAK guides"><p class="eyebrow">Related PEAK guides</p>${related}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
+  return normalizeSteamNewsLinks(pageHtml);
+}
+
 const privacyAdDisclosure = {
   en: ['Third-party advertising technologies', 'Because ads may be served on this site, third parties may place or read cookies, or use web beacons, IP addresses, device identifiers, and similar technologies to collect or receive information. These signals may support ad delivery, measurement, fraud prevention, and personalized advertising where consent and law allow it. You can manage cookies through your browser or available consent controls.', 'How Google uses data on partner sites'],
   zh: ['第三方广告技术', '由于本网站可能展示广告，第三方可能会放置或读取 Cookie，或使用网络信标、IP 地址、设备标识符及类似技术来收集或接收信息。这些信息可能用于广告投放、效果衡量、防止欺诈，以及在获得同意并符合法律要求时提供个性化广告。你可以通过浏览器或可用的同意管理工具控制 Cookie。', 'Google 如何使用合作伙伴网站上的数据'],
@@ -624,9 +784,9 @@ export function renderLegal(locale, page, options = {}) {
   return `${head(locale, page, legal.title, legal.description, legal.description)}\n  <body class="legal-page">${header(locale, page, copy)}<main class="legal-main"><div class="container"><p class="eyebrow">${escapeHtml(legal.eyebrow)}</p><h1>${escapeHtml(legal.h1)}</h1><p class="legal-intro">${escapeHtml(legal.intro)}</p><div class="legal-copy">${sections}${privacyDisclosure}</div></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
 }
 
-export function renderSitemap(buildDate = '2026-08-19') {
-  const pages = ['home', 'about', 'privacy', 'terms', 'map-rotation', 'achievements'];
-  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'map-rotation', 'achievements'].map((page) => `${BASE_URL}${routeFor(code, page)}`)));
+export function renderSitemap(buildDate = '2026-08-19', publishedArticles = articleOrder) {
+  const pages = ['home', 'about', 'privacy', 'terms', 'map-rotation', 'achievements', ...publishedArticles];
+  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'map-rotation', 'achievements', ...publishedArticles].map((page) => `${BASE_URL}${routeFor(code, page)}`)));
   const urls = localeOrder.flatMap((code) => pages.map((page) => `${BASE_URL}${routeFor(code, page)}`));
   const rows = urls.map((url) => {
     const lastmod = updatedUrls.has(url) ? buildDate : '2026-08-17';

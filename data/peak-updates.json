@@ -1,0 +1,50 @@
+{
+  "source": {
+    "label": "Official Steam News API",
+    "url": "https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&count=20&format=json"
+  },
+  "entries": [
+    {
+      "date": "2026-08-27",
+      "title": "Patch Notes 2.03.a",
+      "summary": "Official patch-notes post for version 2.03.a; open the source for the exact changes.",
+      "url": "https://store.steampowered.com/news/app/3527290",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-08-24",
+      "title": "ONE MORE WEEK OF GLOOM + THE CITADEL",
+      "summary": "Official announcement about an additional week of Gloom and The Citadel.",
+      "url": "https://store.steampowered.com/news/app/3527290",
+      "kind": "CONTENT"
+    },
+    {
+      "date": "2026-08-18",
+      "title": "PATCH 2.02.a",
+      "summary": "Official patch-notes post for version 2.02.a; open the source for the exact changes.",
+      "url": "https://store.steampowered.com/news/app/3527290",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-08-13",
+      "title": "PATCH 2.01.a: Frog cooldown and bug fixes",
+      "summary": "Official patch post naming the Frog cooldown and bug fixes in its title.",
+      "url": "https://store.steampowered.com/news/app/3527290",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-08-11",
+      "title": "THE FINAL ASCENT",
+      "summary": "Official update post titled The Final Ascent; use the source for the complete release details.",
+      "url": "https://store.steampowered.com/news/app/3527290",
+      "kind": "UPDATE"
+    },
+    {
+      "date": "2026-08-06",
+      "title": "THE FINAL BIOME UPDATE ARRIVES AUGUST 11!",
+      "summary": "Official announcement that the final biome update would arrive on August 11.",
+      "url": "https://store.steampowered.com/news/app/3527290",
+      "kind": "ANNOUNCEMENT"
+    }
+  ]
+}

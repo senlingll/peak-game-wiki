@@ -6,31 +6,35 @@
 
 The project exists because PEAK questions arrive in several forms at once. A player may search for a daily map, then immediately need to know whether a piton or food item is worth a slot, how many people can join, or whether a recent patch changed a route hazard. A useful wiki should connect those questions instead of treating them as isolated keyword pages.
 
-The first release is intentionally small. It uses stable section anchors instead of exposing unfinished detail routes. The homepage leads with a map-rotation desk, a version desk, a searchable prototype item index, a progress-tracking model, co-op field notes, and FAQ answers. Exact item effects, drop locations, live route results, and definitive achievement conditions require a maintained source table before they are published as final facts.
+The first release is intentionally small. The homepage leads with a map-rotation desk, a version desk, a searchable prototype item index, a progress-tracking model, co-op field notes, and FAQ answers. Exact item effects, drop locations, live route results, and definitive achievement conditions require a maintained source table before they are published as final facts.
 
 Official Steam store information, Steam screenshots, and Steam news posts are the primary sources for game facts, official update names, dates, player-count statements, and visual context. Practical advice is presented as a field note when it is based on gameplay reasoning rather than a first-party statement. The project does not claim affiliation with Landfall or the PEAK developers. Version-sensitive information should be checked against the game and official news feed after every update.
 
 ## Content Category Details
 
-### Map Rotation Desk (https://peak-game.wiki/#maps)
+### Map Rotation Desk (https://peak-game.wiki/)
 
-The map section is a planning entry point, not a fabricated live tracker. It explains that PEAK uses a changing map rotation and gives players a short checklist: confirm the active route in-game, pack around the expected hazard, and log the result for future attempts. A future `/daily-map/` route can add dated history once a stable maintenance source is available.
+The map section is a planning entry point, not a fabricated live tracker. It explains that PEAK uses a changing map rotation and gives players a short checklist: confirm the active route in-game, pack around the expected hazard, and log the result for future attempts. Dated history is added only when a stable maintenance source verifies it.
 
 ### PEAK Map Rotation Guide (https://peak-game.wiki/map-rotation)
 
 The map rotation guide separates the evergreen informational intent of `PEAK map rotation` from the time-sensitive navigation intent of `PEAK map today`. It explains how to verify the active route in-game, plan rope, piton, food, and recovery utility, distinguish biomes from route stages, and record version-aware field notes. It does not invent a live biome result or publish an unsupported fixed map schedule.
 
+### PEAK Biomes List (https://peak-game.wiki/peak-biomes-list)
+
+The PEAK biomes list records the current source-backed roster: Shore, Tropics, Roots, Alpine, Mesa, Caldera, The Kiln, Gloom, and Citadel. It distinguishes a biome label from a map, route, stage, or local landmark, then gives cautious terrain-reading and team-planning notes. The page includes a build-time daily map entry linked to the canonical map rotation page. Exact hazards, item effects, and fixed layouts remain subject to the current game and official updates.
+
 ### PEAK Achievements Guide (https://peak-game.wiki/achievements)
 
 The achievements guide targets the informational intent behind `PEAK achievements`, `PEAK achievement guide`, and `how to get all PEAK achievements`. It treats Steam achievements as platform progress and in-game badges as a separate system, then gives players a checklist method for exact names, route or mode, team members, evidence, and version. It also explains why custom runs, hidden achievements, new achievements, and missing unlocks should be verified against the current game and official Steam pages instead of being presented as permanent facts.
 
-### Item Database (https://peak-game.wiki/#database)
+### Item Database (https://peak-game.wiki/)
 
 The item section separates gear, food, and utility categories and provides browser-side search and filters. The current entries are concise field-note stubs for Piton, Anti-Rope Cannon, Bugle of Friendship, Energy Drink, Portable Stove, and Backpack. The page explicitly labels this as prototype data rather than claiming complete effects or drop tables.
 
-### Version Desk (https://peak-game.wiki/#updates)
+### Version Desk (https://peak-game.wiki/)
 
-The updates section highlights Patch 2.01.a, The Final Ascent, and the final biome announcement from August 2026. Each note is framed as an update anchor that should connect to affected map, item, hazard, and progress pages. The official Steam news feed is linked for the complete source post.
+The updates section highlights Patch Notes 2.03.a, the Gloom and Citadel announcement, and Patch 2.02.a from August 2026. Each note is framed as an update anchor that should connect to affected map, item, hazard, and progress pages. The official Steam news feed is linked for the complete source post.
 
 ### Progress And Co-op Notes (https://peak-game.wiki/#guides)
 
@@ -42,10 +46,14 @@ The site helps a player decide what to check before a climb, where to start when
 
 ## Latest Update Content
 
-### Patch 2.01.a (https://peak-game.wiki/#updates)
+### Patch Notes 2.03.a (https://store.steampowered.com/news/app/3527290)
 
-The current homepage snapshot records the 14 August 2026 patch title, “Frog cooldown and bug fixes,” as the latest version-desk entry and points readers to the official Steam news feed for the full details.
+The maintained update data records Patch Notes 2.03.a on 27 August 2026 as the latest confirmed official entry. The official Steam news post is the authority for exact mechanics and implementation details.
 
-### The Final Ascent (https://peak-game.wiki/#updates)
+### ONE MORE WEEK OF GLOOM + THE CITADEL (https://store.steampowered.com/news/app/3527290)
 
-The homepage also records the 12 August 2026 Final Ascent update as the main content anchor for future map, biome, equipment, and badge expansion. The date and update name are presented as official context, while detailed gameplay claims remain subject to source verification.
+The maintained update data records this official content announcement on 24 August 2026. It is useful route context for players checking the current map, but its title alone does not prove the sequence in every lobby or future reset.
+
+### PATCH 2.02.a (https://store.steampowered.com/news/app/3527290)
+
+The maintained update data records PATCH 2.02.a on 18 August 2026. As with the other entries, the log reports the confirmed title and date without inventing patch details that are not transcribed from the first-party post.
