@@ -24,6 +24,10 @@ The map rotation guide separates the evergreen informational intent of `PEAK map
 
 The PEAK biomes list records the current source-backed roster: Shore, Tropics, Roots, Alpine, Mesa, Caldera, The Kiln, Gloom, and Citadel. It distinguishes a biome label from a map, route, stage, or local landmark, then gives cautious terrain-reading and team-planning notes. The page includes a build-time daily map entry linked to the canonical map rotation page. Exact hazards, item effects, and fixed layouts remain subject to the current game and official updates.
 
+### PEAK Game Update Log (https://peak-game.wiki/peak-game-update)
+
+The PEAK game update log records confirmed official Steam update titles and dates, including patch notes, content announcements, The Final Ascent, and biome updates. Its build-time table preserves official titles and links to the first-party news feed while using cautious summaries instead of inventing untranscribed mechanics. The page places today's map at the top, explains how an update can affect route context without proving a daily sequence, and links to the rotation schedule and beginner guide.
+
 ### PEAK Achievements Guide (https://peak-game.wiki/achievements)
 
 The achievements guide targets the informational intent behind `PEAK achievements`, `PEAK achievement guide`, and `how to get all PEAK achievements`. It treats Steam achievements as platform progress and in-game badges as a separate system, then gives players a checklist method for exact names, route or mode, team members, evidence, and version. It also explains why custom runs, hidden achievements, new achievements, and missing unlocks should be verified against the current game and official Steam pages instead of being presented as permanent facts.

@@ -6,6 +6,11 @@ const projectRoot = resolve(import.meta.dirname, '..');
 const dataPath = resolve(projectRoot, 'data/peak-updates.json');
 const sourceUrl = 'https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&count=20&format=json';
 const fallbackNewsUrl = 'https://store.steampowered.com/news/app/3527290';
+const officialFeedName = 'steam_community_announcements';
+
+function isOfficialNewsItem(item) {
+  return item?.feedname === officialFeedName;
+}
 
 function classifyUpdate(title) {
   const value = String(title ?? '');
@@ -55,7 +60,7 @@ async function main() {
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const payload = await response.json();
-    const entries = (payload?.appnews?.newsitems ?? []).map(normalizeItem).filter(Boolean).sort((left, right) => right.date.localeCompare(left.date)).slice(0, 20);
+    const entries = (payload?.appnews?.newsitems ?? []).filter(isOfficialNewsItem).map(normalizeItem).filter(Boolean).sort((left, right) => right.date.localeCompare(left.date)).slice(0, 20);
     if (!entries.length) throw new Error('official feed returned no usable update entries');
     const existing = await readExisting();
     const next = { source: { label: 'Official Steam News API', url: sourceUrl }, entries };
@@ -70,6 +75,6 @@ async function main() {
   }
 }
 
-export { classifyUpdate, normalizeItem, titleSummary };
+export { classifyUpdate, isOfficialNewsItem, normalizeItem, titleSummary };
 
 if (import.meta.url === pathToFileURL(resolve(process.argv[1] || '')).href) await main();

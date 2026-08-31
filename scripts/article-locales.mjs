@@ -1,3 +1,5 @@
+import { peakGameUpdateTranslations } from './article-update-locales.mjs';
+
 const liveMapCopy = {
   en: {
     eyebrow: 'Build-time daily map',
@@ -1029,3 +1031,7 @@ export const articleLocaleTranslations = {
     },
   },
 };
+
+for (const [locale, translation] of Object.entries(peakGameUpdateTranslations)) {
+  articleLocaleTranslations[locale]['peak-game-update'] = translation;
+}

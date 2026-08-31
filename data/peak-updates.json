@@ -7,44 +7,128 @@
     {
       "date": "2026-08-27",
       "title": "Patch Notes 2.03.a",
-      "summary": "Official patch-notes post for version 2.03.a; open the source for the exact changes.",
-      "url": "https://store.steampowered.com/news/app/3527290",
+      "summary": "Official patch or fix post titled Patch Notes 2.03.a; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1842212951300914",
       "kind": "PATCH"
     },
     {
       "date": "2026-08-24",
       "title": "ONE MORE WEEK OF GLOOM + THE CITADEL",
-      "summary": "Official announcement about an additional week of Gloom and The Citadel.",
-      "url": "https://store.steampowered.com/news/app/3527290",
+      "summary": "Official content or announcement post titled ONE MORE WEEK OF GLOOM + THE CITADEL; open the source for the complete release details.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1841579228676680",
       "kind": "CONTENT"
     },
     {
       "date": "2026-08-18",
       "title": "PATCH 2.02.a",
-      "summary": "Official patch-notes post for version 2.02.a; open the source for the exact changes.",
-      "url": "https://store.steampowered.com/news/app/3527290",
+      "summary": "Official patch or fix post titled PATCH 2.02.a; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1840944183789494",
       "kind": "PATCH"
     },
     {
       "date": "2026-08-13",
       "title": "PATCH 2.01.a: Frog cooldown and bug fixes",
-      "summary": "Official patch post naming the Frog cooldown and bug fixes in its title.",
-      "url": "https://store.steampowered.com/news/app/3527290",
+      "summary": "Official patch or fix post titled PATCH 2.01.a: Frog cooldown and bug fixes; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1840944183777904",
       "kind": "PATCH"
     },
     {
       "date": "2026-08-11",
       "title": "THE FINAL ASCENT",
-      "summary": "Official update post titled The Final Ascent; use the source for the complete release details.",
-      "url": "https://store.steampowered.com/news/app/3527290",
-      "kind": "UPDATE"
+      "summary": "Official content or announcement post titled THE FINAL ASCENT; open the source for the complete release details.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1840310314354680",
+      "kind": "CONTENT"
     },
     {
       "date": "2026-08-06",
       "title": "THE FINAL BIOME UPDATE ARRIVES AUGUST 11!",
-      "summary": "Official announcement that the final biome update would arrive on August 11.",
-      "url": "https://store.steampowered.com/news/app/3527290",
-      "kind": "ANNOUNCEMENT"
+      "summary": "Official content or announcement post titled THE FINAL BIOME UPDATE ARRIVES AUGUST 11!; open the source for the complete release details.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1840310314342574",
+      "kind": "CONTENT"
+    },
+    {
+      "date": "2026-07-23",
+      "title": "patch 1.65.a",
+      "summary": "Official patch or fix post titled patch 1.65.a; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1839041357027333",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-07-16",
+      "title": "BETA PATCH 0.65.d",
+      "summary": "Official patch or fix post titled BETA PATCH 0.65.d; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1838407329257886",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-07-07",
+      "title": "BETA PATCH 0.65.c",
+      "summary": "Official patch or fix post titled BETA PATCH 0.65.c; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1836506165578642",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-07-02",
+      "title": "BETA PATCH 0.65.a",
+      "summary": "Official patch or fix post titled BETA PATCH 0.65.a; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1836506165569032",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-06-24",
+      "title": "Patch Notes 1.64.a",
+      "summary": "Official patch or fix post titled Patch Notes 1.64.a; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1836506165547088",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-06-16",
+      "title": "Happy PEAKversary!",
+      "summary": "Official Steam news entry titled Happy PEAKversary!; open the source for the complete details.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1835236783574578",
+      "kind": "UPDATE"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "SMALL patch 1.63.a",
+      "summary": "Official patch or fix post titled SMALL patch 1.63.a; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1834602721185651",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-05-29",
+      "title": "SMALL patch 1.62.b",
+      "summary": "Official patch or fix post titled SMALL patch 1.62.b; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1833968530891978",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-05-12",
+      "title": "SMALL patch 1.62.a",
+      "summary": "Official patch or fix post titled SMALL patch 1.62.a; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832065502824993",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-04-22",
+      "title": "Patch Notes 1.61.b",
+      "summary": "Official patch or fix post titled Patch Notes 1.61.b; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830797770231254",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-04-16",
+      "title": "BETA branch Patch 1.61.b",
+      "summary": "Official patch or fix post titled BETA branch Patch 1.61.b; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830163047258473",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-04-13",
+      "title": "Patch 1.61.a: Stability and bug fixes",
+      "summary": "Official patch or fix post titled Patch 1.61.a: Stability and bug fixes; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1829528821316244",
+      "kind": "PATCH"
     }
   ]
 }

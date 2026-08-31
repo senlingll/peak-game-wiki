@@ -3,12 +3,25 @@ import { todayMapCopy } from './today-map-copy.mjs';
 import { achievementGuides } from './achievement-guide.mjs';
 import { articleGuides, articleOrder } from './article-guides.mjs';
 import { articleLiveMapCopy, articleLocaleTranslations } from './article-locales.mjs';
+import { articleUpdateCopy } from './article-update-locales.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
 const STEAM_NEWS_API_HTML_URL = 'https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json';
 const nativeBannerMarkup = '<section class="native-ad" aria-label="Advertisement"><div class="container native-ad-inner"><script async="async" data-cfasync="false" src="https://pl30883299.profitableratecpmnetwork.com/3531361214596141d25dc216fd8ebe0f/invoke.js"></script><div id="container-3531361214596141d25dc216fd8ebe0f"></div></div></section>';
 let activeGuideLocale = 'en';
+
+const articleLinkBandCopy = {
+  en: { aria: 'PEAK field guides', eyebrow: 'PEAK field guides', title: 'Start with the daily route, then go deeper.' },
+  zh: { aria: 'PEAK 攻略', eyebrow: 'PEAK 攻略', title: '先看每日路线，再深入了解游戏。' },
+  es: { aria: 'Guías de PEAK', eyebrow: 'Guías de PEAK', title: 'Empieza por la ruta diaria y sigue profundizando.' },
+  ja: { aria: 'PEAKガイド', eyebrow: 'PEAKガイド', title: '毎日のルートを確認してから、詳しく見ていきましょう。' },
+  fr: { aria: 'Guides PEAK', eyebrow: 'Guides PEAK', title: 'Commencez par la route du jour, puis approfondissez.' },
+  de: { aria: 'PEAK-Guides', eyebrow: 'PEAK-Guides', title: 'Beginne mit der Tagesroute und geh dann ins Detail.' },
+  pt: { aria: 'Guias de PEAK', eyebrow: 'Guias de PEAK', title: 'Comece pela rota diária e aprofunde-se depois.' },
+  ko: { aria: 'PEAK 가이드', eyebrow: 'PEAK 가이드', title: '일일 루트부터 확인하고 더 깊이 알아보세요.' },
+  it: { aria: 'Guide di PEAK', eyebrow: 'Guide di PEAK', title: 'Inizia dal percorso giornaliero e poi approfondisci.' },
+};
 
 function normalizeSteamNewsLinks(html) {
   return html.replaceAll(STEAM_NEWS_API_HTML_URL, STEAM_NEWS_URL);
@@ -584,10 +597,15 @@ function renderArticleResetTimes(section, locale, data, buildDate, buildTimestam
 }
 
 function renderArticleUpdates(locale, data) {
+  const copy = articleUpdateCopy[locale] ?? articleUpdateCopy.en;
   const entries = Array.isArray(data?.entries) ? [...data.entries].filter((entry) => entry?.date && entry?.title).sort((left, right) => right.date.localeCompare(left.date)) : [];
-  if (!entries.length) return '<p class="article-data-pending">No verified official update entries are available for this build.</p>';
-  const rows = entries.map((entry) => `<tr><td><time datetime="${escapeHtml(entry.date)}">${escapeHtml(formatDateLabel(locale, entry.date))}</time></td><td><span class="article-data-tag">${escapeHtml(entry.kind || 'UPDATE')}</span></td><td><a href="${escapeHtml(entry.url || STEAM_NEWS_URL)}" target="_blank" rel="noopener">${escapeHtml(entry.title)} <span aria-hidden="true">\u2192</span></a></td><td>${escapeHtml(entry.summary || 'Open the official Steam post for the complete details.')}</td></tr>`).join('');
-  return `<div class="article-table-wrap article-data-table-wrap"><table><caption>Confirmed official PEAK update entries</caption><thead><tr><th scope="col">Date</th><th scope="col">Type</th><th scope="col">Official entry</th><th scope="col">Source-backed summary</th></tr></thead><tbody>${rows}</tbody></table></div><p class="article-data-note">Titles and dates are read from the official Steam news data at build time. The linked post is the authority for exact patch details.</p>`;
+  if (!entries.length) return `<p class="article-data-pending">${escapeHtml(copy.empty)}</p>`;
+  const rows = entries.map((entry) => {
+    const kind = String(entry.kind || 'UPDATE').toUpperCase();
+    const summary = copy.summaries?.[entry.title] ?? copy.generic?.[kind] ?? copy.generic?.default ?? entry.summary ?? copy.sourceFallback;
+    return `<tr><td><time datetime="${escapeHtml(entry.date)}">${escapeHtml(formatDateLabel(locale, entry.date))}</time></td><td><span class="article-data-tag">${escapeHtml(copy.kind?.[kind] || kind)}</span></td><td><a href="${escapeHtml(entry.url || STEAM_NEWS_URL)}" target="_blank" rel="noopener">${escapeHtml(entry.title)} <span aria-hidden="true">\u2192</span></a></td><td>${escapeHtml(summary)}</td></tr>`;
+  }).join('');
+  return `<div class="article-table-wrap article-data-table-wrap"><table><caption>${escapeHtml(copy.caption)}</caption><thead><tr><th scope="col">${escapeHtml(copy.date)}</th><th scope="col">${escapeHtml(copy.type)}</th><th scope="col">${escapeHtml(copy.entry)}</th><th scope="col">${escapeHtml(copy.summary)}</th></tr></thead><tbody>${rows}</tbody></table></div><p class="article-data-note">${escapeHtml(copy.note)}</p>`;
 }
 
 function renderArticleHistory(locale, data, todayMap, buildDate, buildTimestamp) {
@@ -691,8 +709,9 @@ export function renderHome(locale, options = {}) {
   const html = normalizeSteamNewsLinks(renderHomeBase(locale, options)).replace('datetime="2026-08-17"', `datetime="${escapeHtml(buildDate)}"`);
   const marker = '<section id="updates"';
   const publishedArticles = options.publishedArticles ?? articleOrder;
-  const articleLinks = publishedArticles.map((slug) => `<a class="section-link" href="${routeFor(locale, slug)}">${escapeHtml(articleGuides[slug].h1)} <span aria-hidden="true">\u2192</span></a>`).join('');
-  const linkBand = `<section class="article-link-band" aria-label="PEAK field guides"><div class="container article-link-band-inner"><div><p class="eyebrow">PEAK field guides</p><h2>Start with the daily route, then go deeper.</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a><a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a>${articleLinks}</div></div></section>`;
+  const articleLinks = publishedArticles.map((slug) => `<a class="section-link" href="${routeFor(locale, slug)}">${escapeHtml(localizedArticleGuide(locale, slug).h1)} <span aria-hidden="true">\u2192</span></a>`).join('');
+  const bandCopy = articleLinkBandCopy[locale] ?? articleLinkBandCopy.en;
+  const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(bandCopy.aria)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(bandCopy.eyebrow)}</p><h2>${escapeHtml(bandCopy.title)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a><a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a>${articleLinks}</div></div></section>`;
   return html.replace(marker, `${linkBand}${nativeBannerMarkup}${marker}`);
 }
 
