@@ -2,6 +2,7 @@ import { mapGuides } from './map-guide.mjs';
 import { todayMapCopy } from './today-map-copy.mjs';
 import { achievementGuides } from './achievement-guide.mjs';
 import { articleGuides, articleOrder } from './article-guides.mjs';
+import { articleLiveMapCopy, articleLocaleTranslations } from './article-locales.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
@@ -484,6 +485,32 @@ function renderArticleInline(value, locale, publishedArticles = articleOrder) {
   return result + escapeHtml(source.slice(cursor));
 }
 
+function localizedArticleGuide(locale, slug) {
+  const source = articleGuides[slug];
+  const translation = articleLocaleTranslations[locale]?.[slug];
+  if (!translation) return source;
+  const sections = source.sections.map((section, index) => {
+    const translated = translation.sections?.[index];
+    if (!translated) return section;
+    return {
+      ...section,
+      ...translated,
+      table: translated.table ? { ...section.table, ...translated.table } : section.table,
+      heroImage: translated.heroImage ? { ...section.heroImage, ...translated.heroImage } : section.heroImage,
+    };
+  });
+  return {
+    ...source,
+    ...translation,
+    meta: { ...source.meta, ...translation.meta },
+    heroImage: { ...source.heroImage, ...translation.heroImage },
+    sections,
+    faq: translation.faq ? { ...source.faq, ...translation.faq } : source.faq,
+    source: translation.source ? { ...source.source, ...translation.source } : source.source,
+    related: translation.related ?? source.related,
+  };
+}
+
 function stripArticleTokens(value) {
   return String(value ?? '').replace(/\[\[link:[a-z0-9-]+(?:#[a-z0-9-]+)?\|([\s\S]*?)\]\]/gi, '$1');
 }
@@ -501,18 +528,19 @@ function renderArticleBullets(bullets, locale, publishedArticles = articleOrder)
 }
 
 function renderArticleTodayMap(locale, data, buildDate, buildTimestamp) {
+  const copy = articleLiveMapCopy[locale] ?? articleLiveMapCopy.en;
   const snapshot = normalizeTodayMap(data, buildDate, buildTimestamp);
-  const status = snapshot.available ? 'Verified build data' : 'Data pending';
-  const mapValue = snapshot.map || 'Pending verification';
-  const routeValue = snapshot.route || 'Pending verification';
-  const biomeValue = snapshot.biome || 'Pending verification';
+  const status = snapshot.available ? copy.verified : copy.pending;
+  const mapValue = snapshot.map || copy.pendingValue;
+  const routeValue = snapshot.route === 'Daily biome sequence' ? copy.routeLabel : snapshot.route || copy.pendingValue;
+  const biomeValue = snapshot.biome || copy.pendingValue;
   const sourceMarkup = snapshot.source
-    ? `<a href="${escapeHtml(snapshot.source.url)}" target="_blank" rel="noopener">${escapeHtml(snapshot.source.label || 'Verified source')} <span aria-hidden="true">\u2192</span></a>`
-    : '<span>Source pending</span>';
+    ? `<a href="${escapeHtml(snapshot.source.url)}" target="_blank" rel="noopener">${escapeHtml(snapshot.source.label || copy.verifiedSource)} <span aria-hidden="true">\u2192</span></a>`
+    : `<span>${escapeHtml(copy.sourcePending)}</span>`;
   const note = snapshot.available
-    ? 'This snapshot is written during the build. Confirm the route in PEAK after a reset or update.'
-    : 'The source has not supplied enough dated location fields for this build. Confirm the active route in PEAK.';
-  return `<div class="article-live-snapshot"><div class="article-live-snapshot-top"><div><p class="eyebrow">Build-time daily map</p><h3>Today's PEAK map</h3></div><span class="today-map-status${snapshot.available ? ' is-verified' : ''}">${status}</span></div><div class="article-live-snapshot-route"><strong>${escapeHtml(mapValue)}</strong><span>${escapeHtml(routeValue)}</span></div><dl class="article-live-facts"><div><dt>Biome</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>Record date</dt><dd><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></dd></div><div><dt>Next reset</dt><dd>${escapeHtml(formatCountdown(locale, snapshot.resetAt, buildTimestamp))}</dd></div></dl><div class="article-live-source"><span>Source</span>${sourceMarkup}</div><p class="article-live-note">${note}</p></div>`;
+    ? copy.verifiedNote
+    : copy.pendingNote;
+  return `<div class="article-live-snapshot"><div class="article-live-snapshot-top"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h3>${escapeHtml(copy.title)}</h3></div><span class="today-map-status${snapshot.available ? ' is-verified' : ''}">${escapeHtml(status)}</span></div><div class="article-live-snapshot-route"><strong>${escapeHtml(mapValue)}</strong><span>${escapeHtml(routeValue)}</span></div><dl class="article-live-facts"><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.recordDate)}</dt><dd><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(formatCountdown(locale, snapshot.resetAt, buildTimestamp))}</dd></div></dl><div class="article-live-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="article-live-note">${escapeHtml(note)}</p></div>`;
 }
 
 function dateKeyAtZone(date, timeZone) {
@@ -579,7 +607,7 @@ function head(locale, page, title, description, schema, options = {}) {
   const copy = options.copy ?? locales[locale];
   const canonical = `${BASE_URL}${routeFor(locale, page)}`;
   const scripts = [];
-  const article = articleGuides[page];
+  const article = options.article ?? articleGuides[page];
   if (article) {
     const images = [article.heroImage, ...article.sections.map((section) => section.image).filter(Boolean)]
       .map((image) => `${BASE_URL}${image.src}`);
@@ -746,7 +774,7 @@ function renderNewArticleSection(locale, section, options) {
 }
 
 export function renderArticlePage(locale, slug, options = {}) {
-  const article = articleGuides[slug];
+  const article = localizedArticleGuide(locale, slug);
   if (!article) throw new Error(`Missing article configuration: ${slug}`);
   const sourceCopy = locales[locale];
   const buildDate = resolveBuildDate(options);
@@ -757,8 +785,8 @@ export function renderArticlePage(locale, slug, options = {}) {
   const faq = article.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary>${renderArticleInline(question, locale, publishedArticles)}</summary><p>${renderArticleInline(answer, locale, publishedArticles)}</p></details>`).join('');
   const sourceLinks = article.source.links.filter(([, url]) => isSafeHttpUrl(url)).map(([label, url]) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
   const related = article.related.filter(([page]) => page === 'map-rotation' || page === 'achievements' || publishedArticles.includes(page)).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
-  const pageHtml = `${head(locale, slug, article.meta.title, article.meta.description, article.meta.schema, { ...options, dateModified: buildDate })}
-  <body class="article-page"><div id="top"></div>${header(locale, slug, copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(article.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(article.h1)}</p><h1 id="article-title">${escapeHtml(article.h1)}</h1><p class="article-hero-lede">${renderArticleInline(article.intro, locale, publishedArticles)}</p></div>${renderArticleImage({ ...article.heroImage, loading: 'eager', fetchpriority: 'high' }, false)}</div></section>${nativeBannerMarkup}<div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(article.tocLabel)}"><p class="eyebrow">${escapeHtml(article.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#article-faq">${escapeHtml(article.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(article.answerLabel)}</p><h2 id="answer-title">${escapeHtml(article.answerLabel)}</h2><p>${renderArticleInline(article.answer, locale, publishedArticles)}</p></section>${sections}<section id="article-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(article.faq.eyebrow)}</p><h2>${escapeHtml(article.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(article.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(article.source.title)}</h2><p>${renderArticleInline(article.source.body, locale, publishedArticles)}</p><div class="source-links">${sourceLinks}</div></section><nav class="article-related" aria-label="Related PEAK guides"><p class="eyebrow">Related PEAK guides</p>${related}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
+  const pageHtml = `${head(locale, slug, article.meta.title, article.meta.description, article.meta.schema, { ...options, article, dateModified: buildDate })}
+  <body class="article-page"><div id="top"></div>${header(locale, slug, copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(article.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(article.h1)}</p><h1 id="article-title">${escapeHtml(article.h1)}</h1><p class="article-hero-lede">${renderArticleInline(article.intro, locale, publishedArticles)}</p></div>${renderArticleImage({ ...article.heroImage, loading: 'eager', fetchpriority: 'high' }, false)}</div></section>${nativeBannerMarkup}<div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(article.tocLabel)}"><p class="eyebrow">${escapeHtml(article.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#article-faq">${escapeHtml(article.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(article.answerLabel)}</p><h2 id="answer-title">${escapeHtml(article.answerLabel)}</h2><p>${renderArticleInline(article.answer, locale, publishedArticles)}</p></section>${sections}<section id="article-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(article.faq.eyebrow)}</p><h2>${escapeHtml(article.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(article.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(article.source.title)}</h2><p>${renderArticleInline(article.source.body, locale, publishedArticles)}</p><div class="source-links">${sourceLinks}</div></section><nav class="article-related" aria-label="${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}"><p class="eyebrow">${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}</p>${related}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
   return normalizeSteamNewsLinks(pageHtml);
 }
 
