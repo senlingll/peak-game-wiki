@@ -40,13 +40,19 @@ const entries = parseSitemap(sitemap);
 const urls = [...new Set(entries.filter((entry) => entry.lastmod === buildDate).map((entry) => entry.url))];
 if (urls.length > 10000) throw new Error(`IndexNow urlList exceeds 10,000 URLs: ${urls.length}`);
 
-const configuredKeyFile = process.env.INDEXNOW_KEY_FILE?.trim();
-const keyFileName = configuredKeyFile || discoverKeyFile(await readdir(artifactRoot));
-if (!keyFileName) throw new Error('No IndexNow key file found in the publish directory');
+const configuredKey = process.env.INDEXNOW_KEY?.trim();
+if (process.env.INDEXNOW_REQUIRE_SECRET === '1' && !configuredKey) {
+  throw new Error('INDEXNOW_KEY is required for this run');
+}
 
-const key = (await readFile(resolve(artifactRoot, keyFileName), 'utf8')).trim();
-const keyStem = basename(keyFileName, '.txt');
-if (!/^[0-9a-f]{32}$/i.test(key) || key.toLowerCase() !== keyStem.toLowerCase()) {
+const configuredKeyFile = process.env.INDEXNOW_KEY_FILE?.trim();
+const keyFileName = configuredKeyFile || (configuredKey ? '' : discoverKeyFile(await readdir(artifactRoot)));
+if (!configuredKey && !keyFileName) throw new Error('No IndexNow key found in the publish directory or environment');
+
+const key = configuredKey || (await readFile(resolve(artifactRoot, keyFileName), 'utf8')).trim();
+const keyStem = keyFileName ? basename(keyFileName, '.txt') : '';
+if (!/^[0-9a-f]{32}$/i.test(key)) throw new Error('IndexNow key must be 32 hexadecimal characters');
+if (keyFileName && key.toLowerCase() !== keyStem.toLowerCase()) {
   throw new Error('IndexNow key file name and content do not match');
 }
 
