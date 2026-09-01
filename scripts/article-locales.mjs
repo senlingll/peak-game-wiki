@@ -1,4 +1,5 @@
 import { peakGameUpdateTranslations } from './article-update-locales.mjs';
+import { whatIsPeakTranslations } from './article-beginner-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1141,4 +1142,8 @@ export const articleLocaleTranslations = {
 
 for (const [locale, translation] of Object.entries(peakGameUpdateTranslations)) {
   articleLocaleTranslations[locale]['peak-game-update'] = translation;
+}
+
+for (const [locale, translation] of Object.entries(whatIsPeakTranslations)) {
+  articleLocaleTranslations[locale]['what-is-peak-game'] = translation;
 }

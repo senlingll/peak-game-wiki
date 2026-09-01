@@ -243,10 +243,10 @@ export const articleGuides = {
     slug: 'what-is-peak-game',
     meta: {
       title: 'What Is PEAK Game? Beginner\'s Guide to Gameplay & Maps',
-      description: "New to PEAK? Learn what the game is, how it works, its map rotation system and how to check today's map - a complete guide for your first climb.",
+      description: "New to PEAK? Learn what the game is, how it works, its map rotation system and how to check today's map - a complete beginner guide to your first climb.",
       schema: 'A beginner guide explaining what PEAK is, its co-op climbing loop, route and equipment decisions, map rotation vocabulary, and how to check the daily map.',
     },
-    published: '2026-08-31',
+    published: '2026-09-01',
     primaryKeyword: 'what is peak game',
     eyebrow: 'Beginner guide - the first climb explained',
     h1: 'What Is PEAK Game?',
@@ -283,6 +283,13 @@ export const articleGuides = {
           'A typical run begins with a route decision rather than a combat build. The group looks at the next climb, gap, hazard, or uncertain passage, then decides how much time to spend scouting. Climbing tools and recovery options have value because they protect decisions under pressure. Food and stamina-related resources matter because a route that looks short can become expensive when the team detours or waits for a safer move.',
           'Team communication is part of the mechanic even when the game does not show a formal role system. One player may lead the visual read, another may carry a useful tool, and everyone benefits when the stopping point is agreed in advance. A strong beginner habit is to say what the next commitment is, what resource protects it, and what would make the group turn back.',
         ],
+        image: {
+          src: '/media/what-is-peak-game-beginner-flow.webp',
+          alt: 'PEAK beginner flow showing route scouting, equipment preparation, and the first climb',
+          caption: 'Editorial diagram - a PEAK attempt can start by agreeing on the route, preparing equipment, and then climbing.',
+          width: 1024,
+          height: 1024,
+        },
         table: {
           caption: 'The decisions behind a PEAK climb',
           headers: ['Decision', 'Question to ask', 'Why it matters'],
@@ -302,6 +309,13 @@ export const articleGuides = {
           `To see ${todayMapLink("today's active map")}, open the daily entry and check its date, source, route, and reset status. If data is pending, trust the current game over an undated screenshot. The map page also explains how to separate a daily answer from evergreen planning advice, which is the key distinction behind a useful PEAK wiki.`,
           `For the broader vocabulary, read our [[link:peak-biomes-list|biomes list]]. It names the current source-backed roster while clearly marking the difference between a biome label and a complete map assignment.`,
         ],
+        image: {
+          src: '/media/peak-map-route.webp',
+          alt: 'PEAK route screenshot with a player using a rope beside a hazardous climb',
+          caption: 'Official Steam screenshot - the visible route and hazard are more useful than treating a biome name as a fixed map.',
+          width: 1200,
+          height: 675,
+        },
       },
       {
         id: 'beginner-start',
@@ -310,6 +324,13 @@ export const articleGuides = {
           'You do not need a memorized tier list to begin. Use a short loop that works whether the route is familiar or new. The goal is to create one shared decision at a time and keep enough margin to recover. Once the group has a few dated observations, it can refine its route notes without confusing experience with an official rule.',
           'The same loop works in solo and co-op runs, but the communication burden changes. Alone, you must make the route call and recovery decision yourself. With a group, say the next commitment and pause point aloud so players do not spend shared resources under different assumptions. A checkpoint is a coordination habit, not a guarantee that the terrain is safe.',
         ],
+        image: {
+          src: '/media/peak-climb-ridge.webp',
+          alt: 'PEAK player approaching a high ridge on a low-visibility route',
+          caption: 'Official Steam screenshot - choose the next move from the visible route, then confirm the resource and safe pause point.',
+          width: 1200,
+          height: 675,
+        },
         bullets: [
           ['1. Confirm the session', 'Check who is playing, what route the game shows, and whether everyone understands the first objective.'],
           ['2. Scout before committing', 'Look at the first meaningful climb or hazard before spending the item that could protect it.'],

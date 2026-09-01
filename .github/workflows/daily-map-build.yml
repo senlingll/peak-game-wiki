@@ -15,7 +15,7 @@ jobs:
     env:
       TODAY_MAP_FETCH_TIMEOUT_MS: 20000
       SITE_TIMEZONE: Asia/Shanghai
-      PUBLISHED_ARTICLES: peak-biomes-list,peak-game-update
+      PUBLISHED_ARTICLES: peak-biomes-list,peak-game-update,what-is-peak-game
     steps:
       - name: Check out the site
         uses: actions/checkout@v4

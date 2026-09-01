@@ -1,57 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://peak-game.wiki/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/map-rotation</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/achievements</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://peak-game.wiki/</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://peak-game.wiki/about</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/privacy</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/terms</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://peak-game.wiki/zh/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/zh/map-rotation/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/zh/achievements/</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://peak-game.wiki/map-rotation</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/achievements</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/peak-biomes-list</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/peak-game-update</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/what-is-peak-game</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/zh/</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://peak-game.wiki/zh/about/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/zh/privacy/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/zh/terms/</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://peak-game.wiki/es/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/es/map-rotation/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/es/achievements/</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://peak-game.wiki/zh/map-rotation/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/zh/achievements/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/zh/peak-biomes-list/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/zh/peak-game-update/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/zh/what-is-peak-game/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/es/</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://peak-game.wiki/es/about/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/es/privacy/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/es/terms/</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://peak-game.wiki/ja/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/ja/map-rotation/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/ja/achievements/</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://peak-game.wiki/es/map-rotation/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/es/achievements/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/es/peak-biomes-list/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/es/peak-game-update/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/es/what-is-peak-game/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/ja/</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://peak-game.wiki/ja/about/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/ja/privacy/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/ja/terms/</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://peak-game.wiki/fr/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/fr/map-rotation/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/fr/achievements/</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://peak-game.wiki/ja/map-rotation/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/ja/achievements/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/ja/peak-biomes-list/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/ja/peak-game-update/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/ja/what-is-peak-game/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/fr/</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://peak-game.wiki/fr/about/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/fr/privacy/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/fr/terms/</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://peak-game.wiki/de/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/de/map-rotation/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/de/achievements/</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://peak-game.wiki/fr/map-rotation/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/fr/achievements/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/fr/peak-biomes-list/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/fr/peak-game-update/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/fr/what-is-peak-game/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/de/</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://peak-game.wiki/de/about/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/de/privacy/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/de/terms/</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://peak-game.wiki/pt/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/pt/map-rotation/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/pt/achievements/</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://peak-game.wiki/de/map-rotation/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/de/achievements/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/de/peak-biomes-list/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/de/peak-game-update/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/de/what-is-peak-game/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/pt/</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://peak-game.wiki/pt/about/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/pt/privacy/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/pt/terms/</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://peak-game.wiki/ko/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/ko/map-rotation/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/ko/achievements/</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://peak-game.wiki/pt/map-rotation/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/pt/achievements/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/pt/peak-biomes-list/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/pt/peak-game-update/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/pt/what-is-peak-game/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/ko/</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://peak-game.wiki/ko/about/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/ko/privacy/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/ko/terms/</loc><lastmod>2026-08-17</lastmod></url>
-  <url><loc>https://peak-game.wiki/it/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/it/map-rotation/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://peak-game.wiki/it/achievements/</loc><lastmod>2026-08-30</lastmod></url>
+  <url><loc>https://peak-game.wiki/ko/map-rotation/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/ko/achievements/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/ko/peak-biomes-list/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/ko/peak-game-update/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/ko/what-is-peak-game/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/it/</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://peak-game.wiki/it/about/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/it/privacy/</loc><lastmod>2026-08-17</lastmod></url>
   <url><loc>https://peak-game.wiki/it/terms/</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://peak-game.wiki/it/map-rotation/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/it/achievements/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/it/peak-biomes-list/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/it/peak-game-update/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://peak-game.wiki/it/what-is-peak-game/</loc><lastmod>2026-09-01</lastmod></url>
 </urlset>
