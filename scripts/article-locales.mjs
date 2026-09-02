@@ -1152,3 +1152,44 @@ for (const [locale, translation] of Object.entries(whatIsPeakTranslations)) {
 for (const [locale, translation] of Object.entries(peakMapRotationScheduleTranslations)) {
   articleLocaleTranslations[locale]['peak-map-rotation-schedule'] = translation;
 }
+
+const localizedBiomeUpdateCopy = {
+  zh: {
+    sentence: '\u5b98\u65b9\u7684\u751f\u7269\u7fa4\u7cfb\u516c\u544a\u548c\u8865\u4e01\u80cc\u666f\uff0c\u8bf7\u9605\u8bfb[[link:peak-game-update|\u66f4\u65b0\u65e5\u5fd7]]\u3002',
+    label: '\u9605\u8bfb\u66f4\u65b0\u65e5\u5fd7',
+  },
+  es: {
+    sentence: 'Para conocer los anuncios oficiales de biomas y el contexto de los parches, lee el [[link:peak-game-update|registro de actualizaciones]].',
+    label: 'Leer el registro de actualizaciones',
+  },
+  ja: {
+    sentence: '\u516c\u5f0f\u306e\u30d0\u30a4\u30aa\u30fc\u30e0\u544a\u77e5\u3068\u30d1\u30c3\u30c1\u306e\u80cc\u666f\u306f\u3001[[link:peak-game-update|\u66f4\u65b0\u30ed\u30b0]]\u3067\u78ba\u8a8d\u3067\u304d\u307e\u3059\u3002',
+    label: '\u66f4\u65b0\u30ed\u30b0\u3092\u8aad\u3080',
+  },
+  fr: {
+    sentence: 'Pour les annonces officielles de biomes et le contexte des patches, consultez le [[link:peak-game-update|journal des mises \u00e0 jour]].',
+    label: 'Lire le journal des mises \u00e0 jour',
+  },
+  de: {
+    sentence: 'Offizielle Biom-Ank\u00fcndigungen und Patch-Kontext findest du im [[link:peak-game-update|Update-Log]].',
+    label: 'Update-Log lesen',
+  },
+  pt: {
+    sentence: 'Para an\u00fancios oficiais de biomas e contexto dos patches, leia o [[link:peak-game-update|registro de atualiza\u00e7\u00f5es]].',
+    label: 'Ler o registro de atualiza\u00e7\u00f5es',
+  },
+  ko: {
+    sentence: '\uc815\uc2dd \ubc14\uc774\uc634 \uacf5\uc9c0\uc640 \ud328\uce58 \ubc30\uacbd\uc740 [[link:peak-game-update|\uc5c5\ub370\uc774\ud2b8 \ub85c\uadf8]]\uc5d0\uc11c \ud655\uc778\ud558\uc138\uc694.',
+    label: '\uc5c5\ub370\uc774\ud2b8 \ub85c\uadf8 \uc77d\uae30',
+  },
+  it: {
+    sentence: 'Per gli annunci ufficiali sui biomi e il contesto delle patch, leggi il [[link:peak-game-update|registro degli aggiornamenti]].',
+    label: 'Leggi il registro degli aggiornamenti',
+  },
+};
+
+for (const [locale, copy] of Object.entries(localizedBiomeUpdateCopy)) {
+  const translation = articleLocaleTranslations[locale]['peak-biomes-list'];
+  translation.sections[2].afterTable = [translation.sections[2].afterTable, copy.sentence].filter(Boolean).join(' ');
+  translation.related = [...translation.related, ['peak-game-update', copy.label]];
+}

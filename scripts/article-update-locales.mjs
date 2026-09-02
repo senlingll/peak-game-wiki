@@ -657,6 +657,47 @@ export const peakGameUpdateTranslations = {
   },
 };
 
+const localizedBiomeRosterCopy = {
+  zh: {
+    sentence: '\u5982\u9700\u67e5\u770b\u8fd9\u4e9b\u540d\u79f0\u7684\u3001\u7531\u6765\u6e90\u652f\u6301\u7684\u540d\u5355\uff0c\u8bf7\u53c2\u9605[[link:peak-biomes-list|\u751f\u7269\u7fa4\u7cfb\u5217\u8868]]\u3002',
+    label: '\u6d4f\u89c8\u751f\u7269\u7fa4\u7cfb\u540d\u5355',
+  },
+  es: {
+    sentence: 'Para consultar una lista de estos nombres respaldada por fuentes, revisa la [[link:peak-biomes-list|lista de biomas]].',
+    label: 'Explorar la lista de biomas',
+  },
+  ja: {
+    sentence: '\u3053\u308c\u3089\u306e\u540d\u524d\u3092\u51fa\u5178\u4ed8\u304d\u3067\u78ba\u8a8d\u3067\u304d\u308b\u4e00\u89a7\u306f\u3001[[link:peak-biomes-list|\u30d0\u30a4\u30aa\u30fc\u30e0\u4e00\u89a7]]\u3092\u3054\u89a7\u304f\u3060\u3055\u3044\u3002',
+    label: '\u30d0\u30a4\u30aa\u30fc\u30e0\u4e00\u89a7\u3092\u898b\u308b',
+  },
+  fr: {
+    sentence: 'Pour consulter une liste de ces noms \u00e9tay\u00e9e par les sources, lisez la [[link:peak-biomes-list|liste des biomes]].',
+    label: 'Voir la liste des biomes',
+  },
+  de: {
+    sentence: 'Eine quellenbasierte Liste dieser Namen findest du in der [[link:peak-biomes-list|Biome-Liste]].',
+    label: 'Biome-Liste durchsuchen',
+  },
+  pt: {
+    sentence: 'Para ver uma lista desses nomes apoiada por fontes, consulte a [[link:peak-biomes-list|lista de biomas]].',
+    label: 'Ver a lista de biomas',
+  },
+  ko: {
+    sentence: '\uc774 \uc774\ub984\ub4e4\uc758 \ucd9c\ucc98 \uae30\ubc18 \ubaa9\ub85d\uc740 [[link:peak-biomes-list|\ubc14\uc774\uc634 \ubaa9\ub85d]]\uc5d0\uc11c \ud655\uc778\ud558\uc138\uc694.',
+    label: '\ubc14\uc774\uc634 \ubaa9\ub85d \ubcf4\uae30',
+  },
+  it: {
+    sentence: 'Per un elenco di questi nomi basato sulle fonti, consulta la [[link:peak-biomes-list|lista dei biomi]].',
+    label: 'Esplora la lista dei biomi',
+  },
+};
+
+for (const [locale, copy] of Object.entries(localizedBiomeRosterCopy)) {
+  const translation = peakGameUpdateTranslations[locale];
+  translation.sections[2].paragraphs[1] += ` ${copy.sentence}`;
+  translation.related = [...translation.related, ['peak-biomes-list', copy.label]];
+}
+
 const localizedSummaries = {
   en: {
     [officialTitles.patch203]: "Official patch-notes post for version 2.03.a; open the source for the exact changes.",

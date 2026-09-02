@@ -513,6 +513,7 @@ function localizedArticleGuide(locale, slug) {
       ...translated,
       table: translated.table ? { ...section.table, ...translated.table } : section.table,
       heroImage: translated.heroImage ? { ...section.heroImage, ...translated.heroImage } : section.heroImage,
+      afterTable: locale === 'en' ? (translated.afterTable ?? section.afterTable) : translated.afterTable,
     };
   });
   return {
@@ -856,7 +857,7 @@ function renderNewArticleSection(locale, section, options) {
   if (section.kind === 'reset-times') dataMarkup = renderArticleResetTimes(section, locale, options.todayMap, options.buildDate, options.buildTimestamp);
   if (section.kind === 'history') dataMarkup = renderArticleHistory(locale, options.mapHistory, options.todayMap, options.buildDate, options.buildTimestamp);
   const table = section.kind === 'reset-times' ? '' : renderArticleTable(section.table, locale, publishedArticles);
-  const afterTable = locale === 'en' && section.afterTable ? `<p>${renderArticleInline(section.afterTable, locale, publishedArticles)}</p>` : '';
+  const afterTable = section.afterTable ? `<p>${renderArticleInline(section.afterTable, locale, publishedArticles)}</p>` : '';
   return `<section id="${escapeHtml(section.id)}" class="article-section"><h2>${escapeHtml(section.title)}</h2>${paragraphs}${dataMarkup}${image}${bullets}${table}${afterTable}</section>`;
 }
 

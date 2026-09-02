@@ -202,6 +202,47 @@ export const peakMapRotationScheduleTranslations = {
   },
 };
 
+const localizedHistoryBiomeCopy = {
+  zh: {
+    sentence: '\u6b63\u5728\u5b66\u4e60\u751f\u7269\u7fa4\u7cfb\u540d\u79f0\uff1f\u5148\u67e5\u770b[[link:peak-biomes-list|\u751f\u7269\u7fa4\u7cfb\u5217\u8868]]\uff0c\u518d\u5bf9\u6bd4\u8fd9\u4e9b\u5e26\u65e5\u671f\u7684\u8bb0\u5f55\u3002',
+    label: '\u6d4f\u89c8\u751f\u7269\u7fa4\u7cfb\u540d\u5355',
+  },
+  es: {
+    sentence: '\u00bfEst\u00e1s aprendiendo los nombres de los biomas? Empieza con la [[link:peak-biomes-list|lista de biomas]] y compara despu\u00e9s estos registros fechados.',
+    label: 'Explorar la lista de biomas',
+  },
+  ja: {
+    sentence: '\u30d0\u30a4\u30aa\u30fc\u30e0\u540d\u3092\u899a\u3048\u3066\u3044\u307e\u3059\u304b\uff1f\u307e\u305a[[link:peak-biomes-list|\u30d0\u30a4\u30aa\u30fc\u30e0\u4e00\u89a7]]\u3092\u78ba\u8a8d\u3057\u3001\u305d\u306e\u5f8c\u3067\u65e5\u4ed8\u4ed8\u304d\u306e\u8a18\u9332\u3092\u6bd4\u3079\u3066\u304f\u3060\u3055\u3044\u3002',
+    label: '\u30d0\u30a4\u30aa\u30fc\u30e0\u4e00\u89a7\u3092\u898b\u308b',
+  },
+  fr: {
+    sentence: 'Vous apprenez les noms des biomes ? Commencez par la [[link:peak-biomes-list|liste des biomes]], puis comparez ces relev\u00e9s dat\u00e9s.',
+    label: 'Voir la liste des biomes',
+  },
+  de: {
+    sentence: 'Lernst du die Biom-Namen? Beginne mit der [[link:peak-biomes-list|Biome-Liste]] und vergleiche danach diese datierten Eintr\u00e4ge.',
+    label: 'Biome-Liste durchsuchen',
+  },
+  pt: {
+    sentence: 'Est\u00e1 aprendendo os nomes dos biomas? Comece pela [[link:peak-biomes-list|lista de biomas]] e compare depois estes registros datados.',
+    label: 'Ver a lista de biomas',
+  },
+  ko: {
+    sentence: '\ubc14\uc774\uc634 \uc774\ub984\uc744 \uc775\ud788\ub294 \uc911\uc778\uac00\uc694? \uba3c\uc800 [[link:peak-biomes-list|\ubc14\uc774\uc634 \ubaa9\ub85d]]\uc744 \ubcf4\uace0 \ub0a0\uc9dc\uac00 \uc788\ub294 \uae30\ub85d\uacfc \ube44\uad50\ud558\uc138\uc694.',
+    label: '\ubc14\uc774\uc634 \ubaa9\ub85d \ubcf4\uae30',
+  },
+  it: {
+    sentence: 'Stai imparando i nomi dei biomi? Parti dalla [[link:peak-biomes-list|lista dei biomi]], poi confronta questi record datati.',
+    label: 'Esplora la lista dei biomi',
+  },
+};
+
+for (const [locale, copy] of Object.entries(localizedHistoryBiomeCopy)) {
+  const translation = peakMapRotationScheduleTranslations[locale];
+  translation.dynamic.historyNote += ` ${copy.sentence}`;
+  translation.related = [...translation.related, ['peak-biomes-list', copy.label]];
+}
+
 peakMapRotationScheduleTranslations.zh.sections[2].bullets = [
   ['\u65f6\u95f4', '\u5c06\u5df2\u9a8c\u8bc1\u7684 ISO \u91cd\u7f6e\u65f6\u95f4\u6362\u7b97\u5230\u4f60\u7684\u65f6\u533a\u3002'],
   ['\u987a\u5e8f', '\u9605\u8bfb\u5e26\u65e5\u671f\u7684\u751f\u7269\u7fa4\u7cfb\u548c\u8def\u7ebf\u8bb0\u5f55\uff0c\u4e0d\u8981\u731c\u6d4b\u7f3a\u5931\u7684\u65e5\u671f\u3002'],
