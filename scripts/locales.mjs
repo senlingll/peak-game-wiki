@@ -623,7 +623,7 @@ function renderArticleHistory(locale, data, todayMap, buildDate, buildTimestamp)
   if (!entries.length) return `<p class="article-data-pending">${escapeHtml(copy.historyEmpty)}</p>`;
   const rows = entries.map((entry) => `<tr><td><time datetime="${escapeHtml(entry.date)}">${escapeHtml(formatDateLabel(locale, entry.date))}</time></td><td>${escapeHtml(entry.map || entry.route || copy.historyPending)}</td><td>${escapeHtml(entry.biome || copy.historyPending)}</td><td>${entry.source?.url ? `<a href="${escapeHtml(entry.source.url)}" target="_blank" rel="noopener">${escapeHtml(entry.source.label || copy.historySourceVerified)} <span aria-hidden="true">\u2192</span></a>` : escapeHtml(copy.historySourcePending)}</td></tr>`).join('');
   const [dateHeader, mapHeader, biomeHeader, sourceHeader] = copy.historyHeaders;
-  return `<div class="article-table-wrap article-data-table-wrap"><table><caption>${escapeHtml(copy.historyCaption)}</caption><thead><tr><th scope="col">${escapeHtml(dateHeader)}</th><th scope="col">${escapeHtml(mapHeader)}</th><th scope="col">${escapeHtml(biomeHeader)}</th><th scope="col">${escapeHtml(sourceHeader)}</th></tr></thead><tbody>${rows}</tbody></table></div><p class="article-data-note">${escapeHtml(copy.historyNote)}</p>`;
+  return `<div class="article-table-wrap article-data-table-wrap"><table><caption>${escapeHtml(copy.historyCaption)}</caption><thead><tr><th scope="col">${escapeHtml(dateHeader)}</th><th scope="col">${escapeHtml(mapHeader)}</th><th scope="col">${escapeHtml(biomeHeader)}</th><th scope="col">${escapeHtml(sourceHeader)}</th></tr></thead><tbody>${rows}</tbody></table></div><p class="article-data-note">${renderArticleInline(copy.historyNote, locale)}</p>`;
 }
 
 const metaDescriptionOverrides = {
@@ -856,7 +856,8 @@ function renderNewArticleSection(locale, section, options) {
   if (section.kind === 'reset-times') dataMarkup = renderArticleResetTimes(section, locale, options.todayMap, options.buildDate, options.buildTimestamp);
   if (section.kind === 'history') dataMarkup = renderArticleHistory(locale, options.mapHistory, options.todayMap, options.buildDate, options.buildTimestamp);
   const table = section.kind === 'reset-times' ? '' : renderArticleTable(section.table, locale, publishedArticles);
-  return `<section id="${escapeHtml(section.id)}" class="article-section"><h2>${escapeHtml(section.title)}</h2>${paragraphs}${dataMarkup}${image}${bullets}${table}</section>`;
+  const afterTable = locale === 'en' && section.afterTable ? `<p>${renderArticleInline(section.afterTable, locale, publishedArticles)}</p>` : '';
+  return `<section id="${escapeHtml(section.id)}" class="article-section"><h2>${escapeHtml(section.title)}</h2>${paragraphs}${dataMarkup}${image}${bullets}${table}${afterTable}</section>`;
 }
 
 export function renderArticlePage(locale, slug, options = {}) {

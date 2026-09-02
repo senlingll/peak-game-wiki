@@ -88,6 +88,7 @@ export const articleGuides = {
             ['Patch note', 'An official change title and any details stated in that post.', 'A complete unofficial tier list or a mechanic not mentioned by the post.'],
           ],
         },
+        afterTable: 'For official biome announcements and patch context, read the [[link:peak-game-update|update log]].',
       },
       {
         id: 'today-biome',
@@ -137,6 +138,7 @@ export const articleGuides = {
       ['map-rotation', "Check today's PEAK map"],
       ['what-is-peak-game', 'Read what PEAK is'],
       ['peak-map-rotation-schedule', 'See the rotation schedule'],
+      ['peak-game-update', 'Read the update log'],
     ],
   },
 
@@ -187,7 +189,7 @@ export const articleGuides = {
         title: 'How a PEAK game update can affect the map rotation',
         paragraphs: [
           'An update and a daily rotation answer different questions. A patch note describes a version event; the rotation describes the route context being reported for a particular date. A biome announcement may explain why a new area is worth checking, but the announcement alone does not prove that it is the active route in every session. Read the update first, then check dated map data and confirm in-game.',
-          'This distinction matters most when the title contains new biome or route language. The official feed can establish that Gloom, Citadel, Caldera, or The Kiln was mentioned in an update. It cannot, without a current route record, answer which sequence your lobby will show after the reset. For reset timing and recent dated entries, see the [[link:peak-map-rotation-schedule|rotation schedule]].',
+          'This distinction matters most when the title contains new biome or route language. The official feed can establish that Gloom, Citadel, Caldera, or The Kiln was mentioned in an update. It cannot, without a current route record, answer which sequence your lobby will show after the reset. For reset timing and recent dated entries, see the [[link:peak-map-rotation-schedule|rotation schedule]]. For a source-backed roster of these names, see the [[link:peak-biomes-list|biomes list]].',
         ],
         bullets: [
           ['Version check', 'Write down the patch title and date before reusing an older route note.'],
@@ -236,6 +238,7 @@ export const articleGuides = {
       ['map-rotation', "Open today's map"],
       ['peak-map-rotation-schedule', 'Read the rotation schedule'],
       ['what-is-peak-game', 'Start with the beginner guide'],
+      ['peak-biomes-list', 'Browse the biomes roster'],
     ],
   },
 
@@ -494,6 +497,7 @@ export const articleGuides = {
       ['map-rotation', "Open today's PEAK map"],
       ['peak-game-update', 'Read the patch notes'],
       ['what-is-peak-game', 'Learn the map vocabulary'],
+      ['peak-biomes-list', 'Browse the biomes roster'],
     ],
   },
 };

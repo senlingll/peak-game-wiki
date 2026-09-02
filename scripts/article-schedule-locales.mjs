@@ -22,7 +22,7 @@ const englishDynamic = {
   historyPending: 'Pending',
   historySourcePending: 'Source pending',
   historySourceVerified: 'Verified source',
-  historyNote: 'Rows are appended only when the build source has a matching date and enough location fields to identify the route context. They describe observations, not a guaranteed future cycle.',
+  historyNote: 'Rows are appended only when the build source has a matching date and enough location fields to identify the route context. They describe observations, not a guaranteed future cycle. Learning the biome names? Start with the [[link:peak-biomes-list|biomes list]], then compare these dated records.',
 };
 
 export const peakMapRotationScheduleTranslations = {
