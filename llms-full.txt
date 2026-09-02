@@ -65,3 +65,7 @@ The maintained update data records PATCH 2.02.a on 18 August 2026. As with the o
 ### What Is PEAK? (https://peak-game.wiki/what-is-peak-game)
 
 The beginner guide explains PEAK as a Steam co-op climbing and survival game, using the official store page for platform, modes, and the group-size statement. It separates maps, routes, and biome labels, explains the build-time daily map entry, and gives a practical first-run loop: confirm the session, scout before spending utility, assign shared resources, choose a pause point, and record a dated observation. Advice is labeled as practical guidance rather than a permanent game rule. The guide links to the daily map page, the biomes list, and the update log, while the official Steam page remains the authority for current platform and game information.
+
+### PEAK Map Rotation Schedule (https://peak-game.wiki/peak-map-rotation-schedule)
+
+The map rotation schedule explains the current build-time reset record, converts 17:00 UTC for common player time zones, and keeps reset timing separate from any unverified fixed sequence. Its dated history table is populated from the maintained map-history file, while today's map block is generated from the same source used by the canonical map-rotation page. The page links to official Steam news for patch context and labels pending or older records instead of filling missing days by prediction.

@@ -4,6 +4,7 @@ import { achievementGuides } from './achievement-guide.mjs';
 import { articleGuides, articleOrder } from './article-guides.mjs';
 import { articleLiveMapCopy, articleLocaleTranslations } from './article-locales.mjs';
 import { articleUpdateCopy } from './article-update-locales.mjs';
+import { articleScheduleDynamicFallback } from './article-schedule-locales.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
@@ -429,36 +430,39 @@ function formatCountdown(locale, resetAt, buildTimestamp) {
 
 function renderTodayMapMedia(locale, data) {
   const copy = todayMapCopy[locale] ?? todayMapCopy.en;
+  const formatMediaCopy = (template, label) => String(template ?? '').replaceAll('{biome}', label).replaceAll('{date}', formatDateLabel(locale, data.date));
   if (!data.media.length) {
     return `<div class="today-map-media today-map-media-pending" role="img" aria-label="${escapeHtml(copy.mediaPending)}"><strong>${escapeHtml(copy.mediaPending)}</strong><span>${escapeHtml(copy.mediaPendingNote)}</span></div>`;
   }
   const cards = data.media.map((item, index) => {
     const label = item.biome || `${copy.title} ${index + 1}`;
+    const alt = locale === 'en' && item.alt ? item.alt : formatMediaCopy(copy.mediaAlt, label) || item.alt || label;
+    const caption = locale === 'en' && item.caption ? item.caption : formatMediaCopy(copy.mediaCaption, label) || item.caption || data.source?.label || copy.title;
     const media = item.type === 'video'
       ? `<video controls preload="metadata" width="1200" height="675"><source src="${escapeHtml(item.url)}"${item.mimeType ? ` type="${escapeHtml(item.mimeType)}"` : ''} /></video>`
-      : `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.alt || label)}" width="1200" height="675" loading="eager" />`;
+      : `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(alt)}" width="1200" height="675" loading="eager" />`;
     const active = index === 0;
-    return `<figure id="today-map-slide-${index}" class="today-map-media-card${active ? ' is-active' : ''}" data-carousel-slide role="group" aria-roledescription="slide" aria-label="${index + 1} of ${data.media.length}" aria-hidden="${active ? 'false' : 'true'}">${media}<figcaption><strong>${escapeHtml(label)}</strong><span>${escapeHtml(item.caption || data.source?.label || copy.title)}</span></figcaption></figure>`;
+    return `<figure id="today-map-slide-${index}" class="today-map-media-card${active ? ' is-active' : ''}" data-carousel-slide role="group" aria-roledescription="slide" aria-label="${index + 1} of ${data.media.length}" aria-hidden="${active ? 'false' : 'true'}">${media}<figcaption><strong>${escapeHtml(label)}</strong><span>${escapeHtml(caption)}</span></figcaption></figure>`;
   }).join('');
   const indicators = data.media.map((item, index) => {
     const label = item.biome || `${copy.title} ${index + 1}`;
-    return `<button class="today-map-carousel-dot${index === 0 ? ' is-active' : ''}" data-carousel-index="${index}" type="button" aria-pressed="${index === 0 ? 'true' : 'false'}" aria-controls="today-map-slide-${index}" aria-label="Show ${escapeHtml(label)} map"><span aria-hidden="true"></span></button>`;
+    return `<button class="today-map-carousel-dot${index === 0 ? ' is-active' : ''}" data-carousel-index="${index}" type="button" aria-pressed="${index === 0 ? 'true' : 'false'}" aria-controls="today-map-slide-${index}" aria-label="${escapeHtml(formatMediaCopy(copy.mediaShow, label))}"><span aria-hidden="true"></span></button>`;
   }).join('');
   const controls = data.media.length > 1
-    ? `<button class="today-map-carousel-arrow today-map-carousel-prev" data-carousel-prev type="button" aria-label="Previous map" title="Previous map"><span aria-hidden="true">\u2190</span></button><button class="today-map-carousel-arrow today-map-carousel-next" data-carousel-next type="button" aria-label="Next map" title="Next map"><span aria-hidden="true">\u2192</span></button>`
+    ? `<button class="today-map-carousel-arrow today-map-carousel-prev" data-carousel-prev type="button" aria-label="${escapeHtml(copy.mediaPrevious)}" title="${escapeHtml(copy.mediaPrevious)}"><span aria-hidden="true">\u2190</span></button><button class="today-map-carousel-arrow today-map-carousel-next" data-carousel-next type="button" aria-label="${escapeHtml(copy.mediaNext)}" title="${escapeHtml(copy.mediaNext)}"><span aria-hidden="true">\u2192</span></button>`
     : '';
-  return `<div class="today-map-carousel" data-today-carousel tabindex="0" aria-roledescription="carousel" aria-label="${escapeHtml(copy.title)}"><div class="today-map-carousel-viewport"><div class="today-map-carousel-track" data-carousel-track>${cards}</div>${controls}</div><div class="today-map-carousel-dots" role="group" aria-label="Map slides">${indicators}</div></div>`;
+  return `<div class="today-map-carousel" data-today-carousel tabindex="0" aria-roledescription="carousel" aria-label="${escapeHtml(copy.title)}"><div class="today-map-carousel-viewport"><div class="today-map-carousel-track" data-carousel-track>${cards}</div>${controls}</div><div class="today-map-carousel-dots" role="group" aria-label="${escapeHtml(copy.mediaSlides)}">${indicators}</div></div>`;
 }
 
 function renderTodayMap(locale, data, buildDate, buildTimestamp) {
   const copy = todayMapCopy[locale] ?? todayMapCopy.en;
   const snapshot = normalizeTodayMap(data, buildDate, buildTimestamp);
   const mapValue = snapshot.map || copy.pending;
-  const routeValue = snapshot.route || copy.pending;
+  const routeValue = snapshot.route === 'Daily biome sequence' ? copy.dailyRoute : snapshot.route || copy.pending;
   const biomeValue = snapshot.biome || copy.pending;
   const countdown = formatCountdown(locale, snapshot.resetAt, buildTimestamp);
   const sourceMarkup = snapshot.source
-    ? `<a href="${escapeHtml(snapshot.source.url)}" target="_blank" rel="noopener">${escapeHtml(snapshot.source.label || copy.source)} <span aria-hidden="true">\u2192</span></a>${snapshot.fallbackSource ? `<a href="${escapeHtml(snapshot.fallbackSource.url)}" target="_blank" rel="noopener">${escapeHtml(snapshot.fallbackSource.label || copy.source)} <span aria-hidden="true">\u2192</span></a>` : ''}`
+    ? `<a href="${escapeHtml(snapshot.source.url)}" target="_blank" rel="noopener">${escapeHtml(snapshot.source.label || copy.source)} <span aria-hidden="true">\u2192</span></a>${snapshot.fallbackSource ? `<a href="${escapeHtml(snapshot.fallbackSource.url)}" target="_blank" rel="noopener">${escapeHtml(copy.fallbackSource || snapshot.fallbackSource.label || copy.source)} <span aria-hidden="true">\u2192</span></a>` : ''}`
     : `<span>${escapeHtml(copy.pending)}</span>`;
   const status = snapshot.available ? copy.verified : copy.pending;
   const panel = snapshot.available
@@ -565,33 +569,34 @@ function timeAtZone(date, timeZone) {
   return new Intl.DateTimeFormat('en-US', { timeZone, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(date);
 }
 
-function resetDayLabel(date, timeZone) {
+function resetDayLabel(date, timeZone, labels = {}) {
   const utcKey = dateKeyAtZone(date, 'UTC');
   const localKey = dateKeyAtZone(date, timeZone);
-  if (localKey > utcKey) return ' next day';
-  if (localKey < utcKey) return ' previous day';
+  if (localKey > utcKey) return labels.nextDay || 'next day';
+  if (localKey < utcKey) return labels.previousDay || 'previous day';
   return '';
 }
 
+function articleScheduleDynamicCopy(locale) {
+  return articleLocaleTranslations[locale]?.['peak-map-rotation-schedule']?.dynamic ?? articleScheduleDynamicFallback;
+}
+
 function renderArticleResetTimes(section, locale, data, buildDate, buildTimestamp) {
+  const copy = articleScheduleDynamicCopy(locale);
   const snapshot = normalizeTodayMap(data, buildDate, buildTimestamp);
   const resetDate = parseDateValue(snapshot.resetAt);
-  const zones = [
-    ['UTC', 'UTC', 'Stable source-time reference.'],
-    ['China Standard Time (UTC+8)', 'Asia/Shanghai', 'The current record reaches China after midnight.'],
-    ['Japan / Korea (UTC+9)', 'Asia/Tokyo', 'Japan and Korea share this offset.'],
-    ['Central Europe (summer UTC+2)', 'Europe/Berlin', 'Winter local time is one hour earlier.'],
-    ['United Kingdom (summer UTC+1)', 'Europe/London', 'Winter local time is one hour earlier.'],
-    ['US Eastern (daylight UTC-4)', 'America/New_York', 'Standard time is one hour earlier.'],
-    ['US Pacific (daylight UTC-7)', 'America/Los_Angeles', 'Standard time is one hour earlier.'],
-  ];
+  const zones = copy.resetZones || articleScheduleDynamicFallback.resetZones;
   const table = resetDate
     ? {
-      caption: 'Current build-time reset conversion for the verified map record',
-      headers: ['Reference zone', 'Reset time', 'Reading note'],
-      rows: zones.map(([label, timeZone, note]) => [label, `${timeAtZone(resetDate, timeZone)}${resetDayLabel(resetDate, timeZone)}`, note]),
+      caption: copy.resetTableCaption,
+      headers: copy.resetTableHeaders,
+      rows: zones.map(([label, timeZone, note]) => [label, `${timeAtZone(resetDate, timeZone)}${resetDayLabel(resetDate, timeZone, copy) ? ` ${resetDayLabel(resetDate, timeZone, copy)}` : ''}`, note]),
     }
-    : section.table;
+    : section.table || {
+      caption: copy.resetTableCaption,
+      headers: copy.resetTableHeaders,
+      rows: zones.map(([label, , note]) => [label, copy.resetPending, note]),
+    };
   return renderArticleTable(table, locale);
 }
 
@@ -608,15 +613,17 @@ function renderArticleUpdates(locale, data) {
 }
 
 function renderArticleHistory(locale, data, todayMap, buildDate, buildTimestamp) {
+  const copy = articleScheduleDynamicCopy(locale);
   const history = Array.isArray(data) ? [...data] : [];
   const current = normalizeTodayMap(todayMap, buildDate, buildTimestamp);
   if (current.available && !history.some((entry) => entry?.date === current.date)) {
     history.unshift({ date: current.date, map: current.map, route: current.route, biome: current.biome, resetAt: current.resetAt, source: current.source });
   }
   const entries = history.filter((entry) => entry?.date && (entry.map || entry.route || entry.biome)).sort((left, right) => right.date.localeCompare(left.date)).slice(0, 14);
-  if (!entries.length) return '<p class="article-data-pending">No verified rotation records are available for this build.</p>';
-  const rows = entries.map((entry) => `<tr><td><time datetime="${escapeHtml(entry.date)}">${escapeHtml(formatDateLabel(locale, entry.date))}</time></td><td>${escapeHtml(entry.map || entry.route || 'Pending')}</td><td>${escapeHtml(entry.biome || 'Pending')}</td><td>${entry.source?.url ? `<a href="${escapeHtml(entry.source.url)}" target="_blank" rel="noopener">${escapeHtml(entry.source.label || 'Verified source')} <span aria-hidden="true">\u2192</span></a>` : 'Source pending'}</td></tr>`).join('');
-  return `<div class="article-table-wrap article-data-table-wrap"><table><caption>Recent verified PEAK rotation records</caption><thead><tr><th scope="col">Date</th><th scope="col">Map or sequence</th><th scope="col">Biome context</th><th scope="col">Source</th></tr></thead><tbody>${rows}</tbody></table></div><p class="article-data-note">Rows are appended only when the build source has a matching date and enough location fields to identify the route context. They describe observations, not a guaranteed future cycle.</p>`;
+  if (!entries.length) return `<p class="article-data-pending">${escapeHtml(copy.historyEmpty)}</p>`;
+  const rows = entries.map((entry) => `<tr><td><time datetime="${escapeHtml(entry.date)}">${escapeHtml(formatDateLabel(locale, entry.date))}</time></td><td>${escapeHtml(entry.map || entry.route || copy.historyPending)}</td><td>${escapeHtml(entry.biome || copy.historyPending)}</td><td>${entry.source?.url ? `<a href="${escapeHtml(entry.source.url)}" target="_blank" rel="noopener">${escapeHtml(entry.source.label || copy.historySourceVerified)} <span aria-hidden="true">\u2192</span></a>` : escapeHtml(copy.historySourcePending)}</td></tr>`).join('');
+  const [dateHeader, mapHeader, biomeHeader, sourceHeader] = copy.historyHeaders;
+  return `<div class="article-table-wrap article-data-table-wrap"><table><caption>${escapeHtml(copy.historyCaption)}</caption><thead><tr><th scope="col">${escapeHtml(dateHeader)}</th><th scope="col">${escapeHtml(mapHeader)}</th><th scope="col">${escapeHtml(biomeHeader)}</th><th scope="col">${escapeHtml(sourceHeader)}</th></tr></thead><tbody>${rows}</tbody></table></div><p class="article-data-note">${escapeHtml(copy.historyNote)}</p>`;
 }
 
 const metaDescriptionOverrides = {
@@ -801,8 +808,14 @@ export function renderMapGuide(locale, options = {}) {
   const html = normalizeSteamNewsLinks(renderMapGuideHtml(locale, options));
   const marker = '<div class="container article-layout">';
   const publishedArticles = options.publishedArticles ?? articleOrder;
+  const scheduleBandCopy = articleLocaleTranslations[locale]?.['peak-map-rotation-schedule']?.scheduleBand ?? {
+    aria: 'PEAK schedule guide',
+    eyebrow: 'PEAK schedule guide',
+    title: 'Need the reset time? Check the PEAK Map Rotation Schedule.',
+    link: 'Read the schedule',
+  };
   const scheduleBand = publishedArticles.includes('peak-map-rotation-schedule')
-    ? `<section class="article-link-band" aria-label="PEAK schedule guide"><div class="container article-link-band-inner"><div><p class="eyebrow">PEAK schedule guide</p><h2>Need the reset time? Check the PEAK Map Rotation Schedule.</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'peak-map-rotation-schedule')}">Read the schedule <span aria-hidden="true">\u2192</span></a></div></div></section>`
+    ? `<section class="article-link-band" aria-label="${escapeHtml(scheduleBandCopy.aria)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(scheduleBandCopy.eyebrow)}</p><h2>${escapeHtml(scheduleBandCopy.title)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'peak-map-rotation-schedule')}">${escapeHtml(scheduleBandCopy.link)} <span aria-hidden="true">\u2192</span></a></div></div></section>`
     : '';
   return html.replace(marker, `${scheduleBand}${marker}`);
 }

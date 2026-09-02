@@ -8,6 +8,7 @@
 - [PEAK biomes list](https://peak-game.wiki/peak-biomes-list): A source-aware list of Shore, Tropics, Roots, Alpine, Mesa, Caldera, The Kiln, Gloom, and Citadel, with terrain-reading notes and a dated map entry.
 - [PEAK game update log](https://peak-game.wiki/peak-game-update): A dated, source-aware log of official patch titles, content announcements, map-rotation context, and the current daily-map entry.
 - [What is PEAK?](https://peak-game.wiki/what-is-peak-game): A beginner guide to PEAK's co-op climbing loop, maps, biomes, rotation vocabulary, first-run checklist, and current daily-map entry.
+- [PEAK map rotation schedule](https://peak-game.wiki/peak-map-rotation-schedule): A dated reset-time reference with UTC and local conversions, recent verified rotation records, today's map entry, and patch-aware caveats.
 - [PEAK achievements guide](https://peak-game.wiki/achievements): A version-aware guide to Steam achievements, in-game badges, progress tracking, custom-run checks, and missing-unlock troubleshooting.
 
 ## Common Resources

@@ -1,5 +1,6 @@
 import { peakGameUpdateTranslations } from './article-update-locales.mjs';
 import { whatIsPeakTranslations } from './article-beginner-locales.mjs';
+import { peakMapRotationScheduleTranslations } from './article-schedule-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1146,4 +1147,8 @@ for (const [locale, translation] of Object.entries(peakGameUpdateTranslations)) 
 
 for (const [locale, translation] of Object.entries(whatIsPeakTranslations)) {
   articleLocaleTranslations[locale]['what-is-peak-game'] = translation;
+}
+
+for (const [locale, translation] of Object.entries(peakMapRotationScheduleTranslations)) {
+  articleLocaleTranslations[locale]['peak-map-rotation-schedule'] = translation;
 }
