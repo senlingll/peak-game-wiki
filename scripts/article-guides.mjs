@@ -3,6 +3,7 @@ export const articleOrder = [
   'peak-game-update',
   'what-is-peak-game',
   'peak-map-rotation-schedule',
+  'peak-levels-biomes-difficulty',
 ];
 
 const officialNewsUrl = 'https://store.steampowered.com/news/app/3527290';
@@ -499,5 +500,135 @@ export const articleGuides = {
       ['what-is-peak-game', 'Learn the map vocabulary'],
       ['peak-biomes-list', 'Browse the biomes roster'],
     ],
+  },
+
+  'peak-levels-biomes-difficulty': {
+    slug: 'peak-levels-biomes-difficulty',
+    meta: {
+      title: 'PEAK Levels, Biomes & Difficulty: Complete Guide',
+      description: 'How many levels are in PEAK? Learn the biome order, the Ascents difficulty system, and how the daily map rotation changes what you climb today.',
+      schema: 'A source-aware guide to PEAK levels, biome order, the Ascents difficulty system, and the build-time daily map route.',
+    },
+    published: '2026-09-03',
+    primaryKeyword: 'PEAK levels',
+    eyebrow: 'Progression guide - route layers explained',
+    h1: 'PEAK Levels, Biomes & Difficulty \u2013 Explained',
+    intro: `If you are trying to work out how to display level information in the PEAK game, the short answer is that PEAK levels are best read as route context rather than a traditional XP bar. PEAK uses three connected ideas - a climb route, a biome label, and an Ascent difficulty modifier. This guide gives the useful answer first, then points to the [[link:peak-biomes-list|biomes list]] for deeper terrain notes. The current five-position climb is confirmed in-game for this dated build snapshot; the exact names and order are written below from build-time route data and can change after a reset or update.`,
+    answerLabel: 'The short answer',
+    answer: 'PEAK does not use one permanent player-level total as the main way to describe progress. The current maintained game-facing route roster contains nine named biome labels (confirmed in-game for this snapshot): Shore, Tropics, Roots, Alpine, Mesa, Caldera, The Kiln, Gloom, and Citadel. The current daily record displays five route positions (confirmed in-game for this snapshot). Those positions describe the climb context, while Ascents are separate difficulty modifiers that can add debuffs. Treat the counts as dated evidence, not promises that every future patch will use the same structure.',
+    tocLabel: 'On this page',
+    tocFaq: 'Levels FAQ',
+    heroImage: {
+      src: '/media/peak-levels-biomes-difficulty.webp',
+      alt: 'Editorial illustration of a PEAK climb rising through coastal, tropical, alpine, and volcanic terrain',
+      caption: 'Editorial illustration - PEAK progression is easier to read as route layers than as a conventional player-level bar.',
+      width: 1200,
+      height: 800,
+    },
+    sections: [
+      {
+        id: 'biomes-and-levels',
+        title: 'PEAK levels and biomes: the current route vocabulary',
+        paragraphs: [
+          'In PEAK, the word level is useful shorthand, but it can blur together several different things. A biome is a named regional context, a route is the sequence your run presents, and an Ascent changes the pressure applied to that run. None of those labels should be turned into a conventional character-level ladder without a source that says so.',
+          'The table below records the nine named biome labels currently exposed by the maintained route data (confirmed in-game for this snapshot). It is a reference roster, not a claim that every run contains every name or that the list is a permanent order. The terrain notes are deliberately practical: use them to decide what to inspect, then let the current session confirm the actual geometry and hazards.',
+        ],
+        image: {
+          src: '/media/peak-map-route.webp',
+          alt: 'PEAK route screenshot showing terrain and a climbing decision near a hazard',
+          caption: 'Official Steam screenshot - the visible route is the final authority for the climb in front of you.',
+          width: 1200,
+          height: 675,
+        },
+        table: {
+          caption: 'Current named biome roster - nine labels confirmed in-game for this maintained snapshot',
+          headers: ['Biome', 'Route role', 'Risk to inspect', 'Useful first question'],
+          rows: [
+            ['Shore', 'Opening coastal context.', 'Check edges and elevation changes.', 'Where is the first safe pause?'],
+            ['Tropics', 'Vegetated island context.', 'Check sight lines and climb paths.', 'Which route keeps a retreat open?'],
+            ['Roots', 'Organic or root-focused context.', 'Watch narrow passages and awkward movement.', 'Can the team regroup before the next squeeze?'],
+            ['Alpine', 'High-elevation or mountain context.', 'Protect stamina on exposed climbs.', 'Where is the next safe rest?'],
+            ['Mesa', 'Rocky plateau context.', 'Compare direct and recoverable paths.', 'What is safer if plan A fails?'],
+            ['Caldera', 'Volcanic-basin context.', 'Verify heat, lava, and current hazards.', 'What resource protects the next commitment?'],
+            ['The Kiln', 'Late or volcanic route label.', 'Inspect the current path and exits.', 'Where is the next recovery point?'],
+            ['Gloom', 'Darker or low-visibility context.', 'Set visual callouts and a retreat rule.', 'What can the team still see?'],
+            ['Citadel', 'Structured, monumental context.', 'Slow down and save tools for the final push.', 'Could the next move create a rescue problem?'],
+          ],
+        },
+      },
+      {
+        id: 'ascents-difficulty',
+        title: 'The Ascents difficulty system',
+        paragraphs: [
+          'Ascents are best understood as difficulty modifiers layered over a climb, not as extra biomes or extra player levels. When an Ascent is active, the game applies its listed handicap or debuff to the run. That means a familiar route can still require a different plan: the biome tells you the broad setting, while the Ascent changes the cost of mistakes and the value of recovery resources.',
+          'The exact modifier shown in the current game should outrank an old guide. This page therefore explains the system without inventing a permanent tier count or a universal ranking of which Ascent is hardest. Read the selection screen, note the version, and treat any community shorthand as a lead to verify rather than as an official rule.',
+        ],
+        bullets: [
+          ['Read the active modifier', 'Check the Ascent description before choosing equipment or pushing harder.'],
+          ['Separate route from difficulty', 'The biome gives context; the Ascent changes the pressure on that route.'],
+          ['Replan recovery', 'Reserve food, climbing utility, and a retreat for the displayed penalty.'],
+          ['Record the version', 'A dated note separates current effects from old community advice.'],
+        ],
+      },
+      {
+        id: 'daily-rotation-levels',
+        title: 'How the daily map rotation changes the levels',
+        kind: 'today-map',
+        paragraphs: [
+          `The quickest answer to “What level is PEAK today?” is the dated route record below. Open ${todayMapLink("check today's PEAK map rotation")} to see the same build-time map, route, biome, reset, and source fields used by the main daily page. The content is written into static HTML, so the answer is available before any client-side JavaScript runs.`,
+          'At publication, the route has five positions (confirmed in-game for this dated snapshot). Recent records place Roots, Alpine, or Mesa in the middle; the maintained source also names Caldera and The Kiln. Rotation changes today\'s route, not the biome vocabulary.',
+          'Use the rotation as a dated starting point, not a promise for every lobby or future patch. After reset, compare the sequence with the game and read the active Ascent. The map page tells you what is active; this guide explains why it matters.',
+        ],
+      },
+      {
+        id: 'read-level-information',
+        title: 'How to read a PEAK level before you climb',
+        paragraphs: [
+          'If you searched for how to display level information in the PEAK game, use the screen in front of you as a route brief rather than forcing the run into a single level number. Read the biome label, the current route position, the visible terrain, and the active Ascent together. That combination answers what you need to prepare for next.',
+          'Separate confirmed information from a useful prediction. The game-facing label and dated route record are evidence; a guess about a hazard, item location, or exact difficulty is only a planning hypothesis until the current session confirms it. This keeps old screenshots and community shorthand from becoming false guarantees.',
+        ],
+        bullets: [
+          ['Read the label', 'Record the biome and route name exactly as the current source or game displays them.'],
+          ['Inspect the commitment', 'Find the first climb, gap, visibility problem, or hazard that will change movement.'],
+          ['Reserve recovery', 'Choose a rest point and retreat rule before a narrow route removes your options.'],
+          ['Date the note', 'Keep the build date beside the observation so a later update can be compared fairly.'],
+        ],
+      },
+      {
+        id: 'next-steps',
+        title: 'Next steps for learning PEAK progression',
+        paragraphs: [
+          'Build a reliable model by combining the current route with stable vocabulary. Start with [[link:what-is-peak-game|what PEAK is]], compare the [[link:peak-biomes-list|full biomes list]], and open the [[link:peak-game-update|update log]] when a patch may matter. For today\'s answer, return to the [[link:map-rotation|daily map page]].',
+        ],
+      },
+    ],
+    faq: {
+      eyebrow: 'Quick answers',
+      title: 'PEAK levels, biomes, and difficulty FAQ',
+      items: [
+        ['How many levels are in PEAK?', 'PEAK has no permanent conventional player-level total. The maintained roster contains nine named biomes (confirmed in-game for this snapshot), and the daily record shows five route positions (also confirmed in-game). These are route facts, not an XP ladder.'],
+        ['What are the biomes in PEAK?', 'The current roster is Shore, Tropics, Roots, Alpine, Mesa, Caldera, The Kiln, Gloom, and Citadel. Daily order can change, so use the game and dated map record instead of a permanent schedule.'],
+        ['What is the Ascents difficulty system?', 'Ascents add a difficulty modifier or debuff to a climb. The biome describes route context; the active Ascent changes the pressure or handicap. Read the current in-game description because effects can change.'],
+        ['What level is PEAK today?', `There is no universal daily player-level number. Check ${todayMapLink("today's active map")} for the route and biome sequence, then read the Ascent in-game. The dated card is a reference; your session is the final authority.`],
+        ['Is PEAK a difficult game?', 'It can be demanding because route reading, stamina, equipment, recovery, and teamwork interact. Difficulty also depends on the active Ascent and terrain. A lower-pressure first run with a retreat plan is more useful than an absolute rating.'],
+      ],
+    },
+    source: {
+      eyebrow: 'Sources and limits',
+      title: 'How this levels guide is maintained',
+      body: 'The named roster and dated route claims use this site\'s maintained PEAK Map Today data, with game-facing route labels as the current reference. The official PEAK Steam page and Steam news feed add update context. Check current UI wording, Ascent effects, hazards, and the active route in-game.',
+      links: [
+        ['Official PEAK Steam page', 'https://store.steampowered.com/app/3527290/PEAK/'],
+        ['PEAK Map Today source', 'https://peak.skydler.me/'],
+        ['Official Steam news feed', officialNewsUrl],
+      ],
+    },
+    related: [
+      ['peak-biomes-list', 'Compare the full biomes list'],
+      ['map-rotation', "Check today's PEAK map"],
+      ['what-is-peak-game', 'Start with what PEAK is'],
+      ['peak-game-update', 'Read the update log'],
+    ],
+    relatedLabel: 'Related PEAK guides',
   },
 };
