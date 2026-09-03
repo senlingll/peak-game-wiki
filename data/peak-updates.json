@@ -5,6 +5,20 @@
   },
   "entries": [
     {
+      "date": "2026-09-02",
+      "title": "HOTFIX 2.4.b",
+      "summary": "Official patch or fix post titled HOTFIX 2.4.b; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1842846814441666",
+      "kind": "PATCH"
+    },
+    {
+      "date": "2026-09-02",
+      "title": "Patch 2.04.a THE KILN IS BACK",
+      "summary": "Official patch or fix post titled Patch 2.04.a THE KILN IS BACK; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1842846814441503",
+      "kind": "PATCH"
+    },
+    {
       "date": "2026-08-27",
       "title": "Patch Notes 2.03.a",
       "summary": "Official patch or fix post titled Patch Notes 2.03.a; open the source for the exact changes.",
@@ -114,20 +128,6 @@
       "title": "Patch Notes 1.61.b",
       "summary": "Official patch or fix post titled Patch Notes 1.61.b; open the source for the exact changes.",
       "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830797770231254",
-      "kind": "PATCH"
-    },
-    {
-      "date": "2026-04-16",
-      "title": "BETA branch Patch 1.61.b",
-      "summary": "Official patch or fix post titled BETA branch Patch 1.61.b; open the source for the exact changes.",
-      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830163047258473",
-      "kind": "PATCH"
-    },
-    {
-      "date": "2026-04-13",
-      "title": "Patch 1.61.a: Stability and bug fixes",
-      "summary": "Official patch or fix post titled Patch 1.61.a: Stability and bug fixes; open the source for the exact changes.",
-      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1829528821316244",
       "kind": "PATCH"
     }
   ]
