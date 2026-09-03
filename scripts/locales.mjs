@@ -715,10 +715,21 @@ function head(locale, page, title, description, schema, options = {}) {
   return `<!doctype html>\n<html lang="${meta.lang}" data-locale="${locale}">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <title>${escapeHtml(title)}</title>\n    <meta name="description" content="${escapeHtml(pageDescription)}" />\n    <meta name="theme-color" content="#17212d" />\n    <link rel="canonical" href="${canonical}" />\n    ${alternateLinks(page)}\n    <link rel="icon" href="/assets/favicon.ico" sizes="any" />\n    <link rel="manifest" href="/manifest.webmanifest" />\n    \n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(pageDescription)}" />\n    <meta property="og:image" content="${BASE_URL}/media/peak-climb-ridge.webp" />\n    <meta property="og:url" content="${canonical}" />\n    <meta property="og:locale" content="${meta.lang}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:title" content="${escapeHtml(title)}" />\n    <meta name="twitter:description" content="${escapeHtml(pageDescription)}" />\n    <meta name="twitter:image" content="${BASE_URL}/media/peak-climb-ridge.webp" />\n    <link rel="stylesheet" href="/styles.css" />\n    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9042195580058659" crossorigin="anonymous"></script>\n    \n    <script>\n      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","y3c9ye040x");\n    </script>${scripts.map((value) => `\n    <script type="application/ld+json">${jsonLd(value)}</script>`).join('')}\n  </head>`;
 }
 
-function header(locale, page, copy) {
+const NATIVE_BANNER_SRC = 'https://pl30883299.profitableratecpmnetwork.com/3531361214596141d25dc216fd8ebe0f/invoke.js';
+const NATIVE_BANNER_CONTAINER_ID = 'container-3531361214596141d25dc216fd8ebe0f';
+
+function nativeBanner() {
+  return `<script async="async" data-cfasync="false" src="${NATIVE_BANNER_SRC}"></script><div id="${NATIVE_BANNER_CONTAINER_ID}"></div>`;
+}
+
+function renderHeader(locale, page, copy) {
   const todayMap = todayMapCopy[locale] ?? todayMapCopy.en;
   const todayMapHref = page === 'map-rotation' ? '#today-map' : `${routeFor(locale, 'map-rotation')}#today-map`;
   return `<header class="site-header"><div class="container header-inner"><a class="brand" href="${routeFor(locale, 'home')}" aria-label="${escapeHtml(copy.ui.home)}"><span class="brand-mark" aria-hidden="true"><img src="/assets/peak-wiki-logo.png" alt="" width="48" height="48" /><span class="brand-fallback">P</span></span><span class="brand-copy"><strong>PEAK</strong><span>GAME WIKI</span></span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">${escapeHtml(copy.ui.menu)}</button><nav id="site-nav" class="site-nav" aria-label="${escapeHtml(copy.ui.maps)}"><a href="${todayMapHref}">${escapeHtml(todayMap.nav)}</a><a href="${routeFor(locale, 'home')}#maps">${escapeHtml(copy.ui.maps)}</a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(copy.ui.data)}</a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(copy.ui.updates)}</a><a href="${routeFor(locale, 'home')}#guides">${escapeHtml(copy.ui.guides)}</a><a href="${routeFor(locale, 'home')}#faq">${escapeHtml(copy.ui.faq)}</a></nav>${languageMenu(locale, page, copy)}<a class="header-source" href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.official)} <span aria-hidden="true">\u2192</span></a></div></header>`;
+}
+
+function header(locale, page, copy) {
+  return `${renderHeader(locale, page, copy)}${nativeBanner()}`;
 }
 
 function footer(locale, copy) {
