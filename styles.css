@@ -2075,6 +2075,14 @@ img {
   gap: 18px;
 }
 
+.footer-preferred-source {
+  display: flex;
+  width: min(220px, 100%);
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
 .footer-links a:hover {
   color: #fffdf9;
 }
@@ -2366,6 +2374,10 @@ img {
   .footer-main {
     gap: 18px;
     padding: 27px 0;
+  }
+
+  .footer-preferred-source {
+    justify-content: flex-start;
   }
 
   .footer-bottom {

@@ -729,11 +729,12 @@ function renderHeader(locale, page, copy) {
 }
 
 function header(locale, page, copy) {
-  return `${renderHeader(locale, page, copy)}${nativeBanner()}`;
+  return renderHeader(locale, page, copy);
 }
 
 function footer(locale, copy) {
-  return `<footer class="site-footer"><div class="container footer-main"><div class="footer-brand"><span class="brand-mark brand-mark-small" aria-hidden="true"><img src="/assets/peak-wiki-logo.png" alt="" width="40" height="40" /><span class="brand-fallback">P</span></span><div><strong>PEAK Game Wiki</strong><span>${escapeHtml(copy.ui.footerTag)}</span></div></div><div class="footer-links"><a href="${routeFor(locale, 'about')}">${escapeHtml(copy.legal.about.eyebrow)}</a><a href="${routeFor(locale, 'privacy')}">${escapeHtml(copy.legal.privacy.eyebrow)}</a><a href="${routeFor(locale, 'terms')}">${escapeHtml(copy.legal.terms.eyebrow)}</a><a href="https://github.com/senlingll/peak-game-wiki/issues" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.sourceNotes)}</a></div></div><div class="container footer-bottom"><span>${escapeHtml(copy.ui.independent)} \u00b7 ${escapeHtml(copy.ui.snapshot)}</span><span>${escapeHtml(copy.ui.officialLabel)}</span></div></footer>`;
+  const preferredSourceLang = localeMeta[locale].lang.toLowerCase();
+  return `${nativeBanner()}<footer class="site-footer"><div class="container footer-main"><div class="footer-brand"><span class="brand-mark brand-mark-small" aria-hidden="true"><img src="/assets/peak-wiki-logo.png" alt="" width="40" height="40" /><span class="brand-fallback">P</span></span><div><strong>PEAK Game Wiki</strong><span>${escapeHtml(copy.ui.footerTag)}</span></div></div><div class="footer-preferred-source"><div google-add-preferred-source-btn data-theme="dark" data-lang="${escapeHtml(preferredSourceLang)}"></div></div><div class="footer-links"><a href="${routeFor(locale, 'about')}">${escapeHtml(copy.legal.about.eyebrow)}</a><a href="${routeFor(locale, 'privacy')}">${escapeHtml(copy.legal.privacy.eyebrow)}</a><a href="${routeFor(locale, 'terms')}">${escapeHtml(copy.legal.terms.eyebrow)}</a><a href="https://github.com/senlingll/peak-game-wiki/issues" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.sourceNotes)}</a></div></div><div class="container footer-bottom"><span>${escapeHtml(copy.ui.independent)} \u00b7 ${escapeHtml(copy.ui.snapshot)}</span><span>${escapeHtml(copy.ui.officialLabel)}</span></div></footer><script async src="https://news.google.com/swg/js/v1/publisher.js"></script>`;
 }
 
 function itemCards(copy) {
