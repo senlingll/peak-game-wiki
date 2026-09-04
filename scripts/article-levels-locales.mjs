@@ -88,6 +88,7 @@ export const peakLevelsTranslations = {
       {
         title: '学习 PEAK 进度体系的下一步',
         paragraphs: [
+          '如果想把路线层级和难度理解转成实际准备，请继续阅读[[link:peak-game-tips|PEAK 游戏技巧]]。',
           '建立可靠理解最快的方法，是把当前路线检查和稳定术语页结合起来。如果核心玩法还不熟，先读' + articleLink('what-is-peak-game', 'PEAK 是什么') + '；遇到陌生名称时对照' + articleLink('peak-biomes-list', '完整生物群系列表') + '；怀疑路线或 Ascent 背景因补丁变化时，查看' + articleLink('peak-game-update', '更新日志') + '。需要今天的答案时，出发前回到' + articleLink('map-rotation', '每日地图页') + '。',
           '这样即使路线改变，页面仍然有用：每日记录告诉你今天检查什么，生物群系名册解释名称，而游戏本身确认当前关卡环境和难度修正。',
         ],
@@ -119,6 +120,7 @@ export const peakLevelsTranslations = {
       ['map-rotation', '查看今天的 PEAK 地图'],
       ['what-is-peak-game', '从 PEAK 是什么开始'],
       ['peak-game-update', '阅读更新日志'],
+      ['peak-game-tips', '查看 PEAK 游戏技巧'],
     ],
     relatedLabel: '相关 PEAK 指南',
   },
@@ -209,6 +211,7 @@ export const peakLevelsTranslations = {
       {
         title: 'Siguientes pasos para entender la progresión de PEAK',
         paragraphs: [
+          'Si quieres convertir la lectura de la ruta en decisiones prácticas, continúa con nuestros [[link:peak-game-tips|consejos para PEAK]].',
           'Para construir un modelo fiable, combina la comprobación de la ruta actual con vocabulario estable. Empieza por ' + articleLink('what-is-peak-game', 'qué es PEAK') + ' si el ciclo principal aún es nuevo; consulta la ' + articleLink('peak-biomes-list', 'lista completa de biomas') + ' cuando no conozcas un nombre; y abre el ' + articleLink('peak-game-update', 'registro de actualizaciones') + ' si un parche puede haber cambiado la ruta o el contexto de Ascents. Para la respuesta de hoy, vuelve a la ' + articleLink('map-rotation', 'página del mapa diario') + ' antes de escalar.',
           'Así la guía sigue siendo útil cuando cambia la ruta: el registro diario dice qué revisar hoy, el repertorio explica los nombres y el juego confirma el contexto actual del nivel y el modificador de dificultad.',
         ],
@@ -240,6 +243,7 @@ export const peakLevelsTranslations = {
       ['map-rotation', 'Consultar el mapa de PEAK de hoy'],
       ['what-is-peak-game', 'Empezar por qué es PEAK'],
       ['peak-game-update', 'Leer el registro de actualizaciones'],
+      ['peak-game-tips', 'Ver los consejos para PEAK'],
     ],
     relatedLabel: 'Guías relacionadas de PEAK',
   },
@@ -330,6 +334,7 @@ export const peakLevelsTranslations = {
       {
         title: 'PEAKの進行を学ぶ次のステップ',
         paragraphs: [
+          'ルートの理解を具体的な準備に変えたい場合は、[[link:peak-game-tips|PEAK攻略のコツ]]も確認してください。',
           '安定した理解を作るには、現在のルート確認と用語の基準ページを組み合わせます。基本ループが初めてなら' + articleLink('what-is-peak-game', 'PEAKとは何か') + 'を読み、名前が分からなければ' + articleLink('peak-biomes-list', 'バイオーム一覧') + 'を比べ、パッチでルートやAscentの状況が変わったと思ったら' + articleLink('peak-game-update', 'アップデートログ') + 'を開きます。今日の答えは出発前に' + articleLink('map-rotation', 'デイリーマップページ') + 'へ戻って確認してください。',
           'この分け方ならルートが変わっても役立ちます。日々の記録は今日の確認対象を示し、名簿は名前を説明し、ゲーム本体は現在のレベル環境と難易度補正を確定します。',
         ],
@@ -361,6 +366,7 @@ export const peakLevelsTranslations = {
       ['map-rotation', '今日のPEAKマップを見る'],
       ['what-is-peak-game', 'PEAKとは何かから読む'],
       ['peak-game-update', 'アップデートログを読む'],
+      ['peak-game-tips', 'PEAK攻略のコツを見る'],
     ],
     relatedLabel: 'PEAK関連ガイド',
   },
@@ -451,6 +457,7 @@ export const peakLevelsTranslations = {
       {
         title: 'Prochaines étapes pour comprendre la progression de PEAK',
         paragraphs: [
+          'Pour transformer la lecture de la route en préparation concrète, consultez aussi nos [[link:peak-game-tips|astuces PEAK]].',
           'Pour construire un modèle fiable, combinez une vérification de route actuelle avec un vocabulaire stable. Commencez par ' + articleLink('what-is-peak-game', 'ce qu’est PEAK') + ' si le cycle principal est nouveau ; consultez la ' + articleLink('peak-biomes-list', 'liste complète des biomes') + ' quand un nom vous échappe ; et ouvrez le ' + articleLink('peak-game-update', 'journal des mises à jour') + ' si un patch a pu changer la route ou le contexte d’Ascents. Pour la réponse du jour, revenez à la ' + articleLink('map-rotation', 'page de la carte quotidienne') + ' avant de grimper.',
           'Cette séparation reste utile quand la route change : le relevé quotidien indique quoi vérifier aujourd’hui, le répertoire explique les noms et le jeu confirme le contexte de niveau et le modificateur actifs.',
         ],
@@ -482,6 +489,7 @@ export const peakLevelsTranslations = {
       ['map-rotation', 'Voir la carte PEAK du jour'],
       ['what-is-peak-game', 'Commencer par ce qu’est PEAK'],
       ['peak-game-update', 'Lire le journal des mises à jour'],
+      ['peak-game-tips', 'Voir les astuces PEAK'],
     ],
     relatedLabel: 'Guides PEAK associés',
   },
@@ -572,6 +580,7 @@ export const peakLevelsTranslations = {
       {
         title: 'Nächste Schritte für PEAK-Fortschritt',
         paragraphs: [
+          'Für konkrete Entscheidungen beim ersten Aufstieg helfen außerdem unsere [[link:peak-game-tips|PEAK-Spieletipps]].',
           'Ein zuverlässiges Modell entsteht aus aktueller Routenprüfung und stabilem Vokabular. Beginne mit ' + articleLink('what-is-peak-game', 'was PEAK ist') + ', wenn der Kern noch neu ist; vergleiche die ' + articleLink('peak-biomes-list', 'vollständige Biome-Liste') + ' bei unbekannten Namen; und öffne das ' + articleLink('peak-game-update', 'Update-Log') + ', wenn ein Patch Route oder Ascent-Kontext verändert haben könnte. Für die heutige Antwort kehrst du vor dem Aufstieg zur ' + articleLink('map-rotation', 'täglichen Kartenseite') + ' zurück.',
           'So bleibt der Guide auch bei einer neuen Route hilfreich: Der Tagesdatensatz sagt, was heute zu prüfen ist, das Biom-Verzeichnis erklärt Namen, und das Spiel bestätigt aktuellen Levelkontext und Schwierigkeitsmodifikator.',
         ],
@@ -603,6 +612,7 @@ export const peakLevelsTranslations = {
       ['map-rotation', 'Heutige PEAK-Karte prüfen'],
       ['what-is-peak-game', 'Mit was PEAK ist beginnen'],
       ['peak-game-update', 'Update-Log lesen'],
+      ['peak-game-tips', 'PEAK-Spieletipps öffnen'],
     ],
     relatedLabel: 'Verwandte PEAK-Guides',
   },
@@ -693,6 +703,7 @@ export const peakLevelsTranslations = {
       {
         title: 'Próximos passos para entender a progressão de PEAK',
         paragraphs: [
+          'Para transformar a leitura da rota em decisões práticas, consulte também as nossas [[link:peak-game-tips|dicas de PEAK]].',
           'Para montar um modelo confiável, combine a checagem da rota atual com um vocabulário estável. Comece por ' + articleLink('what-is-peak-game', 'o que é PEAK') + ' se o ciclo principal ainda for novo; compare a ' + articleLink('peak-biomes-list', 'lista completa de biomas') + ' quando um nome não for familiar; e abra o ' + articleLink('peak-game-update', 'registro de atualizações') + ' se um patch puder ter alterado a rota ou o contexto de Ascents. Para a resposta de hoje, volte à ' + articleLink('map-rotation', 'página do mapa diário') + ' antes de escalar.',
           'Essa separação continua útil quando a rota muda: o registro diário indica o que verificar hoje, o repertório explica os nomes e o jogo confirma o contexto atual do nível e o modificador de dificuldade.',
         ],
@@ -724,6 +735,7 @@ export const peakLevelsTranslations = {
       ['map-rotation', 'Ver o mapa de PEAK de hoje'],
       ['what-is-peak-game', 'Começar por o que é PEAK'],
       ['peak-game-update', 'Ler o registro de atualizações'],
+      ['peak-game-tips', 'Ver as dicas de PEAK'],
     ],
     relatedLabel: 'Guias relacionados de PEAK',
   },
@@ -814,6 +826,7 @@ export const peakLevelsTranslations = {
       {
         title: 'PEAK 진행을 배우는 다음 단계',
         paragraphs: [
+          '경로를 읽는 법을 실제 준비로 연결하려면 [[link:peak-game-tips|PEAK 게임 팁]]도 확인하세요.',
           '신뢰할 수 있는 이해를 만들려면 현재 경로 확인과 안정적인 용어 페이지를 함께 사용하세요. 기본 흐름이 낯설다면 ' + articleLink('what-is-peak-game', 'PEAK란 무엇인가') + '부터 읽고, 이름이 익숙하지 않으면 ' + articleLink('peak-biomes-list', '전체 바이옴 목록') + '을 비교하며, 패치가 경로나 Ascent 환경을 바꿨을 수 있으면 ' + articleLink('peak-game-update', '업데이트 로그') + '를 확인합니다. 오늘의 답을 보려면 등반 전에 ' + articleLink('map-rotation', '일일 지도 페이지') + '로 돌아오세요.',
           '이렇게 나누면 경로가 바뀌어도 가이드가 유효합니다. 일일 기록은 오늘 확인할 대상을 알려 주고, 바이옴 목록은 이름을 설명하며, 게임은 현재 레벨 환경과 난이도 보정을 확정합니다.',
         ],
@@ -845,6 +858,7 @@ export const peakLevelsTranslations = {
       ['map-rotation', '오늘의 PEAK 지도 확인'],
       ['what-is-peak-game', 'PEAK란 무엇인지 먼저 보기'],
       ['peak-game-update', '업데이트 로그 읽기'],
+      ['peak-game-tips', 'PEAK 게임 팁 보기'],
     ],
     relatedLabel: '관련 PEAK 가이드',
   },
@@ -935,6 +949,7 @@ export const peakLevelsTranslations = {
       {
         title: 'Prossimi passi per capire la progressione di PEAK',
         paragraphs: [
+          'Per trasformare la lettura del percorso in decisioni pratiche, consulta anche i nostri [[link:peak-game-tips|consigli per PEAK]].',
           'Per costruire un modello affidabile, combina il controllo del percorso attuale con un vocabolario stabile. Inizia da ' + articleLink('what-is-peak-game', 'che cos’è PEAK') + ' se il ciclo principale è nuovo; confronta la ' + articleLink('peak-biomes-list', 'lista completa dei biomi') + ' quando un nome non è familiare; e apri il ' + articleLink('peak-game-update', 'registro degli aggiornamenti') + ' se una patch può aver cambiato percorso o contesto di Ascents. Per la risposta di oggi, torna alla ' + articleLink('map-rotation', 'pagina della mappa giornaliera') + ' prima di scalare.',
           'Questa separazione resta utile quando il percorso cambia: il record giornaliero indica cosa verificare oggi, il repertorio spiega i nomi e il gioco conferma il contesto attuale del livello e il modificatore di difficoltà.',
         ],
@@ -966,6 +981,7 @@ export const peakLevelsTranslations = {
       ['map-rotation', 'Controlla la mappa di PEAK di oggi'],
       ['what-is-peak-game', 'Inizia da che cos’è PEAK'],
       ['peak-game-update', 'Leggi il registro degli aggiornamenti'],
+      ['peak-game-tips', 'Vedi i consigli per PEAK'],
     ],
     relatedLabel: 'Guide PEAK correlate',
   },

@@ -2,6 +2,7 @@ import { peakGameUpdateTranslations } from './article-update-locales.mjs';
 import { whatIsPeakTranslations } from './article-beginner-locales.mjs';
 import { peakMapRotationScheduleTranslations } from './article-schedule-locales.mjs';
 import { peakLevelsTranslations } from './article-levels-locales.mjs';
+import { peakTipsTranslations } from './article-tips-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1156,6 +1157,10 @@ for (const [locale, translation] of Object.entries(peakMapRotationScheduleTransl
 
 for (const [locale, translation] of Object.entries(peakLevelsTranslations)) {
   articleLocaleTranslations[locale]['peak-levels-biomes-difficulty'] = translation;
+}
+
+for (const [locale, translation] of Object.entries(peakTipsTranslations)) {
+  articleLocaleTranslations[locale]['peak-game-tips'] = translation;
 }
 
 const localizedBiomeUpdateCopy = {
