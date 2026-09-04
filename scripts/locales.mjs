@@ -254,15 +254,25 @@ for (const [code, data] of Object.entries({ ...translated, ...moreTranslated }))
 // Rescue Claw: https://store.steampowered.com/news/app/3527290/view/716788653799506284
 const additionalDatabaseItems = {
   en: [
+    // Official source for Anti-Rope Spool: https://store.steampowered.com/news/app/3527290/view/676254354515165309
     ['Anti-Rope Spool', 'gear', 'route', 'A specialized climbing tool for route decisions when ordinary rope behavior is not the answer.', 'Read route gear notes', '#guides', 'anti rope spool gear climbing rope route'],
+    // Official source for Rope Shooter: https://store.steampowered.com/news/app/3527290/view/526495718648578104
     ['Rope Shooter', 'gear', 'route', 'A climbing tool that projects a rope line when a direct approach is awkward.', 'Compare climbing tools', '#guides', 'rope shooter gear climbing rope route'],
+    // Official source for Chain Launcher: https://store.steampowered.com/news/app/3527290/view/507347176534312117
     ['Chain Launcher', 'gear', 'route', 'A climbing tool for extending a planned lateral connection with a chain.', 'Review chain route use', '#guides', 'chain launcher gear chain climbing lateral route'],
+    // Official source for Heat Pack: https://store.steampowered.com/news/app/3527290/view/498330460301034111
     ['Heat Pack', 'gear', 'carry', 'A carried cold-management tool for keeping exposure from deciding the next move.', 'Plan cold protection', '#guides', 'heat pack gear cold warmth carry'],
+    // Official source for Lollipop: https://store.steampowered.com/news/app/3527290/view/498325386812198363
     ['Lollipop', 'food', 'consumable', 'A consumable food option for planning the next push when stamina management matters.', 'Plan the next food break', '#maps', 'lollipop food stamina consumable'],
+    // Official source for Fortified Milk: https://store.steampowered.com/news/app/3527290/view/676254354515165309
     ['Fortified Milk', 'food', 'consumable', 'A defensive food option for teams planning around hazard exposure.', 'Plan defensive food', '#maps', 'fortified milk food consumable hazard'],
+    // Official source for Shroomberries: https://store.steampowered.com/news/app/3527290/view/809085268448511599
     ['Shroomberries', 'food', 'consumable', 'A biome-specific food option whose current behavior should be checked in the active game build.', 'Check biome food notes', '#maps', 'shroomberries food berries consumable biome'],
+    // Official source for Flying Disc: https://store.steampowered.com/news/app/3527290/view/498327545507219292
     ['Flying Disc', 'utility', 'coop', 'A throwable co-op utility for creating a deliberate interaction across open space.', 'See co-op utility notes', '#guides', 'flying disc utility co op throw'],
+    // Official source for Bandage: https://store.steampowered.com/news/app/3527290/view/809085268448511599
     ['Bandage', 'utility', 'team', 'A recovery utility for stabilizing a climber after a mistake or hazard.', 'Review recovery items', '#guides', 'bandage utility recovery team'],
+    // Official source for Rescue Claw: https://store.steampowered.com/news/app/3527290/view/716788653799506284
     ['Rescue Claw', 'utility', 'team', 'A team-support tool for helping a scout recover from a compromised position.', 'Review rescue tools', '#guides', 'rescue claw utility rescue team recovery'],
   ],
   zh: [
