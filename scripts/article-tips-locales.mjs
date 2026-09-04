@@ -6,7 +6,7 @@ export const peakTipsTranslations = {
   zh: {
     meta: {
       title: 'PEAK 游戏技巧：攀登前必须知道的 12 件事',
-      description: '刚开始玩 PEAK？这 12 条技巧涵盖体力、饥饿、烹饪、绳索与链条、合作生存等内容，帮助你完成第一次攀登。',
+      description: '刚开始玩 PEAK？这 12 条必备技巧涵盖体力、饥饿、烹饪、绳索与链条、合作生存、寒冷和路线规划，助你做好首次攀登准备。',
       schema: 'PEAK 新手技巧指南，介绍体力、饥饿、烹饪、攀登工具、寒冷、合作生存和每日地图路线。',
     },
     primaryKeyword: 'PEAK 游戏技巧',
@@ -146,7 +146,7 @@ export const peakTipsTranslations = {
   es: {
     meta: {
       title: 'Consejos para PEAK: 12 cosas antes de escalar',
-      description: '¿Acabas de empezar PEAK? Estos 12 consejos cubren resistencia, hambre, cocina, cuerdas y cadenas, supervivencia cooperativa y más.',
+      description: '¿Eres nuevo en PEAK? Estos 12 consejos esenciales cubren resistencia, hambre, cocina, cuerdas y cadenas, supervivencia cooperativa, frío y planificación de ruta antes de tu primera escalada.',
       schema: 'Guía práctica de consejos para PEAK sobre resistencia, hambre, cocina, herramientas de escalada, frío, supervivencia cooperativa y mapa diario.',
     },
     primaryKeyword: 'consejos para el juego PEAK',
@@ -286,7 +286,7 @@ export const peakTipsTranslations = {
   ja: {
     meta: {
       title: 'PEAK攻略：登る前に知っておきたい12のコツ',
-      description: 'PEAKを始めたばかり？スタミナ、空腹、料理、ロープとチェーン、協力プレイなど、初登頂前に役立つ12のコツを紹介します。',
+      description: 'PEAKを始めたばかり？スタミナ、空腹、料理、ロープとチェーン、協力プレイ、寒さ、ルート計画まで、初登頂前に知りたい12の必須ポイントを紹介します。',
       schema: 'スタミナ、空腹、料理、登攀道具、寒さ、協力プレイ、デイリーマップを扱うPEAKの実践攻略。',
     },
     primaryKeyword: 'PEAK ゲームのコツ',
@@ -426,7 +426,7 @@ export const peakTipsTranslations = {
   fr: {
     meta: {
       title: 'Astuces PEAK : 12 choses à savoir avant de grimper',
-      description: 'Vous débutez sur PEAK ? Ces 12 astuces couvrent endurance, faim, cuisine, cordes et chaînes, survie en coopération et plus encore.',
+      description: 'Vous commencez PEAK ? Ces 12 conseils essentiels couvrent l’endurance, la faim, la cuisine, cordes et chaînes, la survie en coopération, le froid et la préparation d’itinéraire.',
       schema: 'Guide pratique des astuces PEAK sur l’endurance, la faim, la cuisine, les outils d’escalade, le froid, la coopération et la carte du jour.',
     },
     primaryKeyword: 'astuces pour le jeu PEAK',
@@ -566,7 +566,7 @@ export const peakTipsTranslations = {
   de: {
     meta: {
       title: 'PEAK-Spieletipps: 12 Dinge vor dem Aufstieg',
-      description: 'Du beginnst mit PEAK? Diese 12 Tipps erklären Ausdauer, Hunger, Kochen, Seile und Ketten, Koop-Überleben und mehr vor dem ersten Aufstieg.',
+      description: 'Ganz neu bei PEAK? Diese 12 wichtigen Tipps behandeln Ausdauer, Hunger, Kochen, Seile und Ketten, Koop-Überleben, Kälte und Routenplanung vor deinem ersten Aufstieg.',
       schema: 'Praktischer PEAK-Tipps-Guide zu Ausdauer, Hunger, Kochen, Kletterausrüstung, Kälte, Koop-Überleben und der Tagesroute.',
     },
     primaryKeyword: 'PEAK-Spieletipps',
@@ -706,7 +706,7 @@ export const peakTipsTranslations = {
   pt: {
     meta: {
       title: 'Dicas de PEAK: 12 coisas antes de escalar',
-      description: 'Começando em PEAK? Estas 12 dicas cobrem resistência, fome, cozinha, cordas e correntes, sobrevivência cooperativa e muito mais.',
+      description: 'Está começando em PEAK? Estas 12 dicas essenciais cobrem resistência, fome, cozinha, cordas e correntes, sobrevivência cooperativa, frio e planejamento de rota antes da primeira subida.',
       schema: 'Guia prático de dicas para PEAK sobre resistência, fome, cozinha, ferramentas de escalada, frio, cooperação e mapa diário.',
     },
     primaryKeyword: 'dicas para o jogo PEAK',
@@ -846,7 +846,7 @@ export const peakTipsTranslations = {
   ko: {
     meta: {
       title: 'PEAK 게임 팁: 등반 전에 알아둘 12가지',
-      description: 'PEAK를 막 시작했나요? 첫 등반 전에 스태미나, 허기, 요리, 로프와 체인, 협동 생존 등에 관한 12가지 팁을 확인하세요.',
+      description: 'PEAK를 처음 시작했나요? 이 12가지 핵심 팁으로 스태미나, 허기, 요리, 로프와 체인, 협동 생존, 추위와 첫 등반 전 경로 계획까지 익히세요.',
       schema: '스태미나, 허기, 요리, 등반 도구, 추위, 협동 생존, 일일 맵 경로를 다루는 PEAK 실전 팁 가이드입니다.',
     },
     primaryKeyword: 'PEAK 게임 팁',
@@ -986,7 +986,7 @@ export const peakTipsTranslations = {
   it: {
     meta: {
       title: 'Consigli PEAK: 12 cose prima di arrampicarsi',
-      description: 'Hai appena iniziato PEAK? Questi 12 consigli spiegano resistenza, fame, cucina, corde e catene, sopravvivenza cooperativa e altro.',
+      description: 'Hai appena iniziato PEAK? Questi 12 consigli essenziali spiegano resistenza, fame, cucina, corde e catene, sopravvivenza cooperativa, freddo e pianificazione del percorso.',
       schema: 'Guida pratica ai consigli per PEAK su resistenza, fame, cucina, strumenti di arrampicata, freddo, cooperazione e mappa giornaliera.',
     },
     primaryKeyword: 'consigli per il gioco PEAK',

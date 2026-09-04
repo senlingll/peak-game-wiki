@@ -249,7 +249,7 @@ export const articleGuides = {
     slug: 'what-is-peak-game',
     meta: {
       title: 'What Is PEAK Game? Beginner\'s Guide to Gameplay & Maps',
-      description: "New to PEAK? Learn what the game is, how it works, its map rotation system and how to check today's map - a complete beginner guide to your first climb.",
+      description: "New to PEAK? Learn what the game is, how it works, how the map rotation changes the route, and how to check today's active map before your first climb.",
       schema: 'A beginner guide explaining what PEAK is, its co-op climbing loop, route and equipment decisions, map rotation vocabulary, and how to check the daily map.',
     },
     published: '2026-09-01',
@@ -639,7 +639,7 @@ export const articleGuides = {
     slug: 'peak-game-tips',
     meta: {
       title: 'PEAK Game Tips: 12 Things to Know Before You Climb',
-      description: 'New to PEAK? These 12 essential tips cover stamina, hunger, cooking, ropes vs chains, co-op survival and more \u2014 know them before your first climb.',
+      description: 'New to PEAK? These 12 essential tips cover stamina, hunger, cooking, ropes vs chains, co-op survival, cold, and route planning before your first climb.',
       schema: 'A practical PEAK game tips guide covering stamina, hunger, cooking, climbing tools, cold, co-op survival, and the daily map route.',
     },
     published: '2026-09-04',
@@ -800,7 +800,7 @@ export const articleGuides = {
     slug: 'how-to-play-peak',
     meta: {
       title: "How to Play PEAK (Beginner's Basics)",
-      description: "New to PEAK? Learn the controls, the climb loop, solo vs co-op, and why checking today's map rotation matters before you start.",
+      description: "New to PEAK and not sure where to begin? Learn controls, climb loop, death and failure, solo vs co-op, and why today's map rotation matters before you start.",
       schema: 'A source-aware beginner guide to playing PEAK, including the opening, climbing controls, run loop, failure, co-op, cold, and daily map preparation.',
     },
     published: '2026-09-04',

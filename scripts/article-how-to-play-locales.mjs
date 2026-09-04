@@ -11,7 +11,7 @@ export const howToPlayPeakTranslations = {
   zh: {
     meta: {
       title: 'PEAK 怎么玩：新手基础玩法指南',
-      description: '第一次玩 PEAK？了解基础操作、攀登循环、单人和联机差异，以及为什么开局前要先查看今天的地图轮换。',
+      description: '刚开始玩 PEAK 不知道从哪入手？了解基础操作、攀登循环、死亡与失败、单人和联机差异，以及为何出发前要查看今日地图轮换。',
       schema: '面向 PEAK 新手的基础玩法指南，涵盖开局、攀登操作、资源循环、失败、合作、寒冷和每日地图准备。',
     },
     primaryKeyword: 'PEAK 怎么玩',
@@ -101,7 +101,7 @@ export const howToPlayPeakTranslations = {
   es: {
     meta: {
       title: 'Cómo jugar a PEAK: guía básica para principiantes',
-      description: 'Aprende los controles, el ciclo de escalada, las diferencias entre jugar solo y en cooperativo y por qué conviene revisar el mapa diario.',
+      description: '¿Eres nuevo en PEAK y no sabes por dónde empezar? Aprende controles, ciclo de escalada, muerte y fracaso, solo y cooperativo, y por qué revisar la rotación de hoy.',
       schema: 'Guía inicial de PEAK sobre el comienzo de una partida, controles, resistencia, recursos, fracaso, cooperativo, frío y mapa diario.',
     },
     primaryKeyword: 'cómo jugar a PEAK',
@@ -128,7 +128,7 @@ export const howToPlayPeakTranslations = {
   },
 
   ja: {
-    meta: { title: 'PEAKの遊び方：初心者向け基本ガイド', description: 'PEAKを初めて遊ぶ人向けに、操作、登攀の流れ、ソロと協力プレイの違い、出発前に今日のマップを確認する理由を解説します。', schema: 'PEAKのスタート地点、登攀操作、スタミナ、補給、失敗、協力、寒さ、デイリーマップをまとめた初心者ガイド。' },
+    meta: { title: 'PEAKの遊び方：初心者向け基本ガイド', description: 'PEAKを始めたものの何から学べばいい？操作、登攀の流れ、死亡と失敗、ソロと協力の違い、出発前に今日のマップを確認する理由を解説します。', schema: 'PEAKのスタート地点、登攀操作、スタミナ、補給、失敗、協力、寒さ、デイリーマップをまとめた初心者ガイド。' },
     primaryKeyword: 'PEAKの遊び方', eyebrow: '初心者ガイド - 墜落した飛行機から山頂へ', h1: 'PEAKの遊び方：初心者が覚える基本',
     intro: 'PEAKは、変化する地形を読みながら山頂を目指すソロ・協力対応の登攀ゲームです。ゲームの位置づけから知りたい場合は、先に' + articleLink('what-is-peak-game', 'PEAKとはどんなゲームか') + 'を確認してください。このページでは、墜落した飛行機の周辺から始まる一回の挑戦を、操作、回復、失敗、再挑戦まで順に説明します。',
     answerLabel: 'まず答え', answer: 'PEAKでは、登る前にルートを観察し、短く確実な動きで進み、スタミナが尽きる前に安全な足場へ戻ることが基本です。食料や回復用品は次の危険に備えて残します。協力プレイでは次の動きを共有し、出発前には' + mapLink('今日のPEAKマップを確認') + 'して、最後にゲーム内の現在ルートと照合します。',
@@ -148,7 +148,7 @@ export const howToPlayPeakTranslations = {
   },
 
   fr: {
-    meta: { title: 'Comment jouer à PEAK : les bases pour débuter', description: 'Découvrez les commandes, la boucle d’ascension, les différences entre solo et coopération, et pourquoi consulter la carte du jour avant de partir.', schema: 'Guide débutant de PEAK couvrant départ, commandes, endurance, ressources, échec, coopération, froid et carte quotidienne.' },
+    meta: { title: 'Comment jouer à PEAK : les bases pour débuter', description: 'Vous débutez sur PEAK sans savoir par où commencer ? Découvrez commandes, boucle d’ascension, mort et échec, solo et coopération, et la rotation de la carte du jour.', schema: 'Guide débutant de PEAK couvrant départ, commandes, endurance, ressources, échec, coopération, froid et carte quotidienne.' },
     primaryKeyword: 'comment jouer à PEAK', eyebrow: 'Guide débutant - de l’avion accidenté au sommet', h1: 'Comment jouer à PEAK : les bases du débutant',
     intro: 'PEAK est une aventure d’escalade jouable seul ou en groupe, où chaque tentative traverse un terrain changeant vers le sommet. Pour comprendre d’abord le concept, lisez ' + articleLink('what-is-peak-game', 'notre présentation de PEAK') + '. Ce guide relie le départ près de l’avion accidenté aux commandes, à la récupération, à l’échec et à la tentative suivante.',
     answerLabel: 'Réponse courte', answer: 'Pour jouer à PEAK, observez la voie, grimpez par gestes courts, reposez-vous avant d’épuiser l’endurance et gardez nourriture ou soins pour un risque identifié. En coopération, annoncez le prochain mouvement et restez à portée d’aide. Avant chaque départ, ' + mapLink('consultez la carte PEAK du jour') + ', puis confirmez la route dans le jeu.',
@@ -167,7 +167,7 @@ export const howToPlayPeakTranslations = {
   },
 
   de: {
-    meta: { title: 'PEAK spielen: Grundlagen für Anfänger', description: 'Lerne Steuerung, Kletterablauf, Solo- und Koop-Unterschiede und warum du vor dem Start die heutige Kartenrotation prüfen solltest.', schema: 'PEAK-Anfängerleitfaden zu Start, Steuerung, Ausdauer, Vorräten, Scheitern, Koop, Kälte und täglicher Karte.' },
+    meta: { title: 'PEAK spielen: Grundlagen für Anfänger', description: 'Neu bei PEAK und unsicher, wo du anfangen sollst? Lerne Steuerung, Kletterablauf, Tod und Scheitern, Solo und Koop sowie die heutige Kartenrotation kennen.', schema: 'PEAK-Anfängerleitfaden zu Start, Steuerung, Ausdauer, Vorräten, Scheitern, Koop, Kälte und täglicher Karte.' },
     primaryKeyword: 'PEAK spielen', eyebrow: 'Anfängerleitfaden - vom Flugzeugwrack zum Gipfel', h1: 'PEAK spielen: Die wichtigsten Grundlagen',
     intro: 'PEAK ist ein Kletterabenteuer für Solo- und Gruppenspiel, in dem jede Runde über wechselndes Gelände zum Gipfel führt. Lies zuerst ' + articleLink('what-is-peak-game', 'was PEAK für ein Spiel ist') + ', wenn dir noch der Rahmen fehlt. Diese Seite verbindet den Start am Flugzeugwrack mit Steuerung, Erholung, Scheitern und dem nächsten Versuch.',
     answerLabel: 'Kurzantwort', answer: 'Um PEAK zu spielen, liest du zuerst die Route, kletterst in kurzen kontrollierten Bewegungen und ruhst, bevor die Ausdauer leer ist. Nahrung und Heilung bleiben für ein bekanntes Risiko reserviert. Im Koop sagst du den nächsten Schritt an und bleibst in Hilfsreichweite. Prüfe vor dem Start ' + mapLink('die heutige PEAK-Karte') + ' und bestätige die Route anschließend im Spiel.',
@@ -186,7 +186,7 @@ export const howToPlayPeakTranslations = {
   },
 
   pt: {
-    meta: { title: 'Como jogar PEAK: fundamentos para iniciantes', description: 'Aprenda os controles, o ciclo da escalada, solo versus cooperativo e por que conferir a rotação do mapa de hoje antes de começar.', schema: 'Guia de PEAK para iniciantes sobre início, controles, resistência, recursos, falha, cooperação, frio e mapa diário.' },
+    meta: { title: 'Como jogar PEAK: fundamentos para iniciantes', description: 'Novo em PEAK e sem saber por onde começar? Aprenda controles, ciclo da escalada, morte e falha, solo e cooperativo, e por que conferir a rotação de hoje.', schema: 'Guia de PEAK para iniciantes sobre início, controles, resistência, recursos, falha, cooperação, frio e mapa diário.' },
     primaryKeyword: 'como jogar PEAK', eyebrow: 'Guia inicial - do avião acidentado ao cume', h1: 'Como jogar PEAK: o básico para iniciantes',
     intro: 'PEAK é uma aventura de escalada para jogar sozinho ou em grupo, na qual cada tentativa segue por terreno variável até o cume. Se você ainda precisa do contexto, comece por ' + articleLink('what-is-peak-game', 'entender o que é PEAK') + '. Esta página liga o início perto do avião acidentado aos controles, à recuperação, à falha e à próxima tentativa.',
     answerLabel: 'Resposta curta', answer: 'Para jogar PEAK, observe a rota, suba com movimentos curtos, descanse antes de esgotar a resistência e guarde comida ou cura para um risco conhecido. No cooperativo, comunique o próximo passo e fique perto o bastante para ajudar. Antes de sair, ' + mapLink('confira o mapa de PEAK de hoje') + ' e confirme a rota dentro do jogo.',
@@ -205,7 +205,7 @@ export const howToPlayPeakTranslations = {
   },
 
   ko: {
-    meta: { title: 'PEAK 플레이 방법: 초보자 기본 가이드', description: 'PEAK의 조작, 등반 흐름, 솔로와 협동의 차이, 출발 전에 오늘의 맵 로테이션을 확인해야 하는 이유를 알아보세요.', schema: 'PEAK의 시작 지점, 등반 조작, 스태미나, 보급, 실패, 협동, 추위, 일일 맵을 다루는 초보자 가이드.' },
+    meta: { title: 'PEAK 플레이 방법: 초보자 기본 가이드', description: 'PEAK를 시작했지만 어디서부터 배워야 할지 모르겠나요? 조작, 등반 흐름, 죽음과 실패, 솔로와 협동의 차이, 오늘의 맵 로테이션을 확인할 이유를 알아보세요.', schema: 'PEAK의 시작 지점, 등반 조작, 스태미나, 보급, 실패, 협동, 추위, 일일 맵을 다루는 초보자 가이드.' },
     primaryKeyword: 'PEAK 플레이 방법', eyebrow: '초보자 가이드 - 추락한 비행기에서 정상까지', h1: 'PEAK 플레이 방법: 초보자가 알아야 할 기본',
     intro: 'PEAK은 혼자 또는 팀으로 변화하는 지형을 넘어 정상에 오르는 등반 게임입니다. 게임의 전체 개념이 먼저 필요하다면 ' + articleLink('what-is-peak-game', 'PEAK이 어떤 게임인지') + '부터 확인하세요. 이 글은 추락한 비행기 근처의 시작부터 조작, 회복, 실패, 다음 시도까지 한 번의 흐름으로 설명합니다.',
     answerLabel: '짧은 답', answer: 'PEAK을 플레이할 때는 먼저 경로를 보고, 짧고 통제된 동작으로 오르며, 스태미나가 바닥나기 전에 안전한 곳에서 쉬세요. 음식과 회복품은 확인된 위험에 맞춰 남겨 둡니다. 협동에서는 다음 행동을 말하고 서로 도울 거리를 유지하세요. 출발 전에는 ' + mapLink('오늘의 PEAK 맵을 확인') + '한 뒤 게임 안의 실제 경로와 비교합니다.',
@@ -224,7 +224,7 @@ export const howToPlayPeakTranslations = {
   },
 
   it: {
-    meta: { title: 'Come giocare a PEAK: basi per principianti', description: 'Impara i comandi, il ciclo della scalata, le differenze tra solo e cooperativa e perché controllare la mappa di oggi prima di partire.', schema: 'Guida iniziale a PEAK su partenza, comandi, resistenza, risorse, fallimento, cooperativa, freddo e mappa giornaliera.' },
+    meta: { title: 'Come giocare a PEAK: basi per principianti', description: 'Nuovo in PEAK e non sai da dove iniziare? Impara comandi, ciclo della scalata, morte e fallimento, solo e cooperativa, e perché controllare la rotazione della mappa di oggi.', schema: 'Guida iniziale a PEAK su partenza, comandi, resistenza, risorse, fallimento, cooperativa, freddo e mappa giornaliera.' },
     primaryKeyword: 'come giocare a PEAK', eyebrow: 'Guida iniziale - dall’aereo precipitato alla vetta', h1: 'Come giocare a PEAK: le basi per iniziare',
     intro: 'PEAK è un’avventura di arrampicata da affrontare da soli o in gruppo, con un percorso variabile verso la vetta. Se ti serve prima il contesto, scopri ' + articleLink('what-is-peak-game', 'che tipo di gioco è PEAK') + '. Questa pagina collega la partenza vicino all’aereo precipitato ai comandi, al recupero, al fallimento e al tentativo successivo.',
     answerLabel: 'Risposta breve', answer: 'Per giocare a PEAK, osserva il percorso, sali con movimenti brevi, riposa prima di esaurire la resistenza e conserva cibo o cure per un rischio preciso. In cooperativa comunica la prossima azione e resta abbastanza vicino da aiutare. Prima di partire, ' + mapLink('controlla la mappa PEAK di oggi') + ' e conferma il percorso nella sessione.',

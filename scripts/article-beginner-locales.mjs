@@ -4,7 +4,7 @@ export const whatIsPeakTranslations = {
   zh: {
     meta: {
       title: 'PEAK 是什么游戏？玩法与地图新手指南',
-      description: '刚接触 PEAK？本指南解释游戏玩法、地图轮换系统和今日地图查看方法，帮助你了解合作攀登、路线判断与首次出发准备。',
+      description: '刚接触 PEAK？了解这款游戏是什么、如何游玩、地图轮换怎样改变路线，以及如何查看今日活动地图，为首次攀登做好完整准备。',
       schema: 'PEAK 新手指南，介绍合作攀登玩法、路线与装备决策、地图轮换术语，以及查看每日地图的方法。',
     },
     primaryKeyword: 'PEAK 是什么游戏',
@@ -112,7 +112,7 @@ export const whatIsPeakTranslations = {
   es: {
     meta: {
       title: '¿Qué es el juego PEAK? Guía de juego y mapas',
-      description: '¿Acabas de llegar a PEAK? Aprende qué juego es, cómo funciona, cómo rota el mapa y cómo consultar el mapa de hoy antes de tu primera escalada.',
+      description: '¿Eres nuevo en PEAK? Descubre qué juego es, cómo funciona, cómo la rotación cambia la ruta y cómo consultar el mapa activo de hoy antes de tu primera escalada.',
       schema: 'Guía para principiantes de PEAK sobre el bucle cooperativo de escalada, las decisiones de ruta y equipo, la rotación de mapas y el mapa diario.'
     },
     primaryKeyword: 'qué es el juego PEAK',
@@ -220,7 +220,7 @@ export const whatIsPeakTranslations = {
   ja: {
     meta: {
       title: 'PEAKとは？ゲームプレイとマップの初心者ガイド',
-      description: 'PEAKを始めたばかりですか？ゲームの内容、遊び方、マップローテーション、今日のマップの確認方法を初心者向けに解説します。',
+      description: 'PEAKを始めたばかり？どんなゲームでどう遊ぶのか、ローテーションがルートをどう変えるのか、今日のアクティブなマップの確認方法まで初心者向けに解説します。',
       schema: 'PEAKの初心者向けガイド。協力型クライミングの流れ、ルートと装備の判断、マップローテーション、毎日のマップ確認方法を解説します。'
     },
     primaryKeyword: 'PEAKとは',
@@ -328,7 +328,7 @@ export const whatIsPeakTranslations = {
   fr: {
     meta: {
       title: 'Qu’est-ce que PEAK ? Guide débutant du jeu et des cartes',
-      description: 'Vous découvrez PEAK ? Apprenez ce qu’est le jeu, son fonctionnement, la rotation des cartes et la façon de consulter la carte du jour.',
+      description: 'Vous découvrez PEAK ? Apprenez ce qu’est le jeu, comment il fonctionne, comment la rotation modifie la route et comment vérifier la carte active du jour avant votre première ascension.',
       schema: 'Guide débutant de PEAK sur la boucle de grimpe coopérative, les choix de route et d’équipement, la rotation des cartes et la carte quotidienne.'
     },
     primaryKeyword: 'qu est-ce que PEAK',
@@ -436,7 +436,7 @@ export const whatIsPeakTranslations = {
   de: {
     meta: {
       title: 'Was ist PEAK? Einsteiger-Guide zu Gameplay und Karten',
-      description: 'Neu bei PEAK? Erfahre, was das Spiel ist, wie es funktioniert, wie die Kartenrotation läuft und wie du die heutige Karte prüfst.',
+      description: 'Neu bei PEAK? Erfahre, was das Spiel ist, wie es funktioniert, wie die Rotation die Route verändert und wie du die heutige aktive Karte vor dem ersten Aufstieg prüfst.',
       schema: 'Einsteiger-Guide zu PEAK mit Koop-Kletterablauf, Routen- und Ausrüstungsentscheidungen, Kartenrotation und täglicher Kartenprüfung.'
     },
     primaryKeyword: 'was ist PEAK',
@@ -544,7 +544,7 @@ export const whatIsPeakTranslations = {
   pt: {
     meta: {
       title: 'O que é PEAK? Guia para iniciantes de jogo e mapas',
-      description: 'Chegou agora ao PEAK? Entenda que jogo é, como funciona, como ocorre a rotação de mapas e como consultar o mapa de hoje.',
+      description: 'Chegou agora ao PEAK? Entenda que jogo é, como funciona, como a rotação muda a rota e como verificar o mapa ativo de hoje antes da primeira subida.',
       schema: 'Guia para iniciantes de PEAK sobre o ciclo cooperativo de escalada, decisões de rota e equipamento, rotação de mapas e mapa diário.'
     },
     primaryKeyword: 'o que é PEAK',
@@ -652,7 +652,7 @@ export const whatIsPeakTranslations = {
   ko: {
     meta: {
       title: 'PEAK 게임이란? 플레이와 지도 초보자 가이드',
-      description: 'PEAK를 처음 시작했나요? 게임의 내용과 플레이 방식, 지도 로테이션, 오늘의 지도를 확인하는 방법을 초보자 관점에서 알아보세요.',
+      description: 'PEAK를 처음 시작했나요? 어떤 게임인지, 어떻게 진행하는지, 로테이션이 경로를 어떻게 바꾸는지와 오늘 활성 맵을 확인하는 법을 첫 등반 전에 알아보세요.',
       schema: 'PEAK 초보자 가이드로 협동 등반 흐름, 경로와 장비 판단, 지도 로테이션 및 일일 지도 확인 방법을 설명합니다.'
     },
     primaryKeyword: 'PEAK 게임이란',
@@ -760,7 +760,7 @@ export const whatIsPeakTranslations = {
   it: {
     meta: {
       title: 'Cos’è PEAK? Guida per principianti a gioco e mappe',
-      description: 'Hai appena iniziato PEAK? Scopri che gioco è, come funziona, come ruotano le mappe e come controllare la mappa di oggi.',
+      description: 'Hai appena iniziato PEAK? Scopri che gioco è, come funziona, come la rotazione cambia il percorso e come controllare la mappa attiva di oggi prima della prima scalata.',
       schema: 'Guida per principianti di PEAK sul ciclo cooperativo di arrampicata, sulle decisioni di percorso ed equipaggiamento, sulla rotazione e sulla mappa giornaliera.'
     },
     primaryKeyword: 'cos è PEAK',
