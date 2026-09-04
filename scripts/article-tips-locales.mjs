@@ -109,7 +109,7 @@ export const peakTipsTranslations = {
         title: '接下来如何让 PEAK 跑得更稳',
         paragraphs: [
           '如果还想理解路线层级和难度，可以继续阅读[[link:peak-levels-biomes-difficulty|PEAK 关卡与难度指南]]。',
-          '基本动作熟悉后，可以对照我们的' + articleLink('peak-biomes-list', '生物群系列表') + '理解路线环境，并在下一次尝试前回到' + articleLink('map-rotation', '每日地图页面') + '。如果需要更完整的入门背景，可以查看我们的完整新手指南，并继续阅读' + articleLink('what-is-peak-game', 'PEAK 是什么') + '。',
+          '基本动作熟悉后，可以对照我们的' + articleLink('peak-biomes-list', '生物群系列表') + '理解路线环境，并在下一次尝试前回到' + articleLink('map-rotation', '每日地图页面') + '。如果需要更完整的入门背景，可以阅读我们的' + articleLink('how-to-play-peak', '完整新手指南') + '，并继续阅读' + articleLink('what-is-peak-game', 'PEAK 是什么') + '。',
         ],
       },
     ],
@@ -249,7 +249,7 @@ export const peakTipsTranslations = {
         title: 'Siguientes pasos para mejorar tus partidas',
         paragraphs: [
           'Para entender mejor las capas de la ruta y la dificultad, continúa con la [[link:peak-levels-biomes-difficulty|guía de niveles y dificultad de PEAK]].',
-          'Cuando los fundamentos sean naturales, compara el contexto de la ruta con nuestra ' + articleLink('peak-biomes-list', 'lista de biomas') + ' y vuelve a la ' + articleLink('map-rotation', 'página del mapa diario') + ' antes del siguiente intento. Para una introducción más amplia, consulta nuestra guía completa para principiantes y ' + articleLink('what-is-peak-game', 'aprende qué es PEAK') + '.',
+          'Cuando los fundamentos sean naturales, compara el contexto de la ruta con nuestra ' + articleLink('peak-biomes-list', 'lista de biomas') + ' y vuelve a la ' + articleLink('map-rotation', 'página del mapa diario') + ' antes del siguiente intento. Para una introducción más amplia, consulta ' + articleLink('how-to-play-peak', 'nuestra guía completa para principiantes') + ' y ' + articleLink('what-is-peak-game', 'aprende qué es PEAK') + '.',
         ],
       },
     ],
@@ -389,7 +389,7 @@ export const peakTipsTranslations = {
         title: '次のPEAKプレイに向けて',
         paragraphs: [
           'ルートの層と難易度も理解したい場合は、[[link:peak-levels-biomes-difficulty|PEAKのレベルと難易度ガイド]]を続けて確認してください。',
-          '基本が身についたら、ルートの環境を' + articleLink('peak-biomes-list', 'バイオーム一覧') + 'で比べ、次の挑戦の前に' + articleLink('map-rotation', 'デイリーマップページ') + 'へ戻りましょう。より広い入門情報が必要なら、初心者向けの総合ガイドを確認し、' + articleLink('what-is-peak-game', 'PEAKとは何かを読む') + 'のがおすすめです。',
+          '基本が身についたら、ルートの環境を' + articleLink('peak-biomes-list', 'バイオーム一覧') + 'で比べ、次の挑戦の前に' + articleLink('map-rotation', 'デイリーマップページ') + 'へ戻りましょう。より広い入門情報が必要なら、' + articleLink('how-to-play-peak', '初心者向けの総合ガイド') + 'を確認し、' + articleLink('what-is-peak-game', 'PEAKとは何かを読む') + 'のがおすすめです。',
         ],
       },
     ],
@@ -529,7 +529,7 @@ export const peakTipsTranslations = {
         title: 'Prochaines étapes pour de meilleures parties',
         paragraphs: [
           'Pour mieux comprendre les couches de la route et la difficulté, consultez aussi le [[link:peak-levels-biomes-difficulty|guide des niveaux et de la difficulté de PEAK]].',
-          'Quand les bases deviennent naturelles, comparez le contexte avec notre ' + articleLink('peak-biomes-list', 'liste des biomes') + ' et revenez à la ' + articleLink('map-rotation', 'page de la carte quotidienne') + ' avant le prochain essai. Pour une introduction plus large, consultez notre guide complet pour débutants et ' + articleLink('what-is-peak-game', 'découvrez ce qu’est PEAK') + '.',
+          'Quand les bases deviennent naturelles, comparez le contexte avec notre ' + articleLink('peak-biomes-list', 'liste des biomes') + ' et revenez à la ' + articleLink('map-rotation', 'page de la carte quotidienne') + ' avant le prochain essai. Pour une introduction plus large, consultez ' + articleLink('how-to-play-peak', 'notre guide complet pour débutants') + ' et ' + articleLink('what-is-peak-game', 'découvrez ce qu’est PEAK') + '.',
         ],
       },
     ],
@@ -669,7 +669,7 @@ export const peakTipsTranslations = {
         title: 'Nächste Schritte für bessere PEAK-Läufe',
         paragraphs: [
           'Wenn du die Routenebenen und Schwierigkeit besser einordnen willst, lies auch den [[link:peak-levels-biomes-difficulty|Guide zu PEAK-Leveln und Schwierigkeit]].',
-          'Wenn die Grundlagen sitzen, vergleiche den Routen-Kontext mit unserer ' + articleLink('peak-biomes-list', 'Biome-Liste') + ' und öffne vor dem nächsten Versuch die ' + articleLink('map-rotation', 'tägliche Kartenseite') + '. Für den größeren Einstieg kannst du unseren vollständigen Anfängerleitfaden lesen und ' + articleLink('what-is-peak-game', 'erfahren, was PEAK ist') + '.',
+          'Wenn die Grundlagen sitzen, vergleiche den Routen-Kontext mit unserer ' + articleLink('peak-biomes-list', 'Biome-Liste') + ' und öffne vor dem nächsten Versuch die ' + articleLink('map-rotation', 'tägliche Kartenseite') + '. Für den größeren Einstieg kannst du ' + articleLink('how-to-play-peak', 'unseren vollständigen Anfängerleitfaden') + ' lesen und ' + articleLink('what-is-peak-game', 'erfahren, was PEAK ist') + '.',
         ],
       },
     ],
@@ -809,7 +809,7 @@ export const peakTipsTranslations = {
         title: 'Próximos passos para partidas melhores',
         paragraphs: [
           'Para entender melhor as camadas da rota e a dificuldade, continue com o [[link:peak-levels-biomes-difficulty|guia de níveis e dificuldade de PEAK]].',
-          'Quando os fundamentos estiverem naturais, compare o contexto da rota com a nossa ' + articleLink('peak-biomes-list', 'lista de biomas') + ' e volte à ' + articleLink('map-rotation', 'página do mapa diário') + ' antes da próxima tentativa. Para uma introdução mais ampla, consulte o nosso guia completo para iniciantes e ' + articleLink('what-is-peak-game', 'entenda o que é PEAK') + '.',
+          'Quando os fundamentos estiverem naturais, compare o contexto da rota com a nossa ' + articleLink('peak-biomes-list', 'lista de biomas') + ' e volte à ' + articleLink('map-rotation', 'página do mapa diário') + ' antes da próxima tentativa. Para uma introdução mais ampla, consulte ' + articleLink('how-to-play-peak', 'o nosso guia completo para iniciantes') + ' e ' + articleLink('what-is-peak-game', 'entenda o que é PEAK') + '.',
         ],
       },
     ],
@@ -949,7 +949,7 @@ export const peakTipsTranslations = {
         title: '더 나은 PEAK 플레이를 위한 다음 단계',
         paragraphs: [
           '경로의 층위와 난이도를 더 잘 이해하려면 [[link:peak-levels-biomes-difficulty|PEAK 레벨 및 난이도 가이드]]도 이어서 읽어 보세요.',
-          '기본기가 익숙해지면 ' + articleLink('peak-biomes-list', '바이옴 목록') + '에서 경로 환경을 비교하고 다음 시도 전에 ' + articleLink('map-rotation', '일일 맵 페이지') + '로 돌아오세요. 더 넓은 입문 설명이 필요하다면 전체 초보자 가이드를 읽고 ' + articleLink('what-is-peak-game', 'PEAK가 어떤 게임인지 알아보세요') + '.',
+          '기본기가 익숙해지면 ' + articleLink('peak-biomes-list', '바이옴 목록') + '에서 경로 환경을 비교하고 다음 시도 전에 ' + articleLink('map-rotation', '일일 맵 페이지') + '로 돌아오세요. 더 넓은 입문 설명이 필요하다면 ' + articleLink('how-to-play-peak', '전체 초보자 가이드') + '를 읽고 ' + articleLink('what-is-peak-game', 'PEAK가 어떤 게임인지 알아보세요') + '.',
         ],
       },
     ],
@@ -1089,7 +1089,7 @@ export const peakTipsTranslations = {
         title: 'Prossimi passi per partite migliori',
         paragraphs: [
           'Per capire meglio i livelli del percorso e la difficoltà, continua con la [[link:peak-levels-biomes-difficulty|guida ai livelli e alla difficoltà di PEAK]].',
-          'Quando le basi diventano naturali, confronta il contesto del percorso con la nostra ' + articleLink('peak-biomes-list', 'lista dei biomi') + ' e torna alla ' + articleLink('map-rotation', 'pagina della mappa giornaliera') + ' prima del prossimo tentativo. Per un’introduzione più ampia, consulta la nostra guida completa per principianti e ' + articleLink('what-is-peak-game', 'scopri che cos’è PEAK') + '.',
+          'Quando le basi diventano naturali, confronta il contesto del percorso con la nostra ' + articleLink('peak-biomes-list', 'lista dei biomi') + ' e torna alla ' + articleLink('map-rotation', 'pagina della mappa giornaliera') + ' prima del prossimo tentativo. Per un’introduzione più ampia, consulta ' + articleLink('how-to-play-peak', 'la nostra guida completa per principianti') + ' e ' + articleLink('what-is-peak-game', 'scopri che cos’è PEAK') + '.',
         ],
       },
     ],

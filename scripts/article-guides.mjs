@@ -5,6 +5,7 @@ export const articleOrder = [
   'peak-map-rotation-schedule',
   'peak-levels-biomes-difficulty',
   'peak-game-tips',
+  'how-to-play-peak',
 ];
 
 const officialNewsUrl = 'https://store.steampowered.com/news/app/3527290';
@@ -599,7 +600,7 @@ export const articleGuides = {
         id: 'next-steps',
         title: 'Next steps for learning PEAK progression',
         paragraphs: [
-          'Build a reliable model by combining the current route with stable vocabulary. Start with [[link:what-is-peak-game|what PEAK is]], compare the [[link:peak-biomes-list|full biomes list]], and open the [[link:peak-game-update|update log]] when a patch may matter. For today\'s answer, return to the [[link:map-rotation|daily map page]]. For practical first-climb preparation, continue with our [[link:peak-game-tips|PEAK game tips]].',
+          'Build a reliable model by combining the current route with stable vocabulary. Start with [[link:what-is-peak-game|what PEAK is]], then follow [[link:how-to-play-peak|our first-run beginner walkthrough]]. Compare the [[link:peak-biomes-list|full biomes list]], and open the [[link:peak-game-update|update log]] when a patch may matter. For today\'s answer, return to the [[link:map-rotation|daily map page]]. For practical first-climb preparation, continue with our [[link:peak-game-tips|PEAK game tips]].',
         ],
       },
     ],
@@ -761,7 +762,7 @@ export const articleGuides = {
         id: 'next-steps',
         title: 'Next steps for better PEAK runs',
         paragraphs: [
-          'Once these habits feel natural, compare the route with our [[link:peak-biomes-list|biomes list]] and return to the [[link:map-rotation|daily map page]] before your next attempt. For wider context, see our full beginner\'s guide and [[link:what-is-peak-game|learn what PEAK is]]. For the broader route and difficulty picture, read our [[link:peak-levels-biomes-difficulty|levels and difficulty guide]].',
+          'Once these habits feel natural, compare the route with our [[link:peak-biomes-list|biomes list]] and return to the [[link:map-rotation|daily map page]] before your next attempt. For a complete first-run walkthrough, read [[link:how-to-play-peak|our complete beginner\'s guide]], then [[link:what-is-peak-game|learn what PEAK is]]. For the broader route and difficulty picture, read our [[link:peak-levels-biomes-difficulty|levels and difficulty guide]].',
         ],
       },
     ],
@@ -793,5 +794,115 @@ export const articleGuides = {
       ['peak-levels-biomes-difficulty', 'Understand levels and difficulty'],
     ],
     relatedLabel: 'Related PEAK guides',
+  },
+
+  'how-to-play-peak': {
+    slug: 'how-to-play-peak',
+    meta: {
+      title: "How to Play PEAK (Beginner's Basics)",
+      description: "New to PEAK? Learn the controls, the climb loop, solo vs co-op, and why checking today's map rotation matters before you start.",
+      schema: 'A source-aware beginner guide to playing PEAK, including the opening, climbing controls, run loop, failure, co-op, cold, and daily map preparation.',
+    },
+    published: '2026-09-04',
+    primaryKeyword: 'how to play PEAK',
+    eyebrow: 'Beginner guide - from the plane to the summit',
+    h1: "How to Play PEAK – Beginner's Basics",
+    intro: 'PEAK is a climbing game you can play alone or with a group, where each run asks you to reach the summit across changing terrain. If you want the wider premise before learning the controls, start with [[link:what-is-peak-game|our introduction to what PEAK is]]. This page explains how to play PEAK from the first moments near the crashed plane to route planning, recovery, failure, and the next attempt.',
+    answerLabel: 'The short answer',
+    answer: 'To play PEAK, inspect the route, climb in short controlled moves, rest before stamina is exhausted, and use food or recovery supplies before a mistake becomes unrecoverable. Move from one biome context toward the summit while keeping a safe pause and retreat option in mind. In co-op, communicate the next move and stay close enough to help; before every run, [[link:map-rotation#today-map|check today\'s PEAK map]] and then confirm the live route in the game.',
+    tocLabel: 'On this page',
+    tocFaq: 'Beginner FAQ',
+    heroImage: {
+      src: '/media/how-to-play-peak.webp',
+      alt: 'Beginner PEAK climbers planning a mountain route beside a crashed plane with ropes, food, and medical supplies',
+      caption: 'Editorial illustration - learn the route, protect stamina, prepare supplies, and help the team before pushing toward the summit.',
+      width: 1254,
+      height: 1254,
+    },
+    sections: [
+      {
+        id: 'what-is-peak',
+        title: 'What is PEAK?',
+        paragraphs: [
+          'PEAK is a climbing adventure built around repeated attempts on a mountain route. Whether you travel solo or cooperate with other players, the goal is to read the terrain, manage supplies, and reach the summit. Think in safe decisions rather than speed, and treat current game prompts as the final reference after an update.',
+        ],
+      },
+      {
+        id: 'the-basics',
+        title: 'The basics: start, controls, and the climb loop',
+        paragraphs: [
+          'A run begins around the crashed plane. Search nearby while returning is easy, then identify the first safe stop uphill. The summit is the destination, but your immediate goal is the next stable place.',
+          'Follow the current control menu. With the default PC controls, hold the left mouse button to grab a climbable surface. Climbing consumes stamina, so settle on safe ground and recover before committing again.',
+          'The core loop is climb, recover, resupply, and advance. Food supports the next stretch, medical supplies protect a recovery plan, and climbing tools solve obstacles. Repeat that loop through each biome without assuming one fixed layout or item placement.',
+        ],
+        bullets: [
+          ['Read before grabbing', 'Move the camera, identify the next hold and landing, and avoid committing without an exit.'],
+          ['Protect a stamina margin', 'Pause on dependable ground before exhaustion removes your ability to correct a mistake.'],
+          ['Spend supplies for a purpose', 'Use food, medical items, and climbing tools to solve the next known problem rather than carrying or consuming them without a plan.'],
+        ],
+      },
+      {
+        id: 'death-and-failure',
+        title: 'Death and failure: what happens when a run goes wrong',
+        paragraphs: [
+          'A fall, hazard, or exhausted recovery plan can remove a climber from the attempt. In solo play, that may end the run; in co-op, the game may offer teammate recovery or revive options. Follow the current on-screen state because those conditions can change.',
+          'After failure, identify one cause: a bad landing, empty stamina, missing food, a split team, or a tool spent too early. Change one preparation choice on the next run instead of memorizing the whole seed.',
+        ],
+      },
+      {
+        id: 'solo-vs-coop',
+        title: 'Solo vs co-op: how your plan changes',
+        paragraphs: [
+          'Solo play gives you control over pace and inventory, but every route and recovery decision belongs to you. Carry balanced supplies, stop earlier, and avoid moves that depend on help. Use the official Steam listing for current play-mode support.',
+          'In co-op, agree on the next stop, avoid crowding narrow ledges, and report low stamina or supplies. Teammates can scout, share items, assist movement, and respond to a downed player when allowed. Stay close enough for a helper to reach you safely.',
+        ],
+      },
+      {
+        id: 'daily-map-rotation',
+        title: 'Check the daily map rotation before you play',
+        kind: 'today-map',
+        paragraphs: [
+          'PEAK uses a changing route, so yesterday\'s remembered line may not describe today\'s climb. Before leaving the starting area, [[link:map-rotation#today-map|check today\'s PEAK map]] for the dated route and biome context written into this site at build time. Then compare that snapshot with the live game after the reset.',
+          'Use the map to ask which biome appears early and where cold, visibility, or terrain may change preparation. Keep one flexible tool available if the route differs. The session confirms the exact path; the daily page supplies the starting brief.',
+          'If older advice disagrees with the current game, trust the active session and review the update date. Rotation changes today\'s climb, while the basic loop remains useful.',
+        ],
+      },
+      {
+        id: 'next-steps',
+        title: 'What to learn after your first PEAK run',
+        paragraphs: [
+          'Once the basic loop makes sense, turn each question into a focused reference. Use our [[link:peak-game-tips|practical PEAK tips]] for stamina, food, ropes, teamwork, and cold. Read the [[link:peak-levels-biomes-difficulty|levels, biomes, and difficulty guide]] to separate route positions from Ascents, then check the [[link:achievements|PEAK achievements guide]] when you want structured goals beyond reaching the summit.',
+          'Keep the order simple: practice safely, check the route, prepare for the next biome, and review one mistake. This is more dependable than copying another seed or patch.',
+        ],
+      },
+    ],
+    faq: {
+      eyebrow: 'Quick answers',
+      title: 'How to play PEAK FAQ',
+      items: [
+        ['What devices can you play PEAK on?', 'The official Steam listing currently documents the Windows PC version. Check the official store and developer announcements for current platform support before buying or organizing a cross-platform group.'],
+        ['Is PEAK PC only?', 'The verified store source for this guide is the Windows PC release on Steam. Platform availability can change, so this page does not treat an older platform list as a permanent promise.'],
+        ['How do I avoid the cold in PEAK?', 'Scout an exposed cold section before entering, keep moving toward cover or a safer area shown by the game, and reserve stamina for the crossing. Use current warming or protection descriptions because item effects and thresholds can change.'],
+        ['Is PEAK a difficult game?', 'It can be demanding because climbing, stamina, supplies, terrain, failure, and teamwork interact. Beginners make it more manageable by using short moves, safe pauses, a recovery margin, and a route check before each attempt.'],
+      ],
+    },
+    source: {
+      eyebrow: 'Sources and limits',
+      title: 'Keep this beginner guide tied to the current game',
+      body: 'The official PEAK Steam page is the source for the game premise, Windows availability, and solo or co-op support. Daily route context comes from this site\'s maintained build-time map record. Controls, cold, item behavior, revive conditions, hazards, and exact routes can change, so current in-game prompts and official update notes take priority.',
+      links: [
+        ['Official PEAK Steam page', 'https://store.steampowered.com/app/3527290/PEAK/'],
+        ['Official Steam news feed', officialNewsUrl],
+        ['PEAK Map Today source', 'https://peak.skydler.me/'],
+      ],
+    },
+    related: [
+      ['map-rotation', "Check today's PEAK map"],
+      ['what-is-peak-game', 'Learn what PEAK is'],
+      ['peak-game-tips', 'Use practical PEAK tips'],
+      ['peak-levels-biomes-difficulty', 'Understand levels and difficulty'],
+      ['achievements', 'Plan achievement goals'],
+    ],
+    relatedLabel: 'Continue learning PEAK',
   },
 };

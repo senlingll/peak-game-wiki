@@ -3,6 +3,7 @@ import { whatIsPeakTranslations } from './article-beginner-locales.mjs';
 import { peakMapRotationScheduleTranslations } from './article-schedule-locales.mjs';
 import { peakLevelsTranslations } from './article-levels-locales.mjs';
 import { peakTipsTranslations } from './article-tips-locales.mjs';
+import { howToPlayPeakTranslations } from './article-how-to-play-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1161,6 +1162,10 @@ for (const [locale, translation] of Object.entries(peakLevelsTranslations)) {
 
 for (const [locale, translation] of Object.entries(peakTipsTranslations)) {
   articleLocaleTranslations[locale]['peak-game-tips'] = translation;
+}
+
+for (const [locale, translation] of Object.entries(howToPlayPeakTranslations)) {
+  articleLocaleTranslations[locale]['how-to-play-peak'] = translation;
 }
 
 const localizedBiomeUpdateCopy = {
