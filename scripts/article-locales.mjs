@@ -4,6 +4,7 @@ import { peakMapRotationScheduleTranslations } from './article-schedule-locales.
 import { peakLevelsTranslations } from './article-levels-locales.mjs';
 import { peakTipsTranslations } from './article-tips-locales.mjs';
 import { howToPlayPeakTranslations } from './article-how-to-play-locales.mjs';
+import { rescueClawTranslations } from './article-rescue-claw-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1184,6 +1185,10 @@ for (const [locale, translation] of Object.entries(peakTipsTranslations)) {
 
 for (const [locale, translation] of Object.entries(howToPlayPeakTranslations)) {
   articleLocaleTranslations[locale]['how-to-play-peak'] = translation;
+}
+
+for (const [locale, translation] of Object.entries(rescueClawTranslations)) {
+  articleLocaleTranslations[locale]['rescue-claw'] = translation;
 }
 
 const localizedBiomeUpdateCopy = {
