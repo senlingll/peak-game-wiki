@@ -58,6 +58,7 @@ export const rescueClawTranslations = {
           '当缺口、短距离坠落或 Scout 遇险变成恢复问题，而不再是普通攀登问题时，才使用这个工具。救援仍然需要接收者、看得见的恢复表面，以及让操作员保持安全的位置。以上是团队实践，不是官方公布的范围或成功保证。',
         ],
         image: {
+          src: '/media/peak-coop-climb.webp',
           alt: 'Steam 官方截图中的 PEAK 队友在陡峭路线旁协作攀登',
           caption: 'Steam 官方截图：保持间距并清楚沟通路线，才能给救援尝试留下空间。',
         },
@@ -75,6 +76,7 @@ export const rescueClawTranslations = {
           '范围也不能替代路线规划。更远的作用距离不能让危险落点变安全；即使距离较短，只要队友就在平台下方，也可能仍然有价值。先读路线，再决定 Rescue Claw 是否值得消耗剩余的恢复选项。',
         ],
         image: {
+          src: '/media/peak-map-route.webp',
           alt: 'Steam 官方截图展示 PEAK 中需要判断下一个安全位置的攀登路线',
           caption: 'Steam 官方截图：依赖工具前，先检查路线和可恢复空间。',
         },
@@ -156,7 +158,7 @@ export const rescueClawTranslations = {
     primaryKeyword: 'Rescue Claw PEAK',
     eyebrow: 'Guía de rescate cooperativo - contexto oficial 2.04.a',
     h1: 'Guía de Rescue Claw en PEAK: alcance, tirones y rescates cooperativos',
-    intro: 'Rescue Claw es la herramienta de recuperación cooperativa de PEAK para cuando un compañero cae, queda atrapado en una posición mala o el Scout necesita salir de una situación expuesta. La actualización oficial 2.04.a explica su comportamiento clave al usarla sobre un compañero; esta guía separa ese dato comprobado de los consejos de partida. Para entender el ciclo de escalada, empieza por' + articleLink('how-to-play-peak', 'la guía para principiantes') + ' y consulta' + articleLink('peak-game-tips', 'los consejos de supervivencia cooperativa') + ' antes de convertir un rescate en tu plan principal.',
+    intro: 'Rescue Claw es la herramienta de recuperación cooperativa de PEAK para cuando un compañero cae, queda atrapado en una posición mala o el Scout necesita salir de una situación expuesta. La actualización oficial 2.04.a explica su comportamiento clave al usarla sobre un compañero; esta guía separa ese dato comprobado de los consejos de partida. Para entender el ciclo de escalada, empieza por ' + articleLink('how-to-play-peak', 'la guía para principiantes') + ' y consulta ' + articleLink('peak-game-tips', 'los consejos de supervivencia cooperativa') + ' antes de convertir un rescate en tu plan principal.',
     answerLabel: 'Respuesta breve',
     answer: 'Usa Rescue Claw cuando un compañero necesite volver a conectar con el terreno. Búscala en el contexto de equipaje descrito por la actualización de THE KILN, apunta al amigo, activa el aviso actual del juego y mantén una posición de recuperación estable. La fuente confirma un estado de ragdoll más corto después de completar el agarre, pero no publica un alcance exacto, un aterrizaje garantizado ni una condición de logro.',
     tocLabel: 'En esta página',
@@ -198,6 +200,7 @@ export const rescueClawTranslations = {
           'Usa la herramienta cuando un hueco, una caída corta o un Scout en problemas convierta la situación en una decisión de recuperación y no en una escalada normal. El intento todavía necesita un receptor, una superficie visible y una posición segura para quien opera la herramienta. Son prácticas de equipo, no garantías publicadas de alcance o éxito.',
         ],
         image: {
+          src: '/media/peak-coop-climb.webp',
           alt: 'Captura oficial de Steam de compañeros de PEAK coordinando una escalada en una ruta empinada',
           caption: 'Captura oficial de Steam: la distancia y las llamadas claras de ruta dan espacio al intento de rescate.',
         },
@@ -215,6 +218,7 @@ export const rescueClawTranslations = {
           'El alcance tampoco sustituye la planificación de la ruta. Una mayor distancia no vuelve seguro un aterrizaje peligroso, y una distancia corta puede seguir siendo útil si el compañero está justo debajo de un saliente. Lee primero la ruta y después decide si Rescue Claw merece tus opciones de recuperación restantes.',
         ],
         image: {
+          src: '/media/peak-map-route.webp',
           alt: 'Captura oficial de Steam de una ruta de PEAK donde el equipo debe leer la siguiente posición segura',
           caption: 'Captura oficial de Steam: revisa la ruta y el espacio de recuperación antes de depender de un objeto.',
         },
@@ -223,7 +227,7 @@ export const rescueClawTranslations = {
         title: 'Afecta Rescue Claw a algún logro',
         paragraphs: [
           'El anuncio oficial 2.04.a no afirma que usar Rescue Claw desbloquee un logro, una insignia o una recompensa especial. Habla de la interacción con un amigo y del estado de ragdoll más corto, pero no define una condición de logro. Por eso esta página no asegura que tirar de un compañero cuente para un desbloqueo concreto.',
-          'Si estás probando un objetivo supuesto, anota la acción exacta, el modo, el estado del compañero, el contexto de la ruta y la versión actual; después revisa el resultado de la plataforma. Toma los informes de la comunidad como pistas hasta que el juego actual o un registro oficial de Steam los confirme. Para distinguir logros de plataforma y progreso del juego, consulta la' + articleLink('achievements', 'guía de logros de PEAK') + '.',
+          'Si estás probando un objetivo supuesto, anota la acción exacta, el modo, el estado del compañero, el contexto de la ruta y la versión actual; después revisa el resultado de la plataforma. Toma los informes de la comunidad como pistas hasta que el juego actual o un registro oficial de Steam los confirme. Para distinguir logros de plataforma y progreso del juego, consulta la ' + articleLink('achievements', 'guía de logros de PEAK') + '.',
           'Un desbloqueo fallido no demuestra que la herramienta esté rota. La condición puede ser ajena, depender de la versión o no estar documentada en la nota del parche. Mantén separadas la recomendación de rescate y la hipótesis sobre logros para no convertir una técnica cooperativa útil en una promesa falsa.',
         ],
       },
@@ -231,8 +235,8 @@ export const rescueClawTranslations = {
         title: 'Rescue Claw frente a las herramientas de cuerda',
         paragraphs: [
           'Rescue Claw es una herramienta de respuesta: sirve para decidir qué hacer cuando un compañero necesita una oportunidad de recuperación. Una herramienta de cuerda es una elección de preparación de ruta: sirve para decidir cómo se acercará el equipo al próximo obstáculo. No gastes una herramienta de rescate solo porque una ruta de cuerda parece incómoda, ni supongas que una cuerda sustituye el plan de recuperación de un compañero. Son funciones de planificación, no estadísticas ocultas.',
-          'Compara las fichas actuales de la base de datos de la página de inicio: la' + articleLink('home#database', 'ficha de Rescue Claw') + ', la' + articleLink('home#database', 'entrada de Anti-Rope Cannon') + ' y la' + articleLink('home#database', 'entrada de Rope Shooter') + '. Las fichas mantienen juntos los nombres y sus funciones generales de equipo o ruta; los efectos exactos deben comprobarse en el juego.',
-          'Antes de salir, decide quién lleva la recuperación, quién comunica la ruta y qué hará el equipo si falla el siguiente movimiento. Después' + mapLink('consulta el mapa de PEAK de hoy') + ' para que la carga empiece con el contexto de la ruta actual. Una ruta con huecos incómodos puede pedir una preparación distinta de otra donde el riesgo inmediato sea separar a un compañero.',
+          'Compara las fichas actuales de la base de datos de la página de inicio: la ' + articleLink('home#database', 'ficha de Rescue Claw') + ', la ' + articleLink('home#database', 'entrada de Anti-Rope Cannon') + ' y la ' + articleLink('home#database', 'entrada de Rope Shooter') + '. Las fichas mantienen juntos los nombres y sus funciones generales de equipo o ruta; los efectos exactos deben comprobarse en el juego.',
+          'Antes de salir, decide quién lleva la recuperación, quién comunica la ruta y qué hará el equipo si falla el siguiente movimiento. Después ' + mapLink('consulta el mapa de PEAK de hoy') + ' para que la carga empiece con el contexto de la ruta actual. Una ruta con huecos incómodos puede pedir una preparación distinta de otra donde el riesgo inmediato sea separar a un compañero.',
         ],
         bullets: [
           ['Herramienta de ruta', 'Prepárate para el terreno que esperas cruzar.'],
@@ -256,7 +260,7 @@ export const rescueClawTranslations = {
       {
         title: 'Siguientes pasos después de aprender Rescue Claw',
         paragraphs: [
-          'Rescue Claw funciona mejor como una parte del plan de ruta, no como permiso para hacer un salto malo. Antes de la próxima partida, lee' + articleLink('peak-game-tips', 'los consejos de supervivencia cooperativa') + ', repasa' + articleLink('how-to-play-peak', 'la guía para principiantes') + ' y' + mapLink('consulta el mapa de PEAK de hoy') + ' para conocer el contexto actual. Después vuelve al juego y verifica el aviso, el objetivo y el aterrizaje en la versión que realmente estés jugando.',
+          'Rescue Claw funciona mejor como una parte del plan de ruta, no como permiso para hacer un salto malo. Antes de la próxima partida, lee ' + articleLink('peak-game-tips', 'los consejos de supervivencia cooperativa') + ', repasa ' + articleLink('how-to-play-peak', 'la guía para principiantes') + ' y ' + mapLink('consulta el mapa de PEAK de hoy') + ' para conocer el contexto actual. Después vuelve al juego y verifica el aviso, el objetivo y el aterrizaje en la versión que realmente estés jugando.',
         ],
       },
     ],
@@ -338,6 +342,7 @@ export const rescueClawTranslations = {
           'すき間、短い落下、困っているScoutが通常の登攀ではなく回復の判断になったときに使います。救助には受け手、見える回復面、操作する人の安全な位置が必要です。これはチームの実践であり、公式が公開した射程や成功保証ではありません。',
         ],
         image: {
+          src: '/media/peak-coop-climb.webp',
           alt: '急なルートでPEAKの仲間同士が登攀を連携するSteam公式スクリーンショット',
           caption: 'Steam公式スクリーンショット：距離を保ち、ルートを明確に伝えると救助の余地が生まれます。',
         },
@@ -355,6 +360,7 @@ export const rescueClawTranslations = {
           '射程はルート計画の代わりにもなりません。長く届いても危険な着地点が安全になるわけではなく、短い距離でも仲間が岩棚のすぐ下にいれば役立つことがあります。まずルートを読み、残りの回復手段を使う価値があるか判断します。',
         ],
         image: {
+          src: '/media/peak-map-route.webp',
           alt: '次に安全な位置を読む必要があるPEAKの登攀ルートを示すSteam公式スクリーンショット',
           caption: 'Steam公式スクリーンショット：道具に頼る前にルートと回復できる空間を確認します。',
         },
@@ -436,7 +442,7 @@ export const rescueClawTranslations = {
     primaryKeyword: 'Rescue Claw PEAK',
     eyebrow: 'Guide de sauvetage coopératif - contexte officiel 2.04.a',
     h1: 'Guide Rescue Claw PEAK : portée, rappels et sauvetages en coop',
-    intro: 'Rescue Claw est l’outil de récupération coopérative de PEAK lorsqu’un coéquipier tombe, reste coincé dans une mauvaise position ou laisse le Scout exposé. La mise à jour officielle 2.04.a décrit son comportement essentiel sur un coéquipier ; ce guide sépare ce fait vérifiable des conseils de terrain. Pour comprendre la boucle d’escalade, commencez par' + articleLink('how-to-play-peak', 'le guide débutant') + ' et consultez ' + articleLink('peak-game-tips', 'les conseils de survie en équipe') + ' avant de compter sur un sauvetage.',
+    intro: 'Rescue Claw est l’outil de récupération coopérative de PEAK lorsqu’un coéquipier tombe, reste coincé dans une mauvaise position ou laisse le Scout exposé. La mise à jour officielle 2.04.a décrit son comportement essentiel sur un coéquipier ; ce guide sépare ce fait vérifiable des conseils de terrain. Pour comprendre la boucle d’escalade, commencez par ' + articleLink('how-to-play-peak', 'le guide débutant') + ' et consultez ' + articleLink('peak-game-tips', 'les conseils de survie en équipe') + ' avant de compter sur un sauvetage.',
     answerLabel: 'Réponse courte',
     answer: 'Utilisez Rescue Claw lorsqu’un coéquipier doit retrouver un contact avec le terrain. Cherchez-la dans le contexte de bagages décrit par la mise à jour de THE KILN, visez l’ami, activez l’invite actuelle du jeu et gardez une position de récupération stable. La source confirme une durée de ragdoll plus courte après la fin de la griffe, mais ne publie ni portée exacte, ni atterrissage garanti, ni condition de succès.',
     tocLabel: 'Sur cette page',
@@ -478,6 +484,7 @@ export const rescueClawTranslations = {
           'Utilisez l’outil lorsqu’un écart, une petite chute ou un Scout en difficulté crée une décision de récupération plutôt qu’une escalade normale. Un sauvetage demande toujours un receveur, une surface de récupération visible et une position sûre pour l’opérateur. Ce sont des pratiques d’équipe, pas des garanties officielles de portée ou de réussite.',
         ],
         image: {
+          src: '/media/peak-coop-climb.webp',
           alt: 'Capture officielle Steam de coéquipiers PEAK coordonnant une escalade sur une route raide',
           caption: 'Capture officielle Steam : l’espace et des appels de route clairs donnent une chance à l’essai de sauvetage.',
         },
@@ -495,6 +502,7 @@ export const rescueClawTranslations = {
           'La portée ne remplace pas non plus la préparation de route. Une longue portée ne rend pas un atterrissage dangereux sûr, et une courte portée peut rester utile si le coéquipier se trouve juste sous une corniche. Lisez d’abord la route, puis décidez si Rescue Claw mérite vos options de récupération restantes.',
         ],
         image: {
+          src: '/media/peak-map-route.webp',
           alt: 'Capture officielle Steam montrant une route PEAK où l’équipe doit lire la prochaine position sûre',
           caption: 'Capture officielle Steam : examinez la route et l’espace de récupération avant de compter sur un objet.',
         },
@@ -503,7 +511,7 @@ export const rescueClawTranslations = {
         title: 'Rescue Claw a-t-elle un effet sur un succès',
         paragraphs: [
           'L’annonce officielle 2.04.a ne dit pas que l’utilisation de Rescue Claw débloque un succès, un badge ou une récompense spéciale. Elle décrit l’interaction avec un ami et la durée de ragdoll réduite, mais ne définit aucune condition de succès. Cette page ne prétend donc pas qu’un rappel de coéquipier compte pour un déblocage précis.',
-          'Si vous testez un objectif supposé, notez l’action exacte, le mode, l’état du coéquipier, le contexte de route et la version actuelle, puis vérifiez le résultat de la plateforme. Traitez un rapport communautaire comme une piste jusqu’à confirmation par le jeu actuel ou un relevé Steam officiel. Pour distinguer les succès de plateforme de la progression en jeu, consultez le' + articleLink('achievements', 'guide des succès PEAK') + '.',
+          'Si vous testez un objectif supposé, notez l’action exacte, le mode, l’état du coéquipier, le contexte de route et la version actuelle, puis vérifiez le résultat de la plateforme. Traitez un rapport communautaire comme une piste jusqu’à confirmation par le jeu actuel ou un relevé Steam officiel. Pour distinguer les succès de plateforme de la progression en jeu, consultez le ' + articleLink('achievements', 'guide des succès PEAK') + '.',
           'Un déblocage raté ne prouve pas que l’outil est défectueux. La condition peut être sans rapport, dépendre de la version ou être simplement absente de la note de patch. Séparez les conseils de sauvetage et l’hypothèse de succès afin de ne pas transformer une technique coopérative utile en fausse promesse.',
         ],
       },
@@ -576,7 +584,7 @@ export const rescueClawTranslations = {
     primaryKeyword: 'Rescue Claw PEAK',
     eyebrow: 'Koop-Rettungsguide - offizieller Kontext zu 2.04.a',
     h1: 'PEAK Rescue Claw Guide: Reichweite, Teamrettung und Koop-Einsatz',
-    intro: 'Rescue Claw ist in PEAK das Koop-Bergungswerkzeug für den Moment, in dem ein Teammitglied stürzt, an einer ungünstigen Stelle festhängt oder der Scout in eine gefährdete Position gerät. Das offizielle Update 2.04.a beschreibt das wichtigste Verhalten beim Einsatz auf einen Freund; dieser Guide trennt diese bestätigte Information von praktischen Entscheidungen. Für den allgemeinen Kletterablauf lies zuerst den' + articleLink('how-to-play-peak', 'Einsteiger-Guide') + ' und bereite dich mit' + articleLink('peak-game-tips', 'Koop-Überlebenstipps') + ' vor.',
+    intro: 'Rescue Claw ist in PEAK das Koop-Bergungswerkzeug für den Moment, in dem ein Teammitglied stürzt, an einer ungünstigen Stelle festhängt oder der Scout in eine gefährdete Position gerät. Das offizielle Update 2.04.a beschreibt das wichtigste Verhalten beim Einsatz auf einen Freund; dieser Guide trennt diese bestätigte Information von praktischen Entscheidungen. Für den allgemeinen Kletterablauf lies zuerst den ' + articleLink('how-to-play-peak', 'Einsteiger-Guide') + ' und bereite dich mit ' + articleLink('peak-game-tips', 'Koop-Überlebenstipps') + ' vor.',
     answerLabel: 'Kurzantwort',
     answer: 'Nutze Rescue Claw, wenn ein Teammitglied wieder Kontakt zum Gelände bekommen muss. Suche sie im Gepäckkontext des offiziellen THE-KILN-Updates, ziele auf den Freund, aktiviere die aktuelle Spielaufforderung und halte eine stabile Bergungsposition bereit. Die Quelle bestätigt eine kürzere Ragdoll-Zeit nach Abschluss der Klaue, nennt aber weder eine genaue Reichweite noch eine garantierte Landung oder eine Erfolgsbedingung.',
     tocLabel: 'Auf dieser Seite',
@@ -618,6 +626,7 @@ export const rescueClawTranslations = {
           'Nutze das Werkzeug, wenn eine Lücke, ein kurzer Sturz oder ein Scout in Schwierigkeiten eine Bergungsentscheidung erzeugt und keine normale Kletterbewegung mehr ist. Eine Rettung braucht weiterhin einen Empfänger, eine sichtbare Fläche zur Erholung und einen sicheren Stand für den Bediener. Das sind Teampraktiken, keine veröffentlichte Reichweiten- oder Erfolgsgarantie.',
         ],
         image: {
+          src: '/media/peak-coop-climb.webp',
           alt: 'Offizieller Steam-Screenshot von PEAK-Teammitgliedern, die einen steilen Kletterweg koordinieren',
           caption: 'Offizieller Steam-Screenshot: Abstand und klare Routenansagen geben dem Rettungsversuch Raum.',
         },
@@ -635,6 +644,7 @@ export const rescueClawTranslations = {
           'Reichweite ersetzt außerdem keine Routenplanung. Eine größere Distanz macht eine gefährliche Landung nicht sicher, und eine kurze Distanz kann wertvoll sein, wenn ein Teammitglied direkt unter einer Kante hängt. Lies zuerst die Route und entscheide dann, ob Rescue Claw deine verbleibenden Bergungsoptionen wert ist.',
         ],
         image: {
+          src: '/media/peak-map-route.webp',
           alt: 'Offizieller Steam-Screenshot einer PEAK-Route, auf der das Team die nächste sichere Position lesen muss',
           caption: 'Offizieller Steam-Screenshot: Prüfe Route und Bergungsraum, bevor du dich auf ein Item verlässt.',
         },
@@ -643,7 +653,7 @@ export const rescueClawTranslations = {
         title: 'Beeinflusst Rescue Claw einen Erfolg',
         paragraphs: [
           'Die offizielle Ankündigung 2.04.a sagt nicht, dass die Nutzung von Rescue Claw einen Erfolg, ein Abzeichen oder eine besondere Belohnung freischaltet. Sie beschreibt die Freund-Interaktion und die kürzere Ragdoll-Zeit, definiert aber keine Erfolgsbedingung. Deshalb behauptet diese Seite nicht, dass das Heranziehen eines Teammitglieds für einen bestimmten Unlock zählt.',
-          'Wenn du ein vermutetes Ziel testest, notiere die genaue Aktion, den Modus, den Zustand des Teammitglieds, den Routen-Kontext und die aktuelle Version und prüfe anschließend das Plattform-Ergebnis. Behandle Community-Berichte als Hinweis, bis das aktuelle Spiel oder ein offizieller Steam-Eintrag sie bestätigt. Den Unterschied zwischen Plattform-Erfolgen und In-Game-Fortschritt erklärt der' + articleLink('achievements', 'PEAK-Erfolge-Guide') + '.',
+          'Wenn du ein vermutetes Ziel testest, notiere die genaue Aktion, den Modus, den Zustand des Teammitglieds, den Routen-Kontext und die aktuelle Version und prüfe anschließend das Plattform-Ergebnis. Behandle Community-Berichte als Hinweis, bis das aktuelle Spiel oder ein offizieller Steam-Eintrag sie bestätigt. Den Unterschied zwischen Plattform-Erfolgen und In-Game-Fortschritt erklärt der ' + articleLink('achievements', 'PEAK-Erfolge-Guide') + '.',
           'Ein fehlender Unlock beweist nicht, dass das Werkzeug kaputt ist. Die Bedingung kann unabhängig, versionsabhängig oder schlicht nicht in den Patchnotes dokumentiert sein. Halte Rettungstipps und Erfolgsvermutungen getrennt, damit eine nützliche Koop-Technik kein falsches Versprechen wird.',
         ],
       },
@@ -716,7 +726,7 @@ export const rescueClawTranslations = {
     primaryKeyword: 'Rescue Claw PEAK',
     eyebrow: 'Guia de resgate cooperativo - contexto oficial 2.04.a',
     h1: 'Guia da Rescue Claw em PEAK: alcance, puxões e resgates em cooperação',
-    intro: 'Rescue Claw é a ferramenta de recuperação cooperativa de PEAK para quando um companheiro cai, fica preso em uma posição ruim ou deixa o Scout exposto. A atualização oficial 2.04.a descreve o comportamento principal ao usá-la em um amigo; este guia separa esse fato confirmado das decisões práticas de uma partida. Para entender o ciclo da escalada, comece pelo' + articleLink('how-to-play-peak', 'guia para iniciantes') + ' e consulte ' + articleLink('peak-game-tips', 'as dicas de sobrevivência em cooperação') + ' antes de depender do resgate.',
+    intro: 'Rescue Claw é a ferramenta de recuperação cooperativa de PEAK para quando um companheiro cai, fica preso em uma posição ruim ou deixa o Scout exposto. A atualização oficial 2.04.a descreve o comportamento principal ao usá-la em um amigo; este guia separa esse fato confirmado das decisões práticas de uma partida. Para entender o ciclo da escalada, comece pelo ' + articleLink('how-to-play-peak', 'guia para iniciantes') + ' e consulte ' + articleLink('peak-game-tips', 'as dicas de sobrevivência em cooperação') + ' antes de depender do resgate.',
     answerLabel: 'Resposta curta',
     answer: 'Use Rescue Claw quando um companheiro precisar voltar a ter contato com o terreno. Procure-a no contexto de bagagens descrito pela atualização de THE KILN, mire no amigo, ative o comando atual do jogo e mantenha uma posição estável para a recuperação. A fonte confirma um tempo menor de ragdoll depois que a garra termina, mas não publica alcance exato, pouso garantido nem condição de conquista.',
     tocLabel: 'Nesta página',
@@ -758,6 +768,7 @@ export const rescueClawTranslations = {
           'Use a ferramenta quando uma abertura, uma queda curta ou um Scout em apuros criar uma decisão de recuperação em vez de uma escalada normal. O resgate ainda precisa de um receptor, uma superfície visível e uma posição segura para quem opera. São práticas de equipe, não garantias oficiais de alcance ou sucesso.',
         ],
         image: {
+          src: '/media/peak-coop-climb.webp',
           alt: 'Captura oficial da Steam de companheiros de PEAK coordenando uma escalada em uma rota íngreme',
           caption: 'Captura oficial da Steam: espaço e chamadas claras de rota dão margem para a tentativa de resgate.',
         },
@@ -775,6 +786,7 @@ export const rescueClawTranslations = {
           'Alcance também não substitui planejamento de rota. Um alcance maior não torna um pouso perigoso seguro, e um alcance curto pode ser útil quando o companheiro está logo abaixo de uma borda. Leia a rota primeiro e depois decida se Rescue Claw vale as opções de recuperação restantes.',
         ],
         image: {
+          src: '/media/peak-map-route.webp',
           alt: 'Captura oficial da Steam mostrando uma rota de PEAK em que a equipe precisa ler a próxima posição segura',
           caption: 'Captura oficial da Steam: observe a rota e o espaço de recuperação antes de depender de um item.',
         },
@@ -783,7 +795,7 @@ export const rescueClawTranslations = {
         title: 'Rescue Claw afeta alguma conquista',
         paragraphs: [
           'O anúncio oficial 2.04.a não afirma que usar Rescue Claw desbloqueia uma conquista, um emblema ou uma recompensa especial. Ele fala da interação com um amigo e do tempo menor de ragdoll, mas não define uma condição de conquista. Por isso, esta página não diz que puxar um companheiro conta para um desbloqueio específico.',
-          'Se estiver testando um objetivo suspeito, registre a ação exata, o modo, o estado do companheiro, o contexto da rota e a versão atual; depois confira o resultado na plataforma. Trate relatos da comunidade como pistas até que o jogo atual ou um registro oficial da Steam confirme. Para diferenciar conquistas da plataforma e progresso dentro do jogo, consulte o' + articleLink('achievements', 'guia de conquistas de PEAK') + '.',
+          'Se estiver testando um objetivo suspeito, registre a ação exata, o modo, o estado do companheiro, o contexto da rota e a versão atual; depois confira o resultado na plataforma. Trate relatos da comunidade como pistas até que o jogo atual ou um registro oficial da Steam confirme. Para diferenciar conquistas da plataforma e progresso dentro do jogo, consulte o ' + articleLink('achievements', 'guia de conquistas de PEAK') + '.',
           'Uma falha no desbloqueio não prova que a ferramenta esteja quebrada. A condição pode não ter relação, depender da versão ou simplesmente não estar documentada na nota do patch. Mantenha a dica de resgate separada da hipótese de conquista para não transformar uma técnica cooperativa útil em promessa falsa.',
         ],
       },
@@ -894,10 +906,11 @@ export const rescueClawTranslations = {
         title: '동료를 조준해 Rescue Claw 사용하는 방법',
         paragraphs: [
           '사용을 팀이 맞춰야 하는 인계 과정으로 생각하세요. 조작자는 경로를 회복할 여지가 있는 곳에 서서 동료를 바라보고, 현재 프롬프트를 작동시키기 전에 대상 친구를 조준해야 합니다. 동료는 잡으려는 손잡이나 선반을 알리고, 나머지 팀원은 또 다른 위기를 만들지 않도록 움직임을 조절하세요.',
-          '2.04.a에서 기억할 공식 문장은 다음과 같습니다. “Using the Rescue Claw on a friend will ragdoll them for less time, making it easier for them to grab onto something once the claw completes.” 이 페이지에서는 “친구에게 Rescue Claw를 사용하면 래그돌 상태가 짧아져 클로가 끝난 뒤 무언가를 잡기 쉬워진다”라고 옮겼습니다. 독자를 위한 번역이며 공식 한국어 문장이 아닙니다. 공식 원문 출처: Patch 2.04.a THE KILN IS BACK, Steam News: ' + sourceLinks.patch + '。',
+          '2.04.a에서 기억할 공식 문장은 다음과 같습니다. “Using the Rescue Claw on a friend will ragdoll them for less time, making it easier for them to grab onto something once the claw completes.” 이 페이지에서는 “친구에게 Rescue Claw를 사용하면 래그돌 상태가 짧아져 클로가 끝난 뒤 무언가를 잡기 쉬워진다”라고 옮겼습니다. 독자를 위한 번역이며 공식 한국어 문장이 아닙니다. 공식 원문 출처: Patch 2.04.a THE KILN IS BACK, Steam News: ' + sourceLinks.patch + '.',
           '틈, 짧은 추락, 곤란에 빠진 Scout 때문에 평범한 등반이 아니라 회복 판단이 필요해졌을 때 도구를 사용하세요. 구조에는 받는 사람, 보이는 회복 표면, 조작자의 안전한 위치가 여전히 필요합니다. 이는 팀 운영 방식이지, 공식적으로 공개된 사거리나 성공 보장이 아닙니다.',
         ],
         image: {
+          src: '/media/peak-coop-climb.webp',
           alt: '가파른 경로에서 PEAK 동료들이 함께 등반을 조율하는 Steam 공식 스크린샷',
           caption: 'Steam 공식 스크린샷: 거리를 유지하고 경로를 분명히 알리면 구조 시도에 여유가 생깁니다.',
         },
@@ -915,6 +928,7 @@ export const rescueClawTranslations = {
           '사거리는 경로 계획을 대신하지도 않습니다. 멀리 닿는다고 위험한 착지가 안전해지는 것은 아니며, 동료가 선반 바로 아래에 있다면 짧은 거리도 유용할 수 있습니다. 먼저 경로를 읽고 남은 회복 수단을 Rescue Claw에 사용할 가치가 있는지 판단하세요.',
         ],
         image: {
+          src: '/media/peak-map-route.webp',
           alt: '다음 안전한 위치를 읽어야 하는 PEAK 등반 경로를 보여 주는 Steam 공식 스크린샷',
           caption: 'Steam 공식 스크린샷: 아이템에 의존하기 전에 경로와 회복 공간을 확인하세요.',
         },
@@ -972,7 +986,7 @@ export const rescueClawTranslations = {
     source: {
       eyebrow: '공식 출처와 한계',
       title: 'Patch 2.04.a에서 확인되는 내용',
-      body: '이 가이드의 주요 출처는 Steam 공식 글 THE KILN IS BACK(Patch 2.04.a)입니다. 글은 짐 변경을 기록하며 “Using the Rescue Claw on a friend will ragdoll them for less time, making it easier for them to grab onto something once the claw completes.”라고 설명합니다. 이 페이지의 한국어는 독자를 위한 번역이며 공식 한국어 텍스트가 아닙니다. 공식 원문 출처: Patch 2.04.a THE KILN IS BACK, Steam News: ' + sourceLinks.patch + '。정확한 사거리, 좌표, 갱신 주기, 등장률, 도전 과제 조건은 공개하지 않았으므로 이 가이드에서도 단정하지 않습니다.',
+      body: '이 가이드의 주요 출처는 Steam 공식 글 THE KILN IS BACK(Patch 2.04.a)입니다. 글은 짐 변경을 기록하며 “Using the Rescue Claw on a friend will ragdoll them for less time, making it easier for them to grab onto something once the claw completes.”라고 설명합니다. 이 페이지의 한국어는 독자를 위한 번역이며 공식 한국어 텍스트가 아닙니다. 공식 원문 출처: Patch 2.04.a THE KILN IS BACK, Steam News: ' + sourceLinks.patch + '. 정확한 사거리, 좌표, 갱신 주기, 등장률, 도전 과제 조건은 공개하지 않았으므로 이 가이드에서도 단정하지 않습니다.',
       links: [
         ['Patch 2.04.a: THE KILN IS BACK', sourceLinks.patch],
         ['PEAK Steam 공식 페이지', sourceLinks.steam],
@@ -996,7 +1010,7 @@ export const rescueClawTranslations = {
     primaryKeyword: 'Rescue Claw PEAK',
     eyebrow: 'Guida al soccorso cooperativo - contesto ufficiale 2.04.a',
     h1: 'Guida Rescue Claw PEAK: portata, recupero dei compagni e cooperativa',
-    intro: 'Rescue Claw è lo strumento di recupero cooperativo di PEAK per quando un compagno cade, resta bloccato in una posizione sfavorevole o lo Scout finisce esposto. L’aggiornamento ufficiale 2.04.a descrive il comportamento principale quando la usi su un amico; questa guida separa il fatto verificato dai consigli di gioco. Per capire il ciclo della scalata, parti dalla' + articleLink('how-to-play-peak', 'guida per principianti') + ' e prepara la squadra con i' + articleLink('peak-game-tips', 'consigli per la sopravvivenza cooperativa') + '.',
+    intro: 'Rescue Claw è lo strumento di recupero cooperativo di PEAK per quando un compagno cade, resta bloccato in una posizione sfavorevole o lo Scout finisce esposto. L’aggiornamento ufficiale 2.04.a descrive il comportamento principale quando la usi su un amico; questa guida separa il fatto verificato dai consigli di gioco. Per capire il ciclo della scalata, parti dalla ' + articleLink('how-to-play-peak', 'guida per principianti') + ' e prepara la squadra con i ' + articleLink('peak-game-tips', 'consigli per la sopravvivenza cooperativa') + '.',
     answerLabel: 'Risposta breve',
     answer: 'Usa Rescue Claw quando un compagno deve tornare a contatto con il terreno. Cercala nel contesto dei bagagli descritto dall’aggiornamento di THE KILN, mira all’amico, attiva il comando mostrato dal gioco e mantieni una posizione stabile per il recupero. La fonte conferma un periodo di ragdoll più breve dopo il completamento della tenaglia, ma non pubblica una portata precisa, un atterraggio garantito o una condizione per un obiettivo.',
     tocLabel: 'In questa pagina',
@@ -1038,6 +1052,7 @@ export const rescueClawTranslations = {
           'Usa lo strumento quando un varco, una caduta breve o uno Scout in difficoltà crea una decisione di recupero invece di una normale decisione di arrampicata. Il tentativo richiede comunque un ricevente, una superficie visibile su cui recuperare e una posizione sicura per chi opera. Sono pratiche di squadra, non garanzie ufficiali di portata o successo.',
         ],
         image: {
+          src: '/media/peak-coop-climb.webp',
           alt: 'Schermata ufficiale Steam di compagni di PEAK che coordinano una scalata su un percorso ripido',
           caption: 'Schermata ufficiale Steam: spazio e comunicazioni chiare sul percorso danno margine al soccorso.',
         },
@@ -1055,6 +1070,7 @@ export const rescueClawTranslations = {
           'La portata non sostituisce la pianificazione del percorso. Una distanza maggiore non rende sicuro un atterraggio pericoloso, mentre una distanza breve può essere utile se il compagno è appena sotto una sporgenza. Leggi prima il percorso e poi decidi se Rescue Claw vale le opzioni di recupero rimaste.',
         ],
         image: {
+          src: '/media/peak-map-route.webp',
           alt: 'Schermata ufficiale Steam di un percorso PEAK in cui la squadra deve leggere la prossima posizione sicura',
           caption: 'Schermata ufficiale Steam: controlla percorso e spazio di recupero prima di affidarti a un oggetto.',
         },
@@ -1063,7 +1079,7 @@ export const rescueClawTranslations = {
         title: 'Rescue Claw influisce su un obiettivo',
         paragraphs: [
           'L’annuncio ufficiale 2.04.a non afferma che usare Rescue Claw sblocchi un obiettivo, un distintivo o una ricompensa speciale. Descrive l’interazione con un amico e il ragdoll più breve, ma non definisce una condizione per un obiettivo. Per questo la pagina non sostiene che tirare un compagno conti per uno sblocco preciso.',
-          'Se stai provando un obiettivo sospetto, registra l’azione esatta, la modalità, lo stato del compagno, il contesto del percorso e la versione attuale, poi controlla il risultato della piattaforma. Considera i report della community degli indizi finché il gioco attuale o un registro Steam ufficiale non li conferma. Per distinguere obiettivi della piattaforma e progressi nel gioco, consulta la' + articleLink('achievements', 'guida agli obiettivi di PEAK') + '.',
+          'Se stai provando un obiettivo sospetto, registra l’azione esatta, la modalità, lo stato del compagno, il contesto del percorso e la versione attuale, poi controlla il risultato della piattaforma. Considera i report della community degli indizi finché il gioco attuale o un registro Steam ufficiale non li conferma. Per distinguere obiettivi della piattaforma e progressi nel gioco, consulta la ' + articleLink('achievements', 'guida agli obiettivi di PEAK') + '.',
           'Uno sblocco mancato non dimostra che lo strumento sia rotto. La condizione può essere indipendente, dipendere dalla versione o semplicemente non essere documentata nella nota della patch. Tieni separati il consiglio di soccorso e l’ipotesi sull’obiettivo, così una tecnica cooperativa utile non diventa una promessa falsa.',
         ],
       },
