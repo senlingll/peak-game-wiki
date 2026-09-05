@@ -6,9 +6,11 @@ export const articleOrder = [
   'peak-levels-biomes-difficulty',
   'peak-game-tips',
   'how-to-play-peak',
+  'rescue-claw',
 ];
 
 const officialNewsUrl = 'https://store.steampowered.com/news/app/3527290';
+const rescueClawPatchUrl = 'https://store.steampowered.com/news/app/3527290/view/716788653799506284';
 
 const todayMapLink = (label = "today's PEAK map") => `[[link:map-rotation#today-map|${label}]]`;
 
@@ -711,7 +713,7 @@ export const articleGuides = {
         title: 'Play with a team',
         paragraphs: [
           'The official Steam description supports solo play and co-op groups of up to four. Stay close enough to share route information and help, but avoid stacking on one unsafe edge. Name the next meeting point and who tests the route.',
-          'Tip 8: agree on the next objective. Tip 9: before a boost, confirm a usable handhold or landing; never boost into unchecked terrain. Tip 10: protect recovery. A Scout can reduce bad commitments, and the current Scout revive option may return a downed teammate when its on-screen condition is met. Announce who is recovering whom and verify the prompt after updates.',
+          'Tip 8: agree on the next objective. Tip 9: before a boost, confirm a usable handhold or landing; never boost into unchecked terrain. Tip 10: protect recovery. A Scout can reduce bad commitments, and the current Scout revive option may return a downed teammate when its on-screen condition is met. Announce who is recovering whom and verify the prompt after updates. When a teammate is in a compromised position, review the [[link:rescue-claw|Rescue Claw teammate-safety guide]] before relying on the tool.',
         ],
         image: {
           src: '/media/peak-coop-climb.webp',
@@ -854,7 +856,7 @@ export const articleGuides = {
         title: 'Solo vs co-op: how your plan changes',
         paragraphs: [
           'Solo play gives you control over pace and inventory, but every route and recovery decision belongs to you. Carry balanced supplies, stop earlier, and avoid moves that depend on help. Use the official Steam listing for current play-mode support.',
-          'In co-op, agree on the next stop, avoid crowding narrow ledges, and report low stamina or supplies. Teammates can scout, share items, assist movement, and respond to a downed player when allowed. Stay close enough for a helper to reach you safely.',
+          'In co-op, agree on the next stop, avoid crowding narrow ledges, and report low stamina or supplies. Teammates can scout, share items, assist movement, and respond to a downed player when allowed. Stay close enough for a helper to reach you safely. For a focused recovery option, see the [[link:rescue-claw|Rescue Claw co-op save guide]] before the next climb.',
         ],
       },
       {
@@ -904,5 +906,166 @@ export const articleGuides = {
       ['achievements', 'Plan achievement goals'],
     ],
     relatedLabel: 'Continue learning PEAK',
+  },
+
+  'rescue-claw': {
+    slug: 'rescue-claw',
+    lang: 'en',
+    category: 'guides',
+    meta: {
+      title: 'PEAK Rescue Claw Guide: Range, Pulls & Co-op Saves',
+      description: 'Learn how to get Rescue Claw in PEAK, aim it at teammates, understand its unlisted range, and check achievement impact with the official 2.04.a patch note.',
+      schema: 'A source-aware PEAK Rescue Claw guide covering the official 2.04.a luggage context, teammate targeting, unlisted range, achievement uncertainty, and co-op recovery planning.',
+    },
+    published: '2026-09-05',
+    primaryKeyword: 'PEAK Rescue Claw',
+    eyebrow: 'Co-op rescue guide - official 2.04.a context',
+    h1: 'PEAK Rescue Claw Guide: Range, Teammate Pulls & Co-op Saves',
+    intro: `Rescue Claw is PEAK's co-op recovery tool for a teammate who has fallen, been caught in a bad position, or needs a safer chance to reconnect with the route. The official 2.04.a note describes how using it on a friend changes the post-claw moment; this guide keeps that source-backed detail separate from field advice. For the wider climb loop, start with [[link:how-to-play-peak|the beginner climb guide]] and use [[link:peak-game-tips|co-op survival tips]] before treating a rescue as the plan.`,
+    answerLabel: 'The short answer',
+    answer: 'Use Rescue Claw when a teammate needs help reconnecting with terrain. Find it in the luggage context described by the official THE KILN update, aim at the friend, activate the current in-game prompt, and keep a stable recovery position ready. The source confirms a shorter ragdoll window after the claw completes, but it does not publish an exact range, a guaranteed landing, or an achievement trigger.',
+    tocLabel: 'On this page',
+    tocFaq: 'Rescue Claw FAQ',
+    heroImage: {
+      src: '/media/rescue-claw-guide.webp',
+      alt: 'Editorial illustration of one PEAK climber using a claw line to help a teammate reach a mountain ledge',
+      caption: 'Editorial illustration - Rescue Claw is a team-recovery decision, not a guaranteed landing.',
+      width: 1200,
+      height: 675,
+    },
+    sections: [
+      {
+        id: 'what-rescue-claw-does',
+        title: 'What Rescue Claw does for a co-op team',
+        paragraphs: [
+          'A rescue tool has a different job from a route tool. When a teammate falls below the next safe hold, gets caught on a bad edge, or leaves the Scout in an exposed position, the team needs a way to turn a failed movement choice into another chance to grab terrain. Rescue Claw belongs in that recovery conversation: the carrier chooses the moment, the teammate communicates their next hold, and the rest of the group protects the route.',
+          'The official patch language is narrower than many community summaries. Patch 2.04.a says that using Rescue Claw on a friend will ragdoll them for less time, making it easier for them to grab onto something once the claw completes. That confirms a friend-targeted co-op interaction and a recovery benefit after completion; it does not justify a promise that every rescue succeeds.',
+        ],
+        bullets: [
+          ['Recognize the rescue', 'Use the tool when the next decision is about recovering a teammate, not simply reaching higher ground.'],
+          ['Call the hold', 'Have the teammate name the surface or ledge they are trying to reach before the attempt.'],
+          ['Protect the carrier', 'Keep the person operating the claw on terrain where a second rescue is not immediately required.'],
+        ],
+      },
+      {
+        id: 'how-to-get-rescue-claw',
+        title: 'How to get Rescue Claw in PEAK',
+        paragraphs: [
+          'The official acquisition context is the luggage spawner in THE KILN. In Patch 2.04.a, THE KILN IS BACK, the developers wrote: "Added 2 more luggages in the spawner for THE KILN and removed 1 luggage from the statue area at the end of the CALDERA, but made it guaranteed to spawn better luggage." The practical takeaway is to inspect the luggage opportunities the current route presents, especially the spawner named by the note.',
+          'That sentence does not identify a Rescue Claw-specific coordinate, refresh timer, drop percentage, or guaranteed appearance. If the tool is not in the luggage you find, record the route and build rather than treating one run as proof of a permanent spawn rule. The current game and official update posts outrank an old list.',
+        ],
+        bullets: [
+          ['Search the named luggage context', 'Check the luggage spawner associated with the current route and update context.'],
+          ['Keep expectations bounded', 'The patch changes luggage context; it does not promise that every search produces Rescue Claw.'],
+          ['Check the current build', 'Use the live game and current official notes when an older item list disagrees.'],
+        ],
+      },
+      {
+        id: 'how-to-use-rescue-claw',
+        title: 'How to aim and use Rescue Claw on a teammate',
+        paragraphs: [
+          'Treat the use as a coordinated handoff. The carrier should stand where the route remains recoverable, face the teammate, and aim at the intended friend before activating the current prompt. The teammate should call the hold or ledge they are trying to reach, while the rest of the group avoids creating a second emergency.',
+          'The official 2.04.a wording is the key behavior to remember: "Using the Rescue Claw on a friend will ragdoll them for less time, making it easier for them to grab onto something once the claw completes." In other words, plan around the moment after completion. Do not promise a teleport, a guaranteed catch, or a fixed pull direction when the official note does not say those things.',
+          'Use the tool when a gap, a short fall, or a Scout in trouble has created a recovery decision rather than a normal climbing decision. A rescue attempt still needs a receiver, a visible recovery surface, and a safe position for the person operating the tool. These are team practices, not published range or success guarantees.',
+        ],
+        image: {
+          src: '/media/peak-coop-climb.webp',
+          alt: 'Official Steam screenshot of PEAK teammates coordinating a climb on a steep route',
+          caption: 'Official Steam screenshot - spacing and clear route calls give a rescue attempt room to work.',
+          width: 1200,
+          height: 675,
+        },
+        bullets: [
+          ['Before activating', 'Name the teammate, the intended recovery surface, and the person responsible for the attempt.'],
+          ['During the pull', 'Keep the team still enough to communicate and avoid turning one emergency into several.'],
+          ['After completion', 'Let the teammate reconnect with terrain before the group resumes the route.'],
+        ],
+      },
+      {
+        id: 'rescue-claw-range',
+        title: 'How far does Rescue Claw reach?',
+        paragraphs: [
+          'The official PEAK sources used for this page do not publish a precise Rescue Claw range. This guide will not repeat a community measurement as confirmed data, and it will not turn a visual estimate into a promise. The direct answer to "what is the Rescue Claw range?" is: verify the current targeting behavior in the game; no official number is available here.',
+          'For a field check, test from a stable position with the teammate and a recoverable surface in view. Move closer if the current prompt does not accept the target, and avoid testing at the edge of a real attempt. Keep notes tied to the game version because a later patch may change behavior. This is a cautious method, not a published measurement.',
+          'Range is also a poor substitute for route planning. A long reach cannot make an unsafe landing safe, and a short reach may still be valuable when a teammate is just below a ledge. Read the route first, then decide whether a Rescue Claw attempt is worth the remaining recovery options.',
+        ],
+        image: {
+          src: '/media/peak-map-route.webp',
+          alt: 'Official Steam screenshot showing a PEAK climbing route where teams must read the next safe position',
+          caption: 'Official Steam screenshot - inspect the route and recovery space before relying on an item.',
+          width: 1200,
+          height: 675,
+        },
+      },
+      {
+        id: 'rescue-claw-achievements',
+        title: 'Does Rescue Claw affect an achievement?',
+        paragraphs: [
+          'The official 2.04.a announcement does not state that using Rescue Claw unlocks an achievement, badge, or special reward. It discusses the friend interaction and the shorter ragdoll window, but it does not define an achievement condition. This page therefore makes no claim that a teammate pull counts for a particular unlock.',
+          'If you are testing a suspected goal, record the exact action, mode, teammate state, route context, and current version, then check the platform result. Treat a community report as a lead until the current game or official Steam record confirms it. For the difference between platform achievements and in-game progress, use the [[link:achievements|PEAK achievement guide]].',
+          'A failed unlock is not proof that the tool is broken. The condition may be unrelated, version-sensitive, or simply undocumented in the patch note. Keep the rescue advice and the achievement hypothesis separate so a useful co-op technique does not become a false promise.',
+        ],
+      },
+      {
+        id: 'rescue-claw-rope-tools',
+        title: 'Rescue Claw vs rope tools in a loadout',
+        paragraphs: [
+          'Rescue Claw is a response tool: it belongs in the plan for what happens when a teammate needs a recovery chance. A rope tool is a route-preparation choice: it belongs in the plan for how the team will approach the next obstacle. Do not spend a rescue slot just because a rope route looks awkward, and do not assume a rope replaces a teammate-recovery plan. These are role distinctions for planning, not a claim about hidden item stats.',
+          'Compare the current item cards in the homepage database: the [[link:home#database|Rescue Claw item card]], the [[link:home#database|Anti-Rope Cannon entry]], and the [[link:home#database|Rope Shooter entry]]. The cards keep the names and broad team or route roles together, while exact effects should still be checked in-game.',
+          `Before you leave, choose who carries recovery, who calls the route, and what the team does if the next move fails. Then check ${todayMapLink("today's PEAK map")} so the loadout starts from the current route context. A route with awkward gaps may justify different preparation from a route where the immediate risk is a separated teammate.`,
+        ],
+        bullets: [
+          ['Route tool', 'Prepare for the terrain you expect to cross.'],
+          ['Recovery tool', 'Keep a clear plan for a teammate who loses the intended line.'],
+          ['Version check', 'Re-read the current item prompt and official update context after a patch.'],
+        ],
+      },
+      {
+        id: 'rescue-claw-checklist',
+        title: 'A simple Rescue Claw co-op checklist',
+        paragraphs: [
+          'Use this short call before an attempt: identify the target, name the landing, confirm the carrier position, activate once the current prompt accepts the friend, then wait for the teammate to reattach before the group moves. If any step is unclear, pause and rebuild the position.',
+          'This checklist is experience-based guidance, not an official sequence. It keeps the team from treating the claw as a panic button and makes the unverified parts visible. The official patch supplies the interaction detail; the team supplies timing, communication, and judgment.',
+        ],
+        bullets: [
+          ['1. Target', 'Call the friend who needs the recovery attempt.'],
+          ['2. Landing', 'Agree on the surface the teammate will try to grab after completion.'],
+          ['3. Position', 'Keep the carrier on a stable, recoverable part of the route.'],
+          ['4. Confirm', 'Use the current in-game prompt and let the teammate reconnect before moving on.'],
+        ],
+      },
+      {
+        id: 'next-steps',
+        title: 'Next steps after learning Rescue Claw',
+        paragraphs: [
+          'Rescue Claw works best as one part of a route plan, not as permission to take a bad jump. Before the next run, read the [[link:peak-game-tips|co-op survival tips]], review the [[link:how-to-play-peak|beginner climb guide]], and [[link:map-rotation#today-map|check today\'s PEAK map]] for the current route context. Then return to the game and verify the prompt, target, and landing in the version you are actually playing.',
+        ],
+      },
+    ],
+    faq: {
+      eyebrow: 'Quick answers',
+      title: 'Rescue Claw FAQ',
+      items: [
+        ['How far does Rescue Claw reach in PEAK?', 'The official sources used here do not publish an exact range. Test the current targeting behavior from a stable position in-game, and do not treat a community measurement as official.'],
+        ['Can Rescue Claw grab teammates?', 'Yes. The official 2.04.a note explicitly describes using Rescue Claw on a friend and says the friend is easier to grab onto something after the claw completes. It does not promise a guaranteed catch or define every targeting condition.'],
+        ['Does Rescue Claw affect an achievement?', 'No achievement effect is confirmed by the official 2.04.a announcement. It describes the teammate interaction, not an achievement condition, so check the current game and Steam record before making that claim.'],
+      ],
+    },
+    source: {
+      eyebrow: 'Official source and limits',
+      title: 'What Patch 2.04.a confirms',
+      body: 'The primary source for this guide is the official Steam post THE KILN IS BACK (Patch 2.04.a). It documents the luggage change and says: "Using the Rescue Claw on a friend will ragdoll them for less time, making it easier for them to grab onto something once the claw completes." It does not publish a precise range, coordinate, refresh rate, drop rate, or achievement condition; those claims are intentionally left open.',
+      links: [
+        ['Patch 2.04.a: THE KILN IS BACK', rescueClawPatchUrl],
+        ['Official PEAK Steam page', 'https://store.steampowered.com/app/3527290/PEAK/'],
+      ],
+    },
+    related: [
+      ['map-rotation', "Check today's PEAK map"],
+      ['peak-game-tips', 'Prepare for co-op rescues'],
+      ['how-to-play-peak', 'Review the climb basics'],
+      ['achievements', 'Check achievement context'],
+    ],
+    relatedLabel: 'Related PEAK guides',
   },
 };
