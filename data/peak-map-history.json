@@ -1,5 +1,16 @@
 [
   {
+    "date": "2026-09-06",
+    "map": "Shore → Tropics → Alpine → Gloom → Citadel",
+    "route": "Daily biome sequence",
+    "biome": "Shore, Tropics, Alpine, Gloom, Citadel",
+    "resetAt": "2026-09-06T17:00:00.000Z",
+    "source": {
+      "label": "PEAK Map Today",
+      "url": "https://peak.skydler.me/"
+    }
+  },
+  {
     "date": "2026-09-05",
     "map": "Shore → Tropics → Mesa → Gloom → Citadel",
     "route": "Daily biome sequence",
