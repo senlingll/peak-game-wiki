@@ -1,7 +1,6 @@
 const itemSearch = document.querySelector('#item-search');
 const itemCards = [...document.querySelectorAll('.item-card')];
 const filterButtons = [...document.querySelectorAll('[data-filter]')];
-const itemCount = document.querySelector('#item-count');
 const emptyItems = document.querySelector('#empty-items');
 const menuToggle = document.querySelector('.menu-toggle');
 const siteNav = document.querySelector('#site-nav');
@@ -20,21 +19,28 @@ const dynamicCopy = {
 };
 
 const copy = dynamicCopy[locale] ?? dynamicCopy.en;
+let itemsExpanded = false;
 
 function updateItemResults() {
   const query = itemSearch?.value.trim().toLowerCase() ?? '';
   const activeFilter = document.querySelector('.filter-button.is-active')?.dataset.filter ?? 'all';
+  const hasSearchOrFilter = Boolean(query) || activeFilter !== 'all';
+  const itemGrid = document.querySelector('#item-grid');
+  const itemToggle = document.querySelector('.item-toggle');
+  const itemToggleLabel = itemToggle?.querySelector('.toggle-label');
   let visible = 0;
 
   itemCards.forEach((card) => {
     const matchesText = !query || card.dataset.search.includes(query);
     const matchesCategory = activeFilter === 'all' || card.dataset.category === activeFilter;
-    const shouldShow = matchesText && matchesCategory;
+    const shouldShow = matchesText && matchesCategory && (itemsExpanded || hasSearchOrFilter || card.dataset.defaultVisible === 'true');
     card.classList.toggle('is-hidden', !shouldShow);
     if (shouldShow) visible += 1;
   });
 
-  if (itemCount) itemCount.textContent = `${visible} ${visible === 1 ? copy.entry : copy.entries}`;
+  itemGrid?.classList.toggle('is-expanded', itemsExpanded || hasSearchOrFilter);
+  if (itemToggle) itemToggle.setAttribute('aria-expanded', String(itemsExpanded));
+  if (itemToggleLabel && itemToggle) itemToggleLabel.textContent = itemsExpanded ? itemToggle.dataset.browseFewer : itemToggle.dataset.browseAll;
   if (emptyItems) emptyItems.hidden = visible !== 0;
 }
 
@@ -66,17 +72,50 @@ function bindFilters() {
   filterButtons.forEach((button) => {
     button.addEventListener('click', () => {
       filterButtons.forEach((candidate) => candidate.classList.toggle('is-active', candidate === button));
+      if (button.dataset.filter === 'all' && !itemSearch?.value.trim()) itemsExpanded = false;
       updateItemResults();
     });
   });
 
-  itemSearch?.addEventListener('input', updateItemResults);
+  itemSearch?.addEventListener('input', () => {
+    if (!itemSearch.value.trim() && document.querySelector('.filter-button.is-active')?.dataset.filter === 'all') itemsExpanded = false;
+    updateItemResults();
+  });
   document.addEventListener('keydown', (event) => {
     const target = event.target;
     if (event.key === '/' && target instanceof HTMLElement && !['INPUT', 'TEXTAREA'].includes(target.tagName)) {
       event.preventDefault();
       itemSearch?.focus();
     }
+  });
+}
+
+function bindUpdateToggle() {
+  const button = document.querySelector('.update-toggle');
+  const list = document.querySelector('#update-list');
+  const label = button?.querySelector('.toggle-label');
+  if (!button || !list || !label) return;
+
+  button.addEventListener('click', () => {
+    const expanded = button.getAttribute('aria-expanded') !== 'true';
+    button.setAttribute('aria-expanded', String(expanded));
+    list.classList.toggle('is-expanded', expanded);
+    label.textContent = expanded ? button.dataset.showFewer : button.dataset.showAll;
+  });
+}
+
+function bindItemToggle() {
+  const button = document.querySelector('.item-toggle');
+  const grid = document.querySelector('#item-grid');
+  const label = button?.querySelector('.toggle-label');
+  if (!button || !grid || !label) return;
+
+  button.addEventListener('click', () => {
+    itemsExpanded = button.getAttribute('aria-expanded') !== 'true';
+    button.setAttribute('aria-expanded', String(itemsExpanded));
+    grid.classList.toggle('is-expanded', itemsExpanded);
+    label.textContent = itemsExpanded ? button.dataset.browseFewer : button.dataset.browseAll;
+    updateItemResults();
   });
 }
 
@@ -170,6 +209,8 @@ function bindCopyAction() {
 bindLogoFallbacks();
 bindMenu();
 bindFilters();
+bindUpdateToggle();
+bindItemToggle();
 bindTodayMapCarousels();
 bindCopyAction();
 updateItemResults();
