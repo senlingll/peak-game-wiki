@@ -1,5 +1,16 @@
 [
   {
+    "date": "2026-09-07",
+    "map": "Shore → Tropics → Alpine → Caldera → The Kiln",
+    "route": "Daily biome sequence",
+    "biome": "Shore, Tropics, Alpine, Caldera, The Kiln",
+    "resetAt": "2026-09-07T17:00:00.000Z",
+    "source": {
+      "label": "PEAK Map Today",
+      "url": "https://peak.skydler.me/"
+    }
+  },
+  {
     "date": "2026-09-06",
     "map": "Shore → Tropics → Alpine → Gloom → Citadel",
     "route": "Daily biome sequence",
