@@ -5,6 +5,7 @@ import { peakLevelsTranslations } from './article-levels-locales.mjs';
 import { peakTipsTranslations } from './article-tips-locales.mjs';
 import { howToPlayPeakTranslations } from './article-how-to-play-locales.mjs';
 import { rescueClawTranslations } from './article-rescue-claw-locales.mjs';
+import { ropeChainTranslations } from './article-rope-chain-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1189,6 +1190,10 @@ for (const [locale, translation] of Object.entries(howToPlayPeakTranslations)) {
 
 for (const [locale, translation] of Object.entries(rescueClawTranslations)) {
   articleLocaleTranslations[locale]['rescue-claw'] = translation;
+}
+
+for (const [locale, translation] of Object.entries(ropeChainTranslations)) {
+  articleLocaleTranslations[locale]['rope-chain'] = translation;
 }
 
 const localizedBiomeUpdateCopy = {
