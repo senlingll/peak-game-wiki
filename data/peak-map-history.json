@@ -1,5 +1,16 @@
 [
   {
+    "date": "2026-09-08",
+    "map": "Shore → Roots → Mesa → Gloom → Citadel",
+    "route": "Daily biome sequence",
+    "biome": "Shore, Roots, Mesa, Gloom, Citadel",
+    "resetAt": "2026-09-08T17:00:00.000Z",
+    "source": {
+      "label": "PEAK Map Today",
+      "url": "https://peak.skydler.me/"
+    }
+  },
+  {
     "date": "2026-09-07",
     "map": "Shore → Tropics → Alpine → Caldera → The Kiln",
     "route": "Daily biome sequence",
