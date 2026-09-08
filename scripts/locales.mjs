@@ -1110,7 +1110,11 @@ export function renderHome(locale, options = {}) {
   const guide = mapGuides[locale];
   const achievementGuide = achievementGuides[locale];
   const buildDate = resolveBuildDate(options);
-  const html = normalizeSteamNewsLinks(renderHomeBase(locale, options)).replace('datetime="2026-08-17"', `datetime="${escapeHtml(buildDate)}"`);
+  const todayMapHref = `${routeFor(locale, 'map-rotation')}#today-map`;
+  const html = normalizeSteamNewsLinks(renderHomeBase(locale, options))
+    .replace('datetime="2026-08-17"', `datetime="${escapeHtml(buildDate)}"`)
+    .replace('<a class="button button-primary" href="#maps">', `<a class="button button-primary" href="${todayMapHref}">`)
+    .replace(/(<section id="maps"[\s\S]*?<div class="container section-heading-row">[\s\S]*?)<span class="section-kicker">([\s\S]*?)<\/span>/, `$1<a class="section-kicker" href="${todayMapHref}">$2</a>`);
   const marker = '<section id="updates"';
   const publishedArticles = options.publishedArticles ?? articleOrder;
   const articleLinks = publishedArticles.map((slug) => `<a class="section-link" href="${routeFor(locale, slug)}">${escapeHtml(localizedArticleGuide(locale, slug).h1)} <span aria-hidden="true">\u2192</span></a>`).join('');
