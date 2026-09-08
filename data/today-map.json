@@ -1,11 +1,11 @@
 {
-  "date": "2026-09-08",
-  "map": "Shore → Roots → Mesa → Gloom → Citadel",
+  "date": "2026-09-09",
+  "map": "Shore → Tropics → Mesa → Caldera → The Kiln",
   "route": "Daily biome sequence",
-  "biome": "Shore, Roots, Mesa, Gloom, Citadel",
-  "resetAt": "2026-09-08T17:00:00.000Z",
-  "updatedAt": "2026-09-07T20:33:07.159Z",
-  "sourceFetchedAt": "2026-09-07T20:33:07.159Z",
+  "biome": "Shore, Tropics, Mesa, Caldera, The Kiln",
+  "resetAt": "2026-09-09T17:00:00.000Z",
+  "updatedAt": "2026-09-08T19:53:45.999Z",
+  "sourceFetchedAt": "2026-09-08T19:53:45.999Z",
   "source": {
     "label": "PEAK Map Today",
     "url": "https://peak.skydler.me/"
@@ -19,36 +19,36 @@
       "type": "image",
       "biome": "Shore",
       "alt": "Shore map from today's rotation",
-      "caption": "Shore map image from PEAK Map Today, fetched 2026-09-08.",
+      "caption": "Shore map image from PEAK Map Today, fetched 2026-09-09.",
       "url": "https://peak.skydler.me/assets/shore-C4RgtyBr.jpg"
     },
     {
       "type": "image",
-      "biome": "Roots",
-      "alt": "Roots map from today's rotation",
-      "caption": "Roots map image from PEAK Map Today, fetched 2026-09-08.",
-      "url": "https://peak.skydler.me/assets/roots-9w5q4sIB.jpg"
+      "biome": "Tropics",
+      "alt": "Tropics map from today's rotation",
+      "caption": "Tropics map image from PEAK Map Today, fetched 2026-09-09.",
+      "url": "https://peak.skydler.me/assets/tropics-MT9xyuK_.jpg"
     },
     {
       "type": "image",
       "biome": "Mesa",
       "alt": "Mesa map from today's rotation",
-      "caption": "Mesa map image from PEAK Map Today, fetched 2026-09-08.",
+      "caption": "Mesa map image from PEAK Map Today, fetched 2026-09-09.",
       "url": "https://peak.skydler.me/assets/mesa-COSGb-4Z.jpg"
     },
     {
       "type": "image",
-      "biome": "Gloom",
-      "alt": "Gloom map from today's rotation",
-      "caption": "Gloom map image from PEAK Map Today, fetched 2026-09-08.",
-      "url": "https://peak.skydler.me/assets/gloom-DiJ8cuaL.jpg"
+      "biome": "Caldera",
+      "alt": "Caldera map from today's rotation",
+      "caption": "Caldera map image from PEAK Map Today, fetched 2026-09-09.",
+      "url": "https://peak.skydler.me/assets/caldera-C9cJuiBH.jpg"
     },
     {
       "type": "image",
-      "biome": "Citadel",
-      "alt": "Citadel map from today's rotation",
-      "caption": "Citadel map image from PEAK Map Today, fetched 2026-09-08.",
-      "url": "https://peak.skydler.me/assets/citadel-DzceUvzD.jpg"
+      "biome": "The Kiln",
+      "alt": "The Kiln map from today's rotation",
+      "caption": "The Kiln map image from PEAK Map Today, fetched 2026-09-09.",
+      "url": "https://peak.skydler.me/assets/kiln-B4ooDngV.jpg"
     }
   ]
 }
