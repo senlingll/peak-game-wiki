@@ -829,7 +829,7 @@ img {
 
 .database-toolbar {
   display: grid;
-  grid-template-columns: minmax(260px, 1fr) auto auto;
+  grid-template-columns: minmax(260px, 1fr) auto auto auto;
   align-items: center;
   gap: 14px;
   margin-bottom: 22px;
@@ -1014,7 +1014,37 @@ img {
   line-height: 1.55;
 }
 
-.item-card a {
+.item-card-image-link {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  border-radius: 4px;
+}
+
+.item-card-image-link:hover .item-icon-image {
+  transform: scale(1.06);
+}
+
+.item-card-image-link:focus-visible,
+.item-card-title-link:focus-visible,
+.item-card-cta:focus-visible {
+  outline: 3px solid rgba(228, 110, 85, 0.48);
+  outline-offset: 3px;
+}
+
+.item-card .item-icon-image {
+  transition: transform 160ms ease;
+}
+
+.item-card-title-link {
+  color: inherit;
+}
+
+.item-card-title-link:hover {
+  color: var(--coral-dark);
+}
+
+.item-card .item-card-cta {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -1024,7 +1054,7 @@ img {
   font-weight: 850;
 }
 
-.item-card a:hover {
+.item-card .item-card-cta:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -2728,6 +2758,10 @@ img {
   }
 
   .result-count {
+    order: 4;
+  }
+
+  .database-toolbar .database-all-items {
     order: 3;
   }
 
