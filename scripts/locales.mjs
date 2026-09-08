@@ -5,6 +5,8 @@ import { articleGuides, articleOrder } from './article-guides.mjs';
 import { articleLiveMapCopy, articleLocaleTranslations } from './article-locales.mjs';
 import { articleUpdateCopy } from './article-update-locales.mjs';
 import { articleScheduleDynamicFallback } from './article-schedule-locales.mjs';
+import { itemsCatalog } from './items-catalog.mjs';
+import { itemsPageCopy } from './items-page-locales.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
@@ -441,6 +443,7 @@ function escapeHtml(value) {
 }
 
 function routeFor(code, page) {
+  if (page === 'items') return code === 'en' ? '/items/' : `/${code}/items/`;
   if (code === 'en') return page === 'home' ? '/' : `/${page}`;
   return page === 'home' ? `/${code}/` : `/${code}/${page}/`;
 }
@@ -851,6 +854,14 @@ function head(locale, page, title, description, schema, options = {}) {
     scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: guide.related.homeAnchor, item: canonical }] });
     scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: guide.faq.items.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) });
   }
+  if (page === 'items') {
+    const catalog = options.itemsPage ?? itemsPageCopy[locale] ?? itemsPageCopy.en;
+    const images = catalog.hero?.src ? [`${BASE_URL}${catalog.hero.src}`] : [];
+    scripts.push({ '@context': 'https://schema.org', '@type': 'Article', headline: catalog.h1, description: pageDescription, image: images, datePublished: catalog.published, dateModified: options.dateModified || process.env.BUILD_DATE || new Date().toISOString().slice(0, 10), inLanguage: meta.lang, author: { '@type': 'Organization', name: 'PEAK Game Wiki' }, publisher: { '@type': 'Organization', name: 'PEAK Game Wiki' }, articleSection: Object.values(catalog.categories).map((category) => category.title), keywords: catalog.primaryKeyword, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical } });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: catalog.h1, item: canonical }] });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: catalog.faq.items.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'ItemList', name: catalog.h1, numberOfItems: itemsCatalog.length, itemListOrder: 'https://schema.org/ItemListOrderAscending', itemListElement: itemsCatalog.map((item, index) => ({ '@type': 'ListItem', position: index + 1, name: item.name, url: `${canonical}#item-${catalogItemId(item.name, index)}` })) });
+  }
   return `<!doctype html>\n<html lang="${meta.lang}" data-locale="${locale}">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <title>${escapeHtml(title)}</title>\n    <meta name="description" content="${escapeHtml(pageDescription)}" />\n    <meta name="theme-color" content="#17212d" />\n    <link rel="canonical" href="${canonical}" />\n    ${alternateLinks(page)}\n    <link rel="icon" href="/assets/favicon.ico" sizes="any" />\n    <link rel="manifest" href="/manifest.webmanifest" />\n    \n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(pageDescription)}" />\n    <meta property="og:image" content="${BASE_URL}/media/peak-climb-ridge.webp" />\n    <meta property="og:url" content="${canonical}" />\n    <meta property="og:locale" content="${meta.lang}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:title" content="${escapeHtml(title)}" />\n    <meta name="twitter:description" content="${escapeHtml(pageDescription)}" />\n    <meta name="twitter:image" content="${BASE_URL}/media/peak-climb-ridge.webp" />\n    <link rel="stylesheet" href="/styles.css" />\n    \n    <script>\n      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","y3c9ye040x");\n    </script>${scripts.map((value) => `\n    <script type="application/ld+json">${jsonLd(value)}</script>`).join('')}\n  </head>`;
 }
 
@@ -950,6 +961,66 @@ function renderArticleImage(image, localizeMapMedia = true) {
   const loading = localizedImage.loading || 'lazy';
   const fetchPriority = localizedImage.fetchpriority ? ` fetchpriority="${escapeHtml(localizedImage.fetchpriority)}"` : '';
   return `<figure class="media-frame article-image"><img src="${escapeHtml(localizedImage.src)}" alt="${escapeHtml(localizedImage.alt)}" width="${escapeHtml(width)}" height="${escapeHtml(height)}" loading="${escapeHtml(loading)}"${fetchPriority} /><figcaption>${escapeHtml(localizedImage.caption)}</figcaption></figure>`;
+}
+
+function catalogItemId(name, index) {
+  const slug = String(name ?? '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'item';
+  return Number.isInteger(index) ? `${slug}-${index + 1}` : slug;
+}
+
+function catalogCellValue(value, fallback = 'n/a') {
+  if (Array.isArray(value)) return value.length ? value.join(', ') : fallback;
+  const text = String(value ?? '').replaceAll('&#32;', ' ').trim();
+  return text || fallback;
+}
+
+function catalogNotesMarkup(value) {
+  const lines = String(value ?? '').replaceAll('&#32;', ' ').split(/\r?\n/).map((line) => line.replace(/^\s*•\s*/, '').trim()).filter(Boolean);
+  if (!lines.length) return '<span class="items-catalog-na">n/a</span>';
+  return `<ul class="items-catalog-notes">${lines.map((line) => `<li>${escapeHtml(line)}</li>`).join('')}</ul>`;
+}
+
+function renderItemsCatalogRows(category, copy) {
+  const colors = ['coral', 'violet', 'blue', 'mint', 'gold', 'ink'];
+  return itemsCatalog.map((item, index) => {
+    if (item.category !== category) return '';
+    const legacy = item.name === 'Bugle?' || item.name === 'Warp Compass';
+    const type = catalogCellValue(item.officialType);
+    const biome = catalogCellValue(item.biome);
+    const location = catalogCellValue(item.location);
+    const search = catalogCellValue([item.name, item.search, type, biome, location, item.notes], '').toLowerCase();
+    const itemId = catalogItemId(item.name, index);
+    return `<tr id="item-${escapeHtml(itemId)}" class="items-catalog-row${legacy ? ' is-legacy' : ''}" data-category="${escapeHtml(item.category)}" data-type="${escapeHtml(type.toLowerCase())}" data-biome="${escapeHtml(biome.toLowerCase())}" data-search="${escapeHtml(search)}"><td class="items-catalog-number">${index + 1}</td><td><span class="items-catalog-icon item-icon item-icon-${colors[index % colors.length]}" aria-hidden="true">${escapeHtml(item.name.charAt(0))}</span></td><th scope="row"><span lang="en">${escapeHtml(item.name)}</span>${legacy ? `<small>${escapeHtml(copy.catalog.legacy)}</small>` : ''}</th><td><span lang="en" class="items-catalog-canonical-fallback">${escapeHtml(item.name)}</span></td><td>${escapeHtml(type)}</td><td>${escapeHtml(catalogCellValue(item.weight))}</td><td>${escapeHtml(catalogCellValue(item.hunger))}</td><td>${escapeHtml(catalogCellValue(item.bonusStamina))}</td><td>${escapeHtml(catalogCellValue(item.poison))}</td><td>${escapeHtml(biome)}</td><td>${escapeHtml(location)}</td><td>${catalogNotesMarkup(item.notes)}</td></tr>`;
+  }).join('');
+}
+
+function renderItemsCatalogSection(copy, category) {
+  const sectionCopy = copy.categories[category];
+  const headingId = `items-${category}-title`;
+  const headers = [copy.catalog.icon, copy.catalog.englishName, copy.catalog.localizedName, copy.catalog.typeLabel, copy.catalog.weight, copy.catalog.hunger, copy.catalog.stamina, copy.catalog.poison, copy.catalog.biome, copy.catalog.location, copy.catalog.notes];
+  return `<section id="items-${escapeHtml(category)}" class="items-category" data-items-section="${escapeHtml(category)}" aria-labelledby="${escapeHtml(headingId)}"><div class="items-category-heading"><div><p class="eyebrow">${escapeHtml(copy.catalog.categoryLabels[category])}</p><h2 id="${escapeHtml(headingId)}">${escapeHtml(sectionCopy.title)}</h2></div><p>${escapeHtml(sectionCopy.intro)}</p></div><div class="items-catalog-table-wrap"><table class="items-catalog-table"><caption>${escapeHtml(sectionCopy.title)} - ${escapeHtml(copy.catalog.title)}</caption><thead><tr><th scope="col">#</th>${headers.map((header) => `<th scope="col">${escapeHtml(header)}</th>`).join('')}</tr></thead><tbody>${renderItemsCatalogRows(category, copy)}</tbody></table></div></section>`;
+}
+
+function renderItemsPageHtml(locale, options = {}) {
+  const sourceCopy = locales[locale];
+  const copy = { ...sourceCopy, ui: { ...sourceCopy.ui, snapshot: formatSnapshotDate(locale, resolveBuildDate(options)) } };
+  const catalog = itemsPageCopy[locale] ?? itemsPageCopy.en;
+  const categories = ['food', 'equipment', 'tools', 'oddities'];
+  const types = [...new Set(itemsCatalog.flatMap((item) => item.officialType))].sort((left, right) => left.localeCompare(right));
+  const biomes = [...new Set(itemsCatalog.flatMap((item) => item.biome))].sort((left, right) => left.localeCompare(right));
+  const typeOptions = types.map((type) => `<option value="${escapeHtml(type.toLowerCase())}">${escapeHtml(type)}</option>`).join('');
+  const biomeOptions = biomes.map((biome) => `<option value="${escapeHtml(biome.toLowerCase())}">${escapeHtml(biome)}</option>`).join('');
+  const categoryLinks = categories.map((category) => `<a href="#items-${escapeHtml(category)}">${escapeHtml(catalog.catalog.categoryLabels[category])}</a>`).join('');
+  const toc = categories.map((category, index) => `<li><a href="#items-${escapeHtml(category)}">${index + 1}. ${escapeHtml(catalog.categories[category].title)}</a></li>`).join('');
+  const faq = catalog.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary><h3>${escapeHtml(question)}</h3></summary><p>${escapeHtml(answer)}</p></details>`).join('');
+  const publishedArticles = options.publishedArticles ?? articleOrder;
+  const guidesHref = publishedArticles.includes('peak-game-tips') ? routeFor(locale, 'peak-game-tips') : `${routeFor(locale, 'home')}#guides`;
+  return `${head(locale, 'items', catalog.meta.title, catalog.meta.description, catalog.meta.schema, { ...options, copy, itemsPage: catalog, dateModified: resolveBuildDate(options) })}
+  <body class="article-page items-page"><div id="top"></div>${header(locale, 'items', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(catalog.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(catalog.catalog.title)}</p><h1 id="article-title">${escapeHtml(catalog.h1)}</h1><p class="article-hero-lede">${escapeHtml(catalog.intro)}</p></div>${renderArticleImage({ ...catalog.hero, loading: 'eager', fetchpriority: 'high' }, false)}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(catalog.tocLabel)}"><p class="eyebrow">${escapeHtml(catalog.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#items-faq">${escapeHtml(catalog.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="items-answer-title"><p class="eyebrow">${escapeHtml(catalog.answerLabel)}</p><h2 id="items-answer-title">${escapeHtml(catalog.answerLabel)}</h2><p>${escapeHtml(catalog.answer)}</p></section><section class="article-section items-browser" aria-labelledby="items-catalog-title"><div class="items-browser-heading"><div><p class="eyebrow">${escapeHtml(catalog.catalog.filterLabel)}</p><h2 id="items-catalog-title">${escapeHtml(catalog.catalog.title)}</h2></div><p>${escapeHtml(catalog.catalog.lede)}</p></div><nav class="items-category-nav" aria-label="${escapeHtml(catalog.catalog.filterLabel)}">${categoryLinks}</nav><div class="items-toolbar"><label for="items-search"><span>${escapeHtml(catalog.catalog.searchLabel)}</span><input id="items-search" type="search" placeholder="${escapeHtml(catalog.catalog.searchPlaceholder)}" autocomplete="off" /></label><label for="items-type"><span>${escapeHtml(catalog.catalog.typeLabel)}</span><select id="items-type"><option value="">${escapeHtml(catalog.catalog.typeAll)}</option>${typeOptions}</select></label><label for="items-biome"><span>${escapeHtml(catalog.catalog.biomeLabel)}</span><select id="items-biome"><option value="">${escapeHtml(catalog.catalog.biomeAll)}</option>${biomeOptions}</select></label><div class="items-category-filters" role="group" aria-label="${escapeHtml(catalog.catalog.filterLabel)}"><button class="items-filter-button is-active" type="button" data-catalog-category="all">${escapeHtml(catalog.catalog.categoryLabels.all)}</button>${categories.map((category) => `<button class="items-filter-button" type="button" data-catalog-category="${escapeHtml(category)}">${escapeHtml(catalog.catalog.categoryLabels[category])}</button>`).join('')}</div><span id="items-result-count" class="items-result-count" data-result-label="${escapeHtml(catalog.catalog.resultLabel)}">${itemsCatalog.length} ${escapeHtml(catalog.catalog.resultLabel)}</span></div><p class="items-no-local-names">${escapeHtml(catalog.catalog.noLocalNames)}</p><p id="items-empty" class="items-empty" hidden>${escapeHtml(catalog.catalog.empty)}</p>${categories.map((category) => renderItemsCatalogSection(catalog, category)).join('')}<p class="items-source-note"><span class="note-mark">i</span><span>${escapeHtml(catalog.catalog.sourceNote)}</span></p></section><section id="items-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(catalog.faq.eyebrow)}</p><h2>${escapeHtml(catalog.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="items-sources-title"><p class="eyebrow">${escapeHtml(catalog.sources.eyebrow)}</p><h2 id="items-sources-title">${escapeHtml(catalog.sources.title)}</h2><p>${escapeHtml(catalog.sources.body)}</p><div class="source-links"><a href="https://peak.wiki.gg/wiki/Items" target="_blank" rel="noopener">${escapeHtml(catalog.sources.official)} <span aria-hidden="true">\u2192</span></a><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(catalog.sources.store)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(catalog.catalog.title)}"><p class="eyebrow">${escapeHtml(catalog.catalog.title)}</p><a href="${routeFor(locale, 'home')}#database">${escapeHtml(catalog.related.home)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'map-rotation')}">${escapeHtml(catalog.related.map)} <span aria-hidden="true">\u2192</span></a><a href="${escapeHtml(guidesHref)}">${escapeHtml(catalog.related.guides)} <span aria-hidden="true">\u2192</span></a></nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script><script src="/items.js" defer></script></body></html>`;
+}
+
+export function renderItemsPage(locale, options = {}) {
+  return normalizeSteamNewsLinks(renderItemsPageHtml(locale, options));
 }
 
 function renderMapGuideHtml(locale, options = {}) {
@@ -1067,8 +1138,8 @@ export function renderLegal(locale, page, options = {}) {
 }
 
 export function renderSitemap(buildDate = '2026-08-19', publishedArticles = articleOrder) {
-  const pages = ['home', 'about', 'privacy', 'terms', 'map-rotation', 'achievements', ...publishedArticles];
-  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'map-rotation', 'achievements', ...publishedArticles].map((page) => `${BASE_URL}${routeFor(code, page)}`)));
+  const pages = ['home', 'about', 'privacy', 'terms', 'map-rotation', 'achievements', 'items', ...publishedArticles];
+  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'map-rotation', 'achievements', 'items', ...publishedArticles].map((page) => `${BASE_URL}${routeFor(code, page)}`)));
   const urls = localeOrder.flatMap((code) => pages.map((page) => `${BASE_URL}${routeFor(code, page)}`));
   const rows = urls.map((url) => {
     const lastmod = updatedUrls.has(url) ? buildDate : '2026-08-17';

@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderHome, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
+import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
 import { articleOrder } from './article-guides.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
@@ -78,7 +78,7 @@ const notFoundHtml = `<!doctype html>
 await rm(outputRoot, { recursive: true, force: true });
 await mkdir(outputRoot, { recursive: true });
 
-for (const entry of ['styles.css', 'app.js', 'robots.txt', 'llms.txt', 'llms-full.txt', indexNowKeyFile]) {
+for (const entry of ['styles.css', 'app.js', 'items.js', 'robots.txt', 'llms.txt', 'llms-full.txt', indexNowKeyFile]) {
   await cp(resolve(projectRoot, entry), resolve(outputRoot, entry), { recursive: true });
 }
 
@@ -91,6 +91,9 @@ for (const page of ['about', 'privacy', 'terms']) {
 await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(buildDate, publishedArticleOrder), 'utf8');
 await writeFile(resolve(outputRoot, 'map-rotation.html'), renderMapGuidePage('en'), 'utf8');
 await writeFile(resolve(outputRoot, 'achievements.html'), renderAchievementGuide('en', renderOptions), 'utf8');
+const itemsRoot = resolve(outputRoot, 'items');
+await mkdir(itemsRoot, { recursive: true });
+await writeFile(resolve(itemsRoot, 'index.html'), renderItemsPage('en', renderOptions), 'utf8');
 for (const slug of publishedArticleOrder) {
   await writeFile(resolve(outputRoot, `${slug}.html`), renderArticlePage('en', slug, renderOptions), 'utf8');
 }
@@ -110,6 +113,9 @@ for (const locale of localeOrder.filter((code) => code !== 'en')) {
   const achievementRoot = resolve(localeRoot, 'achievements');
   await mkdir(achievementRoot, { recursive: true });
   await writeFile(resolve(achievementRoot, 'index.html'), renderAchievementGuide(locale, renderOptions), 'utf8');
+  const itemsLocaleRoot = resolve(localeRoot, 'items');
+  await mkdir(itemsLocaleRoot, { recursive: true });
+  await writeFile(resolve(itemsLocaleRoot, 'index.html'), renderItemsPage(locale, renderOptions), 'utf8');
   for (const slug of publishedArticleOrder) {
     const articleRoot = resolve(localeRoot, slug);
     await mkdir(articleRoot, { recursive: true });
