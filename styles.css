@@ -1148,9 +1148,22 @@ img {
 }
 
 .badge-symbol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--coral-dark);
   font-size: 16px;
   font-weight: 900;
+  text-decoration: none;
+}
+
+.badge-symbol:hover {
+  color: var(--ink);
+}
+
+.badge-symbol:focus-visible {
+  outline: 3px solid rgba(228, 110, 85, 0.48);
+  outline-offset: 3px;
 }
 
 .guide-copy {
