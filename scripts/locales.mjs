@@ -13,6 +13,8 @@ const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
 const STEAM_NEWS_API_HTML_URL = 'https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json';
 const SUPPORT_EMAIL = 'support@peak-game.wiki';
 const ISSUE_TRACKER_URL = 'https://github.com/senlingll/peak-game-wiki/issues';
+const PEAK_WIKI_ITEMS_URL = 'https://peak.wiki.gg/wiki/Items';
+const CC_BY_SA_URL = 'https://creativecommons.org/licenses/by-sa/4.0/';
 let activeGuideLocale = 'en';
 
 const articleLinkBandCopy = {
@@ -940,8 +942,21 @@ const contactPageCopy = {
   },
 };
 
+const itemIconCreditCopy = {
+  en: { beforeSource: 'Item icons from ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', licensed under ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
+  zh: { beforeSource: '物品图标来源 ', sourceLabel: 'PEAK Wiki（wiki.gg）', beforeLicense: '，采用 ', licenseLabel: 'CC BY-SA 4.0', afterLicense: ' 许可。' },
+  es: { beforeSource: 'Iconos de objetos de ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', con licencia ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
+  ja: { beforeSource: 'アイテムアイコンは ', sourceLabel: 'PEAK Wiki（wiki.gg）', beforeLicense: 'より、', licenseLabel: 'CC BY-SA 4.0', afterLicense: ' ライセンスです。' },
+  fr: { beforeSource: 'Icônes des objets provenant de ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', sous licence ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
+  de: { beforeSource: 'Gegenstandssymbole aus dem ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', lizenziert unter ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
+  pt: { beforeSource: 'Ícones dos itens provenientes da ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', licenciados sob ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
+  ko: { beforeSource: '아이템 아이콘 출처: ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', ', licenseLabel: 'CC BY-SA 4.0', afterLicense: ' 라이선스.' },
+  it: { beforeSource: 'Icone degli oggetti da ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', con licenza ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
+};
+
 for (const code of localeOrder) {
   if (!contactPageCopy[code]) throw new Error(`Missing contact copy: ${code}`);
+  if (!itemIconCreditCopy[code]) throw new Error(`Missing item icon credit copy: ${code}`);
 }
 
 function head(locale, page, title, description, schema, options = {}) {
@@ -1025,8 +1040,13 @@ function header(locale, page, copy) {
   return renderHeader(locale, page, copy);
 }
 
+function renderItemIconCredit(locale) {
+  const credit = itemIconCreditCopy[locale] ?? itemIconCreditCopy.en;
+  return `${escapeHtml(credit.beforeSource)}<a href="${PEAK_WIKI_ITEMS_URL}" target="_blank" rel="noopener">${escapeHtml(credit.sourceLabel)}</a>${escapeHtml(credit.beforeLicense)}<a href="${CC_BY_SA_URL}" target="_blank" rel="license noopener">${escapeHtml(credit.licenseLabel)}</a>${escapeHtml(credit.afterLicense)}`;
+}
+
 function footer(locale, copy) {
-  return `<footer class="site-footer"><div class="container footer-main"><div class="footer-brand"><span class="brand-mark brand-mark-small" aria-hidden="true"><img src="/assets/peak-wiki-logo.png" alt="" width="40" height="40" /><span class="brand-fallback">P</span></span><div><strong>PEAK Game Wiki</strong><span>${escapeHtml(copy.ui.footerTag)}</span></div></div><div class="footer-links"><a href="${routeFor(locale, 'about')}">${escapeHtml(copy.legal.about.eyebrow)}</a><a href="${routeFor(locale, 'privacy')}">${escapeHtml(copy.legal.privacy.eyebrow)}</a><a href="${routeFor(locale, 'terms')}">${escapeHtml(copy.legal.terms.eyebrow)}</a><a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a><a href="${ISSUE_TRACKER_URL}" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.sourceNotes)}</a></div></div><div class="container footer-bottom"><span>${escapeHtml(copy.ui.independent)} \u00b7 ${escapeHtml(copy.ui.snapshot)}</span><span>${escapeHtml(copy.ui.officialLabel)}</span></div></footer>`;
+  return `<footer class="site-footer"><div class="container footer-main"><div class="footer-brand"><span class="brand-mark brand-mark-small" aria-hidden="true"><img src="/assets/peak-wiki-logo.png" alt="" width="40" height="40" /><span class="brand-fallback">P</span></span><div><strong>PEAK Game Wiki</strong><span>${escapeHtml(copy.ui.footerTag)}</span></div></div><div class="footer-links"><a href="${routeFor(locale, 'about')}">${escapeHtml(copy.legal.about.eyebrow)}</a><a href="${routeFor(locale, 'privacy')}">${escapeHtml(copy.legal.privacy.eyebrow)}</a><a href="${routeFor(locale, 'terms')}">${escapeHtml(copy.legal.terms.eyebrow)}</a><a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a><a href="${ISSUE_TRACKER_URL}" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.sourceNotes)}</a></div></div><div class="container footer-bottom"><span>${escapeHtml(copy.ui.independent)} \u00b7 ${escapeHtml(copy.ui.snapshot)}</span><span>${escapeHtml(copy.ui.officialLabel)}</span><span class="footer-credit">${renderItemIconCredit(locale)}</span></div></footer>`;
 }
 
 const ITEM_ICON_ALIASES = new Map([
@@ -1284,6 +1304,9 @@ export function renderLegal(locale, page, options = {}) {
   const copy = { ...sourceCopy, ui: { ...sourceCopy.ui, snapshot: formatSnapshotDate(locale, buildDate) } };
   const legal = copy.legal[page];
   const sections = legal.sections.map(([title, body], index) => {
+    if (page === 'about' && index === 1) {
+      return `<h2>${escapeHtml(title)}</h2><p>${escapeHtml(body)}</p><p class="item-icon-credit">${renderItemIconCredit(locale)}</p>`;
+    }
     if (page === 'about' && index === 2) {
       const corrections = contactPageCopy[locale].corrections;
       return `<h2>${escapeHtml(title)}</h2><p>${escapeHtml(corrections.beforeEmail)}<a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>${escapeHtml(corrections.betweenLinks)}<a href="${ISSUE_TRACKER_URL}" target="_blank" rel="noopener">${escapeHtml(corrections.issueLabel)}</a>${escapeHtml(corrections.afterIssue)}</p>`;

@@ -2469,11 +2469,22 @@ img {
 
 .footer-bottom {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 20px;
   padding: 15px 0 22px;
   border-top: 1px solid rgba(255, 255, 255, 0.13);
   font-size: 10px;
+}
+
+.footer-credit {
+  flex-basis: 100%;
+}
+
+.footer-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .legal-page {
