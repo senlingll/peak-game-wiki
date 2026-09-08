@@ -868,15 +868,15 @@ function head(locale, page, title, description, schema, options = {}) {
 const NATIVE_BANNER_SRC = 'https://pl30883299.profitableratecpmnetwork.com/3531361214596141d25dc216fd8ebe0f/invoke.js';
 const NATIVE_BANNER_CONTAINER_ID = 'container-3531361214596141d25dc216fd8ebe0f';
 const HOME_CONTROL_COPY = {
-  en: { showAllUpdates: 'Show all updates', showFewerUpdates: 'Show fewer', browseAllItems: 'Browse all 16 items', browseFewerItems: 'Show fewer items' },
-  zh: { showAllUpdates: '\u5c55\u5f00\u5168\u90e8\u66f4\u65b0', showFewerUpdates: '\u6536\u8d77\u8be6\u60c5', browseAllItems: '\u6d4f\u89c8\u5168\u90e8 16 \u4e2a\u7269\u54c1', browseFewerItems: '\u6536\u8d77\u7269\u54c1' },
-  es: { showAllUpdates: 'Mostrar todas las novedades', showFewerUpdates: 'Mostrar menos', browseAllItems: 'Ver los 16 objetos', browseFewerItems: 'Mostrar menos objetos' },
-  ja: { showAllUpdates: '\u3059\u3079\u3066\u306e\u66f4\u65b0\u3092\u8868\u793a', showFewerUpdates: '\u4e00\u90e8\u3092\u8868\u793a', browseAllItems: '16\u30a2\u30a4\u30c6\u30e0\u3092\u3059\u3079\u3066\u898b\u308b', browseFewerItems: '\u30a2\u30a4\u30c6\u30e0\u3092\u6298\u308a\u305f\u305f\u3080' },
-  fr: { showAllUpdates: 'Afficher toutes les mises \u00e0 jour', showFewerUpdates: 'Afficher moins', browseAllItems: 'Voir les 16 objets', browseFewerItems: 'Afficher moins d objets' },
-  de: { showAllUpdates: 'Alle Updates anzeigen', showFewerUpdates: 'Weniger anzeigen', browseAllItems: 'Alle 16 Items anzeigen', browseFewerItems: 'Weniger Items anzeigen' },
-  pt: { showAllUpdates: 'Mostrar todas as atualiza\u00e7\u00f5es', showFewerUpdates: 'Mostrar menos', browseAllItems: 'Ver os 16 itens', browseFewerItems: 'Mostrar menos itens' },
-  ko: { showAllUpdates: '\ubaa8\ub4e0 \uc5c5\ub370\uc774\ud2b8 \ud45c\uc2dc', showFewerUpdates: '\uc801\uac8c \ud45c\uc2dc', browseAllItems: '\uc804\uccb4 16\uac1c \uc544\uc774\ud15c \ubcf4\uae30', browseFewerItems: '\uc544\uc774\ud15c \uc801\uac8c \ud45c\uc2dc' },
-  it: { showAllUpdates: 'Mostra tutti gli aggiornamenti', showFewerUpdates: 'Mostra meno', browseAllItems: 'Vedi tutti i 16 oggetti', browseFewerItems: 'Mostra meno oggetti' },
+  en: { showAllUpdates: 'Show all updates', showFewerUpdates: 'Show fewer', browseAllItems: 'Browse all 16 items', browseFewerItems: 'Show fewer items', viewAllItems: 'View all 134 items' },
+  zh: { showAllUpdates: '\u5c55\u5f00\u5168\u90e8\u66f4\u65b0', showFewerUpdates: '\u6536\u8d77\u8be6\u60c5', browseAllItems: '\u6d4f\u89c8\u5168\u90e8 16 \u4e2a\u7269\u54c1', browseFewerItems: '\u6536\u8d77\u7269\u54c1', viewAllItems: '\u67e5\u770b\u5168\u90e8 134 \u4e2a\u7269\u54c1' },
+  es: { showAllUpdates: 'Mostrar todas las novedades', showFewerUpdates: 'Mostrar menos', browseAllItems: 'Ver los 16 objetos', browseFewerItems: 'Mostrar menos objetos', viewAllItems: 'Ver los 134 objetos' },
+  ja: { showAllUpdates: '\u3059\u3079\u3066\u306e\u66f4\u65b0\u3092\u8868\u793a', showFewerUpdates: '\u4e00\u90e8\u3092\u8868\u793a', browseAllItems: '16\u30a2\u30a4\u30c6\u30e0\u3092\u3059\u3079\u3066\u898b\u308b', browseFewerItems: '\u30a2\u30a4\u30c6\u30e0\u3092\u6298\u308a\u305f\u305f\u3080', viewAllItems: '134\u500b\u306e\u30a2\u30a4\u30c6\u30e0\u3092\u3059\u3079\u3066\u898b\u308b' },
+  fr: { showAllUpdates: 'Afficher toutes les mises \u00e0 jour', showFewerUpdates: 'Afficher moins', browseAllItems: 'Voir les 16 objets', browseFewerItems: 'Afficher moins d objets', viewAllItems: 'Voir les 134 objets' },
+  de: { showAllUpdates: 'Alle Updates anzeigen', showFewerUpdates: 'Weniger anzeigen', browseAllItems: 'Alle 16 Items anzeigen', browseFewerItems: 'Weniger Items anzeigen', viewAllItems: 'Alle 134 Items ansehen' },
+  pt: { showAllUpdates: 'Mostrar todas as atualiza\u00e7\u00f5es', showFewerUpdates: 'Mostrar menos', browseAllItems: 'Ver os 16 itens', browseFewerItems: 'Mostrar menos itens', viewAllItems: 'Ver todos os 134 itens' },
+  ko: { showAllUpdates: '\ubaa8\ub4e0 \uc5c5\ub370\uc774\ud2b8 \ud45c\uc2dc', showFewerUpdates: '\uc801\uac8c \ud45c\uc2dc', browseAllItems: '\uc804\uccb4 16\uac1c \uc544\uc774\ud15c \ubcf4\uae30', browseFewerItems: '\uc544\uc774\ud15c \uc801\uac8c \ud45c\uc2dc', viewAllItems: '134\uac1c \uc544\uc774\ud15c \ubaa8\ub450 \ubcf4\uae30' },
+  it: { showAllUpdates: 'Mostra tutti gli aggiornamenti', showFewerUpdates: 'Mostra meno', browseAllItems: 'Vedi tutti i 16 oggetti', browseFewerItems: 'Mostra meno oggetti', viewAllItems: 'Vedi tutti i 134 oggetti' },
 };
 const DEFAULT_HOME_ITEMS = new Set(['Piton', 'Rope Shooter', 'Backpack', 'Energy Drink', 'Portable Stove', 'Rescue Claw']);
 
@@ -945,7 +945,7 @@ function renderHomeBase(locale, options = {}) {
   // Append new version rows to the array; the homepage always shows only the first three by default.
   const updateMarkup = copy.updates.rows.map(([month, day, year, tag, title, text], index) => `<article class="update-row${index === 0 ? ' update-row-current' : ''}${index >= 3 ? ' update-row-collapsed' : ''}"><div class="update-date"><span>${escapeHtml(month)}</span><strong>${escapeHtml(day)}</strong><small>${escapeHtml(year)}</small></div><div><span class="update-tag">${escapeHtml(tag)}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p></div><span class="update-arrow" aria-hidden="true">\u2192</span></article>`).join('');
   const updateToggle = copy.updates.rows.length > 3 ? `<button class="text-button update-toggle" type="button" aria-expanded="false" aria-controls="update-list" data-show-all="${escapeHtml(controls.showAllUpdates)}" data-show-fewer="${escapeHtml(controls.showFewerUpdates)}"><span class="toggle-label">${escapeHtml(controls.showAllUpdates)}</span> <span aria-hidden="true">\u2192</span></button>` : '';
-  const itemToggle = `<button class="text-button item-toggle" type="button" aria-expanded="false" aria-controls="item-grid" data-browse-all="${escapeHtml(controls.browseAllItems)}" data-browse-fewer="${escapeHtml(controls.browseFewerItems)}"><span class="toggle-label">${escapeHtml(controls.browseAllItems)}</span> <span aria-hidden="true">\u2192</span></button>`;
+  const itemToggle = `<button class="text-button item-toggle" type="button" aria-expanded="false" aria-controls="item-grid" data-browse-all="${escapeHtml(controls.browseAllItems)}" data-browse-fewer="${escapeHtml(controls.browseFewerItems)}"><span class="toggle-label">${escapeHtml(controls.browseAllItems)}</span> <span aria-hidden="true">\u2192</span></button><a class="button button-outline database-all-items" href="${routeFor(locale, 'items')}">${escapeHtml(controls.viewAllItems)} <span aria-hidden="true">\u2192</span></a>`;
   const badgeMarkup = copy.badges.rows.map(([title, text], index) => `<div class="badge-row" role="listitem"><span class="badge-number">0${index + 1}</span><div><strong>${escapeHtml(title)}</strong><p>${escapeHtml(text)}</p></div><span class="badge-symbol">\u2192</span></div>`).join('');
   const guideMarkup = copy.guide.points.map(([title, text], index) => `<div><span>0${index + 1}</span><p><strong>${escapeHtml(title)}</strong> ${escapeHtml(text)}</p></div>`).join('');
   const faqMarkup = copy.faq.items.map(([question, answer], index) => {
@@ -994,7 +994,7 @@ function catalogNotesMarkup(value) {
   return `<ul class="items-catalog-notes">${lines.map((line) => `<li>${escapeHtml(line)}</li>`).join('')}</ul>`;
 }
 
-function renderItemsCatalogRows(category, copy) {
+function renderItemsCatalogCards(category, copy) {
   return itemsCatalog.map((item, index) => {
     if (item.category !== category) return '';
     const legacy = item.name === 'Bugle?' || item.name === 'Warp Compass';
@@ -1003,15 +1003,22 @@ function renderItemsCatalogRows(category, copy) {
     const location = catalogCellValue(item.location);
     const search = catalogCellValue([item.name, item.search, type, biome, location, item.notes], '').toLowerCase();
     const itemId = catalogItemId(item.name, index);
-    return `<tr id="item-${escapeHtml(itemId)}" class="items-catalog-row${legacy ? ' is-legacy' : ''}" data-category="${escapeHtml(item.category)}" data-type="${escapeHtml(type.toLowerCase())}" data-biome="${escapeHtml(biome.toLowerCase())}" data-search="${escapeHtml(search)}"><td class="items-catalog-number">${index + 1}</td><td><img class="items-catalog-icon item-icon item-icon-image" src="${escapeHtml(itemIconPath(item.name))}" alt="" width="32" height="32" loading="lazy" decoding="async" /></td><th scope="row"><span lang="en">${escapeHtml(item.name)}</span>${legacy ? `<small>${escapeHtml(copy.catalog.legacy)}</small>` : ''}</th><td><span lang="en" class="items-catalog-canonical-fallback">${escapeHtml(item.name)}</span></td><td>${escapeHtml(type)}</td><td>${escapeHtml(catalogCellValue(item.weight))}</td><td>${escapeHtml(catalogCellValue(item.hunger))}</td><td>${escapeHtml(catalogCellValue(item.bonusStamina))}</td><td>${escapeHtml(catalogCellValue(item.poison))}</td><td>${escapeHtml(biome)}</td><td>${escapeHtml(location)}</td><td>${catalogNotesMarkup(item.notes)}</td></tr>`;
+    const stats = [
+      [copy.catalog.weight, item.weight, false],
+      [copy.catalog.hunger, item.hunger, false],
+      [copy.catalog.stamina, item.bonusStamina, false],
+      [copy.catalog.poison, item.poison, false],
+      [copy.catalog.biome, biome, true],
+      [copy.catalog.location, location, true],
+    ].map(([label, value, wide]) => `<div class="items-card-stat${wide ? ' items-card-stat-wide' : ''}"><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(catalogCellValue(value))}</dd></div>`).join('');
+    return `<article id="item-${escapeHtml(itemId)}" class="items-card items-catalog-row${legacy ? ' is-legacy' : ''}" data-category="${escapeHtml(item.category)}" data-type="${escapeHtml(type.toLowerCase())}" data-biome="${escapeHtml(biome.toLowerCase())}" data-search="${escapeHtml(search)}"><div class="items-card-visual"><span class="items-card-number" aria-hidden="true">${String(index + 1).padStart(3, '0')}</span><img class="items-card-icon item-icon-image" src="${escapeHtml(itemIconPath(item.name))}" alt="" width="112" height="112" loading="lazy" decoding="async" /></div><div class="items-card-body"><p class="items-card-type">${escapeHtml(type)}</p><h3><span lang="en">${escapeHtml(item.name)}</span></h3>${legacy ? `<span class="items-card-legacy">${escapeHtml(copy.catalog.legacy)}</span>` : ''}<dl class="items-card-stats">${stats}</dl><details class="items-card-notes"><summary>${escapeHtml(copy.catalog.notes)}</summary><div class="items-card-note-content">${catalogNotesMarkup(item.notes)}</div></details></div></article>`;
   }).join('');
 }
 
 function renderItemsCatalogSection(copy, category) {
   const sectionCopy = copy.categories[category];
   const headingId = `items-${category}-title`;
-  const headers = [copy.catalog.icon, copy.catalog.englishName, copy.catalog.localizedName, copy.catalog.typeLabel, copy.catalog.weight, copy.catalog.hunger, copy.catalog.stamina, copy.catalog.poison, copy.catalog.biome, copy.catalog.location, copy.catalog.notes];
-  return `<section id="items-${escapeHtml(category)}" class="items-category" data-items-section="${escapeHtml(category)}" aria-labelledby="${escapeHtml(headingId)}"><div class="items-category-heading"><div><p class="eyebrow">${escapeHtml(copy.catalog.categoryLabels[category])}</p><h2 id="${escapeHtml(headingId)}">${escapeHtml(sectionCopy.title)}</h2></div><p>${escapeHtml(sectionCopy.intro)}</p></div><div class="items-catalog-table-wrap"><table class="items-catalog-table"><caption>${escapeHtml(sectionCopy.title)} - ${escapeHtml(copy.catalog.title)}</caption><thead><tr><th scope="col">#</th>${headers.map((header) => `<th scope="col">${escapeHtml(header)}</th>`).join('')}</tr></thead><tbody>${renderItemsCatalogRows(category, copy)}</tbody></table></div></section>`;
+  return `<section id="items-${escapeHtml(category)}" class="items-category" data-items-section="${escapeHtml(category)}" aria-labelledby="${escapeHtml(headingId)}"><div class="items-category-heading"><div><p class="eyebrow">${escapeHtml(copy.catalog.categoryLabels[category])}</p><h2 id="${escapeHtml(headingId)}">${escapeHtml(sectionCopy.title)}</h2></div><p>${escapeHtml(sectionCopy.intro)}</p></div><div class="items-card-grid">${renderItemsCatalogCards(category, copy)}</div></section>`;
 }
 
 function renderItemsPageHtml(locale, options = {}) {
