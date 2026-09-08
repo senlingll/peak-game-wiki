@@ -954,6 +954,12 @@ img {
   font-weight: 700;
 }
 
+.item-icon-image {
+  display: block;
+  object-fit: contain;
+  background: transparent;
+}
+
 .item-icon-coral { color: #fff; background: var(--coral); }
 .item-icon-violet { color: #fff; background: var(--lavender-deep); }
 .item-icon-blue { color: var(--ink); background: var(--blue); }

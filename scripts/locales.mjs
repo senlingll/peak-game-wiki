@@ -898,11 +898,25 @@ function footer(locale, copy) {
   return `<footer class="site-footer"><div class="container footer-main"><div class="footer-brand"><span class="brand-mark brand-mark-small" aria-hidden="true"><img src="/assets/peak-wiki-logo.png" alt="" width="40" height="40" /><span class="brand-fallback">P</span></span><div><strong>PEAK Game Wiki</strong><span>${escapeHtml(copy.ui.footerTag)}</span></div></div><div class="footer-links"><a href="${routeFor(locale, 'about')}">${escapeHtml(copy.legal.about.eyebrow)}</a><a href="${routeFor(locale, 'privacy')}">${escapeHtml(copy.legal.privacy.eyebrow)}</a><a href="${routeFor(locale, 'terms')}">${escapeHtml(copy.legal.terms.eyebrow)}</a><a href="https://github.com/senlingll/peak-game-wiki/issues" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.sourceNotes)}</a></div></div><div class="container footer-bottom"><span>${escapeHtml(copy.ui.independent)} \u00b7 ${escapeHtml(copy.ui.snapshot)}</span><span>${escapeHtml(copy.ui.officialLabel)}</span></div></footer>`;
 }
 
+const ITEM_ICON_ALIASES = new Map([
+  ['Rope Shooter', 'Rope Cannon'],
+  ['Lollipop', 'Big Lollipop'],
+  ['Shroomberries', 'Blue Shroomberry'],
+  ['Bandage', 'Bandages'],
+]);
+
+function itemIconPath(name) {
+  const canonicalName = ITEM_ICON_ALIASES.get(name) ?? name;
+  if (canonicalName === 'Bugle?') return '/media/items/bugle-question-mark.webp';
+  const filename = String(canonicalName ?? '').normalize('NFKC').toLowerCase().replace(/[()]/g, ' ').replace(/[^a-z0-9' -]+/g, '-').replace(/[ _-]+/g, '-').replace(/^[-.]+|[-.]+$/g, '');
+  return `/media/items/${filename}.webp`;
+}
+
 function itemCards(copy) {
-  const colors = ['coral', 'violet', 'blue', 'mint', 'gold', 'ink'];
   return copy.items.map((item, index) => {
     const [name, category, state, description, link, href, search] = item;
-    const defaultVisible = DEFAULT_HOME_ITEMS.has(name); return `<article class="item-card${defaultVisible ? '' : ' item-card-collapsed'}" data-default-visible="${defaultVisible}" data-category="${escapeHtml(category)}" data-search="${escapeHtml(search.toLowerCase())}"><div class="item-icon item-icon-${colors[index % colors.length]}">${escapeHtml(name.charAt(0))}</div><div class="item-main"><div class="item-card-top"><span class="item-type">${escapeHtml(copy.database.type[category] ?? category)}</span><span class="item-state">${escapeHtml(copy.database.state[state] ?? state)}</span></div><h3>${escapeHtml(name)}</h3><p>${escapeHtml(description)}</p><a href="${href}">${escapeHtml(link)} <span aria-hidden="true">\u2192</span></a></div></article>`;
+    const iconName = locales.en.items[index]?.[0] ?? name;
+    const defaultVisible = DEFAULT_HOME_ITEMS.has(name); return `<article class="item-card${defaultVisible ? '' : ' item-card-collapsed'}" data-default-visible="${defaultVisible}" data-category="${escapeHtml(category)}" data-search="${escapeHtml(search.toLowerCase())}"><img class="item-icon item-icon-image" src="${escapeHtml(itemIconPath(iconName))}" alt="" width="48" height="48" loading="lazy" decoding="async" /><div class="item-main"><div class="item-card-top"><span class="item-type">${escapeHtml(copy.database.type[category] ?? category)}</span><span class="item-state">${escapeHtml(copy.database.state[state] ?? state)}</span></div><h3>${escapeHtml(name)}</h3><p>${escapeHtml(description)}</p><a href="${href}">${escapeHtml(link)} <span aria-hidden="true">\u2192</span></a></div></article>`;
   }).join('');
 }
 
@@ -981,7 +995,6 @@ function catalogNotesMarkup(value) {
 }
 
 function renderItemsCatalogRows(category, copy) {
-  const colors = ['coral', 'violet', 'blue', 'mint', 'gold', 'ink'];
   return itemsCatalog.map((item, index) => {
     if (item.category !== category) return '';
     const legacy = item.name === 'Bugle?' || item.name === 'Warp Compass';
@@ -990,7 +1003,7 @@ function renderItemsCatalogRows(category, copy) {
     const location = catalogCellValue(item.location);
     const search = catalogCellValue([item.name, item.search, type, biome, location, item.notes], '').toLowerCase();
     const itemId = catalogItemId(item.name, index);
-    return `<tr id="item-${escapeHtml(itemId)}" class="items-catalog-row${legacy ? ' is-legacy' : ''}" data-category="${escapeHtml(item.category)}" data-type="${escapeHtml(type.toLowerCase())}" data-biome="${escapeHtml(biome.toLowerCase())}" data-search="${escapeHtml(search)}"><td class="items-catalog-number">${index + 1}</td><td><span class="items-catalog-icon item-icon item-icon-${colors[index % colors.length]}" aria-hidden="true">${escapeHtml(item.name.charAt(0))}</span></td><th scope="row"><span lang="en">${escapeHtml(item.name)}</span>${legacy ? `<small>${escapeHtml(copy.catalog.legacy)}</small>` : ''}</th><td><span lang="en" class="items-catalog-canonical-fallback">${escapeHtml(item.name)}</span></td><td>${escapeHtml(type)}</td><td>${escapeHtml(catalogCellValue(item.weight))}</td><td>${escapeHtml(catalogCellValue(item.hunger))}</td><td>${escapeHtml(catalogCellValue(item.bonusStamina))}</td><td>${escapeHtml(catalogCellValue(item.poison))}</td><td>${escapeHtml(biome)}</td><td>${escapeHtml(location)}</td><td>${catalogNotesMarkup(item.notes)}</td></tr>`;
+    return `<tr id="item-${escapeHtml(itemId)}" class="items-catalog-row${legacy ? ' is-legacy' : ''}" data-category="${escapeHtml(item.category)}" data-type="${escapeHtml(type.toLowerCase())}" data-biome="${escapeHtml(biome.toLowerCase())}" data-search="${escapeHtml(search)}"><td class="items-catalog-number">${index + 1}</td><td><img class="items-catalog-icon item-icon item-icon-image" src="${escapeHtml(itemIconPath(item.name))}" alt="" width="32" height="32" loading="lazy" decoding="async" /></td><th scope="row"><span lang="en">${escapeHtml(item.name)}</span>${legacy ? `<small>${escapeHtml(copy.catalog.legacy)}</small>` : ''}</th><td><span lang="en" class="items-catalog-canonical-fallback">${escapeHtml(item.name)}</span></td><td>${escapeHtml(type)}</td><td>${escapeHtml(catalogCellValue(item.weight))}</td><td>${escapeHtml(catalogCellValue(item.hunger))}</td><td>${escapeHtml(catalogCellValue(item.bonusStamina))}</td><td>${escapeHtml(catalogCellValue(item.poison))}</td><td>${escapeHtml(biome)}</td><td>${escapeHtml(location)}</td><td>${catalogNotesMarkup(item.notes)}</td></tr>`;
   }).join('');
 }
 
