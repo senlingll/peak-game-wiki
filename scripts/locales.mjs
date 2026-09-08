@@ -11,6 +11,8 @@ import { itemsPageCopy } from './items-page-locales.mjs';
 const BASE_URL = 'https://peak-game.wiki';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
 const STEAM_NEWS_API_HTML_URL = 'https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json';
+const SUPPORT_EMAIL = 'support@peak-game.wiki';
+const ISSUE_TRACKER_URL = 'https://github.com/senlingll/peak-game-wiki/issues';
 let activeGuideLocale = 'en';
 
 const articleLinkBandCopy = {
@@ -443,7 +445,7 @@ function escapeHtml(value) {
 }
 
 function routeFor(code, page) {
-  if (page === 'items') return code === 'en' ? '/items/' : `/${code}/items/`;
+  if (page === 'items' || page === 'contact') return code === 'en' ? `/${page}/` : `/${code}/${page}/`;
   if (code === 'en') return page === 'home' ? '/' : `/${page}`;
   return page === 'home' ? `/${code}/` : `/${code}/${page}/`;
 }
@@ -818,6 +820,130 @@ const metaDescriptionOverrides = {
   },
 };
 
+const contactPageCopy = {
+  en: {
+    title: 'Contact PEAK Game Wiki',
+    description: 'Contact the independent PEAK Game Wiki to report item stat errors, outdated map information, copyright concerns, or site suggestions with sources for review.',
+    eyebrow: 'Contact the project',
+    h1: 'Contact',
+    intro: 'We welcome clear feedback and corrections that help this independent field guide stay useful, accurate, and transparent.',
+    feedbackTitle: 'What you can contact us about',
+    feedbackTypes: ['Item stat errors', 'Outdated map information', 'Copyright concerns', 'Site suggestions'],
+    emailTitle: 'Send a message',
+    emailIntro: 'Email the project at',
+    sourceNote: 'Please include a source, such as the in-game value you observed or an official announcement link, so we can verify the report.',
+    corrections: { beforeEmail: 'Game information can change after an update. Submit source-backed corrections to ', betweenLinks: ', or through the ', issueLabel: 'public issue tracker', afterIssue: '; the project team will review and update the affected entry.' },
+  },
+  zh: {
+    title: '联系 PEAK 游戏 Wiki',
+    description: '联系 PEAK 游戏 Wiki，反馈物品数值错误、过期地图信息、版权问题或站点建议。请附游戏内实际数值或官方公告链接，方便项目核实。',
+    eyebrow: '联系项目',
+    h1: '联系我们',
+    intro: '欢迎提供清晰的反馈与更正，帮助这份独立玩家指南保持实用、准确和透明。',
+    feedbackTitle: '可以反馈的问题',
+    feedbackTypes: ['物品数值错误', '地图信息过期', '版权问题', '站点建议'],
+    emailTitle: '联系邮箱',
+    emailIntro: '请发送邮件至',
+    sourceNote: '请附上来源，例如游戏内实际数值或官方公告链接，方便我们核实。',
+    corrections: { beforeEmail: '游戏信息可能随更新变化。可将来源明确的更正发送至', betweenLinks: '，或通过', issueLabel: '公开问题跟踪器', afterIssue: '提交；项目团队将审核并更新对应条目。' },
+  },
+  es: {
+    title: 'Contacto | PEAK Game Wiki',
+    description: 'Contacta con PEAK Game Wiki para informar de estadísticas incorrectas, mapas desactualizados, cuestiones de derechos de autor o sugerencias para el sitio.',
+    eyebrow: 'Contacto con el proyecto',
+    h1: 'Contacto',
+    intro: 'Agradecemos comentarios claros y correcciones que ayuden a mantener esta guía independiente útil, precisa y transparente.',
+    feedbackTitle: 'Sobre qué puedes escribirnos',
+    feedbackTypes: ['Errores en las estadísticas de objetos', 'Información de mapas desactualizada', 'Cuestiones de derechos de autor', 'Sugerencias para el sitio'],
+    emailTitle: 'Enviar un mensaje',
+    emailIntro: 'Escribe al proyecto en',
+    sourceNote: 'Incluye una fuente, como el valor observado en el juego o un enlace a un anuncio oficial, para que podamos verificar el aviso.',
+    corrections: { beforeEmail: 'La información del juego puede cambiar tras una actualización. Envía correcciones respaldadas por fuentes a ', betweenLinks: ' o mediante el ', issueLabel: 'rastreador público de incidencias', afterIssue: '; el equipo revisará el aviso y actualizará la entrada afectada.' },
+  },
+  ja: {
+    title: 'PEAK Wiki お問い合わせ',
+    description: 'PEAK Wiki へのお問い合わせページです。アイテム数値の誤り、古いマップ情報、著作権に関する問題、サイトへの提案を、確認できる出典とともにお寄せください。',
+    eyebrow: 'プロジェクトへの連絡',
+    h1: 'お問い合わせ',
+    intro: 'この独立ガイドを実用的で正確かつ透明に保つため、具体的なご意見や修正情報を受け付けています。',
+    feedbackTitle: 'お問い合わせいただける内容',
+    feedbackTypes: ['アイテム数値の誤り', '古くなったマップ情報', '著作権に関する問題', 'サイトへの提案'],
+    emailTitle: 'メールを送る',
+    emailIntro: '連絡先メールアドレス：',
+    sourceNote: '確認を円滑にするため、ゲーム内で確認した実際の数値や公式告知のリンクなど、出典を添えてください。',
+    corrections: { beforeEmail: 'ゲーム情報はアップデート後に変わる場合があります。出典を添えた修正情報は', betweenLinks: '、または', issueLabel: '公開イシュートラッカー', afterIssue: 'からお送りください。プロジェクトチームが確認し、該当項目を更新します。' },
+  },
+  fr: {
+    title: 'Contacter PEAK Game Wiki',
+    description: 'Contactez PEAK Game Wiki pour signaler une statistique d’objet erronée, une carte obsolète, un problème de droits d’auteur ou proposer une amélioration du site.',
+    eyebrow: 'Contacter le projet',
+    h1: 'Contact',
+    intro: 'Nous accueillons les retours précis et les corrections qui permettent à ce guide indépendant de rester utile, fiable et transparent.',
+    feedbackTitle: 'Motifs de contact',
+    feedbackTypes: ['Statistique d’objet erronée', 'Information de carte obsolète', 'Problème de droits d’auteur', 'Suggestion pour le site'],
+    emailTitle: 'Envoyer un message',
+    emailIntro: 'Écrivez au projet à',
+    sourceNote: 'Ajoutez une source, par exemple la valeur constatée dans le jeu ou le lien d’une annonce officielle, afin que nous puissions vérifier le signalement.',
+    corrections: { beforeEmail: 'Les informations du jeu peuvent changer après une mise à jour. Envoyez les corrections accompagnées de leurs sources à ', betweenLinks: ' ou via le ', issueLabel: 'suivi public des problèmes', afterIssue: ' ; l’équipe vérifiera le signalement et mettra à jour l’entrée concernée.' },
+  },
+  de: {
+    title: 'Kontakt zur PEAK Game Wiki',
+    description: 'Kontaktiere die PEAK Game Wiki bei fehlerhaften Gegenstandswerten, veralteten Karteninformationen, Urheberrechtsfragen oder Vorschlägen zur Website.',
+    eyebrow: 'Projektkontakt',
+    h1: 'Kontakt',
+    intro: 'Wir begrüßen klare Hinweise und Korrekturen, damit dieser unabhängige Field Guide nützlich, genau und transparent bleibt.',
+    feedbackTitle: 'Wozu du uns kontaktieren kannst',
+    feedbackTypes: ['Fehlerhafte Gegenstandswerte', 'Veraltete Karteninformationen', 'Urheberrechtsfragen', 'Vorschläge zur Website'],
+    emailTitle: 'Nachricht senden',
+    emailIntro: 'Schreibe dem Projekt an',
+    sourceNote: 'Bitte füge eine Quelle bei, etwa den im Spiel beobachteten Wert oder den Link zu einer offiziellen Ankündigung, damit wir den Hinweis prüfen können.',
+    corrections: { beforeEmail: 'Spielinformationen können sich nach einem Update ändern. Sende belegte Korrekturen an ', betweenLinks: ' oder über den ', issueLabel: 'öffentlichen Issue-Tracker', afterIssue: '; das Projektteam prüft den Hinweis und aktualisiert den betroffenen Eintrag.' },
+  },
+  pt: {
+    title: 'Contato | PEAK Game Wiki',
+    description: 'Entre em contato com a PEAK Game Wiki para relatar atributos incorretos, mapas desatualizados, questões de direitos autorais ou sugestões para o site.',
+    eyebrow: 'Contato com o projeto',
+    h1: 'Contato',
+    intro: 'Recebemos comentários claros e correções que ajudem este guia independente a continuar útil, preciso e transparente.',
+    feedbackTitle: 'Assuntos para contato',
+    feedbackTypes: ['Erros nos atributos de itens', 'Informações de mapa desatualizadas', 'Questões de direitos autorais', 'Sugestões para o site'],
+    emailTitle: 'Enviar uma mensagem',
+    emailIntro: 'Escreva para o projeto em',
+    sourceNote: 'Inclua uma fonte, como o valor observado no jogo ou o link de um anúncio oficial, para que possamos verificar o relato.',
+    corrections: { beforeEmail: 'As informações do jogo podem mudar após uma atualização. Envie correções acompanhadas de fontes para ', betweenLinks: ' ou pelo ', issueLabel: 'rastreador público de problemas', afterIssue: '; a equipe analisará o relato e atualizará a entrada afetada.' },
+  },
+  ko: {
+    title: 'PEAK 게임 위키 문의',
+    description: 'PEAK 게임 위키에 아이템 수치 오류, 오래된 지도 정보, 저작권 문제 또는 사이트 개선 의견을 알려 주세요. 확인할 수 있는 출처를 함께 보내 주세요.',
+    eyebrow: '프로젝트 문의',
+    h1: '문의하기',
+    intro: '이 독립 필드 가이드를 유용하고 정확하며 투명하게 유지할 수 있도록 구체적인 의견과 수정 제보를 받습니다.',
+    feedbackTitle: '문의할 수 있는 내용',
+    feedbackTypes: ['아이템 수치 오류', '오래된 지도 정보', '저작권 문제', '사이트 개선 의견'],
+    emailTitle: '메일 보내기',
+    emailIntro: '프로젝트 이메일:',
+    sourceNote: '확인을 위해 게임에서 본 실제 수치나 공식 공지 링크 같은 출처를 함께 보내 주세요.',
+    corrections: { beforeEmail: '게임 정보는 업데이트 후 바뀔 수 있습니다. 출처가 있는 수정 제보는 ', betweenLinks: ' 또는 ', issueLabel: '공개 이슈 트래커', afterIssue: '로 보내 주세요. 프로젝트 팀이 확인한 뒤 해당 항목을 업데이트합니다.' },
+  },
+  it: {
+    title: 'Contatti | PEAK Game Wiki',
+    description: 'Contatta PEAK Game Wiki per segnalare statistiche errate degli oggetti, mappe non aggiornate, problemi di copyright o suggerimenti per migliorare il sito.',
+    eyebrow: 'Contatta il progetto',
+    h1: 'Contatti',
+    intro: 'Accogliamo segnalazioni chiare e correzioni che aiutino questa guida indipendente a restare utile, accurata e trasparente.',
+    feedbackTitle: 'Per cosa puoi contattarci',
+    feedbackTypes: ['Errori nelle statistiche degli oggetti', 'Informazioni sulle mappe non aggiornate', 'Problemi di copyright', 'Suggerimenti per il sito'],
+    emailTitle: 'Invia un messaggio',
+    emailIntro: 'Scrivi al progetto a',
+    sourceNote: 'Allega una fonte, come il valore osservato nel gioco o il link a un annuncio ufficiale, così potremo verificare la segnalazione.',
+    corrections: { beforeEmail: 'Le informazioni di gioco possono cambiare dopo un aggiornamento. Invia le correzioni supportate da fonti a ', betweenLinks: ' oppure tramite il ', issueLabel: 'tracker pubblico dei problemi', afterIssue: '; il team verificherà la segnalazione e aggiornerà la voce interessata.' },
+  },
+};
+
+for (const code of localeOrder) {
+  if (!contactPageCopy[code]) throw new Error(`Missing contact copy: ${code}`);
+}
+
 function head(locale, page, title, description, schema, options = {}) {
   const meta = localeMeta[locale];
   const copy = options.copy ?? locales[locale];
@@ -862,6 +988,11 @@ function head(locale, page, title, description, schema, options = {}) {
     scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: catalog.faq.items.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) });
     scripts.push({ '@context': 'https://schema.org', '@type': 'ItemList', name: catalog.h1, numberOfItems: itemsCatalog.length, itemListOrder: 'https://schema.org/ItemListOrderAscending', itemListElement: itemsCatalog.map((item, index) => ({ '@type': 'ListItem', position: index + 1, name: item.name, url: `${canonical}#item-${catalogItemId(item.name, index)}` })) });
   }
+  if (page === 'contact') {
+    const contact = options.contact ?? contactPageCopy[locale] ?? contactPageCopy.en;
+    scripts.push({ '@context': 'https://schema.org', '@type': 'ContactPage', '@id': `${canonical}#contact`, url: canonical, name: contact.h1, description: pageDescription, inLanguage: meta.lang, isPartOf: { '@id': `${BASE_URL}/#website` }, about: { '@type': 'VideoGame', name: 'PEAK' }, mainEntity: { '@type': 'Organization', name: 'PEAK Game Wiki', url: BASE_URL, email: SUPPORT_EMAIL, contactPoint: { '@type': 'ContactPoint', email: SUPPORT_EMAIL, contactType: contact.emailTitle } } });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: contact.h1, item: canonical }] });
+  }
   return `<!doctype html>\n<html lang="${meta.lang}" data-locale="${locale}">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <title>${escapeHtml(title)}</title>\n    <meta name="description" content="${escapeHtml(pageDescription)}" />\n    <meta name="theme-color" content="#17212d" />\n    <link rel="canonical" href="${canonical}" />\n    ${alternateLinks(page)}\n    <link rel="icon" href="/assets/favicon.ico" sizes="any" />\n    <link rel="manifest" href="/manifest.webmanifest" />\n    \n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(pageDescription)}" />\n    <meta property="og:image" content="${BASE_URL}/media/peak-climb-ridge.webp" />\n    <meta property="og:url" content="${canonical}" />\n    <meta property="og:locale" content="${meta.lang}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:title" content="${escapeHtml(title)}" />\n    <meta name="twitter:description" content="${escapeHtml(pageDescription)}" />\n    <meta name="twitter:image" content="${BASE_URL}/media/peak-climb-ridge.webp" />\n    <link rel="stylesheet" href="/styles.css" />\n    \n    <script>\n      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","y3c9ye040x");\n    </script>${scripts.map((value) => `\n    <script type="application/ld+json">${jsonLd(value)}</script>`).join('')}\n  </head>`;
 }
 
@@ -895,7 +1026,7 @@ function header(locale, page, copy) {
 }
 
 function footer(locale, copy) {
-  return `<footer class="site-footer"><div class="container footer-main"><div class="footer-brand"><span class="brand-mark brand-mark-small" aria-hidden="true"><img src="/assets/peak-wiki-logo.png" alt="" width="40" height="40" /><span class="brand-fallback">P</span></span><div><strong>PEAK Game Wiki</strong><span>${escapeHtml(copy.ui.footerTag)}</span></div></div><div class="footer-links"><a href="${routeFor(locale, 'about')}">${escapeHtml(copy.legal.about.eyebrow)}</a><a href="${routeFor(locale, 'privacy')}">${escapeHtml(copy.legal.privacy.eyebrow)}</a><a href="${routeFor(locale, 'terms')}">${escapeHtml(copy.legal.terms.eyebrow)}</a><a href="https://github.com/senlingll/peak-game-wiki/issues" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.sourceNotes)}</a></div></div><div class="container footer-bottom"><span>${escapeHtml(copy.ui.independent)} \u00b7 ${escapeHtml(copy.ui.snapshot)}</span><span>${escapeHtml(copy.ui.officialLabel)}</span></div></footer>`;
+  return `<footer class="site-footer"><div class="container footer-main"><div class="footer-brand"><span class="brand-mark brand-mark-small" aria-hidden="true"><img src="/assets/peak-wiki-logo.png" alt="" width="40" height="40" /><span class="brand-fallback">P</span></span><div><strong>PEAK Game Wiki</strong><span>${escapeHtml(copy.ui.footerTag)}</span></div></div><div class="footer-links"><a href="${routeFor(locale, 'about')}">${escapeHtml(copy.legal.about.eyebrow)}</a><a href="${routeFor(locale, 'privacy')}">${escapeHtml(copy.legal.privacy.eyebrow)}</a><a href="${routeFor(locale, 'terms')}">${escapeHtml(copy.legal.terms.eyebrow)}</a><a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a><a href="${ISSUE_TRACKER_URL}" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.sourceNotes)}</a></div></div><div class="container footer-bottom"><span>${escapeHtml(copy.ui.independent)} \u00b7 ${escapeHtml(copy.ui.snapshot)}</span><span>${escapeHtml(copy.ui.officialLabel)}</span></div></footer>`;
 }
 
 const ITEM_ICON_ALIASES = new Map([
@@ -1152,14 +1283,30 @@ export function renderLegal(locale, page, options = {}) {
   const sourceCopy = locales[locale];
   const copy = { ...sourceCopy, ui: { ...sourceCopy.ui, snapshot: formatSnapshotDate(locale, buildDate) } };
   const legal = copy.legal[page];
-  const sections = legal.sections.map(([title, body]) => `<h2>${escapeHtml(title)}</h2><p>${escapeHtml(body)}</p>`).join('');
+  const sections = legal.sections.map(([title, body], index) => {
+    if (page === 'about' && index === 2) {
+      const corrections = contactPageCopy[locale].corrections;
+      return `<h2>${escapeHtml(title)}</h2><p>${escapeHtml(corrections.beforeEmail)}<a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>${escapeHtml(corrections.betweenLinks)}<a href="${ISSUE_TRACKER_URL}" target="_blank" rel="noopener">${escapeHtml(corrections.issueLabel)}</a>${escapeHtml(corrections.afterIssue)}</p>`;
+    }
+    return `<h2>${escapeHtml(title)}</h2><p>${escapeHtml(body)}</p>`;
+  }).join('');
   const privacyDisclosure = page === 'privacy' ? `<h2>${escapeHtml(privacyAdDisclosure[locale][0])}</h2><p>${escapeHtml(privacyAdDisclosure[locale][1])}</p><p><a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">${escapeHtml(privacyAdDisclosure[locale][2])} <span aria-hidden="true">\u2192</span></a></p>` : '';
   return `${head(locale, page, legal.title, legal.description, legal.description)}\n  <body class="legal-page">${header(locale, page, copy)}<main class="legal-main"><div class="container"><p class="eyebrow">${escapeHtml(legal.eyebrow)}</p><h1>${escapeHtml(legal.h1)}</h1><p class="legal-intro">${escapeHtml(legal.intro)}</p><div class="legal-copy">${sections}${privacyDisclosure}</div></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
 }
 
+export function renderContact(locale, options = {}) {
+  const buildDate = resolveBuildDate(options);
+  const sourceCopy = locales[locale];
+  const copy = { ...sourceCopy, ui: { ...sourceCopy.ui, snapshot: formatSnapshotDate(locale, buildDate) } };
+  const contact = contactPageCopy[locale] ?? contactPageCopy.en;
+  const feedbackTypes = contact.feedbackTypes.map((item) => `<li>${escapeHtml(item)}</li>`).join('');
+  const emailGap = ['zh', 'ja'].includes(locale) ? '' : ' ';
+  return `${head(locale, 'contact', contact.title, contact.description, contact.description, { ...options, copy, contact })}\n  <body class="legal-page">${header(locale, 'contact', copy)}<main class="legal-main"><div class="container"><p class="eyebrow">${escapeHtml(contact.eyebrow)}</p><h1>${escapeHtml(contact.h1)}</h1><p class="legal-intro">${escapeHtml(contact.intro)}</p><div class="legal-copy"><h2>${escapeHtml(contact.feedbackTitle)}</h2><ul>${feedbackTypes}</ul><h2>${escapeHtml(contact.emailTitle)}</h2><p>${escapeHtml(contact.emailIntro)}${emailGap}<a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p><p>${escapeHtml(contact.sourceNote)}</p></div></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
+}
+
 export function renderSitemap(buildDate = '2026-08-19', publishedArticles = articleOrder) {
-  const pages = ['home', 'about', 'privacy', 'terms', 'map-rotation', 'achievements', 'items', ...publishedArticles];
-  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'map-rotation', 'achievements', 'items', ...publishedArticles].map((page) => `${BASE_URL}${routeFor(code, page)}`)));
+  const pages = ['home', 'about', 'contact', 'privacy', 'terms', 'map-rotation', 'achievements', 'items', ...publishedArticles];
+  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'contact', 'map-rotation', 'achievements', 'items', ...publishedArticles].map((page) => `${BASE_URL}${routeFor(code, page)}`)));
   const urls = localeOrder.flatMap((code) => pages.map((page) => `${BASE_URL}${routeFor(code, page)}`));
   const rows = urls.map((url) => {
     const lastmod = updatedUrls.has(url) ? buildDate : '2026-08-17';

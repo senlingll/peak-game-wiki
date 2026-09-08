@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
+import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderContact, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
 import { articleOrder } from './article-guides.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
@@ -88,6 +88,9 @@ await writeFile(resolve(outputRoot, '404.html'), notFoundHtml, 'utf8');
 for (const page of ['about', 'privacy', 'terms']) {
   await writeFile(resolve(outputRoot, `${page}.html`), renderLegal('en', page, renderOptions), 'utf8');
 }
+const contactRoot = resolve(outputRoot, 'contact');
+await mkdir(contactRoot, { recursive: true });
+await writeFile(resolve(contactRoot, 'index.html'), renderContact('en', renderOptions), 'utf8');
 await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(buildDate, publishedArticleOrder), 'utf8');
 await writeFile(resolve(outputRoot, 'map-rotation.html'), renderMapGuidePage('en'), 'utf8');
 await writeFile(resolve(outputRoot, 'achievements.html'), renderAchievementGuide('en', renderOptions), 'utf8');
@@ -107,6 +110,9 @@ for (const locale of localeOrder.filter((code) => code !== 'en')) {
     await mkdir(pageRoot, { recursive: true });
     await writeFile(resolve(pageRoot, 'index.html'), renderLegal(locale, page, renderOptions), 'utf8');
   }
+  const contactLocaleRoot = resolve(localeRoot, 'contact');
+  await mkdir(contactLocaleRoot, { recursive: true });
+  await writeFile(resolve(contactLocaleRoot, 'index.html'), renderContact(locale, renderOptions), 'utf8');
   const guideRoot = resolve(localeRoot, 'map-rotation');
   await mkdir(guideRoot, { recursive: true });
   await writeFile(resolve(guideRoot, 'index.html'), renderMapGuidePage(locale), 'utf8');
