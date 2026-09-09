@@ -6,6 +6,7 @@ import { peakTipsTranslations } from './article-tips-locales.mjs';
 import { howToPlayPeakTranslations } from './article-how-to-play-locales.mjs';
 import { rescueClawTranslations } from './article-rescue-claw-locales.mjs';
 import { ropeChainTranslations } from './article-rope-chain-locales.mjs';
+import { roomCodesTranslations } from './article-room-codes-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1194,6 +1195,10 @@ for (const [locale, translation] of Object.entries(rescueClawTranslations)) {
 
 for (const [locale, translation] of Object.entries(ropeChainTranslations)) {
   articleLocaleTranslations[locale]['rope-chain'] = translation;
+}
+
+for (const [locale, translation] of Object.entries(roomCodesTranslations)) {
+  articleLocaleTranslations[locale]['room-codes'] = translation;
 }
 
 const localizedBiomeUpdateCopy = {

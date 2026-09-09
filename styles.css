@@ -1409,6 +1409,11 @@ img {
   border-color: rgba(56, 101, 73, 0.35);
 }
 
+.today-map-status.is-estimated {
+  color: var(--coral-dark);
+  border-color: rgba(169, 75, 61, 0.35);
+}
+
 .today-map-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
@@ -1706,6 +1711,16 @@ img {
 
 .today-map-source > span {
   font-weight: 850;
+}
+
+.today-map-source p {
+  flex: 1 1 100%;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.today-map-source .today-map-estimate-note {
+  color: var(--ink);
 }
 
 .today-map-source a {

@@ -2,6 +2,7 @@ import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderContact, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
 import { articleOrder } from './article-guides.mjs';
+import { buildTodayMapSnapshot } from './today-map-rotation.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const outputRoot = resolve(projectRoot, 'dist');
@@ -18,18 +19,6 @@ if (!publishedArticleOrder.length) {
   throw new Error('PUBLISHED_ARTICLES must include at least one known article slug.');
 }
 
-async function readTodayMap() {
-  try {
-    return JSON.parse(await readFile(resolve(projectRoot, 'data/today-map.json'), 'utf8'));
-  } catch (error) {
-    if (error?.code === 'ENOENT' || error instanceof SyntaxError) {
-      console.warn('No valid data/today-map.json found; building a pending daily-map card.');
-      return {};
-    }
-    throw error;
-  }
-}
-
 async function readJsonFile(file, fallback) {
   try {
     return JSON.parse(await readFile(resolve(projectRoot, file), 'utf8'));
@@ -42,7 +31,7 @@ async function readJsonFile(file, fallback) {
   }
 }
 
-const todayMap = await readTodayMap();
+const todayMap = buildTodayMapSnapshot(buildTimestamp, buildDate);
 const updateData = await readJsonFile('data/peak-updates.json', { entries: [] });
 const mapHistory = await readJsonFile('data/peak-map-history.json', []);
 
@@ -98,7 +87,13 @@ const itemsRoot = resolve(outputRoot, 'items');
 await mkdir(itemsRoot, { recursive: true });
 await writeFile(resolve(itemsRoot, 'index.html'), renderItemsPage('en', renderOptions), 'utf8');
 for (const slug of publishedArticleOrder) {
-  await writeFile(resolve(outputRoot, `${slug}.html`), renderArticlePage('en', slug, renderOptions), 'utf8');
+  if (slug === 'room-codes') {
+    const articleRoot = resolve(outputRoot, slug);
+    await mkdir(articleRoot, { recursive: true });
+    await writeFile(resolve(articleRoot, 'index.html'), renderArticlePage('en', slug, renderOptions), 'utf8');
+  } else {
+    await writeFile(resolve(outputRoot, `${slug}.html`), renderArticlePage('en', slug, renderOptions), 'utf8');
+  }
 }
 
 for (const locale of localeOrder.filter((code) => code !== 'en')) {

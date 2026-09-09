@@ -129,7 +129,7 @@ export const peakTipsTranslations = {
       body: '平台、单人/合作模式和队伍人数信息来自 PEAK 官方 Steam 页面。每日路线环境在构建时从维护中的地图记录写入。本文的建议属于实战指导；具体物品效果、寒冷行为、Scout revive 提示以及绳索和链条互动，都应在更新后回到当前游戏中核对。',
       links: [
         ['PEAK 官方 Steam 页面', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['PEAK Map Today 来源', 'https://peak.skydler.me/'],
+        ['PEAK Wiki 计时器来源', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Steam 官方新闻', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -269,7 +269,7 @@ export const peakTipsTranslations = {
       body: 'La información sobre plataforma, juego individual/cooperativo y tamaño del grupo procede de la página oficial de PEAK en Steam. El contexto de la ruta diaria se escribe durante el build desde el registro de mapas mantenido. Estas recomendaciones son orientación práctica; comprueba en el juego actual los efectos de objetos, el frío, el revive del Scout y las interacciones de cuerdas y cadenas tras cada actualización.',
       links: [
         ['Página oficial de PEAK en Steam', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['Fuente de PEAK Map Today', 'https://peak.skydler.me/'],
+        ['Fuente del temporizador de PEAK Wiki', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Noticias oficiales de Steam', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -409,7 +409,7 @@ export const peakTipsTranslations = {
       body: 'プラットフォーム、ソロ/協力プレイ、人数の情報はPEAK公式Steamページに基づきます。デイリールートの情報は、維持しているマップ記録からビルド時に書き込まれます。ここでの提案は実践的な目安であり、アイテム効果、寒さ、Scoutのrevive表示、ロープとチェーンの挙動は更新後に現在のゲームで確認してください。',
       links: [
         ['PEAK公式Steamページ', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['PEAK Map Todayの参照元', 'https://peak.skydler.me/'],
+        ['PEAK Wikiタイマーの参照元', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Steam公式ニュース', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -549,7 +549,7 @@ export const peakTipsTranslations = {
       body: 'Les informations de plateforme, de jeu solo ou coopératif et de taille de groupe viennent de la page Steam officielle de PEAK. Le contexte de la route quotidienne est écrit pendant le build depuis le registre de cartes maintenu. Ces recommandations sont pratiques ; vérifiez dans le jeu actuel les effets des objets, le froid, le revive du Scout et les interactions des cordes et chaînes après les mises à jour.',
       links: [
         ['Page Steam officielle de PEAK', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['Source PEAK Map Today', 'https://peak.skydler.me/'],
+        ['Source du minuteur PEAK Wiki', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Actualités officielles Steam', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -689,7 +689,7 @@ export const peakTipsTranslations = {
       body: 'Informationen zu Plattform, Einzel- oder Koop-Spiel und Gruppengröße stammen von der offiziellen PEAK-Steamseite. Der Kontext der Tagesroute wird beim Build aus dem gepflegten Kartenprotokoll geschrieben. Die Empfehlungen sind praktische Hinweise; Gegenstandseffekte, Kälte, Scout-Revive sowie Seil- und Ketteninteraktionen müssen nach Updates im aktuellen Spiel geprüft werden.',
       links: [
         ['Offizielle PEAK-Steamseite', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['PEAK-Map-Today-Quelle', 'https://peak.skydler.me/'],
+        ['Quelle des PEAK-Wiki-Timers', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Offizielle Steam-News', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -829,7 +829,7 @@ export const peakTipsTranslations = {
       body: 'As informações de plataforma, jogo solo/cooperativo e tamanho do grupo vêm da página oficial de PEAK na Steam. O contexto da rota diária é escrito durante o build a partir do registro de mapas mantido. Estas recomendações são orientação prática; confirme no jogo atual os efeitos dos itens, o frio, o revive do Scout e as interações de cordas e correntes depois das atualizações.',
       links: [
         ['Página oficial de PEAK na Steam', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['Fonte PEAK Map Today', 'https://peak.skydler.me/'],
+        ['Fonte do cronômetro da PEAK Wiki', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Notícias oficiais da Steam', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -969,7 +969,7 @@ export const peakTipsTranslations = {
       body: '플랫폼, 싱글/협동 플레이, 팀 규모 정보는 PEAK 공식 Steam 페이지에서 가져왔습니다. 일일 경로 정보는 유지 중인 맵 기록을 빌드 시점에 작성합니다. 이 글의 내용은 실전 조언이며, 아이템 효과, 추위, Scout revive 안내, 로프와 체인 상호작용은 업데이트 후 현재 게임에서 확인해야 합니다.',
       links: [
         ['PEAK 공식 Steam 페이지', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['PEAK Map Today 출처', 'https://peak.skydler.me/'],
+        ['PEAK Wiki 타이머 출처', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Steam 공식 뉴스', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -1109,7 +1109,7 @@ export const peakTipsTranslations = {
       body: 'Le informazioni su piattaforma, gioco in solitaria o cooperativo e dimensione del gruppo provengono dalla pagina Steam ufficiale di PEAK. Il contesto del percorso giornaliero viene scritto durante il build dal registro delle mappe mantenuto. Queste sono indicazioni pratiche: dopo gli aggiornamenti verifica nel gioco gli effetti degli oggetti, il freddo, il revive dello Scout e le interazioni di corde e catene.',
       links: [
         ['Pagina Steam ufficiale di PEAK', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['Fonte PEAK Map Today', 'https://peak.skydler.me/'],
+        ['Fonte do timer de PEAK Wiki', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Notizie ufficiali di Steam', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },

@@ -4,51 +4,53 @@
   "route": "Daily biome sequence",
   "biome": "Shore, Tropics, Mesa, Caldera, The Kiln",
   "resetAt": "2026-09-09T17:00:00.000Z",
-  "updatedAt": "2026-09-08T19:53:45.999Z",
-  "sourceFetchedAt": "2026-09-08T19:53:45.999Z",
+  "currentResetAt": "2026-09-08T17:00:00.000Z",
+  "updatedAt": "2026-09-09T03:25:29.406Z",
+  "sourceFetchedAt": "2026-09-09T03:25:29.406Z",
+  "estimated": true,
   "source": {
-    "label": "PEAK Map Today",
-    "url": "https://peak.skydler.me/"
+    "label": "PEAK Wiki timer",
+    "url": "https://peak.wiki.gg/wiki/MediaWiki:Common.js"
   },
-  "fallbackSource": {
-    "label": "Steam Community daily map guide",
-    "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3553972295"
+  "license": {
+    "label": "CC BY-SA 4.0",
+    "url": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "media": [
     {
       "type": "image",
       "biome": "Shore",
-      "alt": "Shore map from today's rotation",
-      "caption": "Shore map image from PEAK Map Today, fetched 2026-09-09.",
-      "url": "https://peak.skydler.me/assets/shore-C4RgtyBr.jpg"
+      "alt": "Shore map from today's estimated rotation",
+      "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
+      "url": "/media/peak-map-shore.webp"
     },
     {
       "type": "image",
       "biome": "Tropics",
-      "alt": "Tropics map from today's rotation",
-      "caption": "Tropics map image from PEAK Map Today, fetched 2026-09-09.",
-      "url": "https://peak.skydler.me/assets/tropics-MT9xyuK_.jpg"
+      "alt": "Tropics map from today's estimated rotation",
+      "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
+      "url": "/media/peak-map-tropics.webp"
     },
     {
       "type": "image",
       "biome": "Mesa",
-      "alt": "Mesa map from today's rotation",
-      "caption": "Mesa map image from PEAK Map Today, fetched 2026-09-09.",
-      "url": "https://peak.skydler.me/assets/mesa-COSGb-4Z.jpg"
+      "alt": "Mesa map from today's estimated rotation",
+      "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
+      "url": "/media/peak-map-mesa.webp"
     },
     {
       "type": "image",
       "biome": "Caldera",
-      "alt": "Caldera map from today's rotation",
-      "caption": "Caldera map image from PEAK Map Today, fetched 2026-09-09.",
-      "url": "https://peak.skydler.me/assets/caldera-C9cJuiBH.jpg"
+      "alt": "Caldera map from today's estimated rotation",
+      "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
+      "url": "/media/peak-map-caldera.webp"
     },
     {
       "type": "image",
       "biome": "The Kiln",
-      "alt": "The Kiln map from today's rotation",
-      "caption": "The Kiln map image from PEAK Map Today, fetched 2026-09-09.",
-      "url": "https://peak.skydler.me/assets/kiln-B4ooDngV.jpg"
+      "alt": "The Kiln map from today's estimated rotation",
+      "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
+      "url": "/media/peak-map-kiln.webp"
     }
   ]
 }

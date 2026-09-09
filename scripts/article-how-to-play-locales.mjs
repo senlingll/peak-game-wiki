@@ -4,7 +4,7 @@ const mapLink = (label) => articleLink('map-rotation#today-map', label);
 const sourceLinks = {
   steam: 'https://store.steampowered.com/app/3527290/PEAK/',
   news: 'https://store.steampowered.com/news/app/3527290',
-  map: 'https://peak.skydler.me/',
+  map: 'https://peak.wiki.gg/wiki/MediaWiki:Common.js',
 };
 
 export const howToPlayPeakTranslations = {

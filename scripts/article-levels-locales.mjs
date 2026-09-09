@@ -111,7 +111,7 @@ export const peakLevelsTranslations = {
       body: '生物群系名册和带日期的路线说法来自本站维护的 PEAK Map Today 构建数据，并把游戏使用的路线名称作为当前参考。PEAK 官方 Steam 页面和 Steam 新闻流提供游戏与更新背景。具体界面文字、Ascent 效果、危险和活动路线都可能受当前版本影响，仍应在游戏内核对。',
       links: [
         ['PEAK 官方 Steam 页面', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['PEAK Map Today 来源', 'https://peak.skydler.me/'],
+        ['PEAK Wiki 计时器来源', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Steam 官方新闻流', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -234,7 +234,7 @@ export const peakLevelsTranslations = {
       body: 'El repertorio de biomas y las rutas fechadas proceden de los datos de PEAK Map Today mantenidos por este sitio, usando las etiquetas de ruta del juego como referencia actual. La página oficial de PEAK en Steam y sus noticias aportan contexto general del juego y de las actualizaciones. El texto exacto de la interfaz, los efectos de Ascents, los peligros y la ruta activa dependen de la versión actual y deben comprobarse dentro del juego.',
       links: [
         ['Página oficial de PEAK en Steam', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['Fuente de PEAK Map Today', 'https://peak.skydler.me/'],
+        ['Fuente del temporizador de PEAK Wiki', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Noticias oficiales de Steam', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -357,7 +357,7 @@ export const peakLevelsTranslations = {
       body: 'バイオーム名簿と日付付きルートの説明は、当サイトが維持するPEAK Map Todayのビルドデータに基づき、ゲームで使われるルート名を現在の基準として扱っています。PEAK公式SteamページとSteamニュースはゲームとアップデートの背景を補います。UIの文言、Ascentの効果、危険、現在のルートはバージョンに依存するため、ゲーム内で確認してください。',
       links: [
         ['PEAK公式Steamページ', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['PEAK Map Todayのソース', 'https://peak.skydler.me/'],
+        ['PEAK Wikiタイマーのソース', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Steam公式ニュース', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -480,7 +480,7 @@ export const peakLevelsTranslations = {
       body: 'Le répertoire des biomes et les routes datées viennent des données PEAK Map Today maintenues par ce site, avec les noms utilisés par le jeu comme référence actuelle. La page Steam officielle de PEAK et le fil d’actualités Steam fournissent le contexte général du jeu et des mises à jour. Les textes d’interface, effets d’Ascents, dangers et route active dépendent de la version actuelle et doivent être vérifiés en jeu.',
       links: [
         ['Page Steam officielle de PEAK', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['Source PEAK Map Today', 'https://peak.skydler.me/'],
+        ['Source du minuteur PEAK Wiki', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Fil d’actualités Steam officiel', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -603,7 +603,7 @@ export const peakLevelsTranslations = {
       body: 'Biom-Verzeichnis und datierte Routen stammen aus den von dieser Seite gepflegten PEAK-Map-Today-Builddaten; die im Spiel verwendeten Routennamen gelten als aktuelle Referenz. Die offizielle PEAK-Steamseite und Steam-News liefern allgemeinen Spiel- und Update-Kontext. UI-Texte, Ascent-Effekte, Gefahren und aktive Route hängen von der aktuellen Version ab und sollten im Spiel geprüft werden.',
       links: [
         ['Offizielle PEAK-Steamseite', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['PEAK-Map-Today-Quelle', 'https://peak.skydler.me/'],
+        ['Quelle des PEAK-Wiki-Timers', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Offizieller Steam-Newsfeed', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -726,7 +726,7 @@ export const peakLevelsTranslations = {
       body: 'O repertório de biomas e as rotas com data vêm dos dados de PEAK Map Today mantidos pelo site, usando os nomes de rota do jogo como referência atual. A página oficial de PEAK na Steam e o feed de notícias da Steam fornecem contexto geral do jogo e das atualizações. Textos da interface, efeitos de Ascents, perigos e rota ativa dependem da versão atual e devem ser conferidos dentro do jogo.',
       links: [
         ['Página oficial de PEAK na Steam', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['Fonte do PEAK Map Today', 'https://peak.skydler.me/'],
+        ['Fonte do cronômetro da PEAK Wiki', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Feed oficial de notícias da Steam', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -849,7 +849,7 @@ export const peakLevelsTranslations = {
       body: '바이옴 목록과 날짜가 있는 경로 설명은 사이트가 관리하는 PEAK Map Today 빌드 데이터에서 가져오며 게임에서 사용하는 경로 이름을 현재 기준으로 삼습니다. PEAK 공식 Steam 페이지와 Steam 뉴스는 게임 및 업데이트의 일반적인 배경을 제공합니다. UI 문구, Ascent 효과, 위험, 활성 경로는 현재 버전에 따라 달라질 수 있으므로 게임 내에서 확인하세요.',
       links: [
         ['PEAK 공식 Steam 페이지', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['PEAK Map Today 출처', 'https://peak.skydler.me/'],
+        ['PEAK Wiki 타이머 출처', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Steam 공식 뉴스', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },
@@ -972,7 +972,7 @@ export const peakLevelsTranslations = {
       body: 'Il repertorio dei biomi e i percorsi datati provengono dai dati PEAK Map Today mantenuti dal sito, usando i nomi di percorso del gioco come riferimento attuale. La pagina ufficiale di PEAK su Steam e il feed di notizie Steam forniscono il contesto generale del gioco e degli aggiornamenti. Testi dell’interfaccia, effetti di Ascents, pericoli e percorso attivo dipendono dalla versione corrente e vanno controllati nel gioco.',
       links: [
         ['Pagina ufficiale di PEAK su Steam', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['Fonte PEAK Map Today', 'https://peak.skydler.me/'],
+        ['Fonte do timer de PEAK Wiki', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Feed ufficiale delle notizie Steam', 'https://store.steampowered.com/news/app/3527290'],
       ],
     },

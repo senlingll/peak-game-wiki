@@ -1,45 +1,19 @@
 # Today's map data
 
-`today-map.json` is the build-time source for the map-rotation page. The scheduled workflow runs `npm run fetch:today-map` after the observed daily reset and before `npm run build`. The fetcher tries `peak.skydler.me` first because it exposes the current biome array in its public JavaScript, then falls back to the dated Steam community guide when the primary source is unavailable. It writes only a current result with explicit map fields. Keep it empty when neither source can be verified; the builder will render a pending card instead of guessing.
+`today-map.json` is the build-time snapshot for the map-rotation page. The scheduled workflow runs `npm run fetch:today-map` after the observed daily reset and before `npm run build`. The command performs no network request: it applies the locally maintained community reverse-engineered rotation script from the PEAK Wiki timer and writes an explicitly estimated result.
 
-To publish a result, fill the fields below and run `npm run build`:
+The rotation is not an official announcement. The daily pool expanded after Patch 2.04.a, so the estimate may become inaccurate after an update. The game session is always the final authority. The static builder also computes the same snapshot directly from the rotation module, so the published HTML does not depend on client-side JavaScript or an external daily-map service.
 
-```json
-{
-  "date": "2026-08-22",
-  "map": "Map name from the source",
-  "route": "Route or cycle from the source",
-  "biome": "Verified biome",
-  "resetAt": "2026-08-23T00:00:00Z",
-  "updatedAt": "2026-08-22T08:00:00Z",
-  "sourceFetchedAt": "2026-08-22T08:00:00Z",
-  "source": {
-    "label": "PEAK Map Today",
-    "url": "https://peak.skydler.me/"
-  },
-  "fallbackSource": {
-    "label": "Steam Community daily map guide",
-    "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3553972295"
-  },
-  "media": [
-    {
-      "type": "image",
-      "biome": "Shore",
-      "url": "https://example.com/verified-map.webp",
-      "alt": "Verified PEAK Shore map route for August 22, 2026",
-      "caption": "Community-sourced map entry, checked on August 22, 2026."
-    }
-  ]
-}
-```
+The snapshot includes:
 
-`date` must match the UTC build date and a published source must have an `http` or `https` URL. A record becomes a verified entry only when at least two of the map/route/biome values are present. A dated media-only community post may still show its source image/video while those location fields remain pending. `resetAt` is optional only when the reset time cannot be verified. Supported media types are `image` and `video`; `media` is an array and may contain one card per verified biome, while media is never used to infer a route. The Steam fallback is accepted only when its current cycle and explicit biome fields are present in HTML; the fetcher does not OCR images or infer names from an unlabeled screenshot.
+- `date`, `map`, `route`, and `biome` for the build-date estimate;
+- `currentResetAt` for the reset that selected the sequence and `resetAt` for the next 17:00 UTC reset;
+- `estimated: true` and the PEAK Wiki timer attribution;
+- local `/media/peak-map-*.webp` images, with the original PEAK Wiki attribution and CC BY-SA 4.0 license link rendered by the page.
 
-For local network access through a proxy, set `TODAY_MAP_PROXY` before running the fetch command, for example `TODAY_MAP_PROXY=http://127.0.0.1:10808 npm run fetch:today-map` or the equivalent PowerShell environment variable. GitHub Actions does not set this local-only proxy and uses its own runner network.
+`peak-map-history.json` stores dated observations produced by the same estimate. It is a reference history, not a guaranteed future cycle and not an official record.
 
-## Rotation history
-
-`peak-map-history.json` stores the most recent verified map records. `fetch:today-map` prepends a record only when the current source has enough location fields, removes an older record for the same date, and keeps the latest 30 dates. The schedule article reads this file during the build; it never fills missing dates by prediction.
+The rotation source is the PEAK Wiki timer at `https://peak.wiki.gg/wiki/MediaWiki:Common.js`. Images and attribution follow the PEAK Wiki license notice, `CC BY-SA 4.0`: `https://creativecommons.org/licenses/by-sa/4.0/`.
 
 ## Official updates
 

@@ -14,6 +14,7 @@ const STEAM_NEWS_API_HTML_URL = 'https://api.steampowered.com/ISteamNews/GetNews
 const SUPPORT_EMAIL = 'support@peak-game.wiki';
 const ISSUE_TRACKER_URL = 'https://github.com/senlingll/peak-game-wiki/issues';
 const PEAK_WIKI_ITEMS_URL = 'https://peak.wiki.gg/wiki/Items';
+const PEAK_WIKI_TIMER_URL = 'https://peak.wiki.gg/wiki/MediaWiki:Common.js';
 const CC_BY_SA_URL = 'https://creativecommons.org/licenses/by-sa/4.0/';
 let activeGuideLocale = 'en';
 
@@ -447,7 +448,7 @@ function escapeHtml(value) {
 }
 
 function routeFor(code, page) {
-  if (page === 'items' || page === 'contact') return code === 'en' ? `/${page}/` : `/${code}/${page}/`;
+  if (page === 'items' || page === 'contact' || page === 'room-codes') return code === 'en' ? `/${page}/` : `/${code}/${page}/`;
   if (code === 'en') return page === 'home' ? '/' : `/${page}`;
   return page === 'home' ? `/${code}/` : `/${code}/${page}/`;
 }
@@ -528,18 +529,22 @@ function isSafeMediaUrl(value) {
   return typeof value === 'string' && (value.startsWith('/') || isSafeHttpUrl(value));
 }
 
+function isLocalMapMediaUrl(value) {
+  return typeof value === 'string' && value.startsWith('/media/');
+}
+
 function normalizeTodayMap(data, buildDate, buildTimestamp) {
   const source = data?.source;
-  const fallbackSource = data?.fallbackSource;
   const hasLocation = [data?.map, data?.route, data?.biome].some((value) => typeof value === 'string' && value.trim());
   const datedSource = data?.date === buildDate && isSafeHttpUrl(source?.url);
   const available = datedSource && hasLocation;
   const mediaValues = Array.isArray(data?.media) ? data.media : data?.media ? [data.media] : [];
   const media = datedSource
-    ? mediaValues.filter((item) => item && ['image', 'video'].includes(item.type) && isSafeMediaUrl(item.url))
+    ? mediaValues.filter((item) => item && ['image', 'video'].includes(item.type) && isLocalMapMediaUrl(item.url))
     : [];
   return {
     available,
+    estimated: available && data?.estimated === true,
     date: datedSource ? data.date : buildDate,
     map: available ? data.map : null,
     route: available ? data.route : null,
@@ -547,7 +552,7 @@ function normalizeTodayMap(data, buildDate, buildTimestamp) {
     resetAt: datedSource && parseDateValue(data.resetAt) ? data.resetAt : null,
     updatedAt: datedSource ? (data.updatedAt || data.sourceFetchedAt || buildTimestamp) : buildTimestamp,
     source: datedSource ? { label: source.label || '', url: source.url } : null,
-    fallbackSource: datedSource && isSafeHttpUrl(fallbackSource?.url) ? { label: fallbackSource.label || '', url: fallbackSource.url } : null,
+    license: datedSource && isSafeHttpUrl(data?.license?.url) ? { label: data.license.label || '', url: data.license.url } : null,
     media,
   };
 }
@@ -577,8 +582,8 @@ function renderTodayMapMedia(locale, data) {
   }
   const cards = data.media.map((item, index) => {
     const label = item.biome || `${copy.title} ${index + 1}`;
-    const alt = locale === 'en' && item.alt ? item.alt : formatMediaCopy(copy.mediaAlt, label) || item.alt || label;
-    const caption = locale === 'en' && item.caption ? item.caption : formatMediaCopy(copy.mediaCaption, label) || item.caption || data.source?.label || copy.title;
+    const alt = formatMediaCopy(copy.mediaAlt, label) || item.alt || label;
+    const caption = formatMediaCopy(copy.mediaCaption, label) || item.caption || data.source?.label || copy.title;
     const media = item.type === 'video'
       ? `<video controls preload="metadata" width="1200" height="675"><source src="${escapeHtml(item.url)}"${item.mimeType ? ` type="${escapeHtml(item.mimeType)}"` : ''} /></video>`
       : `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(alt)}" width="1200" height="675" loading="eager" />`;
@@ -603,13 +608,14 @@ function renderTodayMap(locale, data, buildDate, buildTimestamp) {
   const biomeValue = snapshot.biome || copy.pending;
   const countdown = formatCountdown(locale, snapshot.resetAt, buildTimestamp);
   const sourceMarkup = snapshot.source
-    ? `<a href="${escapeHtml(snapshot.source.url)}" target="_blank" rel="noopener">${escapeHtml(snapshot.source.label || copy.source)} <span aria-hidden="true">\u2192</span></a>${snapshot.fallbackSource ? `<a href="${escapeHtml(snapshot.fallbackSource.url)}" target="_blank" rel="noopener">${escapeHtml(copy.fallbackSource || snapshot.fallbackSource.label || copy.source)} <span aria-hidden="true">\u2192</span></a>` : ''}`
+    ? `<p>${escapeHtml(copy.attributionPrefix)}<a href="${escapeHtml(snapshot.source.url)}" rel="noopener">${escapeHtml(copy.wikiSourceLabel || snapshot.source.label || copy.source)}</a>${escapeHtml(copy.attributionBetween)}<a href="${escapeHtml(snapshot.license?.url || CC_BY_SA_URL)}" rel="license noopener">${escapeHtml(copy.licenseLabel)}</a>${escapeHtml(copy.attributionSuffix)}</p><p class="today-map-estimate-note">${escapeHtml(copy.estimateNote)}</p>`
     : `<span>${escapeHtml(copy.pending)}</span>`;
-  const status = snapshot.available ? copy.verified : copy.pending;
+  const status = snapshot.estimated ? copy.estimated : snapshot.available ? copy.verified : copy.pending;
   const panel = snapshot.available
     ? `<h3>${escapeHtml(mapValue)}</h3><p class="today-map-route">${escapeHtml(routeValue)}</p>`
     : `<div class="today-map-pending-copy"><h3>${escapeHtml(copy.pendingTitle)}</h3><p>${escapeHtml(copy.pendingBody)}</p></div>`;
-  return `<section id="today-map" class="today-map-section" aria-labelledby="today-map-title"><div class="container today-map-heading"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h2 id="today-map-title">${escapeHtml(copy.title)}</h2><p>${escapeHtml(copy.lede)}</p></div><span class="today-map-status${snapshot.available ? ' is-verified' : ''}">${escapeHtml(status)}</span></div><div class="container today-map-grid"><div>${renderTodayMapMedia(locale, snapshot)}</div><div class="today-map-panel"><div class="today-map-panel-top"><span class="status-pill"><i></i>${escapeHtml(status)}</span><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></div>${panel}<dl class="today-map-facts"><div><dt>${escapeHtml(copy.currentMap)}</dt><dd>${escapeHtml(mapValue)}</dd></div><div><dt>${escapeHtml(copy.route)}</dt><dd>${escapeHtml(routeValue)}</dd></div><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(countdown)}</dd></div></dl><div class="today-map-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="today-map-updated"><span>${escapeHtml(copy.updated)}</span> ${escapeHtml(formatDateLabel(locale, snapshot.updatedAt))}</p>${snapshot.available ? '' : `<p class="today-map-note">${escapeHtml(copy.pendingNote)}</p>`}</div></div></section>`;
+  const statusClass = snapshot.estimated ? ' is-estimated' : snapshot.available ? ' is-verified' : '';
+  return `<section id="today-map" class="today-map-section" aria-labelledby="today-map-title"><div class="container today-map-heading"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h2 id="today-map-title">${escapeHtml(copy.title)}</h2><p>${escapeHtml(copy.lede)}</p></div><span class="today-map-status${statusClass}">${escapeHtml(status)}</span></div><div class="container today-map-grid"><div>${renderTodayMapMedia(locale, snapshot)}</div><div class="today-map-panel"><div class="today-map-panel-top"><span class="status-pill"><i></i>${escapeHtml(status)}</span><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></div>${panel}<dl class="today-map-facts"><div><dt>${escapeHtml(copy.currentMap)}</dt><dd>${escapeHtml(mapValue)}</dd></div><div><dt>${escapeHtml(copy.route)}</dt><dd>${escapeHtml(routeValue)}</dd></div><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(countdown)}</dd></div></dl><div class="today-map-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="today-map-updated"><span>${escapeHtml(copy.updated)}</span> ${escapeHtml(formatDateLabel(locale, snapshot.updatedAt))}</p>${snapshot.available ? '' : `<p class="today-map-note">${escapeHtml(copy.pendingNote)}</p>`}</div></div></section>`;
 }
 
 export function injectTodayMapSection(html, locale, data, buildDate, buildTimestamp) {
@@ -618,12 +624,12 @@ export function injectTodayMapSection(html, locale, data, buildDate, buildTimest
   return html.replace(marker, `</section>${renderTodayMap(locale, data, buildDate, buildTimestamp)}<div class="container article-layout">`);
 }
 
-const articleLinkPages = new Set(['home', 'map-rotation', 'achievements', ...articleOrder]);
+const articleLinkPages = new Set(['home', 'map-rotation', 'achievements', 'items', ...articleOrder]);
 
 function renderArticleInline(value, locale, publishedArticles = articleOrder) {
   const source = String(value ?? '');
   const pattern = /\[\[link:([a-z0-9-]+)(#[a-z0-9-]+)?\|([\s\S]*?)\]\]/gi;
-  const publishedPages = new Set(['home', 'map-rotation', 'achievements', ...publishedArticles]);
+  const publishedPages = new Set(['home', 'map-rotation', 'achievements', 'items', ...publishedArticles]);
   let result = '';
   let cursor = 0;
   for (const match of source.matchAll(pattern)) {
@@ -687,18 +693,22 @@ function renderArticleBullets(bullets, locale, publishedArticles = articleOrder)
 
 function renderArticleTodayMap(locale, data, buildDate, buildTimestamp) {
   const copy = articleLiveMapCopy[locale] ?? articleLiveMapCopy.en;
+  const mapCopy = todayMapCopy[locale] ?? todayMapCopy.en;
   const snapshot = normalizeTodayMap(data, buildDate, buildTimestamp);
-  const status = snapshot.available ? copy.verified : copy.pending;
+  const status = snapshot.estimated ? mapCopy.estimated : snapshot.available ? copy.verified : copy.pending;
   const mapValue = snapshot.map || copy.pendingValue;
   const routeValue = snapshot.route === 'Daily biome sequence' ? copy.routeLabel : snapshot.route || copy.pendingValue;
   const biomeValue = snapshot.biome || copy.pendingValue;
   const sourceMarkup = snapshot.source
-    ? `<a href="${escapeHtml(snapshot.source.url)}" target="_blank" rel="noopener">${escapeHtml(snapshot.source.label || copy.verifiedSource)} <span aria-hidden="true">\u2192</span></a>`
+    ? `<a href="${escapeHtml(snapshot.source.url)}" rel="noopener">${escapeHtml(mapCopy.wikiSourceLabel || snapshot.source.label || copy.verifiedSource)} <span aria-hidden="true">\u2192</span></a>`
     : `<span>${escapeHtml(copy.sourcePending)}</span>`;
-  const note = snapshot.available
-    ? copy.verifiedNote
+  const note = snapshot.estimated
+    ? mapCopy.estimateNote
+    : snapshot.available
+      ? copy.verifiedNote
     : copy.pendingNote;
-  return `<div class="article-live-snapshot"><div class="article-live-snapshot-top"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h3>${escapeHtml(copy.title)}</h3></div><span class="today-map-status${snapshot.available ? ' is-verified' : ''}">${escapeHtml(status)}</span></div><div class="article-live-snapshot-route"><strong>${escapeHtml(mapValue)}</strong><span>${escapeHtml(routeValue)}</span></div><dl class="article-live-facts"><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.recordDate)}</dt><dd><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(copy.nextResetValue)}</dd></div></dl><div class="article-live-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="article-live-note">${escapeHtml(note)} <a href="${routeFor(locale, 'map-rotation')}#today-map">${escapeHtml(copy.liveMapLink)} <span aria-hidden="true">\u2192</span></a></p></div>`;
+  const statusClass = snapshot.estimated ? ' is-estimated' : snapshot.available ? ' is-verified' : '';
+  return `<div class="article-live-snapshot"><div class="article-live-snapshot-top"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h3>${escapeHtml(copy.title)}</h3></div><span class="today-map-status${statusClass}">${escapeHtml(status)}</span></div><div class="article-live-snapshot-route"><strong>${escapeHtml(mapValue)}</strong><span>${escapeHtml(routeValue)}</span></div><dl class="article-live-facts"><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.recordDate)}</dt><dd><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(copy.nextResetValue)}</dd></div></dl><div class="article-live-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="article-live-note">${escapeHtml(note)} <a href="${routeFor(locale, 'map-rotation')}#today-map">${escapeHtml(copy.liveMapLink)} <span aria-hidden="true">\u2192</span></a></p></div>`;
 }
 
 function dateKeyAtZone(date, timeZone) {
@@ -759,11 +769,12 @@ function renderArticleHistory(locale, data, todayMap, buildDate, buildTimestamp)
   const history = Array.isArray(data) ? [...data] : [];
   const current = normalizeTodayMap(todayMap, buildDate, buildTimestamp);
   if (current.available && !history.some((entry) => entry?.date === current.date)) {
-    history.unshift({ date: current.date, map: current.map, route: current.route, biome: current.biome, resetAt: current.resetAt, source: current.source });
+    history.unshift({ date: current.date, map: current.map, route: current.route, biome: current.biome, resetAt: current.resetAt, estimated: current.estimated, source: current.source });
   }
   const entries = history.filter((entry) => entry?.date && (entry.map || entry.route || entry.biome)).sort((left, right) => right.date.localeCompare(left.date)).slice(0, 14);
   if (!entries.length) return `<p class="article-data-pending">${escapeHtml(copy.historyEmpty)}</p>`;
-  const rows = entries.map((entry) => `<tr><td><time datetime="${escapeHtml(entry.date)}">${escapeHtml(formatDateLabel(locale, entry.date))}</time></td><td>${escapeHtml(entry.map || entry.route || copy.historyPending)}</td><td>${escapeHtml(entry.biome || copy.historyPending)}</td><td>${entry.source?.url ? `<a href="${escapeHtml(entry.source.url)}" target="_blank" rel="noopener">${escapeHtml(entry.source.label || copy.historySourceVerified)} <span aria-hidden="true">\u2192</span></a>` : escapeHtml(copy.historySourcePending)}</td></tr>`).join('');
+  const mapCopy = todayMapCopy[locale] ?? todayMapCopy.en;
+  const rows = entries.map((entry) => `<tr><td><time datetime="${escapeHtml(entry.date)}">${escapeHtml(formatDateLabel(locale, entry.date))}</time></td><td>${escapeHtml(entry.map || entry.route || copy.historyPending)}</td><td>${escapeHtml(entry.biome || copy.historyPending)}</td><td>${entry.source?.url ? `<a href="${escapeHtml(entry.source.url)}" rel="noopener">${escapeHtml(entry.estimated ? mapCopy.estimated : entry.source.label || copy.historySourceVerified)} <span aria-hidden="true">\u2192</span></a>` : escapeHtml(copy.historySourcePending)}</td></tr>`).join('');
   const [dateHeader, mapHeader, biomeHeader, sourceHeader] = copy.historyHeaders;
   return `<div class="article-table-wrap article-data-table-wrap"><table><caption>${escapeHtml(copy.historyCaption)}</caption><thead><tr><th scope="col">${escapeHtml(dateHeader)}</th><th scope="col">${escapeHtml(mapHeader)}</th><th scope="col">${escapeHtml(biomeHeader)}</th><th scope="col">${escapeHtml(sourceHeader)}</th></tr></thead><tbody>${rows}</tbody></table></div><p class="article-data-note">${renderArticleInline(copy.historyNote, locale)}</p>`;
 }
@@ -1290,7 +1301,7 @@ export function renderArticlePage(locale, slug, options = {}) {
   const sections = article.sections.map((section) => renderNewArticleSection(locale, section, { ...options, buildDate })).join('');
   const faq = article.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary><h3>${renderArticleInline(question, locale, publishedArticles)}</h3></summary><p>${renderArticleInline(answer, locale, publishedArticles)}</p></details>`).join('');
   const sourceLinks = article.source.links.filter(([, url]) => isSafeHttpUrl(url)).map(([label, url]) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
-  const related = article.related.filter(([page]) => page === 'map-rotation' || page === 'achievements' || publishedArticles.includes(page)).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
+  const related = article.related.filter(([page]) => page === 'map-rotation' || page === 'achievements' || page === 'items' || publishedArticles.includes(page)).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
   const pageHtml = `${head(locale, slug, article.meta.title, article.meta.description, article.meta.schema, { ...options, article, dateModified: buildDate })}
   <body class="article-page"><div id="top"></div>${header(locale, slug, copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(article.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(article.h1)}</p><h1 id="article-title">${escapeHtml(article.h1)}</h1><p class="article-hero-lede">${renderArticleInline(article.intro, locale, publishedArticles)}</p></div>${renderArticleImage({ ...article.heroImage, loading: 'eager', fetchpriority: 'high' }, false)}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(article.tocLabel)}"><p class="eyebrow">${escapeHtml(article.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#article-faq">${escapeHtml(article.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(article.answerLabel)}</p><h2 id="answer-title">${escapeHtml(article.answerLabel)}</h2><p>${renderArticleInline(article.answer, locale, publishedArticles)}</p></section>${sections}<section id="article-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(article.faq.eyebrow)}</p><h2>${escapeHtml(article.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(article.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(article.source.title)}</h2><p>${renderArticleInline(article.source.body, locale, publishedArticles)}</p><div class="source-links">${sourceLinks}</div></section><nav class="article-related" aria-label="${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}"><p class="eyebrow">${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}</p>${related}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
   return normalizeSteamNewsLinks(pageHtml);

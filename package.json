@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "python -m http.server 4173 -d .",
+    "predev": "npm run build",
+    "dev": "python -m http.server 4173 --directory dist",
     "build": "node scripts/build.mjs",
     "fetch:today-map": "node scripts/fetch-today-map.mjs",
     "fetch:updates": "node scripts/fetch-updates.mjs",

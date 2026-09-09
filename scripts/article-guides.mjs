@@ -8,6 +8,7 @@ export const articleOrder = [
   'how-to-play-peak',
   'rescue-claw',
   'rope-chain',
+  'room-codes',
 ];
 
 const officialNewsUrl = 'https://store.steampowered.com/news/app/3527290';
@@ -624,7 +625,7 @@ export const articleGuides = {
       body: 'The named roster and dated route claims use this site\'s maintained PEAK Map Today data, with game-facing route labels as the current reference. The official PEAK Steam page and Steam news feed add update context. Check current UI wording, Ascent effects, hazards, and the active route in-game.',
       links: [
         ['Official PEAK Steam page', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['PEAK Map Today source', 'https://peak.skydler.me/'],
+        ['PEAK Wiki timer source', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Official Steam news feed', officialNewsUrl],
       ],
     },
@@ -785,7 +786,7 @@ export const articleGuides = {
       body: 'Platform and group-size facts come from the official PEAK Steam page. Daily route context is build-time map data. Verify item, cold, Scout revive, rope, and chain behavior in the current game after updates.',
       links: [
         ['Official PEAK Steam page', 'https://store.steampowered.com/app/3527290/PEAK/'],
-        ['PEAK Map Today source', 'https://peak.skydler.me/'],
+        ['PEAK Wiki timer source', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
         ['Official Steam news feed', officialNewsUrl],
       ],
     },
@@ -896,7 +897,7 @@ export const articleGuides = {
       links: [
         ['Official PEAK Steam page', 'https://store.steampowered.com/app/3527290/PEAK/'],
         ['Official Steam news feed', officialNewsUrl],
-        ['PEAK Map Today source', 'https://peak.skydler.me/'],
+        ['PEAK Wiki timer source', 'https://peak.wiki.gg/wiki/MediaWiki:Common.js'],
       ],
     },
     related: [
@@ -1217,6 +1218,207 @@ export const articleGuides = {
       ['peak-game-tips', 'Prepare with practical tips'],
       ['how-to-play-peak', 'Review the climb basics'],
       ['peak-biomes-list', 'Browse the biomes list'],
+    ],
+    relatedLabel: 'Related PEAK guides',
+  },
+
+  'room-codes': {
+    slug: 'room-codes',
+    lang: 'en',
+    category: 'guides',
+    meta: {
+      title: 'PEAK Multiplayer & Room Codes Guide: Co-op, Crossplay & Join Codes',
+      description: 'Learn how PEAK room codes work, how to join friends through Steam or JOIN GAME, how many players can climb together, and what crossplay status means today.',
+      schema: 'A source-aware PEAK multiplayer and room codes guide covering co-op invites, JOIN GAME, player count, crossplay plans, matchmaking, and lobby privacy.',
+    },
+    published: '2026-09-09',
+    primaryKeyword: 'PEAK room codes',
+    eyebrow: 'Multiplayer field guide - co-op and join codes',
+    h1: 'PEAK Multiplayer & Room Codes Guide: Co-op, Crossplay & Join Codes',
+    intro: 'PEAK multiplayer supports Steam friend invites and room codes for joining a lobby. This guide explains where to copy a code, where a friend enters it, how the four-player limit works, and how to read the current crossplay status without confusing a future console plan with a feature that is already live.',
+    answerLabel: 'The short answer',
+    answer: 'PEAK has room codes. In a lobby, open the pause menu to copy the code; the joining player enters it through JOIN GAME on the main menu. Steam invites still work, and the official store page supports a host plus up to three other scouts. The current playable version is on Steam/PC, while Landfall describes console support and cross-platform play as work in progress. There is no random matchmaking, and solo offline play is available.',
+    tocLabel: 'On this page',
+    tocFaq: 'Multiplayer FAQ',
+    heroImage: {
+      src: '/media/peak-coop-climb.webp',
+      alt: 'PEAK teammates coordinating an online co-op climb on a steep island route',
+      caption: 'Official Steam screenshot - co-op progress depends on a shared route and a clear way to join the lobby.',
+      width: 1200,
+      height: 675,
+    },
+    sections: [
+      {
+        id: 'room-codes',
+        title: 'How PEAK room codes work',
+        paragraphs: [
+          'Patch 2.04.a added room codes to PEAK. The official announcement says that a player in a lobby should see a room code in the pause menu, where it can be copied and sent to friends. A separate option can hide the code for streamers who do not want it visible on screen.',
+          'The sharing flow has two roles. The host opens the pause menu, copies the code, and sends it through the player’s usual private channel. The joining player opens the main menu, chooses JOIN GAME, and enters that code. Keep the code private when the lobby is meant for a specific group.',
+          'The same announcement describes room codes as preparation for cross-platform play once the console ports are out. That makes the code a direct way to identify and join a lobby; it is not a public queue that automatically finds strangers. Existing Steam invite methods continue to work as well.',
+        ],
+        bullets: [
+          ['Host', 'Open the lobby pause menu, copy the room code, and share it with the intended players.'],
+          ['Joining player', 'Use JOIN GAME on the main menu and enter the code you received.'],
+          ['Privacy', 'Use the in-game option to hide the room code when streaming or sharing a lobby publicly.'],
+        ],
+      },
+      {
+        id: 'join-co-op',
+        title: 'How to join a PEAK co-op game',
+        paragraphs: [
+          'The official Steam description presents PEAK as friends-only multiplayer: a player can invite up to three other scouts through Steam, or play alone. The 2.04.a announcement adds room codes without removing the existing invitation flow, so choose the route that matches how your group is coordinating.',
+          'If a friend sends a Steam invite, accept it through Steam and follow the current game prompt. If the group is sharing a code, use JOIN GAME from the main menu. The exact menu layout can change with updates, so treat the labels visible in your current build as the final interface reference rather than relying on an old screenshot.',
+          'A room code is most useful when the host and joining player are already coordinating directly. It does not replace the need to agree on who is hosting, which lobby the group is using, or whether the next climb should follow the current [[link:map-rotation#today-map|daily map route]]. For the basic climb loop, review [[link:how-to-play-peak|how to play PEAK]].',
+        ],
+        image: {
+          src: '/media/peak-climb-ridge.webp',
+          alt: 'PEAK climbers moving together along a narrow ridge during a co-op route',
+          caption: 'Editorial route context - joining the lobby is only the first step; the team still needs a shared climb plan.',
+          width: 1200,
+          height: 675,
+        },
+        bullets: [
+          ['Choose one host', 'Decide which lobby the group is joining before sending invites or a code.'],
+          ['Use the current labels', 'Room-code and invitation menus can change; follow the interface in the running build.'],
+          ['Plan the route', 'After joining, confirm the team’s route and next objective before leaving camp.'],
+        ],
+      },
+      {
+        id: 'player-count',
+        title: 'How many players can play PEAK together?',
+        paragraphs: [
+          'The official Steam description says multiplayer is friends-only and allows an invitation to up to three other scouts. In practical terms, that means one host plus three other players, for a four-player co-op group. A smaller group is fine; the game can also be played solo.',
+          'Landfall’s FAQ confirms that single-player is available offline. You do not need to fill every place before starting a climb, and a solo run should not be described as an incomplete multiplayer lobby. The player-count answer is separate from the question of which platforms can connect.',
+          'For a group run, agree on a host and a communication channel before the first invite. The team can then use a Steam invitation or a room code depending on what the host shares. Once everyone is in, keep the route discussion focused on the next safe decision rather than treating the lobby size as a strategy by itself.',
+        ],
+        bullets: [
+          ['Four-player maximum', 'One host plus up to three other scouts is the clear limit in the official store wording.'],
+          ['Smaller groups work', 'You can start with fewer players instead of waiting for a full lobby.'],
+          ['Solo is supported', 'Landfall’s FAQ says single-player can be played offline.'],
+        ],
+      },
+      {
+        id: 'crossplay-status',
+        title: 'PEAK crossplay: current status and future plan',
+        paragraphs: [
+          'Do not collapse two different answers into one. The currently documented playable version for this guide is the Steam/PC version. Landfall’s official FAQ says the team is working on bringing PEAK to consoles and that PEAK is going to be cross-platform, with more news promised later in the year.',
+          'Patch 2.04.a explains why room codes were added: the announcement describes them as the way players will be able to play cross-platform once the console ports are out. That is a future-facing purpose, not proof that a mixed PC-and-console session is already available today.',
+          'The safe planning rule is simple: organize a current PC session through Steam friends or the room-code flow, then recheck the official game and platform announcements before promising a cross-platform lobby. Do not label the game permanently “not cross-platform,” and do not advertise crossplay as already live without a current official release notice.',
+        ],
+        image: {
+          src: '/media/peak-map-route.webp',
+          alt: 'PEAK route view showing a team preparing for the next section of a changing map',
+          caption: 'Editorial route context - platform status and the active map are separate checks before a group starts climbing.',
+          width: 1200,
+          height: 675,
+        },
+        bullets: [
+          ['Current session', 'Treat Steam/PC as the currently documented playable platform for this guide.'],
+          ['Official plan', 'Console support and cross-platform play are described as work in progress.'],
+          ['Do not overpromise', 'Recheck official announcements before arranging a mixed-platform game.'],
+        ],
+      },
+      {
+        id: 'matchmaking-and-teammates',
+        title: 'Matchmaking, Steam friends, and finding teammates',
+        paragraphs: [
+          'A room code is not the same thing as matchmaking. Landfall’s FAQ says PEAK has no matchmaking and is Steam-friends only. A code identifies a lobby that someone is already hosting; it does not create a public queue or choose a team for you.',
+          'Use Steam friends when you already know who is climbing. When you need teammates, the official FAQ points players to the developer’s Discord as a community place to find people. Treat that Discord as a way to meet other players, not as an in-game matchmaking feature or a promise that a group will be available at every moment.',
+          'After a group forms, choose one host, decide whether the code or an invite is the shared entry point, and state the route goal before the run. The [[link:items|PEAK item catalog]] can help the team name equipment consistently, while the [[link:achievements|achievement guide]] is useful when a run has a platform-progress goal as well as a summit goal.',
+        ],
+        bullets: [
+          ['Known group', 'Use Steam friends and the host’s invitation or room code.'],
+          ['Need teammates', 'Use the official Discord as a community contact point, not as random matchmaking.'],
+          ['Before launch', 'Agree on the host, entry method, route, and communication channel.'],
+        ],
+      },
+      {
+        id: 'lobby-privacy',
+        title: 'How to stop random players joining your lobby',
+        paragraphs: [
+          'Landfall’s FAQ includes a specific answer for the case where a random player joins a lobby without an invitation. The official steps are to set Lobby Mode to Invite Only, set the Steam profile to Private, and then create the lobby again after changing those settings.',
+          'If someone is already inside the lobby, the host can kick that player. The FAQ also says that a kicked player cannot rejoin that host’s game. This is a lobby-privacy measure, not a matchmaking setting, so it should be handled before sharing a room code outside the intended group.',
+          'For a private climb, check the lobby mode first, keep the Steam profile setting in mind, and share the code only with the players who should enter. If the code has appeared in a public stream or post, hide it in the game and make a fresh lobby rather than assuming the old code is private again.',
+        ],
+        image: {
+          src: '/media/peak-coop-climb.webp',
+          alt: 'PEAK co-op teammates gathered on a shared route before continuing the climb',
+          caption: 'Official Steam screenshot - a predictable lobby makes team communication easier before the climb begins.',
+          width: 1200,
+          height: 675,
+        },
+        bullets: [
+          ['Set Invite Only', 'Change Lobby Mode before creating the private lobby.'],
+          ['Review Steam privacy', 'Set the Steam profile to Private when following the official FAQ’s prevention steps.'],
+          ['Re-host', 'Create the lobby again after changing the settings.'],
+          ['Remove an intruder', 'The host can kick a random player, who cannot rejoin that host’s game.'],
+        ],
+      },
+      {
+        id: 'connection-troubleshooting',
+        title: 'Official connection troubleshooting',
+        paragraphs: [
+          'When an invite or room-code join fails, use the current Landfall FAQ as the source-backed troubleshooting list. It covers the types of checks the developers want players to try, including Steam maintenance, verifying the game files, firewall or antivirus exclusions, VPN-related checks, cFosSpeed, and mod or installation issues.',
+          'These checks are not a claim that every failure has one universal cause. Work through the relevant item in the official FAQ, then try the invitation or JOIN GAME flow again. If the issue remains unclear, use the official PEAK Discord or Steam community as the next place to report the exact platform, lobby method, and visible error rather than inventing a PEAK-specific fix.',
+          'A useful report includes whether the host used a Steam invite or a room code, whether the joining player reached JOIN GAME, whether the lobby was Invite Only, and what the current game displayed. That context separates a private-lobby problem from a connection or platform-status question without promising a workaround the official source does not document.',
+        ],
+        bullets: [
+          ['Start with the official FAQ', 'Use its current connection and Photon troubleshooting section.'],
+          ['Record the entry method', 'Note whether the session used a Steam invite or JOIN GAME with a code.'],
+          ['Report the visible state', 'Include the platform, lobby settings, and exact message when asking the community.'],
+        ],
+      },
+      {
+        id: 'co-op-checklist',
+        title: 'A simple PEAK co-op checklist',
+        paragraphs: [
+          'Before the host starts, decide who is hosting and whether the group will enter through a Steam invitation or a room code. If you are using a code, copy it from the pause menu and share it privately. If the lobby should stay closed, set Invite Only and review the Steam privacy setting before re-hosting.',
+          'After everyone joins, confirm the current route with [[link:map-rotation#today-map|today’s PEAK map]], then make one short plan for the first climb. Use the [[link:items|item catalog]] to settle names for route tools, food, and recovery supplies. If the run also targets a platform achievement, check the [[link:achievements|achievement guide]] before committing to a special objective.',
+          'Keep the join process and the climb process separate. A successful code entry only proves that the player reached the lobby. It does not prove the route is safe, the platform plan is current, or that the team has agreed on who scouts, who carries recovery, and when to stop pushing upward.',
+        ],
+        bullets: [
+          ['1. Choose the host', 'Name one lobby and one communication channel.'],
+          ['2. Choose the entry method', 'Use a Steam invite or share the room code privately.'],
+          ['3. Protect the lobby', 'Use Invite Only and the official Steam privacy steps when needed.'],
+          ['4. Plan the climb', 'Check the daily route, name the equipment, and agree on the first safe objective.'],
+        ],
+      },
+      {
+        id: 'next-steps',
+        title: 'Next steps for a better co-op run',
+        paragraphs: [
+          'Once the group can join reliably, the useful work moves to the route. Read [[link:how-to-play-peak|how to play PEAK]] for the basic climb loop, check [[link:map-rotation#today-map|today’s map]] before leaving camp, and use the [[link:items|item catalog]] when the team needs a shared name for equipment. For platform progress, continue to the [[link:achievements|achievement guide]].',
+        ],
+      },
+    ],
+    faq: {
+      eyebrow: 'Quick answers',
+      title: 'PEAK Multiplayer and Room Codes FAQ',
+      items: [
+        ['Does PEAK have room codes?', 'Yes. Patch 2.04.a added room codes. The host copies the code from the lobby pause menu, and the joining player enters it through JOIN GAME on the main menu.'],
+        ['How do PEAK room codes work?', 'The host shares the lobby code with the intended players. They enter it through JOIN GAME. Room codes identify a lobby; they are not a random matchmaking queue.'],
+        ['Does PEAK support crossplay?', 'The currently documented playable version is on Steam/PC. Landfall says console support is in progress and PEAK is going to be cross-platform, so treat crossplay as a planned feature rather than an already-live mixed-platform session.'],
+        ['How many players can play PEAK together?', 'The official store description supports a host plus up to three other scouts, for four players in a co-op group. Solo offline play is also available.'],
+        ['Does PEAK have matchmaking?', 'No. Landfall’s FAQ describes PEAK as Steam-friends only with no matchmaking. Use Steam friends, room-code sharing, or the official Discord to find teammates.'],
+        ['How do I stop random players joining my PEAK lobby?', 'Set Lobby Mode to Invite Only, set your Steam profile to Private, and create the lobby again. The host can kick a player, and the official FAQ says a kicked player cannot rejoin that host’s game.'],
+      ],
+    },
+    source: {
+      eyebrow: 'Official sources and current-status limits',
+      title: 'What this multiplayer guide can confirm',
+      body: 'Room-code behavior, the JOIN GAME entry point, the future cross-platform purpose, and continued Steam invitation support come from the official Patch 2.04.a announcement. Player-count and online/offline play details come from the official PEAK Steam page. Landfall’s FAQ supplies the current matchmaking, platform-plan, Discord, lobby-privacy, and connection-troubleshooting guidance. Platform availability and interface labels can change, so confirm the current official pages before organizing a mixed-platform session.',
+      links: [
+        ['Official PEAK Steam page', 'https://store.steampowered.com/app/3527290/PEAK/'],
+        ['Patch 2.04.a: THE KILN IS BACK', 'https://store.steampowered.com/news/app/3527290/view/716788653799506284'],
+        ['Landfall official PEAK FAQ', 'https://landfall.se/peak-faq'],
+        ['Official PEAK Discord', 'https://discord.gg/peakgame'],
+      ],
+    },
+    related: [
+      ['items', 'Browse the PEAK item catalog'],
+      ['how-to-play-peak', 'Review how to play PEAK'],
+      ['map-rotation', "Check today's PEAK map"],
+      ['achievements', 'Plan achievement goals'],
     ],
     relatedLabel: 'Related PEAK guides',
   },

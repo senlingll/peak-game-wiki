@@ -4,3 +4,4 @@ output/seo/
 node_modules/
 .wrangler/
 .playwright-cli/
+logs/*.log

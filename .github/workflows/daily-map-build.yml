@@ -28,7 +28,7 @@ jobs:
       - name: Freeze site date in the configured timezone
         run: echo "BUILD_DATE=$(TZ="$SITE_TIMEZONE" date +%F)" >> "$GITHUB_ENV"
 
-      - name: Fetch today's verified map
+      - name: Compute today's estimated map
         run: npm run fetch:today-map
 
       - name: Fetch official PEAK update entries
