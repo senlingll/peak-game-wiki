@@ -1,5 +1,22 @@
 [
   {
+    "date": "2026-09-10",
+    "map": "Shore → Roots → Alpine → Gloom → Citadel",
+    "route": "Daily biome sequence",
+    "biome": "Shore, Roots, Alpine, Gloom, Citadel",
+    "resetAt": "2026-09-10T17:00:00.000Z",
+    "currentResetAt": "2026-09-09T17:00:00.000Z",
+    "estimated": true,
+    "source": {
+      "label": "PEAK Wiki timer",
+      "url": "https://peak.wiki.gg/wiki/MediaWiki:Common.js"
+    },
+    "license": {
+      "label": "CC BY-SA 4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    }
+  },
+  {
     "date": "2026-09-09",
     "map": "Shore → Tropics → Mesa → Caldera → The Kiln",
     "route": "Daily biome sequence",
