@@ -608,7 +608,7 @@ function renderTodayMap(locale, data, buildDate, buildTimestamp) {
   const biomeValue = snapshot.biome || copy.pending;
   const countdown = formatCountdown(locale, snapshot.resetAt, buildTimestamp);
   const sourceMarkup = snapshot.source
-    ? `<p>${escapeHtml(copy.attributionPrefix)}<a href="${escapeHtml(snapshot.source.url)}" rel="noopener">${escapeHtml(copy.wikiSourceLabel || snapshot.source.label || copy.source)}</a>${escapeHtml(copy.attributionBetween)}<a href="${escapeHtml(snapshot.license?.url || CC_BY_SA_URL)}" rel="license noopener">${escapeHtml(copy.licenseLabel)}</a>${escapeHtml(copy.attributionSuffix)}</p><p class="today-map-estimate-note">${escapeHtml(copy.estimateNote)}</p>`
+    ? `<p>${escapeHtml(copy.attributionPrefix)}${escapeHtml(copy.wikiSourceLabel || snapshot.source.label || copy.source)}${escapeHtml(copy.attributionBetween)}${escapeHtml(copy.licenseLabel)}${escapeHtml(copy.attributionSuffix)}</p><p class="today-map-estimate-note">${escapeHtml(copy.estimateNote)}</p>`
     : `<span>${escapeHtml(copy.pending)}</span>`;
   const status = snapshot.estimated ? copy.estimated : snapshot.available ? copy.verified : copy.pending;
   const panel = snapshot.available
@@ -954,15 +954,15 @@ const contactPageCopy = {
 };
 
 const itemIconCreditCopy = {
-  en: { beforeSource: 'Item icons from ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', licensed under ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
-  zh: { beforeSource: '物品图标来源 ', sourceLabel: 'PEAK Wiki（wiki.gg）', beforeLicense: '，采用 ', licenseLabel: 'CC BY-SA 4.0', afterLicense: ' 许可。' },
-  es: { beforeSource: 'Iconos de objetos de ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', con licencia ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
-  ja: { beforeSource: 'アイテムアイコンは ', sourceLabel: 'PEAK Wiki（wiki.gg）', beforeLicense: 'より、', licenseLabel: 'CC BY-SA 4.0', afterLicense: ' ライセンスです。' },
-  fr: { beforeSource: 'Icônes des objets provenant de ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', sous licence ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
-  de: { beforeSource: 'Gegenstandssymbole aus dem ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', lizenziert unter ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
-  pt: { beforeSource: 'Ícones dos itens provenientes da ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', licenciados sob ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
-  ko: { beforeSource: '아이템 아이콘 출처: ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', ', licenseLabel: 'CC BY-SA 4.0', afterLicense: ' 라이선스.' },
-  it: { beforeSource: 'Icone degli oggetti da ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', con licenza ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
+  en: { beforeSource: 'Item & map imagery from ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
+  zh: { beforeSource: '物品与地图图片来源：', sourceLabel: 'PEAK Wiki（wiki.gg）', beforeLicense: '，采用 ', licenseLabel: 'CC BY-SA 4.0', afterLicense: ' 许可。' },
+  es: { beforeSource: 'Imágenes de objetos y mapas de ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', con licencia ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
+  ja: { beforeSource: 'アイテムとマップの画像は ', sourceLabel: 'PEAK Wiki（wiki.gg）', beforeLicense: 'より、', licenseLabel: 'CC BY-SA 4.0', afterLicense: ' ライセンスです。' },
+  fr: { beforeSource: 'Images des objets et des cartes provenant de ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', sous licence ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
+  de: { beforeSource: 'Item- und Kartenbilder aus dem ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', lizenziert unter ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
+  pt: { beforeSource: 'Imagens de itens e mapas provenientes da ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', licenciadas sob ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
+  ko: { beforeSource: '아이템 및 맵 이미지 출처: ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', ', licenseLabel: 'CC BY-SA 4.0', afterLicense: ' 라이선스.' },
+  it: { beforeSource: 'Immagini di oggetti e mappe da ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', con licenza ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
 };
 
 for (const code of localeOrder) {
