@@ -749,7 +749,7 @@ img {
   margin-top: 18px;
 }
 
-.update-row-collapsed,
+.update-list .update-row-collapsed,
 .item-card-collapsed {
   display: none;
 }
