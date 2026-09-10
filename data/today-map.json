@@ -1,12 +1,12 @@
 {
-  "date": "2026-09-10",
-  "map": "Shore → Roots → Alpine → Gloom → Citadel",
+  "date": "2026-09-11",
+  "map": "Shore → Tropics → Alpine → Caldera → The Kiln",
   "route": "Daily biome sequence",
-  "biome": "Shore, Roots, Alpine, Gloom, Citadel",
-  "resetAt": "2026-09-10T17:00:00.000Z",
-  "currentResetAt": "2026-09-09T17:00:00.000Z",
-  "updatedAt": "2026-09-09T19:44:59.223Z",
-  "sourceFetchedAt": "2026-09-09T19:44:59.223Z",
+  "biome": "Shore, Tropics, Alpine, Caldera, The Kiln",
+  "resetAt": "2026-09-11T17:00:00.000Z",
+  "currentResetAt": "2026-09-10T17:00:00.000Z",
+  "updatedAt": "2026-09-10T19:39:42.795Z",
+  "sourceFetchedAt": "2026-09-10T19:39:42.795Z",
   "estimated": true,
   "source": {
     "label": "PEAK Wiki timer",
@@ -26,10 +26,10 @@
     },
     {
       "type": "image",
-      "biome": "Roots",
-      "alt": "Roots map from today's estimated rotation",
+      "biome": "Tropics",
+      "alt": "Tropics map from today's estimated rotation",
       "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
-      "url": "/media/peak-map-roots.webp"
+      "url": "/media/peak-map-tropics.webp"
     },
     {
       "type": "image",
@@ -40,17 +40,17 @@
     },
     {
       "type": "image",
-      "biome": "Gloom",
-      "alt": "Gloom map from today's estimated rotation",
+      "biome": "Caldera",
+      "alt": "Caldera map from today's estimated rotation",
       "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
-      "url": "/media/peak-map-gloom.webp"
+      "url": "/media/peak-map-caldera.webp"
     },
     {
       "type": "image",
-      "biome": "Citadel",
-      "alt": "Citadel map from today's estimated rotation",
+      "biome": "The Kiln",
+      "alt": "The Kiln map from today's estimated rotation",
       "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
-      "url": "/media/peak-map-citadel.webp"
+      "url": "/media/peak-map-kiln.webp"
     }
   ]
 }
