@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderContact, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
+import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderBadgesGuide, renderContact, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
 import { articleOrder } from './article-guides.mjs';
 import { buildTodayMapSnapshot } from './today-map-rotation.mjs';
 
@@ -83,6 +83,9 @@ await writeFile(resolve(contactRoot, 'index.html'), renderContact('en', renderOp
 await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(buildDate, publishedArticleOrder), 'utf8');
 await writeFile(resolve(outputRoot, 'map-rotation.html'), renderMapGuidePage('en'), 'utf8');
 await writeFile(resolve(outputRoot, 'achievements.html'), renderAchievementGuide('en', renderOptions), 'utf8');
+const badgesGuideRoot = resolve(outputRoot, 'badges-guide');
+await mkdir(badgesGuideRoot, { recursive: true });
+await writeFile(resolve(badgesGuideRoot, 'index.html'), renderBadgesGuide('en', renderOptions), 'utf8');
 const itemsRoot = resolve(outputRoot, 'items');
 await mkdir(itemsRoot, { recursive: true });
 await writeFile(resolve(itemsRoot, 'index.html'), renderItemsPage('en', renderOptions), 'utf8');
@@ -114,6 +117,9 @@ for (const locale of localeOrder.filter((code) => code !== 'en')) {
   const achievementRoot = resolve(localeRoot, 'achievements');
   await mkdir(achievementRoot, { recursive: true });
   await writeFile(resolve(achievementRoot, 'index.html'), renderAchievementGuide(locale, renderOptions), 'utf8');
+  const badgesGuideLocaleRoot = resolve(localeRoot, 'badges-guide');
+  await mkdir(badgesGuideLocaleRoot, { recursive: true });
+  await writeFile(resolve(badgesGuideLocaleRoot, 'index.html'), renderBadgesGuide(locale, renderOptions), 'utf8');
   const itemsLocaleRoot = resolve(localeRoot, 'items');
   await mkdir(itemsLocaleRoot, { recursive: true });
   await writeFile(resolve(itemsLocaleRoot, 'index.html'), renderItemsPage(locale, renderOptions), 'utf8');

@@ -1878,6 +1878,151 @@ img {
   margin: 28px 0 30px;
 }
 
+.article-crosslink {
+  margin: 24px 0 0;
+  padding: 16px 18px;
+  color: var(--ink-soft);
+  background: #f1eee7;
+  border-left: 3px solid var(--gold);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.article-crosslink a {
+  color: var(--coral-dark);
+  font-weight: 850;
+}
+
+.badge-guide-list-note {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  margin: 42px 0 0 !important;
+  padding: 16px 18px;
+  color: var(--ink-soft) !important;
+  background: #f1eee7;
+  border-left: 3px solid var(--gold);
+  font-size: 13px !important;
+  line-height: 1.7 !important;
+}
+
+.badge-guide-list-note .note-mark {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.badge-guide-mechanics {
+  margin-top: 58px;
+}
+
+.badge-guide-group {
+  margin-top: 70px;
+}
+
+.badge-guide-group .article-image {
+  margin-top: 25px;
+}
+
+.badge-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 27px;
+}
+
+.badge-guide-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 19px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--lavender);
+  border-radius: 8px;
+}
+
+.badge-guide-card.is-spoiler {
+  border-top-color: var(--coral);
+}
+
+.badge-guide-card h3 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+  margin: 0;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.badge-guide-spoiler {
+  padding: 3px 6px;
+  color: var(--coral-dark);
+  border: 1px solid rgba(169, 75, 61, 0.32);
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.badge-guide-card dl {
+  display: grid;
+  gap: 12px;
+  margin: 19px 0 0;
+}
+
+.badge-guide-card dl div {
+  padding-top: 11px;
+  border-top: 1px solid var(--line);
+}
+
+.badge-guide-card dt,
+.badge-guide-patch span,
+.badge-guide-source span {
+  color: var(--ink-soft);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.badge-guide-card dd {
+  margin: 5px 0 0;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.badge-guide-patch {
+  margin: 17px 0 0 !important;
+  padding: 11px 12px;
+  color: var(--ink-soft) !important;
+  background: #f1eee7;
+  border-left: 2px solid var(--gold);
+  font-size: 11px !important;
+  line-height: 1.6 !important;
+}
+
+.badge-guide-patch span,
+.badge-guide-source span {
+  margin-right: 4px;
+}
+
+.badge-guide-source {
+  margin: auto 0 0 !important;
+  padding-top: 17px;
+  color: var(--ink-soft) !important;
+  border-top: 1px dashed var(--line);
+  font-size: 10px !important;
+  line-height: 1.6 !important;
+}
+
 .article-table-wrap {
   margin-top: 27px;
   overflow-x: auto;
@@ -2944,6 +3089,14 @@ img {
 
   .items-category {
     margin-top: 52px;
+  }
+
+  .badge-guide-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .badge-guide-card {
+    padding: 17px;
   }
 }
 
