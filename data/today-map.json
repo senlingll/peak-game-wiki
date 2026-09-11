@@ -1,12 +1,12 @@
 {
-  "date": "2026-09-11",
-  "map": "Shore → Tropics → Alpine → Caldera → The Kiln",
+  "date": "2026-09-12",
+  "map": "Shore → Roots → Mesa → Gloom → Citadel",
   "route": "Daily biome sequence",
-  "biome": "Shore, Tropics, Alpine, Caldera, The Kiln",
-  "resetAt": "2026-09-11T17:00:00.000Z",
-  "currentResetAt": "2026-09-10T17:00:00.000Z",
-  "updatedAt": "2026-09-10T19:39:42.795Z",
-  "sourceFetchedAt": "2026-09-10T19:39:42.795Z",
+  "biome": "Shore, Roots, Mesa, Gloom, Citadel",
+  "resetAt": "2026-09-12T17:00:00.000Z",
+  "currentResetAt": "2026-09-11T17:00:00.000Z",
+  "updatedAt": "2026-09-11T19:39:58.104Z",
+  "sourceFetchedAt": "2026-09-11T19:39:58.104Z",
   "estimated": true,
   "source": {
     "label": "PEAK Wiki timer",
@@ -26,31 +26,31 @@
     },
     {
       "type": "image",
-      "biome": "Tropics",
-      "alt": "Tropics map from today's estimated rotation",
+      "biome": "Roots",
+      "alt": "Roots map from today's estimated rotation",
       "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
-      "url": "/media/peak-map-tropics.webp"
+      "url": "/media/peak-map-roots.webp"
     },
     {
       "type": "image",
-      "biome": "Alpine",
-      "alt": "Alpine map from today's estimated rotation",
+      "biome": "Mesa",
+      "alt": "Mesa map from today's estimated rotation",
       "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
-      "url": "/media/peak-map-alpine.webp"
+      "url": "/media/peak-map-mesa.webp"
     },
     {
       "type": "image",
-      "biome": "Caldera",
-      "alt": "Caldera map from today's estimated rotation",
+      "biome": "Gloom",
+      "alt": "Gloom map from today's estimated rotation",
       "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
-      "url": "/media/peak-map-caldera.webp"
+      "url": "/media/peak-map-gloom.webp"
     },
     {
       "type": "image",
-      "biome": "The Kiln",
-      "alt": "The Kiln map from today's estimated rotation",
+      "biome": "Citadel",
+      "alt": "Citadel map from today's estimated rotation",
       "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
-      "url": "/media/peak-map-kiln.webp"
+      "url": "/media/peak-map-citadel.webp"
     }
   ]
 }
