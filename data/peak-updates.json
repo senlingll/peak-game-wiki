@@ -5,6 +5,13 @@
   },
   "entries": [
     {
+      "date": "2026-09-14",
+      "title": "Patch 2.4.C: Bookworm badge fix, lag fix and more",
+      "summary": "Official patch or fix post titled Patch 2.4.C: Bookworm badge fix, lag fix and more; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1843481262702769",
+      "kind": "PATCH"
+    },
+    {
       "date": "2026-09-02",
       "title": "HOTFIX 2.4.b",
       "summary": "Official patch or fix post titled HOTFIX 2.4.b; open the source for the exact changes.",
@@ -121,13 +128,6 @@
       "title": "SMALL patch 1.62.a",
       "summary": "Official patch or fix post titled SMALL patch 1.62.a; open the source for the exact changes.",
       "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832065502824993",
-      "kind": "PATCH"
-    },
-    {
-      "date": "2026-04-22",
-      "title": "Patch Notes 1.61.b",
-      "summary": "Official patch or fix post titled Patch Notes 1.61.b; open the source for the exact changes.",
-      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830797770231254",
       "kind": "PATCH"
     }
   ]
