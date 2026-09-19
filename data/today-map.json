@@ -1,12 +1,12 @@
 {
-  "date": "2026-09-19",
-  "map": "Shore → Roots → Alpine → Caldera → The Kiln",
+  "date": "2026-09-20",
+  "map": "Shore → Roots → Mesa → Caldera → The Kiln",
   "route": "Daily biome sequence",
-  "biome": "Shore, Roots, Alpine, Caldera, The Kiln",
-  "resetAt": "2026-09-19T17:00:00.000Z",
-  "currentResetAt": "2026-09-18T17:00:00.000Z",
-  "updatedAt": "2026-09-18T19:34:22.416Z",
-  "sourceFetchedAt": "2026-09-18T19:34:22.416Z",
+  "biome": "Shore, Roots, Mesa, Caldera, The Kiln",
+  "resetAt": "2026-09-20T17:00:00.000Z",
+  "currentResetAt": "2026-09-19T17:00:00.000Z",
+  "updatedAt": "2026-09-19T19:18:14.196Z",
+  "sourceFetchedAt": "2026-09-19T19:18:14.196Z",
   "estimated": true,
   "source": {
     "label": "PEAK Wiki timer",
@@ -33,10 +33,10 @@
     },
     {
       "type": "image",
-      "biome": "Alpine",
-      "alt": "Alpine map from today's estimated rotation",
+      "biome": "Mesa",
+      "alt": "Mesa map from today's estimated rotation",
       "caption": "PEAK Wiki (wiki.gg), CC BY-SA 4.0.",
-      "url": "/media/peak-map-alpine.webp"
+      "url": "/media/peak-map-mesa.webp"
     },
     {
       "type": "image",
