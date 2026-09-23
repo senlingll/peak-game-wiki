@@ -249,7 +249,21 @@ const moreTranslated = {
   },
 };
 
-for (const [code, data] of Object.entries({ ...translated, ...moreTranslated })) locales[code] = makeTranslatedLocale(data);
+const faqNavigationLabels = {
+  es: 'Preguntas frecuentes',
+  ja: '\u3088\u304f\u3042\u308b\u8cea\u554f',
+  fr: 'Questions fréquentes',
+  de: 'Häufige Fragen',
+  pt: 'Perguntas frequentes',
+  ko: '자주 묻는 질문',
+  it: 'Domande frequenti',
+};
+
+for (const [code, data] of Object.entries({ ...translated, ...moreTranslated })) {
+  locales[code] = makeTranslatedLocale(data);
+  locales[code].ui.faq = faqNavigationLabels[code] ?? locales[code].ui.faq;
+}
+locales.zh.ui.faq = '\u5e38\u89c1\u95ee\u9898';
 
 // Official sources for the ten expansion entries:
 // Anti-Rope Spool and Fortified Milk: https://store.steampowered.com/news/app/3527290/view/676254354515165309
@@ -965,6 +979,7 @@ const itemIconCreditCopy = {
   ko: { beforeSource: '아이템 및 맵 이미지 출처: ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', ', licenseLabel: 'CC BY-SA 4.0', afterLicense: ' 라이선스.' },
   it: { beforeSource: 'Immagini di oggetti e mappe da ', sourceLabel: 'PEAK Wiki (wiki.gg)', beforeLicense: ', con licenza ', licenseLabel: 'CC BY-SA 4.0', afterLicense: '.' },
 };
+itemIconCreditCopy.ko.sourceLabel = 'PEAK 위키 (wiki.gg)';
 
 for (const code of localeOrder) {
   if (!contactPageCopy[code]) throw new Error(`Missing contact copy: ${code}`);
@@ -1359,7 +1374,7 @@ export function renderArticlePage(locale, slug, options = {}) {
   const toc = article.sections.map((section, index) => `<li><a href="#${escapeHtml(section.id)}">${index + 1}. ${escapeHtml(section.title)}</a></li>`).join('');
   const sections = article.sections.map((section) => renderNewArticleSection(locale, section, { ...options, buildDate })).join('');
   const faq = article.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary><h3>${renderArticleInline(question, locale, publishedArticles)}</h3></summary><p>${renderArticleInline(answer, locale, publishedArticles)}</p></details>`).join('');
-  const sourceLinks = article.source.links.filter(([, url]) => isSafeHttpUrl(url)).map(([label, url]) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
+  const sourceLinks = article.source.links.filter(([, url]) => isSafeHttpUrl(url)).map(([label, url]) => `<a href="${escapeHtml(url)}" target="_blank" rel="${url.includes('steamcommunity.com/') ? 'nofollow noopener' : 'noopener'}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
   const related = article.related.filter(([page]) => page === 'map-rotation' || page === 'achievements' || page === 'items' || page === 'badges-guide' || publishedArticles.includes(page)).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
   const pageHtml = `${head(locale, slug, article.meta.title, article.meta.description, article.meta.schema, { ...options, article, dateModified: buildDate })}
   <body class="article-page"><div id="top"></div>${header(locale, slug, copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(article.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(article.h1)}</p><h1 id="article-title">${escapeHtml(article.h1)}</h1><p class="article-hero-lede">${renderArticleInline(article.intro, locale, publishedArticles)}</p></div>${renderArticleImage({ ...article.heroImage, loading: 'eager', fetchpriority: 'high' }, false)}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(article.tocLabel)}"><p class="eyebrow">${escapeHtml(article.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#article-faq">${escapeHtml(article.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(article.answerLabel)}</p><h2 id="answer-title">${escapeHtml(article.answerLabel)}</h2><p>${renderArticleInline(article.answer, locale, publishedArticles)}</p></section>${sections}<section id="article-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(article.faq.eyebrow)}</p><h2>${escapeHtml(article.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(article.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(article.source.title)}</h2><p>${renderArticleInline(article.source.body, locale, publishedArticles)}</p><div class="source-links">${sourceLinks}</div></section><nav class="article-related" aria-label="${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}"><p class="eyebrow">${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}</p>${related}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;

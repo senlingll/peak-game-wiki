@@ -32,6 +32,10 @@ The PEAK game update log records confirmed official Steam update titles and date
 
 The achievements guide targets the informational intent behind `PEAK achievements`, `PEAK achievement guide`, and `how to get all PEAK achievements`. It treats Steam achievements as platform progress and in-game badges as a separate system, then gives players a checklist method for exact names, route or mode, team members, evidence, and version. It also explains why custom runs, hidden achievements, new achievements, and missing unlocks should be verified against the current game and official Steam pages instead of being presented as permanent facts.
 
+### PEAK Photon Troubleshooting Guide (https://peak-game.wiki/peak-photon-troubleshooting)
+
+The Photon troubleshooting guide explains what PEAK's `Disconnected from Photon`, `Failed to connect to Photon Network`, and `ClientTimeout` messages establish without assigning an unsupported single cause. It puts Landfall's current FAQ first: check routine Tuesday Steam maintenance, connection stability, Steam friendship and profile privacy, running programs, game files and mods, security exclusions, and then conditional router, cFosSpeed, MLO, or VPN reports. Each troubleshooting step is designed to change one reversible variable at a time. The guide distinguishes developer guidance from player reports, explains what error labels do not prove, gives a privacy-conscious support-report checklist, and links back to the separate room-code guide for lobby-entry problems.
+
 ### Item Database (https://peak-game.wiki/)
 
 The item section separates gear, food, and utility categories and provides browser-side search and filters. The current entries are concise field-note stubs for Piton, Anti-Rope Cannon, Bugle of Friendship, Energy Drink, Portable Stove, and Backpack. The page explicitly labels this as prototype data rather than claiming complete effects or drop tables.

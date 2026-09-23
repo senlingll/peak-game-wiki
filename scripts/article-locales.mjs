@@ -7,6 +7,7 @@ import { howToPlayPeakTranslations } from './article-how-to-play-locales.mjs';
 import { rescueClawTranslations } from './article-rescue-claw-locales.mjs';
 import { ropeChainTranslations } from './article-rope-chain-locales.mjs';
 import { roomCodesTranslations } from './article-room-codes-locales.mjs';
+import { photonTroubleshootingTranslations } from './article-photon-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1199,6 +1200,25 @@ for (const [locale, translation] of Object.entries(ropeChainTranslations)) {
 
 for (const [locale, translation] of Object.entries(roomCodesTranslations)) {
   articleLocaleTranslations[locale]['room-codes'] = translation;
+}
+
+const photonRoomCodeLinkLabels = {
+  zh: '排查 PEAK Photon 断连与 ClientTimeout',
+  es: 'Solucionar la desconexión de Photon y ClientTimeout en PEAK',
+  ja: 'PEAKのPhoton切断とClientTimeoutを調べる',
+  fr: 'Dépanner les déconnexions Photon et ClientTimeout de PEAK',
+  de: 'PEAK Photon-Abbrüche und ClientTimeout beheben',
+  pt: 'Investigar desconexões do Photon e ClientTimeout em PEAK',
+  ko: 'PEAK Photon 연결 끊김과 ClientTimeout 해결하기',
+  it: 'Risolvi disconnessioni Photon e ClientTimeout di PEAK',
+};
+
+for (const [locale, translation] of Object.entries(photonTroubleshootingTranslations)) {
+  articleLocaleTranslations[locale]['peak-photon-troubleshooting'] = translation;
+  articleLocaleTranslations[locale]['room-codes'].related.push([
+    'peak-photon-troubleshooting',
+    photonRoomCodeLinkLabels[locale],
+  ]);
 }
 
 const localizedBiomeUpdateCopy = {

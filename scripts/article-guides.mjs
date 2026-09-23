@@ -9,6 +9,7 @@ export const articleOrder = [
   'rescue-claw',
   'rope-chain',
   'room-codes',
+  'peak-photon-troubleshooting',
 ];
 
 const officialNewsUrl = 'https://store.steampowered.com/news/app/3527290';
@@ -1419,7 +1420,173 @@ export const articleGuides = {
       ['how-to-play-peak', 'Review how to play PEAK'],
       ['map-rotation', "Check today's PEAK map"],
       ['achievements', 'Plan achievement goals'],
+      ['peak-photon-troubleshooting', 'Troubleshoot PEAK Photon disconnects'],
     ],
     relatedLabel: 'Related PEAK guides',
+  },
+
+  'peak-photon-troubleshooting': {
+    slug: 'peak-photon-troubleshooting',
+    lang: 'en',
+    category: 'guides',
+    meta: {
+      title: 'PEAK Disconnected from Photon: ClientTimeout Fix Guide',
+      description: 'PEAK Disconnected from Photon or ClientTimeout? Follow Landfall’s current checks, compare the exact error, and separate official steps from community reports.',
+      schema: 'A source-aware PEAK Photon troubleshooting guide covering Disconnected from Photon, ClientTimeout, official checks, community reports, and useful support evidence.',
+    },
+    published: '2026-09-23',
+    primaryKeyword: 'PEAK disconnected from Photon',
+    eyebrow: 'Connection troubleshooting - verify one cause at a time',
+    h1: 'PEAK Disconnected from Photon: ClientTimeout Fix Guide',
+    intro: `If PEAK says “Disconnected from Photon,” the message confirms that the co-op connection was interrupted; it does not identify one certain cause. Landfall’s ${'[[link:room-codes|PEAK co-op guide]]'} covers lobby entry. This page focuses on the error itself: check routine Steam maintenance, follow the current official troubleshooting list, and keep player-reported router or VPN changes conditional rather than treating them as guaranteed fixes.`,
+    answerLabel: 'The short answer',
+    answer: 'Start by noting the exact error and when it appears. Landfall’s current PEAK FAQ says Steam servers have routine maintenance every Tuesday, then recommends checking firewall and antivirus exclusions, game files, connection stability, other running programs, mods, router behavior, cFosSpeed, Steam friendship and profile privacy, and VPN use. Make one reversible change at a time and retry with the same group. A Photon error alone does not prove that PEAK is globally down, that your ISP is blocking the connection, or that one setting will fix it.',
+    tocLabel: 'On this page',
+    tocFaq: 'Photon troubleshooting FAQ',
+    heroImage: {
+      src: '/media/peak-coop-climb.webp',
+      alt: 'PEAK scouts coordinating a co-op climb on an island route',
+      caption: 'Official Steam screenshot - it shows PEAK co-op context, not a Photon error or a network-status result.',
+      width: 1200,
+      height: 675,
+    },
+    sections: [
+      {
+        id: 'photon-error-meaning',
+        title: 'What “Disconnected from Photon” means in PEAK',
+        paragraphs: [
+          'Landfall says PEAK uses Photon for server relays. When the game reports “Disconnected from Photon,” it tells you that the session lost its connection to that relay path. The wording is useful evidence, but it is not a diagnosis: it does not say whether the interruption came from scheduled Steam maintenance, a local network change, a lobby member’s privacy setting, a firewall, a mod, or a service-side issue.',
+          'The error labels also describe different points in a connection attempt. “Failed to connect to Photon Network” or “Failed to connect to Room” can appear while a session is being established; “Disconnected from Photon” describes a connection that was interrupted; “ClientTimeout” is a timeout label shown by the game. The public PEAK FAQ does not document a one-to-one cause for each label, so use the text to record what happened rather than to guess the cause.',
+          'First check whether the same problem affects everyone in the lobby or only one player. If the whole group sees the same failure at once, record that shared timing and check the official maintenance note. If one player drops while the others stay connected, begin with that player’s files, mods, connection, firewall, and Steam relationship to the lobby. These patterns narrow the next check, but neither proves a root cause.',
+        ],
+        table: {
+          caption: 'Use the visible PEAK error as a starting clue, not as proof of a cause',
+          headers: ['Visible message or pattern', 'What it establishes', 'What it does not establish', 'Next check'],
+          rows: [
+            ['Disconnected from Photon', 'The running co-op session lost its Photon relay connection.', 'It does not identify a PEAK-wide outage, ISP block, or single local setting.', 'Record the time and whether all lobby members were affected.'],
+            ['Failed to connect to Photon Network or Room', 'The attempt did not complete a network or room connection.', 'It does not distinguish Steam maintenance from local, lobby, or network conditions.', 'Check the official maintenance note, connection stability, and Steam friendship.'],
+            ['ClientTimeout', 'The game displayed a client timeout while connecting or playing.', 'The public FAQ does not map this label to one guaranteed cause.', 'Keep the exact text, stage, and timing in your notes.'],
+            ['Only one player disconnects', 'The symptom is limited to one member in that attempt.', 'It does not prove that player’s hardware or ISP is at fault.', 'Compare that player’s mods, files, firewall, network, and Steam profile.'],
+            ['Several players fail together', 'The group observed a shared failure window.', 'It is not by itself proof of a global PEAK outage.', 'Compare timestamps and retry after routine maintenance has passed.'],
+          ],
+        },
+      },
+      {
+        id: 'official-troubleshooting-order',
+        title: 'Check these items before changing router settings',
+        paragraphs: [
+          'Use the current Landfall FAQ as the first source. It notes that Steam servers go offline for routine maintenance every Tuesday. If the error lines up with that window, wait and test again after Steam is available; do not treat a single failed lobby as proof that a PEAK server is down. The FAQ does not promise a fixed duration for every maintenance event.',
+          'Outside that maintenance window, test simple conditions first. Make sure the internet connection is stable, close software that may interfere, and restart the computer if the issue persists. If the group can reproduce the error, ask whether every player sees it or whether the same player disconnects each time. That comparison tells you which device or account settings are worth checking next without naming an unsupported cause.',
+          'For the remaining checks, make one change, retry the same join path, and write down the result. Avoid stacking several edits together: if you disable a security tool, change a router option, remove mods, and switch VPN state at once, a successful retry will not tell you which change mattered. Restore any temporary setting that made no difference.',
+        ],
+        image: {
+          src: '/media/peak-map-route.webp',
+          alt: 'Official PEAK Steam screenshot showing scouts on a difficult island route',
+          caption: 'Official Steam screenshot - a play-context image only; capture the exact Photon message from your own session when reporting an error.',
+          width: 1200,
+          height: 675,
+        },
+        table: {
+          caption: 'Landfall’s published Photon checks, grouped from low-risk to conditional changes',
+          headers: ['Order', 'Check', 'How to test it', 'Evidence boundary'],
+          rows: [
+            ['1', 'Steam maintenance', 'Check whether the attempt coincides with routine Tuesday maintenance; retry after it passes.', 'Landfall documents the routine window, not a live global PEAK status feed.'],
+            ['2', 'Connection stability', 'Confirm other network activity works; restart the router only if the connection is unstable.', 'A retry after a restart is an observation, not proof of one cause.'],
+            ['3', 'Steam friends and profile privacy', 'Make sure everyone in the lobby is friends on Steam; review whether a Friends Only profile is restricting a lobby member.', 'Landfall says this may contribute to disconnections; it is not a universal explanation.'],
+            ['4', 'Other running programs', 'Close likely interfering programs, then repeat the same lobby test.', 'Reopen tools after the test if they were needed for accessibility or security.'],
+            ['5', 'Game files and mods', 'Verify PEAK files in Steam. If mods are installed, remove them completely, including leftover BepInEx files, before comparing.', 'Keep a backup of personal configuration; do not remove unrelated files.'],
+            ['6', 'Firewall or antivirus', 'Use the product’s PEAK-specific allow or exclusion flow if you can identify the correct game entry.', 'Do not turn off all firewall or antivirus protection as a general fix.'],
+            ['7', 'cFosSpeed, router MLO, or VPN', 'Only test a setting that is present and that you can restore; change one variable per retry.', 'Landfall presents these as reported or conditional checks, not a guaranteed fix.'],
+            ['8', 'Landfall troubleshooting', 'If the same error remains, follow the official troubleshooting page and use its current support path.', 'Do not rely on an old video or third-party “fix” over current developer guidance.'],
+          ],
+        },
+      },
+      {
+        id: 'timeout-limits',
+        title: 'What ClientTimeout and ServerTimeout do not prove',
+        paragraphs: [
+          'A timeout label says that the game did not complete an expected connection step in time. The public Landfall FAQ lists possible checks but does not publish a PEAK-specific mapping from ClientTimeout or ServerTimeout to one cause. A label cannot tell you by itself that the player has a bad router, that the Photon service is offline, or that a particular Windows setting is wrong.',
+          'Keep the error text exact and note what was happening immediately before it appeared: launching a lobby, accepting an invite, entering a room code, or playing with the group. Also record whether the host or a joining player saw it and whether a retry changed the result. This is more useful to support than a broad statement such as “the servers are broken,” because it preserves observable details without turning a guess into a fact.',
+          'If you are trying to join a friend rather than investigating a disconnect after joining, use the dedicated ' + '[[link:room-codes|PEAK room-code and co-op guide]]' + ' for Steam invites, JOIN GAME, room codes, and lobby privacy. That page handles the join flow; this guide handles Photon connection symptoms.',
+        ],
+        bullets: [
+          ['Before the error', 'Starting a lobby, accepting an invite, entering a code, or already climbing.'],
+          ['Who was affected', 'Host, one joining player, or all members in the same attempt.'],
+          ['Exact wording', 'Copy the message as displayed; do not paraphrase ClientTimeout as a confirmed server failure.'],
+          ['One change at a time', 'Record the setting tested and restore it if the retry does not help.'],
+        ],
+      },
+      {
+        id: 'community-reported-checks',
+        title: 'Community-reported checks: VPN, MLO, and cFosSpeed',
+        paragraphs: [
+          'Landfall’s FAQ includes a few items based on reports from players. It says that other players have reported success after uninstalling cFosSpeed or disabling Multi-Link Operation (MLO) on a router, and it suggests trying PEAK with or without a VPN. These are conditional troubleshooting leads, not official claims that any one item is the root cause for everyone.',
+          'If cFosSpeed is installed, first identify the program and consult its or the motherboard vendor’s instructions before changing it. If you test MLO, make a note of the original router setting and restore it if the test does not help. If you already use a VPN, compare one session with it and one without it; do not install an unknown VPN or leave a changed connection route in place just because a video recommends it.',
+          'Landfall also says some internet providers may block addresses needed to connect to Photon and advises contacting the provider for more information; it notes that VPN use has helped some players. That is a reported possibility, not a finding about your provider. Ask the provider or official support before changing network security or purchasing a service.',
+        ],
+        table: {
+          caption: 'Keep player reports separate from universal fixes',
+          headers: ['Check', 'Source status', 'Practical boundary'],
+          rows: [
+            ['cFosSpeed', 'Landfall says players have reported that uninstalling it helped.', 'Check whether it is installed; do not remove unrelated drivers or software by guess.'],
+            ['Router MLO', 'Landfall says other players reported success after disabling it.', 'Treat as a temporary router test for someone comfortable restoring the setting.'],
+            ['VPN on or off', 'Landfall suggests testing with and without a VPN; some players reported improvement.', 'Compare only a service you already trust; the result is not proof of a regional block.'],
+            ['ISP restriction', 'Landfall says some providers may block addresses and suggests contacting the ISP.', 'Ask the provider about the connection; do not state that a block exists without confirmation.'],
+          ],
+        },
+      },
+      {
+        id: 'support-report',
+        title: 'What to include in a useful PEAK support report',
+        paragraphs: [
+          'If the official checks do not change the result, send a concise report through Landfall’s current support route or the relevant Steam discussion. Include the game version shown in your client, the date and approximate time with time zone, the exact error text, and the point where it appeared. Say whether the host, a joining player, or the whole group was affected, and whether the lobby used a Steam invite or room code.',
+          'List only the checks you actually tried and state whether each one changed the symptom. Mention mods, VPN use, a relevant firewall rule, cFosSpeed, or an MLO test only when those details apply. A screenshot of the error can help, but crop out account names, private chat, invite or room codes, and other personal information before sharing it publicly. Do not attach tokens, passwords, or full network identifiers.',
+          'A good report separates facts from interpretation: “the client displayed ClientTimeout after JOIN GAME at 20:15 UTC; two other players stayed in the lobby” is more actionable than “Photon is broken.” Official troubleshooting remains the source for recommended actions; Steam Community posts can show that other players reported a similar symptom but cannot confirm the cause of your session.',
+        ],
+        image: {
+          src: '/media/peak-climb-ridge.webp',
+          alt: 'PEAK scouts climbing together along a ridge on an island route',
+          caption: 'Official Steam screenshot for co-op context, not a Photon error capture. Crop and redact your own error image before sharing it.',
+          width: 1200,
+          height: 675,
+        },
+        bullets: [
+          ['Exact symptom', 'Error text, step where it appeared, date, time, and time zone.'],
+          ['Lobby context', 'Host or joining player, group scope, and Steam invite or room-code path.'],
+          ['Relevant changes', 'Only checks you performed and whether the result changed.'],
+          ['Privacy', 'Hide room codes, account details, private chat, passwords, and tokens.'],
+        ],
+      },
+    ],
+    faq: {
+      eyebrow: 'Quick answers',
+      title: 'PEAK Photon troubleshooting FAQ',
+      items: [
+        ['How do I fix PEAK “Disconnected from Photon”?', 'Start with Landfall’s current FAQ: check routine Steam maintenance, connection stability, Steam friendship and privacy, other programs, game-file integrity, mods, security exclusions, and then conditional router or VPN reports. Change one item at a time; no single step is a guaranteed fix.'],
+        ['Does ClientTimeout mean PEAK servers are down?', 'No conclusion about a global outage follows from that label alone. The public PEAK FAQ does not map ClientTimeout to one cause. Record when it appears, check official maintenance information, and compare whether other lobby members are affected.'],
+        ['Are PEAK or Steam servers down every Tuesday?', 'Landfall says Steam servers go offline for routine maintenance every Tuesday. The FAQ does not give one duration for every event or say that every Photon error is caused by it. Retry after maintenance and compare the result.'],
+        ['Can PEAK mods cause a Photon disconnect?', 'Landfall recommends completely removing installed mods, including leftover files such as BepInEx, when investigating disconnections. Test an unmodded installation before attributing a particular error to a specific mod.'],
+        ['Should I turn my VPN on or off for PEAK?', 'Landfall suggests trying PEAK both with and without a VPN, and says some players reported that it helped. Treat that as a conditional test, not a diagnosis. Do not install an untrusted VPN or change security settings without understanding the effect.'],
+        ['Should I disable MLO or uninstall cFosSpeed?', 'Landfall reports that some players found these checks helpful. They are not universal fixes. Test only if the setting or software applies to your setup, record the original state, and restore it if there is no improvement.'],
+        ['Is a PEAK room-code error the same as a Photon error?', 'Not necessarily. A room-code or invite issue concerns the lobby join flow; a Photon message describes a connection symptom. Use the room-code guide for where to enter a code, then record the exact Photon message if the connection fails.'],
+      ],
+    },
+    source: {
+      eyebrow: 'Official guidance and player reports',
+      title: 'What this PEAK connection guide can confirm',
+      body: 'Landfall’s PEAK FAQ is the primary source for Photon relay context, routine Tuesday Steam maintenance, and the published troubleshooting checks. It labels cFosSpeed, router MLO, VPN, and provider restrictions as reported or conditional possibilities; this page keeps that distinction visible. A Steam Community discussion is linked only as a player report, not as official confirmation or a universal fix.',
+      links: [
+        ['Landfall PEAK FAQ and connection checks', 'https://landfall.se/peak-faq'],
+        ['Landfall troubleshooting', 'https://landfall.se/troubleshooting'],
+        ['Official PEAK Steam page', 'https://store.steampowered.com/app/3527290/PEAK/'],
+        ['Steam Community: Photon error report', 'https://steamcommunity.com/app/3527290/discussions/0/592907722016587684/'],
+      ],
+    },
+    related: [
+      ['room-codes', 'Use PEAK room codes and join a co-op lobby'],
+      ['peak-game-tips', 'Read practical PEAK co-op tips'],
+      ['peak-game-update', 'Review PEAK update notes'],
+    ],
+    relatedLabel: 'Related PEAK troubleshooting and co-op guides',
   },
 };

@@ -10,6 +10,7 @@
 - [What is PEAK?](https://peak-game.wiki/what-is-peak-game): A beginner guide to PEAK's co-op climbing loop, maps, biomes, rotation vocabulary, first-run checklist, and current daily-map entry.
 - [PEAK map rotation schedule](https://peak-game.wiki/peak-map-rotation-schedule): A dated reset-time reference with UTC and local conversions, recent verified rotation records, today's map entry, and patch-aware caveats.
 - [PEAK achievements guide](https://peak-game.wiki/achievements): A version-aware guide to Steam achievements, in-game badges, progress tracking, custom-run checks, and missing-unlock troubleshooting.
+- [PEAK Photon troubleshooting guide](https://peak-game.wiki/peak-photon-troubleshooting): Source-aware help for Disconnected from Photon and ClientTimeout, with reversible checks, official guidance, and player reports clearly separated.
 
 ## Common Resources
 - [About](https://peak-game.wiki/about): Project purpose, source policy, and independence statement.
