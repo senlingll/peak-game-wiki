@@ -11,6 +11,7 @@
 - [PEAK map rotation schedule](https://peak-game.wiki/peak-map-rotation-schedule): A dated reset-time reference with UTC and local conversions, recent verified rotation records, today's map entry, and patch-aware caveats.
 - [PEAK achievements guide](https://peak-game.wiki/achievements): A version-aware guide to Steam achievements, in-game badges, progress tracking, custom-run checks, and missing-unlock troubleshooting.
 - [PEAK Photon troubleshooting guide](https://peak-game.wiki/peak-photon-troubleshooting): Source-aware help for Disconnected from Photon and ClientTimeout, with reversible checks, official guidance, and player reports clearly separated.
+- [How to revive in PEAK](https://peak-game.wiki/peak-revive-guide): A source-aware co-op guide that separates a downed or unconscious Scout from a dead Scout, explains Scout Effigy, and covers missing prompts, revive points, and final-level limits.
 
 ## Common Resources
 - [About](https://peak-game.wiki/about): Project purpose, source policy, and independence statement.

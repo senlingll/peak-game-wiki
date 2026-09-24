@@ -73,3 +73,7 @@ The beginner guide explains PEAK as a Steam co-op climbing and survival game, us
 ### PEAK Map Rotation Schedule (https://peak-game.wiki/peak-map-rotation-schedule)
 
 The map rotation schedule explains the current build-time reset record, converts 17:00 UTC for common player time zones, and keeps reset timing separate from any unverified fixed sequence. Its dated history table is populated from the maintained map-history file, while today's map block is generated from the same source used by the canonical map-rotation page. The page links to official Steam news for patch context and labels pending or older records instead of filling missing days by prediction.
+
+### How to Revive in PEAK (https://peak-game.wiki/peak-revive-guide)
+
+The revive guide answers `how to revive in PEAK` by separating an unconscious or downed Scout from a dead Scout before naming an item or location. It explains the recovery decision for a downed teammate, the co-op and target checks for Scout Effigy, the difference between resurrection and checkpoint-style respawn, why a universal last revive point is not claimed, and how to handle missing prompts or the final level. Official Steam information and maintained item references provide context, while the current game prompt remains the authority for version-sensitive behavior.

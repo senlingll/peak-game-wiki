@@ -8,6 +8,7 @@ import { rescueClawTranslations } from './article-rescue-claw-locales.mjs';
 import { ropeChainTranslations } from './article-rope-chain-locales.mjs';
 import { roomCodesTranslations } from './article-room-codes-locales.mjs';
 import { photonTroubleshootingTranslations } from './article-photon-locales.mjs';
+import { reviveGuideTranslations } from './article-revive-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1219,6 +1220,10 @@ for (const [locale, translation] of Object.entries(photonTroubleshootingTranslat
     'peak-photon-troubleshooting',
     photonRoomCodeLinkLabels[locale],
   ]);
+}
+
+for (const [locale, translation] of Object.entries(reviveGuideTranslations)) {
+  articleLocaleTranslations[locale]['peak-revive-guide'] = translation;
 }
 
 const localizedBiomeUpdateCopy = {
