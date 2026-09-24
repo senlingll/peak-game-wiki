@@ -1878,6 +1878,23 @@ img {
   margin: 28px 0 30px;
 }
 
+.article-image-item-icon {
+  width: min(100%, 224px);
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.article-image-item-icon img {
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.article-hero .article-image-item-icon {
+  width: min(100%, 300px);
+  justify-self: end;
+}
+
 .article-crosslink {
   margin: 24px 0 0;
   padding: 16px 18px;
@@ -3021,6 +3038,10 @@ img {
   .article-hero .article-image {
     transform: none;
     box-shadow: 10px 10px 0 rgba(228, 110, 85, 0.3);
+  }
+
+  .article-hero .article-image-item-icon {
+    justify-self: center;
   }
 
   .article-layout {

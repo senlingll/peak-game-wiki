@@ -77,3 +77,7 @@ The map rotation schedule explains the current build-time reset record, converts
 ### How to Revive in PEAK (https://peak-game.wiki/peak-revive-guide)
 
 The revive guide answers `how to revive in PEAK` by separating an unconscious or downed Scout from a dead Scout before naming an item or location. It explains the recovery decision for a downed teammate, the co-op and target checks for Scout Effigy, the difference between resurrection and checkpoint-style respawn, why a universal last revive point is not claimed, and how to handle missing prompts or the final level. Official Steam information and maintained item references provide context, while the current game prompt remains the authority for version-sensitive behavior.
+
+### PEAK Cooking Guide (https://peak-game.wiki/peak-cooking-guide)
+
+The cooking guide explains the Portable Stove from the maintained item table, consolidates 16 food cooking notes from the 2026-08-14 community snapshot, and separates non-food interactions that have no effect, incinerate, or cause an explosion. It cites official Patch 2.4.C (2026-09-14) for the newer rule that Amulets can no longer be cooked. It does not claim a universal control sequence, live item behavior, or an unverified benefit from cooking an item twice. The item images are community PEAK Wiki assets, not official Steam screenshots.
