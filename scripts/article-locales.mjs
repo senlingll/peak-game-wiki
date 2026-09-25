@@ -10,6 +10,7 @@ import { roomCodesTranslations } from './article-room-codes-locales.mjs';
 import { photonTroubleshootingTranslations } from './article-photon-locales.mjs';
 import { reviveGuideTranslations } from './article-revive-locales.mjs';
 import { cookingGuideTranslations } from './article-cooking-locales.mjs';
+import { peakGamePriceTranslations } from './article-price-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1270,4 +1271,23 @@ for (const [locale, copy] of Object.entries(localizedBiomeUpdateCopy)) {
   const translation = articleLocaleTranslations[locale]['peak-biomes-list'];
   translation.sections[2].afterTable = [translation.sections[2].afterTable, copy.sentence].filter(Boolean).join(' ');
   translation.related = [...translation.related, ['peak-game-update', copy.label]];
+}
+
+const peakPriceLinkLabels = {
+  zh: '查看 PEAK 各地区 Steam 价格',
+  es: 'Comparar el precio de PEAK por región',
+  ja: 'PEAKの地域別Steam価格を比較する',
+  ko: 'PEAK Steam 지역별 가격 비교하기',
+  de: 'PEAK-Preise bei Steam nach Region vergleichen',
+  fr: 'Comparer le prix de PEAK selon la région',
+  pt: 'Comparar o preço de PEAK por região',
+  it: 'Confronta il prezzo di PEAK per regione',
+};
+
+for (const [locale, translation] of Object.entries(peakGamePriceTranslations)) {
+  articleLocaleTranslations[locale]['peak-game-price'] = translation;
+  articleLocaleTranslations[locale]['what-is-peak-game'].related.push([
+    'peak-game-price',
+    peakPriceLinkLabels[locale],
+  ]);
 }
