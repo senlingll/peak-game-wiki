@@ -13,6 +13,7 @@ export const articleOrder = [
   'room-codes',
   'peak-photon-troubleshooting',
   'peak-cooking-guide',
+  'peak-secret-ending-guide',
 ];
 
 const officialNewsUrl = 'https://store.steampowered.com/news/app/3527290';
@@ -645,6 +646,164 @@ export const articleGuides = {
       ['what-is-peak-game', 'Start with what PEAK is'],
       ['peak-game-update', 'Read the update log'],
       ['peak-game-tips', 'Use the PEAK game tips'],
+      ['peak-secret-ending-guide', 'Reach the PEAK secret ending'],
+    ],
+    relatedLabel: 'Related PEAK guides',
+  },
+
+  'peak-secret-ending-guide': {
+    slug: 'peak-secret-ending-guide',
+    meta: {
+      title: 'PEAK Secret Ending Guide: Find All 4 Amulets and Reach Nadir',
+      description: 'Learn how to get the PEAK secret ending: find four Amulets, unlock Scout’s Honor, enter Nadir, free the Scoutmaster’s Soul, and escape. Includes Ascent 8 notes.',
+      schema: 'A source-aware PEAK secret ending walkthrough covering the four Amulets, Scout’s Honor, Nadir, the Scoutmaster’s Soul, optional completion, and Ascent 8 requirements.',
+    },
+    published: '2026-10-02',
+    primaryKeyword: 'peak secret ending',
+    eyebrow: 'Route walkthrough - hidden summit path',
+    h1: 'PEAK Secret Ending Guide: How to Reach Nadir',
+    intro: 'To get the PEAK secret ending, collect four Amulets during one climb, place them in the Stone Scout behind the summit, use the revealed Scout’s Honor to enter Nadir, then free the Scoutmaster’s Soul and escape. The route is optional on ordinary Ascents, but it becomes part of the required win on Ascent 8. This guide explains the sequence, what can vary between runs, and the most common reasons a team reaches the summit without opening the hidden path.',
+    answerLabel: 'The short answer',
+    answer: 'Find the four Scout Amulets from statues in the first four biomes of one climb, bring them to the Stone Scout behind the Peak, and place all four in its sockets. Take the Strange Gem after it becomes Scout’s Honor and activate it to enter Nadir. Commune with the Scoutmaster’s Soul, then climb the revealed False Climb to the upper gate and escape. Statue locations can vary between runs; do not rely on fixed coordinates. The ending is optional on ordinary Ascents, but entering and escaping Nadir is required to win Ascent 8.',
+    tocLabel: 'On this page',
+    tocFaq: 'Secret ending FAQ',
+    heroImage: {
+      src: '/media/peak-final-ascent.webp',
+      alt: 'Official PEAK Final Ascent artwork showing scouts climbing toward the mountain summit',
+      caption: 'Official Steam artwork for Final Ascent. It establishes the summit context; it is not a map of Amulet locations.',
+      width: 1200,
+      height: 675,
+    },
+    sections: [
+      {
+        id: 'secret-ending-steps',
+        title: 'How to get the PEAK secret ending',
+        paragraphs: [
+          'The hidden ending is a connected objective chain, not a separate ending button at the summit. The practical order is: search Scout Statues in the first four biomes, keep the set together for the final approach, activate Scout’s Honor to enter Nadir, commune with the Scoutmaster’s Soul, and climb out through the upper gate. If your group is still learning the route vocabulary, our [[link:peak-levels-biomes-difficulty|PEAK levels, biomes, and difficulty guide]] explains how biome labels and Ascents differ.',
+          'The community-maintained PEAK Wiki documents this route as the Nadir path. The game can change, so use the steps below as a route reference and confirm object prompts in your current session. This guide deliberately avoids assigning one Amulet to one permanent biome: their order and exact placement are not a dependable fixed route.',
+        ],
+        table: {
+          caption: 'Secret ending route at a glance',
+          headers: ['Step', 'What to do', 'Check before moving on'],
+          rows: [
+            ['1. Search', 'Find the four distinct Scout Amulets at statues in the first four biomes of the same climb.', 'Look for the blue glow around Amulet Statues; keep a live count.'],
+            ['2. Carry', 'Bring the full set to the Stone Scout behind the Peak.', 'Do not leave an Amulet behind or assume a later run will preserve it.'],
+            ['3. Unlock', 'Place all four Amulets in the Scout’s empty sockets and take Scout’s Honor.', 'The Strange Gem changes after the four offerings are complete.'],
+            ['4. Enter Nadir', 'Activate Scout’s Honor to open the hidden descent.', 'Treat this as a new objective, not the end of the summit route.'],
+            ['5. Escape', 'Commune with the Scoutmaster’s Soul and climb the False Climb to the upper gate.', 'The ending triggers when you reach and interact with the exit.'],
+          ],
+        },
+      },
+      {
+        id: 'find-four-amulets',
+        title: 'Where to find the four Amulets in PEAK',
+        paragraphs: [
+          'Search the first four biomes before the final summit approach. The community badge route lists Scout Statues across those four biomes as the source of the four Amulets. Their exact positions can change between runs, so a guide that promises “Amulet one is always in X” can send a team past the actual clue. Check the current route and the statue itself instead; do not assume a fixed coordinate or one permanent order for every map.',
+          'The clearest field clue is a blue glow or particle effect around an Amulet Statue. Scan the route as you move through a biome, especially when the team can safely look over a side path without spending a critical resource. A statue is a landmark to investigate, not a reason to split the party across a dangerous climb. Mark who has each Amulet and who is carrying it so the team does not mistake a dropped item for a completed objective.',
+          'A 2026 official Steam patch note says Amulets can no longer be cooked. This removes one earlier source of accidental loss, but it does not remove the need to carry and account for all four. Recheck the official update feed after major patches if an interaction prompt or spawn rule appears different from this guide.',
+        ],
+        image: {
+          src: '/media/peak-map-route.webp',
+          width: 1200,
+          height: 675,
+          alt: 'Official PEAK gameplay screenshot showing a scout using a rope while navigating a hazardous route',
+          caption: 'Official Steam gameplay screenshot for route context. It is not an Amulet Statue location or a guaranteed spawn map.',
+        },
+        bullets: [
+          ['Count objects, not biomes', 'The goal is four distinct Amulets in one run; a biome name alone does not prove its statue was found.'],
+          ['Follow the visible clue', 'Blue light or particles point to a statue; exact terrain and approach can differ between runs.'],
+          ['Keep the team informed', 'Call out who is carrying each Amulet and pause before leaving a route area if the count is short.'],
+          ['Avoid fixed-location claims', 'Use current in-game clues rather than a memorized one-to-one biome order.'],
+        ],
+      },
+      {
+        id: 'unlock-scouts-honor',
+        title: 'Unlock Scout’s Honor at the Stone Scout',
+        paragraphs: [
+          'After reaching the top, continue around the back of the Peak to the Stone Scout. It has four empty sockets for the Amulets and a Strange Gem nearby. Offer the four distinct Amulets to the sockets. When the set is complete, the gem becomes Scout’s Honor, the item that opens the route to Nadir.',
+          'If the gem has not changed, stop and check the simple causes first: count the sockets again, confirm that each offering registered, and make sure the team did not leave one of the four objects on the approach. Do not spend time searching for a fifth Amulet or trying to cook one. The four-socket interaction is the checkpoint between collecting the set and entering the hidden descent.',
+          'Once the prompt or item name identifies Scout’s Honor, pick it up and activate it. That sends the team into Nadir. On an ordinary Ascent, choosing to do this is the optional secret route. On Ascent 8, Nadir is mandatory for a successful completion, so preserve enough time, health, and useful gear for the descent and the return objective.',
+        ],
+        image: {
+          src: '/media/peak-climb-ridge.webp',
+          width: 1200,
+          height: 675,
+          alt: 'Official PEAK gameplay view across a dark mountain ridge, illustrating the late-climb setting',
+          caption: 'Official Steam gameplay screenshot from a late climb. It illustrates the route atmosphere, not the Stone Scout or its exact position.',
+        },
+      },
+      {
+        id: 'escape-nadir',
+        title: 'Enter Nadir, free the Scoutmaster, and escape',
+        paragraphs: [
+          'Nadir is a separate descent and rescue objective below the summit. After landing on the False Shore, follow the steps to the stone platform and look for Scoutmaster Myres’s Soul inside a green bubble. Commune with the soul to free it. The bubble breaks, the soul begins following the Scout, and the False Climb is revealed. The Lost Souls start rising, so keep the team moving upward instead of treating this area as a safe stop.',
+          'Climb the revealed False Climb back to the upper gate and interact with it to finish the route. The soul follows; it is not an inventory item that you need to carry. Community route documentation says escaping Nadir triggers the secret ending and grants Rule Zero. A flare is not required for this escape; focus on the soul, the rising hazard, and the gate rather than following an older generic escape tip.',
+          'The screenshots on this page are authentic images from PEAK’s official Steam listing, included to show the game’s climb and terrain context. They do not reveal exact statue spawns, Nadir navigation, or a guaranteed route. Use the current in-game landmarks and object prompts for those decisions.',
+        ],
+        image: {
+          src: '/media/peak-map-gloom.webp',
+          width: 1200,
+          height: 675,
+          alt: 'Official PEAK screenshot showing a shadowed Gloom route with the summit terrain in view',
+          caption: 'Official Steam screenshot of PEAK terrain. The image is illustrative and does not show a verified Scoutmaster or exit location.',
+        },
+      },
+      {
+        id: 'ascent-eight-and-team-planning',
+        title: 'Ascent 8 requirements and team planning',
+        paragraphs: [
+          'The main strategic difference is whether you are pursuing a normal summit or an Ascent 8 win. On ordinary Ascents, the secret route is optional: a group can finish its climb without entering Nadir. On Ascent 8, escaping Nadir is part of the required victory path. Decide which run you are playing before the team spends its last supplies or treats the summit as the finish line.',
+          'For a group, agree on three calls before the first statue: who tracks the Amulet count, who can safely carry shared supplies, and what the team will do if one statue is missed. Keep the full set together at the summit, then have one player read prompts while another checks sockets and inventory. The goal is to reduce duplicate searches and prevent one player from leaving before the objective is complete.',
+          'If a long descent or rescue goes badly, use the game’s current state rather than assuming a restart will preserve progress. This is a run-based objective. For practical stamina, equipment, and co-op preparation, see [[link:peak-game-tips|our PEAK game tips]] and the [[link:peak-biomes-list|biomes reference]].',
+        ],
+        bullets: [
+          ['Before the climb', 'Confirm whether the goal is a normal summit or an Ascent 8 completion.'],
+          ['During the search', 'Keep one shared count and make statue callouts before the party advances.'],
+          ['At the Stone Scout', 'Verify four completed socket interactions before activating Scout’s Honor.'],
+          ['In Nadir', 'Treat the soul as the objective and keep a return route to the upper gate in view.'],
+        ],
+      },
+      {
+        id: 'troubleshooting-secret-ending',
+        title: 'Why the secret ending may not trigger',
+        paragraphs: [
+          'Most failed attempts stop at a missing step rather than a hidden timing trick. If the gem is still a Strange Gem, recheck all four sockets. If Scout’s Honor is in inventory but Nadir did not open, use the item’s current interaction prompt. If you reached Nadir but saw no ending, confirm that you communed with the Scoutmaster’s Soul and climbed the False Climb to interact with the upper gate; entering the area alone is not completion.',
+          'A team may also be following an old location list that assumes a fixed spawn. The community reference points to Scout Statues in the first four biomes and warns through its route details that you must complete the chain in one run. The official patch feed documents changes such as making Amulets impossible to cook. When observations conflict, note the game version and trust the current session and official patch notes for changed mechanics.',
+        ],
+      },
+    ],
+    faq: {
+      eyebrow: 'Quick answers',
+      title: 'PEAK secret ending FAQ',
+      items: [
+        ['How do you get the PEAK secret ending?', 'Find the four Scout Amulets in the first four biomes, place them in the Stone Scout behind the Peak, activate Scout’s Honor, commune with the Scoutmaster’s Soul in Nadir, and climb the False Climb to the upper gate.'],
+        ['How many Amulets are needed for the PEAK secret ending?', 'Four distinct Amulets are needed for the four Stone Scout sockets. Check all four interactions before moving on.'],
+        ['Do you need a flare for the PEAK secret ending?', 'A flare is not required to escape Nadir with the Scoutmaster’s Soul. The objective is to reach the upper gate with the soul.'],
+        ['Is the PEAK secret ending required on every Ascent?', 'No. It is optional on ordinary Ascents, but escaping Nadir is required to win Ascent 8.'],
+        ['Where do Amulet Statues spawn in PEAK?', 'The community badge route lists Scout Statues in the first four biomes. Their exact positions can vary, so look for the blue glow in your current run rather than trusting fixed coordinates.'],
+        ['Why will the Strange Gem not become Scout’s Honor?', 'Check that all four Amulets were offered to the Stone Scout’s sockets and that each interaction registered. The gem changes only after the complete set is offered.'],
+        ['Can Amulets be cooked in PEAK?', 'Official Steam patch notes for Patch 2.4.C say Amulets can no longer be cooked. Check the live update feed after a later patch for newer interaction changes.'],
+      ],
+    },
+    source: {
+      eyebrow: 'Sources and limits',
+      title: 'Official patch notes and community route reference',
+      body: 'Official Steam announcements were checked on October 2, 2026 for the Amulet cooking change. Route sequence, Nadir, the Scoutmaster’s Soul, and Rule Zero details are summarized from the community-maintained PEAK Wiki, whose articles are shared under CC BY-SA 4.0; the linked pages are provided for verification and attribution. Exact spawns can vary by run. The three images above are authentic official Steam listing media and are illustrative, not location evidence. This is an independent fan guide.',
+      links: [
+        ['Official PEAK Steam announcements', 'https://steamcommunity.com/app/3527290/announcements/'],
+        ['PEAK Wiki: The Lost Souls', 'https://peak.wiki.gg/wiki/The_Lost_Souls'],
+        ['PEAK Wiki: Ascents', 'https://peak.wiki.gg/wiki/Ascents'],
+        ['PEAK Wiki: Scout Statue', 'https://peak.wiki.gg/wiki/Scout_Statue'],
+        ['PEAK Wiki: Leave No Trace / Rule Zero', 'https://peak.wiki.gg/wiki/Leave_no_trace'],
+        ['Creative Commons Attribution-ShareAlike 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'],
+      ],
+    },
+    related: [
+      ['peak-levels-biomes-difficulty', 'Understand PEAK levels, biomes, and Ascents'],
+      ['peak-biomes-list', 'Review the PEAK biomes list'],
+      ['peak-game-tips', 'Prepare with PEAK game tips'],
+      ['peak-game-update', 'Check official PEAK updates'],
+      ['badges-guide', 'Browse the PEAK badges guide'],
     ],
     relatedLabel: 'Related PEAK guides',
   },

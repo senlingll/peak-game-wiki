@@ -11,6 +11,7 @@ import { photonTroubleshootingTranslations } from './article-photon-locales.mjs'
 import { reviveGuideTranslations } from './article-revive-locales.mjs';
 import { cookingGuideTranslations } from './article-cooking-locales.mjs';
 import { peakGamePriceTranslations } from './article-price-locales.mjs';
+import { peakSecretEndingTranslations } from './article-secret-ending-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1183,6 +1184,10 @@ for (const [locale, translation] of Object.entries(peakMapRotationScheduleTransl
 
 for (const [locale, translation] of Object.entries(peakLevelsTranslations)) {
   articleLocaleTranslations[locale]['peak-levels-biomes-difficulty'] = translation;
+}
+
+for (const [locale, translation] of Object.entries(peakSecretEndingTranslations)) {
+  articleLocaleTranslations[locale]['peak-secret-ending-guide'] = translation;
 }
 
 for (const [locale, translation] of Object.entries(peakTipsTranslations)) {
