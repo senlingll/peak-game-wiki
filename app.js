@@ -1,3 +1,16 @@
+(() => {
+  if (!/^(www\.)?peak-game\.wiki$/.test(window.location.hostname)) return;
+  const measurementId = 'G-8GDHLW3098';
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('config', measurementId);
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+  document.head.appendChild(script);
+})();
+
 const itemSearch = document.querySelector('#item-search');
 const itemCards = [...document.querySelectorAll('.item-card')];
 const filterButtons = [...document.querySelectorAll('[data-filter]')];
