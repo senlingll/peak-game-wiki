@@ -13,6 +13,7 @@ import { cookingGuideTranslations } from './article-cooking-locales.mjs';
 import { peakGamePriceTranslations } from './article-price-locales.mjs';
 import { peakSecretEndingTranslations } from './article-secret-ending-locales.mjs';
 import { articleSupplementalLocaleTranslations } from './article-supplemental-locales.mjs';
+import { articleSupplementalGeneratedLocaleTranslations } from './article-supplemental-generated-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1301,5 +1302,14 @@ for (const [locale, translation] of Object.entries(peakGamePriceTranslations)) {
 for (const [locale, translations] of Object.entries(articleSupplementalLocaleTranslations)) {
   for (const [slug, translation] of Object.entries(translations)) {
     articleLocaleTranslations[locale][slug] = translation;
+  }
+}
+
+for (const [locale, translations] of Object.entries(articleSupplementalGeneratedLocaleTranslations)) {
+  for (const [slug, translation] of Object.entries(translations)) {
+    articleLocaleTranslations[locale][slug] = {
+      ...articleLocaleTranslations[locale][slug],
+      ...translation,
+    };
   }
 }

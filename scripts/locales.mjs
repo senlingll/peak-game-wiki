@@ -893,6 +893,11 @@ function localizedArticleGuide(locale, slug) {
   const source = articleGuides[slug];
   const translation = articleLocaleTranslations[locale]?.[slug];
   if (!translation) return source;
+  const translatedMeta = translation.meta ?? {
+    title: translation.title ?? source.meta.title,
+    description: translation.description ?? source.meta.description,
+    schema: translation.schema ?? source.meta.schema,
+  };
   const sections = source.sections.map((section, index) => {
     const translated = translation.sections?.[index];
     if (!translated) return section;
@@ -908,7 +913,7 @@ function localizedArticleGuide(locale, slug) {
   return {
     ...source,
     ...translation,
-    meta: { ...source.meta, ...translation.meta },
+    meta: { ...source.meta, ...translatedMeta },
     heroImage: { ...source.heroImage, ...translation.heroImage },
     sections,
     faq: translation.faq ? { ...source.faq, ...translation.faq } : source.faq,
