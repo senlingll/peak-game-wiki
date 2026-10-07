@@ -31,6 +31,39 @@ async function readJsonFile(file, fallback) {
   }
 }
 
+async function validateSitemap(outputRoot) {
+  const sitemapPath = resolve(outputRoot, 'sitemap.xml');
+  const sitemap = await readFile(sitemapPath, 'utf8');
+  const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
+  const issues = [];
+
+  for (const url of urls) {
+    const pathname = new URL(url).pathname;
+    const relativePath = pathname.replace(/^\/+/, '');
+    const target = !relativePath
+      ? resolve(outputRoot, 'index.html')
+      : relativePath.endsWith('/')
+        ? resolve(outputRoot, relativePath, 'index.html')
+        : resolve(outputRoot, `${relativePath}.html`);
+    let html;
+
+    try {
+      html = await readFile(target, 'utf8');
+    } catch {
+      issues.push(`${url} -> missing ${target}`);
+      continue;
+    }
+
+    if (/<meta\s+[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html)) {
+      issues.push(`${url} -> noindex`);
+    }
+  }
+
+  if (issues.length) {
+    throw new Error(`Sitemap contains non-indexable URLs:\n${issues.join('\n')}`);
+  }
+}
+
 const todayMap = buildTodayMapSnapshot(buildTimestamp, buildDate);
 const updateData = await readJsonFile('data/peak-updates.json', { entries: [] });
 const mapHistory = await readJsonFile('data/peak-map-history.json', []);
@@ -80,7 +113,6 @@ for (const page of ['about', 'privacy', 'terms']) {
 const contactRoot = resolve(outputRoot, 'contact');
 await mkdir(contactRoot, { recursive: true });
 await writeFile(resolve(contactRoot, 'index.html'), renderContact('en', renderOptions), 'utf8');
-await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(buildDate, publishedArticleOrder), 'utf8');
 await writeFile(resolve(outputRoot, 'map-rotation.html'), renderMapGuidePage('en'), 'utf8');
 await writeFile(resolve(outputRoot, 'achievements.html'), renderAchievementGuide('en', renderOptions), 'utf8');
 const badgesGuideRoot = resolve(outputRoot, 'badges-guide');
@@ -129,6 +161,9 @@ for (const locale of localeOrder.filter((code) => code !== 'en')) {
     await writeFile(resolve(articleRoot, 'index.html'), renderArticlePage(locale, slug, renderOptions), 'utf8');
   }
 }
+
+await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(buildDate, publishedArticleOrder), 'utf8');
+await validateSitemap(outputRoot);
 
 console.log(`Built static site to ${outputRoot}`);
 console.log(`Build date: ${buildDate}`);
