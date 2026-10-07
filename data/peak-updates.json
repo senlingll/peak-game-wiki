@@ -7,7 +7,7 @@
     {
       "date": "2026-10-06",
       "title": "Patch Notes 2.6.b",
-      "summary": "Official patch or fix post titled Patch Notes 2.6.b; open the source for the exact changes.",
+      "summary": "Fixed several mid-game join cases, Gloom and Citadel revive badge attribution, t-pose skeletons on late joins, and slow-network late-join loading.",
       "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1845383656397393",
       "kind": "PATCH"
     },

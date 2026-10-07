@@ -1,3 +1,5 @@
+import { supplementalArticleGuides } from './article-supplemental-guides.mjs';
+
 export const articleOrder = [
   'peak-biomes-list',
   'peak-game-update',
@@ -14,6 +16,12 @@ export const articleOrder = [
   'peak-photon-troubleshooting',
   'peak-cooking-guide',
   'peak-secret-ending-guide',
+  'peak-multiplayer-troubleshooting',
+  'peak-achievements-not-unlocking',
+  'peak-save-and-reconnect',
+  'peak-gloom-guide',
+  'peak-citadel-guide',
+  'peak-solo-and-public-lobbies',
 ];
 
 const officialNewsUrl = 'https://store.steampowered.com/news/app/3527290';
@@ -2244,3 +2252,5 @@ export const articleGuides = {
     relatedLabel: 'Related PEAK guides',
   },
 };
+
+Object.assign(articleGuides, supplementalArticleGuides);

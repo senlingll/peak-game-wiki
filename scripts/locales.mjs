@@ -402,46 +402,82 @@ for (const code of localeOrder) {
 const homepageOverrides = {
   en: {
     title: "PEAK Game Wiki — Today's Map, Items, Badges & Patch Notes",
+    patchValue: 'Patch 2.6.b',
+    patchNote: 'Checked 6 Oct 2026: mid-game joins, Gloom/Citadel revival badges, t-pose skeletons, and slow-network late-join loading.',
+    latestUpdate: ['OCT', '06', '2026', 'CURRENT', 'Patch Notes 2.6.b', 'Fixed several mid-game join cases, Gloom and Citadel revive badge attribution, t-pose skeletons on late joins, and slow-network late-join loading.'],
+    latestFaq: 'Patch 2.6.b is the latest confirmed update checked on 6 October 2026. It addresses mid-game joins, Gloom and Citadel revive badge attribution, t-pose skeletons on late joins, and slow-network loading; see the full timeline for earlier fixes and remaining player reports.',
     mapParagraph: "This page keeps the rotation language honest. See today's verified map at the top of our map rotation guide, updated daily. The official game and update feed remain the authority for the active route.",
     dailyFaq: "PEAK uses a changing map rotation. Check the daily update section at the top of the map rotation guide, then confirm the active route in the game.",
   },
   zh: {
     title: 'PEAK 游戏 Wiki：今日地图（每日更新）· 道具、徽章与更新',
+    patchValue: 'Patch 2.6.b',
+    patchNote: '2026 年 10 月 6 日核对：修复中途加入、Gloom/Citadel 复活徽章、晚加入 T-pose 骷髅和慢网络加载问题。',
+    latestUpdate: ['10月', '06', '2026', '当前', 'Patch Notes 2.6.b', '修复多种中途加入、Gloom 与 Citadel 复活徽章归属、晚加入 T-pose 骷髅以及慢网络晚加入加载问题。'],
+    latestFaq: '截至 2026 年 10 月 6 日核对，Patch 2.6.b 是最新确认版本，主要处理多种中途加入、Gloom/Citadel 复活徽章归属、晚加入 T-pose 骷髅和慢网络加载问题；更早修复及仍可能发生的玩家反馈请查看完整时间线。',
     mapParagraph: '这个页面会明确区分轮换信息和推测。请查看地图轮换指南顶部的每日更新区块，页面会每日更新；游戏和官方更新仍是当前路线的最终依据。',
     dailyFaq: 'PEAK 会更换地图轮换。请查看地图轮换指南顶部的每日更新区块，再在游戏中确认当前路线。',
   },
   es: {
     title: 'Mapa PEAK hoy (diario): objetos, insignias y novedades',
+    patchValue: 'Patch 2.6.b',
+    patchNote: 'Comprobado el 6 de octubre de 2026: entradas durante la partida, insignias de reanimación de Gloom/Citadel, esqueletos en T-pose y Loading con redes lentas.',
+    latestUpdate: ['OCT', '06', '2026', 'ACTUAL', 'Patch Notes 2.6.b', 'Corrigió varios casos de entrada durante la partida, la atribución de insignias de reanimación de Gloom y Citadel, esqueletos en T-pose y Loading de entradas tardías con redes lentas.'],
+    latestFaq: 'Patch 2.6.b es la última actualización confirmada, comprobada el 6 de octubre de 2026. Aborda entradas durante la partida, insignias de reanimación de Gloom y Citadel, esqueletos en T-pose y Loading lento; consulta la cronología para correcciones anteriores y reportes pendientes.',
     mapParagraph: 'Esta página separa la rotación verificada de la especulación. Consulta el bloque de actualización diaria en la parte superior de la guía de rotación, actualizado a diario, y confirma la ruta activa en el juego.',
     dailyFaq: 'PEAK usa una rotación cambiante. Consulta el bloque de actualización diaria en la parte superior de la guía de rotación y confirma la ruta activa en el juego.',
   },
   ja: {
     title: 'PEAK Wiki：今日のマップ（毎日更新）・アイテム、バッジと更新',
+    patchValue: 'Patch 2.6.b',
+    patchNote: '2026年10月6日確認：途中参加、Gloom/Citadel の復活バッジ、遅れて参加した際のTポーズ骸骨、低速回線のLoadingを修正。',
+    latestUpdate: ['10月', '06', '2026', '現在', 'Patch Notes 2.6.b', '途中参加、Gloom と Citadel の復活バッジ判定、遅れて参加した際のTポーズ骸骨、低速回線でのLoadingを複数修正。'],
+    latestFaq: '2026年10月6日に確認した最新の確定アップデートは Patch 2.6.b です。途中参加、Gloom/Citadel の復活バッジ、Tポーズ骸骨、低速回線のLoadingを対象にしています。以前の修正と未確認のプレイヤー報告は更新年表で確認してください。',
     mapParagraph: 'このページでは、確認済みのローテーションと推測を分けています。ローテーションガイド上部の毎日更新セクションを確認し、ゲーム内で現在のルートを確かめてください。',
     dailyFaq: 'PEAK のマップローテーションは変化します。ローテーションガイド上部の毎日更新セクションを確認し、ゲーム内で現在のルートを確かめてください。',
   },
   ko: {
     title: 'PEAK 위키: 오늘의 맵(매일 업데이트) · 아이템, 배지와 업데이트',
+    patchValue: 'Patch 2.6.b',
+    patchNote: '2026년 10월 6일 확인: 중도 참가, Gloom/Citadel 부활 배지, 늦은 참가의 T-pose 해골, 느린 네트워크 Loading을 수정했습니다.',
+    latestUpdate: ['10월', '06', '2026', '현재', 'Patch Notes 2.6.b', '중도 참가, Gloom과 Citadel 부활 배지 귀속, 늦은 참가의 T-pose 해골과 느린 네트워크 Loading 문제를 수정했습니다.',],
+    latestFaq: '2026년 10월 6일 확인 기준 최신 확정 업데이트는 Patch 2.6.b입니다. 중도 참가, Gloom/Citadel 부활 배지 귀속, 늦은 참가의 T-pose 해골과 느린 네트워크 Loading을 다룹니다. 이전 수정과 아직 확인되지 않은 플레이어 제보는 전체 연표에서 확인하세요.',
     mapParagraph: '이 페이지는 확인된 로테이션과 추측을 구분합니다. 맵 로테이션 가이드 상단의 매일 업데이트 영역을 확인하고 게임에서 현재 경로를 확인하세요.',
     dailyFaq: 'PEAK은 변화하는 맵 로테이션을 사용합니다. 맵 로테이션 가이드 상단의 매일 업데이트 영역을 확인한 뒤 게임에서 활성 경로를 확인하세요.',
   },
   de: {
     title: 'PEAK Wiki: Tageskarte (täglich), Items, Abzeichen & Updates',
+    patchValue: 'Patch 2.6.b',
+    patchNote: 'Am 6. Oktober 2026 geprüft: Mid-Game-Beitritte, Gloom/Citadel-Wiederbelebungsabzeichen, T-Pose-Skelette und Loading bei langsamen Netzwerken.',
+    latestUpdate: ['OKT', '06', '2026', 'AKTUELL', 'Patch Notes 2.6.b', 'Behebt mehrere Mid-Game-Beitritte, die Zuordnung von Gloom- und Citadel-Wiederbelebungsabzeichen, T-Pose-Skelette bei späten Beitritten und Loading bei langsamen Netzwerken.'],
+    latestFaq: 'Patch 2.6.b ist das letzte bestätigte Update, geprüft am 6. Oktober 2026. Es behandelt Mid-Game-Beitritte, Gloom- und Citadel-Wiederbelebungsabzeichen, T-Pose-Skelette und langsames Loading; die vollständige Zeitleiste nennt frühere Fixes und offene Spielerberichte.',
     mapParagraph: 'Diese Seite trennt bestätigte Rotation von Vermutungen. Sieh im täglichen Update-Bereich oben im Kartenrotations-Ratgeber nach und prüfe die aktive Route zusätzlich im Spiel.',
     dailyFaq: 'PEAK nutzt eine wechselnde Kartenrotation. Prüfe den täglichen Update-Bereich oben im Kartenrotations-Ratgeber und bestätige die aktive Route im Spiel.',
   },
   fr: {
     title: 'Wiki PEAK : carte quotidienne, objets, badges & actus',
+    patchValue: 'Patch 2.6.b',
+    patchNote: 'Vérifié le 6 octobre 2026 : entrées en cours de partie, badges de réanimation Gloom/Citadel, squelettes en T-pose et Loading sur réseau lent.',
+    latestUpdate: ['OCT', '06', '2026', 'ACTUEL', 'Patch Notes 2.6.b', 'Correction de plusieurs entrées en cours de partie, de l’attribution des badges de réanimation de Gloom et Citadel, des squelettes en T-pose et du Loading des entrées tardives sur réseau lent.'],
+    latestFaq: 'Patch 2.6.b est la dernière mise à jour confirmée, vérifiée le 6 octobre 2026. Elle concerne les entrées en cours de partie, les badges de réanimation Gloom/Citadel, les squelettes en T-pose et le Loading lent ; consultez la chronologie pour les correctifs précédents et les signalements en attente.',
     mapParagraph: 'Cette page distingue la rotation vérifiée des suppositions. Consultez la section des mises à jour quotidiennes en haut du guide de rotation, puis confirmez la route active dans le jeu.',
     dailyFaq: 'PEAK utilise une rotation variable. Consultez la section des mises à jour quotidiennes en haut du guide de rotation, puis confirmez la route active dans le jeu.',
   },
   pt: {
     title: 'Wiki PEAK: mapa diário, itens, distintivos e atualizações',
+    patchValue: 'Patch 2.6.b',
+    patchNote: 'Conferido em 6 de outubro de 2026: entradas durante a partida, distintivos de reviver de Gloom/Citadel, esqueletos em T-pose e Loading em redes lentas.',
+    latestUpdate: ['OUT', '06', '2026', 'ATUAL', 'Patch Notes 2.6.b', 'Corrigiu vários casos de entrada durante a partida, a atribuição de distintivos de reviver de Gloom e Citadel, esqueletos em T-pose e Loading de entradas tardias em redes lentas.'],
+    latestFaq: 'Patch 2.6.b é a atualização mais recente confirmada, conferida em 6 de outubro de 2026. Ela trata de entradas durante a partida, distintivos de reviver de Gloom e Citadel, esqueletos em T-pose e Loading lento; veja a linha do tempo para correções anteriores e relatos pendentes.',
     mapParagraph: 'Esta página separa a rotação verificada das suposições. Consulte a seção de atualização diária no topo do guia de rotação e confirme a rota ativa no jogo.',
     dailyFaq: 'PEAK usa uma rotação de mapas variável. Consulte a seção de atualização diária no topo do guia de rotação e confirme a rota ativa no jogo.',
   },
   it: {
     title: 'Wiki PEAK: mappa quotidiana, oggetti, badge e aggiornamenti',
+    patchValue: 'Patch 2.6.b',
+    patchNote: 'Verificato il 6 ottobre 2026: ingressi durante la partita, badge di resurrezione Gloom/Citadel, scheletri in T-pose e Loading su reti lente.',
+    latestUpdate: ['OTT', '06', '2026', 'ATTUALE', 'Patch Notes 2.6.b', 'Corretti diversi casi di ingresso durante la partita, l’attribuzione dei badge di resurrezione di Gloom e Citadel, gli scheletri in T-pose e il Loading degli ingressi tardivi su reti lente.'],
+    latestFaq: 'Patch 2.6.b è l’ultimo aggiornamento confermato, verificato il 6 ottobre 2026. Riguarda gli ingressi durante la partita, i badge di resurrezione Gloom/Citadel, gli scheletri in T-pose e il Loading lento; la cronologia completa mostra le correzioni precedenti e le segnalazioni ancora da verificare.',
     mapParagraph: 'Questa pagina separa la rotazione verificata dalle ipotesi. Consulta la sezione degli aggiornamenti quotidiani in cima alla guida alla rotazione e conferma il percorso attivo nel gioco.',
     dailyFaq: 'PEAK usa una rotazione variabile. Consulta la sezione degli aggiornamenti quotidiani in cima alla guida alla rotazione e conferma il percorso attivo nel gioco.',
   },
@@ -494,6 +530,188 @@ function formatDateLabel(locale, value) {
   if (locale === 'de') return new Intl.DateTimeFormat(localeMeta[locale].lang, { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'UTC' }).format(date);
   return new Intl.DateTimeFormat(localeMeta[locale].lang, { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(date);
 }
+
+function formatDateTimeLabel(locale, value) {
+  const date = parseDateValue(value);
+  if (!date) return String(value ?? '');
+  const formatted = new Intl.DateTimeFormat(localeMeta[locale].lang, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'UTC',
+  }).format(date);
+  return `${formatted} UTC`;
+}
+
+const todayMapDetailCopy = {
+  en: {
+    currentVersion: 'Current game version',
+    dataUpdated: 'Data updated',
+    nextResetAt: 'Next reset at',
+    poolChanges: 'Recent map-pool changes',
+    related: 'Related guides',
+    poolItems: [
+      ['Patch 2.6.a', 'The island pool was replaced with properly randomized islands.'],
+      ['Patch 2.04.a', 'Caldera and The Kiln returned to the rotation.'],
+      ['Patch 2.03.a', 'A Gloom/Citadel map batch entered the daily rotation.'],
+    ],
+    relatedLinks: [
+      ['peak-biomes-list', 'Biomes list'],
+      ['peak-gloom-guide', 'Gloom guide'],
+      ['peak-citadel-guide', 'Citadel guide'],
+      ['items', 'Item catalog'],
+    ],
+  },
+  zh: {
+    currentVersion: '当前游戏版本',
+    dataUpdated: '数据更新时间',
+    nextResetAt: '下次重置时间',
+    poolChanges: '最近地图池变化',
+    related: '相关攻略',
+    poolItems: [
+      ['Patch 2.6.a', '地图池改为正确随机的岛屿组合。'],
+      ['Patch 2.04.a', 'Caldera 与 The Kiln 回归轮换。'],
+      ['Patch 2.03.a', '包含 Gloom/Citadel 的地图批次进入每日轮换。'],
+    ],
+    relatedLinks: [
+      ['peak-biomes-list', '生物群系列表'],
+      ['peak-gloom-guide', 'Gloom 指南'],
+      ['peak-citadel-guide', 'Citadel 指南'],
+      ['items', '道具目录'],
+    ],
+  },
+  es: {
+    currentVersion: 'Versión actual del juego',
+    dataUpdated: 'Datos actualizados',
+    nextResetAt: 'Próximo reinicio a las',
+    poolChanges: 'Cambios recientes del grupo de mapas',
+    related: 'Guías relacionadas',
+    poolItems: [
+      ['Patch 2.6.a', 'El grupo de islas pasó a estar correctamente aleatorizado.'],
+      ['Patch 2.04.a', 'Caldera y The Kiln volvieron a la rotación.'],
+      ['Patch 2.03.a', 'Una tanda de mapas con Gloom/Citadel entró en la rotación diaria.'],
+    ],
+    relatedLinks: [
+      ['peak-biomes-list', 'Lista de biomas'],
+      ['peak-gloom-guide', 'Guía de Gloom'],
+      ['peak-citadel-guide', 'Guía de Citadel'],
+      ['items', 'Catálogo de objetos'],
+    ],
+  },
+  ja: {
+    currentVersion: '現在のゲームバージョン',
+    dataUpdated: 'データ更新',
+    nextResetAt: '次回リセット',
+    poolChanges: '最近のマッププール変更',
+    related: '関連ガイド',
+    poolItems: [
+      ['Patch 2.6.a', '島のプールが正しくランダム化されました。'],
+      ['Patch 2.04.a', 'Caldera と The Kiln がローテーションに戻りました。'],
+      ['Patch 2.03.a', 'Gloom/Citadel を含むマップ群がデイリーローテーションに入りました。'],
+    ],
+    relatedLinks: [
+      ['peak-biomes-list', 'バイオーム一覧'],
+      ['peak-gloom-guide', 'Gloom 攻略'],
+      ['peak-citadel-guide', 'Citadel 攻略'],
+      ['items', 'アイテム一覧'],
+    ],
+  },
+  ko: {
+    currentVersion: '현재 게임 버전',
+    dataUpdated: '데이터 업데이트',
+    nextResetAt: '다음 초기화 시각',
+    poolChanges: '최근 맵 풀 변경',
+    related: '관련 가이드',
+    poolItems: [
+      ['Patch 2.6.a', '섬 맵 풀이 올바르게 무작위화되었습니다.'],
+      ['Patch 2.04.a', 'Caldera와 The Kiln이 로테이션으로 돌아왔습니다.'],
+      ['Patch 2.03.a', 'Gloom/Citadel이 포함된 맵 묶음이 일일 로테이션에 들어왔습니다.'],
+    ],
+    relatedLinks: [
+      ['peak-biomes-list', '생물군계 목록'],
+      ['peak-gloom-guide', 'Gloom 가이드'],
+      ['peak-citadel-guide', 'Citadel 가이드'],
+      ['items', '아이템 목록'],
+    ],
+  },
+  de: {
+    currentVersion: 'Aktuelle Spielversion',
+    dataUpdated: 'Daten aktualisiert',
+    nextResetAt: 'Nächster Reset um',
+    poolChanges: 'Aktuelle Kartenpool-Änderungen',
+    related: 'Verwandte Guides',
+    poolItems: [
+      ['Patch 2.6.a', 'Der Inselpool wurde richtig zufällig gemacht.'],
+      ['Patch 2.04.a', 'Caldera und The Kiln kehrten in die Rotation zurück.'],
+      ['Patch 2.03.a', 'Eine Kartenserie mit Gloom/Citadel kam in die tägliche Rotation.'],
+    ],
+    relatedLinks: [
+      ['peak-biomes-list', 'Biome-Liste'],
+      ['peak-gloom-guide', 'Gloom-Guide'],
+      ['peak-citadel-guide', 'Citadel-Guide'],
+      ['items', 'Item-Katalog'],
+    ],
+  },
+  fr: {
+    currentVersion: 'Version actuelle du jeu',
+    dataUpdated: 'Données mises à jour',
+    nextResetAt: 'Prochaine réinitialisation à',
+    poolChanges: 'Changements récents du pool de cartes',
+    related: 'Guides associés',
+    poolItems: [
+      ['Patch 2.6.a', 'Le pool d’îles est désormais correctement aléatoire.'],
+      ['Patch 2.04.a', 'Caldera et The Kiln sont revenus dans la rotation.'],
+      ['Patch 2.03.a', 'Une série de cartes avec Gloom/Citadel est entrée dans la rotation quotidienne.'],
+    ],
+    relatedLinks: [
+      ['peak-biomes-list', 'Liste des biomes'],
+      ['peak-gloom-guide', 'Guide Gloom'],
+      ['peak-citadel-guide', 'Guide Citadel'],
+      ['items', 'Catalogue des objets'],
+    ],
+  },
+  pt: {
+    currentVersion: 'Versão atual do jogo',
+    dataUpdated: 'Dados atualizados',
+    nextResetAt: 'Próximo reinício às',
+    poolChanges: 'Mudanças recentes no conjunto de mapas',
+    related: 'Guias relacionados',
+    poolItems: [
+      ['Patch 2.6.a', 'O conjunto de ilhas passou a ser corretamente aleatório.'],
+      ['Patch 2.04.a', 'Caldera e The Kiln voltaram à rotação.'],
+      ['Patch 2.03.a', 'Um grupo de mapas com Gloom/Citadel entrou na rotação diária.'],
+    ],
+    relatedLinks: [
+      ['peak-biomes-list', 'Lista de biomas'],
+      ['peak-gloom-guide', 'Guia de Gloom'],
+      ['peak-citadel-guide', 'Guia de Citadel'],
+      ['items', 'Catálogo de itens'],
+    ],
+  },
+  it: {
+    currentVersion: 'Versione attuale del gioco',
+    dataUpdated: 'Dati aggiornati',
+    nextResetAt: 'Prossimo reset alle',
+    poolChanges: 'Cambiamenti recenti del pool di mappe',
+    related: 'Guide correlate',
+    poolItems: [
+      ['Patch 2.6.a', 'Il pool delle isole è stato reso correttamente casuale.'],
+      ['Patch 2.04.a', 'Caldera e The Kiln sono tornati nella rotazione.'],
+      ['Patch 2.03.a', 'Un gruppo di mappe con Gloom/Citadel è entrato nella rotazione giornaliera.'],
+    ],
+    relatedLinks: [
+      ['peak-biomes-list', 'Elenco dei biomi'],
+      ['peak-gloom-guide', 'Guida a Gloom'],
+      ['peak-citadel-guide', 'Guida a Citadel'],
+      ['items', 'Catalogo oggetti'],
+    ],
+  },
+};
+
+const defaultTodayMapDetailCopy = todayMapDetailCopy.en;
 
 export function formatSnapshotDate(locale, buildDate) {
   const date = formatDateLabel(locale, buildDate);
@@ -566,6 +784,8 @@ function normalizeTodayMap(data, buildDate, buildTimestamp) {
     biome: available ? data.biome : null,
     resetAt: datedSource && parseDateValue(data.resetAt) ? data.resetAt : null,
     updatedAt: datedSource ? (data.updatedAt || data.sourceFetchedAt || buildTimestamp) : buildTimestamp,
+    recordDate: data?.date || null,
+    recordUpdatedAt: data?.updatedAt || data?.sourceFetchedAt || null,
     source: datedSource ? { label: source.label || '', url: source.url } : null,
     license: datedSource && isSafeHttpUrl(data?.license?.url) ? { label: data.license.label || '', url: data.license.url } : null,
     media,
@@ -617,11 +837,15 @@ function renderTodayMapMedia(locale, data) {
 
 function renderTodayMap(locale, data, buildDate, buildTimestamp) {
   const copy = todayMapCopy[locale] ?? todayMapCopy.en;
+  const detailCopy = todayMapDetailCopy[locale] ?? defaultTodayMapDetailCopy;
   const snapshot = normalizeTodayMap(data, buildDate, buildTimestamp);
   const mapValue = snapshot.map || copy.pending;
   const routeValue = snapshot.route === 'Daily biome sequence' ? copy.dailyRoute : snapshot.route || copy.pending;
   const biomeValue = snapshot.biome || copy.pending;
   const countdown = formatCountdown(locale, snapshot.resetAt, buildTimestamp);
+  const dataUpdatedAt = snapshot.recordUpdatedAt || snapshot.updatedAt;
+  const dataUpdatedLabel = formatDateTimeLabel(locale, dataUpdatedAt);
+  const nextResetLabel = snapshot.resetAt ? formatDateTimeLabel(locale, snapshot.resetAt) : copy.resetPending;
   const sourceMarkup = snapshot.source
     ? `<p>${escapeHtml(copy.attributionPrefix)}${escapeHtml(copy.wikiSourceLabel || snapshot.source.label || copy.source)}${escapeHtml(copy.attributionBetween)}${escapeHtml(copy.licenseLabel)}${escapeHtml(copy.attributionSuffix)}</p><p class="today-map-estimate-note">${escapeHtml(copy.estimateNote)}</p>`
     : `<span>${escapeHtml(copy.pending)}</span>`;
@@ -630,7 +854,9 @@ function renderTodayMap(locale, data, buildDate, buildTimestamp) {
     ? `<h3>${escapeHtml(mapValue)}</h3><p class="today-map-route">${escapeHtml(routeValue)}</p>`
     : `<div class="today-map-pending-copy"><h3>${escapeHtml(copy.pendingTitle)}</h3><p>${escapeHtml(copy.pendingBody)}</p></div>`;
   const statusClass = snapshot.estimated ? ' is-estimated' : snapshot.available ? ' is-verified' : '';
-  return `<section id="today-map" class="today-map-section" aria-labelledby="today-map-title"><div class="container today-map-heading"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h2 id="today-map-title">${escapeHtml(copy.title)}</h2><p>${escapeHtml(copy.lede)}</p></div><span class="today-map-status${statusClass}">${escapeHtml(status)}</span></div><div class="container today-map-grid"><div>${renderTodayMapMedia(locale, snapshot)}</div><div class="today-map-panel"><div class="today-map-panel-top"><span class="status-pill"><i></i>${escapeHtml(status)}</span><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></div>${panel}<dl class="today-map-facts"><div><dt>${escapeHtml(copy.currentMap)}</dt><dd>${escapeHtml(mapValue)}</dd></div><div><dt>${escapeHtml(copy.route)}</dt><dd>${escapeHtml(routeValue)}</dd></div><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(countdown)}</dd></div></dl><div class="today-map-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="today-map-updated"><span>${escapeHtml(copy.updated)}</span> ${escapeHtml(formatDateLabel(locale, snapshot.updatedAt))}</p>${snapshot.available ? '' : `<p class="today-map-note">${escapeHtml(copy.pendingNote)}</p>`}</div></div></section>`;
+  const poolItems = detailCopy.poolItems.map(([version, text]) => `<li><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">${escapeHtml(version)}</a> ${escapeHtml(text)}</li>`).join('');
+  const relatedLinks = detailCopy.relatedLinks.map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
+  return `<section id="today-map" class="today-map-section" aria-labelledby="today-map-title"><div class="container today-map-heading"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h2 id="today-map-title">${escapeHtml(copy.title)}</h2><p>${escapeHtml(copy.lede)}</p></div><span class="today-map-status${statusClass}">${escapeHtml(status)}</span></div><div class="container today-map-grid"><div>${renderTodayMapMedia(locale, snapshot)}</div><div class="today-map-panel"><div class="today-map-panel-top"><span class="status-pill"><i></i>${escapeHtml(status)}</span><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></div>${panel}<dl class="today-map-facts"><div><dt>${escapeHtml(copy.currentMap)}</dt><dd>${escapeHtml(mapValue)}</dd></div><div><dt>${escapeHtml(copy.route)}</dt><dd>${escapeHtml(routeValue)}</dd></div><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(countdown)}</dd></div><div><dt>${escapeHtml(detailCopy.currentVersion)}</dt><dd><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">2.6.b</a></dd></div><div><dt>${escapeHtml(detailCopy.nextResetAt)}</dt><dd><time datetime="${escapeHtml(snapshot.resetAt || '')}">${escapeHtml(nextResetLabel)}</time></dd></div><div><dt>${escapeHtml(detailCopy.dataUpdated)}</dt><dd><time datetime="${escapeHtml(dataUpdatedAt || '')}">${escapeHtml(dataUpdatedLabel)}</time></dd></div></dl><div class="today-map-pool-changes"><h3>${escapeHtml(detailCopy.poolChanges)}</h3><ul>${poolItems}</ul></div><div class="today-map-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="today-map-updated"><span>${escapeHtml(copy.updated)}</span> ${escapeHtml(formatDateTimeLabel(locale, snapshot.updatedAt))}</p><nav class="today-map-related" aria-label="${escapeHtml(detailCopy.related)}"><span>${escapeHtml(detailCopy.related)}</span>${relatedLinks}</nav>${snapshot.available ? '' : `<p class="today-map-note">${escapeHtml(copy.pendingNote)}</p>`}</div></div></section>`;
 }
 
 export function injectTodayMapSection(html, locale, data, buildDate, buildTimestamp) {
@@ -1122,14 +1348,20 @@ function renderHomeBase(locale, options = {}) {
     locale,
     meta: homepageCopy ? { ...sourceCopy.meta, title: homepageCopy.title } : sourceCopy.meta,
     hero: { ...sourceCopy.hero, eyebrow: formatHeroSnapshot(locale, buildDate) },
+    signal: homepageCopy?.patchValue
+      ? { ...sourceCopy.signal, patchValue: homepageCopy.patchValue, patchNote: homepageCopy.patchNote }
+      : sourceCopy.signal,
     ui: { ...sourceCopy.ui, snapshot: formatSnapshotDate(locale, buildDate) },
     map: {
       ...sourceCopy.map,
       date: formatDateLabel(locale, buildDate),
       paragraphs: homepageCopy ? [sourceCopy.map.paragraphs[0], homepageCopy.mapParagraph] : sourceCopy.map.paragraphs,
     },
+    updates: homepageCopy?.latestUpdate
+      ? { ...sourceCopy.updates, rows: [homepageCopy.latestUpdate, ...sourceCopy.updates.rows.slice(1)] }
+      : sourceCopy.updates,
     faq: homepageCopy
-      ? { ...sourceCopy.faq, items: sourceCopy.faq.items.map((item, index) => index === 3 ? [item[0], homepageCopy.dailyFaq] : item) }
+      ? { ...sourceCopy.faq, items: sourceCopy.faq.items.map((item, index) => index === 3 ? [item[0], homepageCopy.dailyFaq] : index === 4 && homepageCopy.latestFaq ? [item[0], homepageCopy.latestFaq] : item) }
       : sourceCopy.faq,
   };
   const controls = HOME_CONTROL_COPY[locale] ?? HOME_CONTROL_COPY.en;
@@ -1260,8 +1492,13 @@ function renderMapGuideHtml(locale, options = {}) {
     return `<section id="${escapeHtml(section.id)}" class="article-section"><h2>${escapeHtml(section.title)}</h2>${paragraphs}${image}${bullets}${table}</section>`;
   }).join('');
   const faq = guide.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary><h3>${escapeHtml(question)}</h3></summary><p>${escapeHtml(answer)}</p></details>`).join('');
+  const mapRelatedPages = ['peak-biomes-list', 'peak-gloom-guide', 'peak-citadel-guide', 'items'];
+  const mapRelatedLinks = mapRelatedPages.map((page) => {
+    const label = page === 'items' ? copy.database.title : localizedArticleGuide(locale, page).h1;
+    return `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`;
+  }).join('');
   return `${head(locale, 'map-rotation', guide.meta.title, guide.meta.description, guide.meta.schema, options)}
-  <body class="article-page"><div id="top"></div>${header(locale, 'map-rotation', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(guide.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(guide.related.homeAnchor)}</p><h1 id="article-title">${escapeHtml(guide.h1)}</h1><p class="article-hero-lede">${escapeHtml(guide.intro)}</p></div>${renderArticleImage({ src: '/media/peak-map-route.webp', alt: locale === 'en' ? 'PEAK route screenshot with a rope crossing a volcanic hazard' : guide.sections[1].image.alt, caption: locale === 'en' ? 'Official Steam screenshot - a route decision is more useful than an unverified live-map claim.' : guide.sections[1].image.caption })}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#rotation-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(guide.answerLabel)}</p><h2 id="answer-title">${escapeHtml(guide.answerLabel)}</h2><p>${escapeHtml(guide.answer)}</p></section>${sections}<section id="rotation-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noopener">${escapeHtml(guide.source.news)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#maps">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a></nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
+  <body class="article-page"><div id="top"></div>${header(locale, 'map-rotation', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(guide.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(guide.related.homeAnchor)}</p><h1 id="article-title">${escapeHtml(guide.h1)}</h1><p class="article-hero-lede">${escapeHtml(guide.intro)}</p></div>${renderArticleImage({ src: '/media/peak-map-route.webp', alt: locale === 'en' ? 'PEAK route screenshot with a rope crossing a volcanic hazard' : guide.sections[1].image.alt, caption: locale === 'en' ? 'Official Steam screenshot - a route decision is more useful than an unverified live-map claim.' : guide.sections[1].image.caption })}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#rotation-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(guide.answerLabel)}</p><h2 id="answer-title">${escapeHtml(guide.answerLabel)}</h2><p>${escapeHtml(guide.answer)}</p></section>${sections}<section id="rotation-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noopener">${escapeHtml(guide.source.news)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#maps">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a>${mapRelatedLinks}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
 }
 
 export function renderMapGuide(locale, options = {}) {

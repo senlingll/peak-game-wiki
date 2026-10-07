@@ -1697,6 +1697,65 @@ img {
   overflow-wrap: anywhere;
 }
 
+.today-map-facts a,
+.today-map-pool-changes a,
+.today-map-related a {
+  color: var(--coral-dark);
+  text-decoration: none;
+}
+
+.today-map-facts a:hover,
+.today-map-pool-changes a:hover,
+.today-map-related a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.today-map-pool-changes {
+  margin-top: 24px;
+  padding-top: 17px;
+  border-top: 1px solid var(--line);
+}
+
+.today-map-pool-changes h3 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.today-map-pool-changes ul {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 17px;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.today-map-related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 13px;
+  align-items: baseline;
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px dashed var(--line);
+  font-size: 11px;
+}
+
+.today-map-related > span {
+  flex: 1 1 100%;
+  color: var(--ink-soft);
+  font-weight: 850;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 .today-map-source {
   display: flex;
   flex-wrap: wrap;
