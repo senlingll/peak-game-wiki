@@ -1307,7 +1307,7 @@ function renderHeader(locale, page, copy) {
 }
 
 function header(locale, page, copy) {
-  return renderHeader(locale, page, copy);
+  return `${renderHeader(locale, page, copy)}<div class="ad-slot ad-slot-header">${nativeBanner()}</div>`;
 }
 
 function renderItemIconCredit(locale) {
@@ -1394,6 +1394,7 @@ export function renderHome(locale, options = {}) {
   const buildDate = resolveBuildDate(options);
   const todayMapHref = `${routeFor(locale, 'map-rotation')}#today-map`;
   const html = normalizeSteamNewsLinks(renderHomeBase(locale, options))
+    .replace(`<div class="ad-slot ad-slot-top">${nativeBanner()}</div>`, '')
     .replace('datetime="2026-08-17"', `datetime="${escapeHtml(buildDate)}"`)
     .replace('<a class="button button-primary" href="#maps">', `<a class="button button-primary" href="${todayMapHref}">`)
     .replace(/(<section id="maps"[\s\S]*?<div class="container section-heading-row">[\s\S]*?)<span class="section-kicker">([\s\S]*?)<\/span>/, `$1<a class="section-kicker" href="${todayMapHref}">$2</a>`);
