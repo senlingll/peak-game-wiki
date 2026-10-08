@@ -1,24 +1,65 @@
 # PEAK Game Wiki
 
-> An independent, source-aware PEAK reference for map rotation notes, item categories, badge and achievement context, co-op questions, and official update links.
+> An independent, multilingual, source-aware reference for the Steam co-op climbing game PEAK. The site covers map rotation, biomes, items, badges, achievements, co-op play, troubleshooting, and update context.
 
-## Core Content
-- [PEAK Game Wiki homepage](https://peak-game.wiki/): The main reference hub for map planning, items, updates, progress tracking, co-op notes, and FAQ answers.
-- [PEAK map rotation guide](https://peak-game.wiki/map-rotation): An evergreen guide to route context, biome checks, equipment planning, and the limits of live-map claims.
-- [PEAK biomes list](https://peak-game.wiki/peak-biomes-list): A source-aware list of Shore, Tropics, Roots, Alpine, Mesa, Caldera, The Kiln, Gloom, and Citadel, with terrain-reading notes and a dated map entry.
-- [PEAK game update log](https://peak-game.wiki/peak-game-update): A dated, source-aware log of official patch titles, content announcements, map-rotation context, and the current daily-map entry.
-- [What is PEAK?](https://peak-game.wiki/what-is-peak-game): A beginner guide to PEAK's co-op climbing loop, maps, biomes, rotation vocabulary, first-run checklist, and current daily-map entry.
-- [PEAK map rotation schedule](https://peak-game.wiki/peak-map-rotation-schedule): A dated reset-time reference with UTC and local conversions, recent verified rotation records, today's map entry, and patch-aware caveats.
-- [PEAK achievements guide](https://peak-game.wiki/achievements): A version-aware guide to Steam achievements, in-game badges, progress tracking, custom-run checks, and missing-unlock troubleshooting.
-- [PEAK Photon troubleshooting guide](https://peak-game.wiki/peak-photon-troubleshooting): Source-aware help for Disconnected from Photon and ClientTimeout, with reversible checks, official guidance, and player reports clearly separated.
-- [How to revive in PEAK](https://peak-game.wiki/peak-revive-guide): A source-aware co-op guide that separates a downed or unconscious Scout from a dead Scout, explains Scout Effigy, and covers missing prompts, revive points, and final-level limits.
-- [PEAK cooking guide](https://peak-game.wiki/peak-cooking-guide): A dated cooking reference for the Portable Stove, documented food effects, non-food hazards, and the newer official Amulet patch rule.
+## Site Identity
 
-## Common Resources
-- [About](https://peak-game.wiki/about): Project purpose, source policy, and independence statement.
-- [Privacy policy](https://peak-game.wiki/privacy): Analytics, advertising, cookie, and third-party-link disclosure.
-- [Terms and disclaimer](https://peak-game.wiki/terms): Fan-site, accuracy, and external-source limitations.
+- Canonical site: https://peak-game.wiki/
+- Site type: Independent fan reference; not operated by or endorsed by the PEAK developers or publisher.
+- Primary audience: Players who need a route check, item context, co-op guidance, achievement help, or version-aware update notes before a climb.
+- Current build note: Pages and daily map data are generated at build time. The date shown on a page is the freshness boundary for that snapshot.
 
-## Latest Updates
-- [Current daily map record](https://peak-game.wiki/map-rotation): The build-time map entry and route context for August 31, 2026.
-- [Official PEAK Steam news](https://store.steampowered.com/news/app/3527290): The first-party feed for Patch 2.03.a and other update titles dated August 27, 2026.
+## Main Pages
+
+- [Homepage](https://peak-game.wiki/): Daily-map entry point, update desk, item database, progress context, co-op field notes, FAQ, and official source links.
+- [Map today and rotation guide](https://peak-game.wiki/map-rotation): Build-time map estimate, reset context, biome vocabulary, route checks, and planning guidance.
+- [Items list](https://peak-game.wiki/items/): Searchable catalog of 134 item entries with categories, names, stats or locations where maintained, and source boundaries.
+- [Achievements guide](https://peak-game.wiki/achievements): Steam achievement tracking, in-game badge distinction, custom-run checks, and missing-unlock troubleshooting.
+- [Badges guide](https://peak-game.wiki/badges-guide/): In-game badge groups, unlock context, route notes, and source-aware progress guidance.
+- [Contact](https://peak-game.wiki/contact/): Source-backed correction and feedback route.
+- [About](https://peak-game.wiki/about), [Privacy](https://peak-game.wiki/privacy), and [Terms](https://peak-game.wiki/terms): Project scope, data disclosures, independence statement, and accuracy limits.
+
+## Guide Index
+
+- [PEAK biomes list](https://peak-game.wiki/peak-biomes-list)
+- [PEAK game update timeline](https://peak-game.wiki/peak-game-update)
+- [What is PEAK?](https://peak-game.wiki/what-is-peak-game)
+- [PEAK game price](https://peak-game.wiki/peak-game-price)
+- [PEAK map rotation schedule](https://peak-game.wiki/peak-map-rotation-schedule)
+- [PEAK levels, biomes, and difficulty](https://peak-game.wiki/peak-levels-biomes-difficulty)
+- [PEAK game tips](https://peak-game.wiki/peak-game-tips)
+- [How to play PEAK](https://peak-game.wiki/how-to-play-peak)
+- [Rescue Claw guide](https://peak-game.wiki/rescue-claw)
+- [How to revive in PEAK](https://peak-game.wiki/peak-revive-guide)
+- [Rope and chain guide](https://peak-game.wiki/rope-chain)
+- [Room codes and multiplayer](https://peak-game.wiki/room-codes/)
+- [Photon troubleshooting](https://peak-game.wiki/peak-photon-troubleshooting)
+- [Cooking guide](https://peak-game.wiki/peak-cooking-guide)
+- [Secret ending guide](https://peak-game.wiki/peak-secret-ending-guide)
+- [Multiplayer troubleshooting](https://peak-game.wiki/peak-multiplayer-troubleshooting)
+- [Achievements not unlocking](https://peak-game.wiki/peak-achievements-not-unlocking)
+- [Save and reconnect guide](https://peak-game.wiki/peak-save-and-reconnect)
+- [Gloom guide](https://peak-game.wiki/peak-gloom-guide)
+- [Citadel guide](https://peak-game.wiki/peak-citadel-guide)
+- [Solo and public lobbies](https://peak-game.wiki/peak-solo-and-public-lobbies)
+
+## Important Resources
+
+- [Full site context](https://peak-game.wiki/llms-full.txt)
+- [Sitemap](https://peak-game.wiki/sitemap.xml)
+- [Robots policy](https://peak-game.wiki/robots.txt)
+- [Official PEAK Steam store](https://store.steampowered.com/app/3527290/PEAK/)
+- [Official PEAK Steam news](https://store.steampowered.com/news/app/3527290)
+- [Public correction tracker](https://github.com/senlingll/peak-game-wiki/issues)
+
+## Multilingual Routes
+
+The same page set is available in the existing locale routes: English at `/`, Chinese at `/zh/`, Spanish at `/es/`, Japanese at `/ja/`, French at `/fr/`, German at `/de/`, Portuguese at `/pt/`, Korean at `/ko/`, and Italian at `/it/`. The root `llms.txt` and `llms-full.txt` are the default English machine-readable resources.
+
+## Editorial Boundaries
+
+- Treat official Steam store and Steam news links as the authority for official names, dates, platform statements, update titles, and first-party media.
+- Treat practical route, loadout, and troubleshooting advice as editorial field guidance unless a page links a first-party source.
+- Do not infer live map results, fixed rotation sequences, exact item effects, prices, platforms, downloads, or achievement conditions when the current source does not verify them.
+- Recheck time-sensitive map, patch, item, multiplayer, and achievement details in the current game and official sources after an update.
+- Last reviewed for this resource: 2026-10-08.

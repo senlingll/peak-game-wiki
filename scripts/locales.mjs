@@ -10,6 +10,7 @@ import { itemsPageCopy } from './items-page-locales.mjs';
 import { badgeGuideCopy, badgeGuideEntries, badgeGuideSource, badgeGrantCopy, badgeCardLabels } from './badges-guide.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
+const STYLESHEET_HREF = '/styles.css?v=20261008-geo';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
 const STEAM_NEWS_API_HTML_URL = 'https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json';
 const SUPPORT_EMAIL = 'support@peak-game.wiki';
@@ -48,6 +49,20 @@ const mapGuideHeroMedia = {
 };
 
 export const localeOrder = ['en', 'zh', 'es', 'ja', 'fr', 'de', 'pt', 'ko', 'it'];
+
+const geoFooterCopy = {
+  en: { eyebrow: 'AI-readable resources', title: 'Ask with this site as your source', description: 'Use the concise or full context file, or start an assistant with a source-aware prompt.', index: 'llms.txt', full: 'llms-full.txt', chatgpt: 'Ask ChatGPT', claude: 'Ask Claude', perplexity: 'Ask Perplexity' },
+  zh: { eyebrow: 'AI 可读资源', title: '让 AI 以本站作为来源', description: '使用简明或完整上下文文件，或用带来源边界的提示词开始提问。', index: 'llms.txt', full: 'llms-full.txt', chatgpt: '询问 ChatGPT', claude: '询问 Claude', perplexity: '询问 Perplexity' },
+  es: { eyebrow: 'Recursos legibles por IA', title: 'Pregunta usando este sitio como fuente', description: 'Usa el contexto breve o completo, o inicia un asistente con un aviso que exige fuentes.', index: 'llms.txt', full: 'llms-full.txt', chatgpt: 'Preguntar a ChatGPT', claude: 'Preguntar a Claude', perplexity: 'Preguntar a Perplexity' },
+  ja: { eyebrow: 'AI 向けリソース', title: 'このサイトを情報源にして質問', description: '簡易または完全なコンテキストを使うか、出典を明示するプロンプトでアシスタントを始められます。', index: 'llms.txt', full: 'llms-full.txt', chatgpt: 'ChatGPT に質問', claude: 'Claude に質問', perplexity: 'Perplexity に質問' },
+  fr: { eyebrow: 'Ressources lisibles par IA', title: 'Interroger avec ce site comme source', description: 'Utilisez le contexte court ou complet, ou démarrez un assistant avec une consigne qui impose les sources.', index: 'llms.txt', full: 'llms-full.txt', chatgpt: 'Demander à ChatGPT', claude: 'Demander à Claude', perplexity: 'Demander à Perplexity' },
+  de: { eyebrow: 'KI-lesbare Ressourcen', title: 'Mit dieser Website als Quelle fragen', description: 'Nutze den kurzen oder vollständigen Kontext oder starte einen Assistenten mit einer quellenbewussten Vorgabe.', index: 'llms.txt', full: 'llms-full.txt', chatgpt: 'ChatGPT fragen', claude: 'Claude fragen', perplexity: 'Perplexity fragen' },
+  pt: { eyebrow: 'Recursos legíveis por IA', title: 'Pergunte usando este site como fonte', description: 'Use o contexto resumido ou completo, ou inicie um assistente com uma instrução que exige fontes.', index: 'llms.txt', full: 'llms-full.txt', chatgpt: 'Perguntar ao ChatGPT', claude: 'Perguntar ao Claude', perplexity: 'Perguntar ao Perplexity' },
+  ko: { eyebrow: 'AI 읽기용 리소스', title: '이 사이트를 출처로 질문하기', description: '간단한 컨텍스트나 전체 컨텍스트를 사용하거나 출처를 요구하는 프롬프트로 어시스턴트를 시작하세요.', index: 'llms.txt', full: 'llms-full.txt', chatgpt: 'ChatGPT에 질문', claude: 'Claude에 질문', perplexity: 'Perplexity에 질문' },
+  it: { eyebrow: 'Risorse leggibili dall’IA', title: 'Fai domande usando questo sito come fonte', description: 'Usa il contesto breve o completo, oppure avvia un assistente con un prompt che richiede le fonti.', index: 'llms.txt', full: 'llms-full.txt', chatgpt: 'Chiedi a ChatGPT', claude: 'Chiedi a Claude', perplexity: 'Chiedi a Perplexity' },
+};
+
+const GEO_ASSISTANT_PROMPT = `Use ${BASE_URL} as a source. Answer my question using the most relevant page from this website. Cite the relevant page, separate official facts from editorial guidance, and do not invent prices, features, platforms, downloads, or unsupported claims.`;
 
 export const localeMeta = {
   en: { lang: 'en', label: 'English', short: 'EN' },
@@ -491,6 +506,7 @@ for (const code of localeOrder) {
   if (!todayMapCopy[code]) throw new Error(`Missing today's map copy: ${code}`);
   for (const key of requiredKeys) if (!locale[key]) throw new Error(`Missing ${key} configuration: ${code}`);
   for (const page of ['about', 'privacy', 'terms']) if (!locale.legal[page]) throw new Error(`Missing legal copy: ${code}/${page}`);
+  if (!geoFooterCopy[code]) throw new Error(`Missing GEO footer copy: ${code}`);
   localeMeta[code].copy = locale;
 }
 
@@ -1278,7 +1294,7 @@ function head(locale, page, title, description, schema, options = {}) {
     scripts.push({ '@context': 'https://schema.org', '@type': 'ContactPage', '@id': `${canonical}#contact`, url: canonical, name: contact.h1, description: pageDescription, inLanguage: meta.lang, isPartOf: { '@id': `${BASE_URL}/#website` }, about: { '@type': 'VideoGame', name: 'PEAK' }, mainEntity: { '@type': 'Organization', name: 'PEAK Game Wiki', url: BASE_URL, email: SUPPORT_EMAIL, contactPoint: { '@type': 'ContactPoint', email: SUPPORT_EMAIL, contactType: contact.emailTitle } } });
     scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: contact.h1, item: canonical }] });
   }
-  return `<!doctype html>\n<html lang="${meta.lang}" data-locale="${locale}">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <title>${escapeHtml(title)}</title>\n    <meta name="description" content="${escapeHtml(pageDescription)}" />\n    <meta name="theme-color" content="#17212d" />\n    <link rel="canonical" href="${canonical}" />\n    ${alternateLinks(page)}\n    <link rel="icon" href="/assets/favicon.ico" sizes="any" />\n    <link rel="manifest" href="/manifest.webmanifest" />\n    \n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(pageDescription)}" />\n    <meta property="og:image" content="${socialImage}" />\n    <meta property="og:url" content="${canonical}" />\n    <meta property="og:locale" content="${meta.lang}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:title" content="${escapeHtml(title)}" />\n    <meta name="twitter:description" content="${escapeHtml(pageDescription)}" />\n    <meta name="twitter:image" content="${socialImage}" />\n    <link rel="stylesheet" href="/styles.css" />\n    \n    <script>\n      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","y3c9ye040x");\n    </script>${scripts.map((value) => `\n    <script type="application/ld+json">${jsonLd(value)}</script>`).join('')}\n  </head>`;
+  return `<!doctype html>\n<html lang="${meta.lang}" data-locale="${locale}">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <title>${escapeHtml(title)}</title>\n    <meta name="description" content="${escapeHtml(pageDescription)}" />\n    <meta name="theme-color" content="#17212d" />\n    <link rel="canonical" href="${canonical}" />\n    ${alternateLinks(page)}\n    <link rel="icon" href="/assets/favicon.ico" sizes="any" />\n    <link rel="manifest" href="/manifest.webmanifest" />\n    \n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(pageDescription)}" />\n    <meta property="og:image" content="${socialImage}" />\n    <meta property="og:url" content="${canonical}" />\n    <meta property="og:locale" content="${meta.lang}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:title" content="${escapeHtml(title)}" />\n    <meta name="twitter:description" content="${escapeHtml(pageDescription)}" />\n    <meta name="twitter:image" content="${socialImage}" />\n    <link rel="stylesheet" href="${STYLESHEET_HREF}" />\n    \n    <script>\n      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","y3c9ye040x");\n    </script>${scripts.map((value) => `\n    <script type="application/ld+json">${jsonLd(value)}</script>`).join('')}\n  </head>`;
 }
 
 const NATIVE_BANNER_SRC = 'https://pl30883299.profitableratecpmnetwork.com/3531361214596141d25dc216fd8ebe0f/invoke.js';
@@ -1315,8 +1331,19 @@ function renderItemIconCredit(locale) {
   return `${escapeHtml(credit.beforeSource)}<a href="${PEAK_WIKI_ITEMS_URL}" target="_blank" rel="noopener">${escapeHtml(credit.sourceLabel)}</a>${escapeHtml(credit.beforeLicense)}<a href="${CC_BY_SA_URL}" target="_blank" rel="license noopener">${escapeHtml(credit.licenseLabel)}</a>${escapeHtml(credit.afterLicense)}`;
 }
 
+function geoAssistantHref(service) {
+  const encodedPrompt = encodeURIComponent(GEO_ASSISTANT_PROMPT);
+  const baseUrls = {
+    chatgpt: 'https://chatgpt.com/?q=',
+    claude: 'https://claude.ai/new?q=',
+    perplexity: 'https://www.perplexity.ai/search/new?q=',
+  };
+  return `${baseUrls[service]}${encodedPrompt}`;
+}
+
 function footer(locale, copy) {
-  return `<footer class="site-footer"><div class="container footer-main"><div class="footer-brand"><span class="brand-mark brand-mark-small" aria-hidden="true"><img src="/assets/peak-wiki-logo.png" alt="" width="40" height="40" /><span class="brand-fallback">P</span></span><div><strong>PEAK Game Wiki</strong><span>${escapeHtml(copy.ui.footerTag)}</span></div></div><div class="footer-links"><a href="${routeFor(locale, 'about')}">${escapeHtml(copy.legal.about.eyebrow)}</a><a href="${routeFor(locale, 'privacy')}">${escapeHtml(copy.legal.privacy.eyebrow)}</a><a href="${routeFor(locale, 'terms')}">${escapeHtml(copy.legal.terms.eyebrow)}</a><a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a><a href="${ISSUE_TRACKER_URL}" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.sourceNotes)}</a></div></div><div class="container footer-bottom"><span>${escapeHtml(copy.ui.independent)} \u00b7 ${escapeHtml(copy.ui.snapshot)}</span><span>${escapeHtml(copy.ui.officialLabel)}</span><span class="footer-credit">${renderItemIconCredit(locale)}</span></div></footer>`;
+  const geo = geoFooterCopy[locale] ?? geoFooterCopy.en;
+  return `<footer class="site-footer"><div class="container footer-main"><div class="footer-brand"><span class="brand-mark brand-mark-small" aria-hidden="true"><img src="/assets/peak-wiki-logo.png" alt="" width="40" height="40" /><span class="brand-fallback">P</span></span><div><strong>PEAK Game Wiki</strong><span>${escapeHtml(copy.ui.footerTag)}</span></div></div><div class="footer-links"><a href="${routeFor(locale, 'about')}">${escapeHtml(copy.legal.about.eyebrow)}</a><a href="${routeFor(locale, 'privacy')}">${escapeHtml(copy.legal.privacy.eyebrow)}</a><a href="${routeFor(locale, 'terms')}">${escapeHtml(copy.legal.terms.eyebrow)}</a><a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a><a href="${ISSUE_TRACKER_URL}" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.sourceNotes)}</a></div></div><section class="footer-geo" aria-labelledby="footer-geo-title"><div class="container footer-geo-inner"><div class="footer-geo-copy"><p class="eyebrow">${escapeHtml(geo.eyebrow)}</p><h2 id="footer-geo-title">${escapeHtml(geo.title)}</h2><p>${escapeHtml(geo.description)}</p></div><div class="footer-geo-links" aria-label="${escapeHtml(geo.title)}"><a href="/llms.txt">${escapeHtml(geo.index)}</a><a href="/llms-full.txt">${escapeHtml(geo.full)}</a><a href="${geoAssistantHref('chatgpt')}" target="_blank" rel="noopener noreferrer">${escapeHtml(geo.chatgpt)}</a><a href="${geoAssistantHref('claude')}" target="_blank" rel="noopener noreferrer">${escapeHtml(geo.claude)}</a><a href="${geoAssistantHref('perplexity')}" target="_blank" rel="noopener noreferrer">${escapeHtml(geo.perplexity)}</a></div></div></section><div class="container footer-bottom"><span>${escapeHtml(copy.ui.independent)} \u00b7 ${escapeHtml(copy.ui.snapshot)}</span><span>${escapeHtml(copy.ui.officialLabel)}</span><span class="footer-credit">${renderItemIconCredit(locale)}</span></div></footer>`;
 }
 
 const ITEM_ICON_ALIASES = new Map([
@@ -1685,4 +1712,4 @@ export function renderSitemap(buildDate = '2026-08-19', publishedArticles = arti
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows}\n</urlset>\n`;
 }
 
-export { BASE_URL, escapeHtml, routeFor };
+export { BASE_URL, STYLESHEET_HREF, escapeHtml, routeFor };

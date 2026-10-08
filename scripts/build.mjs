@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderBadgesGuide, renderContact, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap } from './locales.mjs';
+import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderBadgesGuide, renderContact, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap, STYLESHEET_HREF } from './locales.mjs';
 import { articleOrder } from './article-guides.mjs';
 import { buildTodayMapSnapshot } from './today-map-rotation.mjs';
 
@@ -79,7 +79,7 @@ const notFoundHtml = `<!doctype html>
     <meta name="theme-color" content="#17212d" />
     <title>Page not found | PEAK Game Wiki</title>
     <link rel="icon" href="/assets/favicon.ico" sizes="any" />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="${STYLESHEET_HREF}" />
   </head>
   <body class="legal-page">
     <main class="legal-main">
