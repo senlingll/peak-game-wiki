@@ -14,6 +14,7 @@ import { peakGamePriceTranslations } from './article-price-locales.mjs';
 import { peakSecretEndingTranslations } from './article-secret-ending-locales.mjs';
 import { articleSupplementalLocaleTranslations } from './article-supplemental-locales.mjs';
 import { articleSupplementalGeneratedLocaleTranslations } from './article-supplemental-generated-locales.mjs';
+import { peakMultiplayerModTranslations } from './article-multiplayer-mod-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1312,4 +1313,8 @@ for (const [locale, translations] of Object.entries(articleSupplementalGenerated
       ...translation,
     };
   }
+}
+
+for (const [locale, translation] of Object.entries(peakMultiplayerModTranslations)) {
+  articleLocaleTranslations[locale]['peak-multiplayer-mod'] = translation;
 }

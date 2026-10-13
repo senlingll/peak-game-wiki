@@ -22,6 +22,7 @@ export const articleOrder = [
   'peak-gloom-guide',
   'peak-citadel-guide',
   'peak-solo-and-public-lobbies',
+  'peak-multiplayer-mod',
 ];
 
 const officialNewsUrl = 'https://store.steampowered.com/news/app/3527290';

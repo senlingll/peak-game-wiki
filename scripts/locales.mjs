@@ -1651,7 +1651,7 @@ export function renderArticlePage(locale, slug, options = {}) {
   const faq = article.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary><h3>${renderArticleInline(question, locale, publishedArticles)}</h3></summary><p>${renderArticleInline(answer, locale, publishedArticles)}</p></details>`).join('');
   const sourceLinks = article.source.links.filter(([, url]) => isSafeHttpUrl(url)).map(([label, url]) => {
     const hostname = new URL(url).hostname;
-    const rel = url.includes('steamcommunity.com/') || hostname === 'peak.wiki.gg' || hostname.endsWith('.peak.wiki.gg') ? 'nofollow noopener' : 'noopener';
+    const rel = url.includes('steamcommunity.com/') || hostname === 'peak.wiki.gg' || hostname.endsWith('.peak.wiki.gg') || hostname === 'thunderstore.io' || hostname.endsWith('.thunderstore.io') ? 'nofollow noopener' : 'noopener';
     return `<a href="${escapeHtml(url)}" target="_blank" rel="${rel}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`;
   }).join('');
   const related = article.related.filter(([page]) => page === 'map-rotation' || page === 'achievements' || page === 'items' || page === 'badges-guide' || publishedArticles.includes(page)).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');

@@ -64,6 +64,7 @@ Each guide below is a crawlable page with localized alternates where the route e
 - https://peak-game.wiki/peak-gloom-guide - Gloom Guide: route planning, badges, update context, revives, and save boundaries.
 - https://peak-game.wiki/peak-citadel-guide - Citadel Guide: traps, Medieval History context, saves, reconnects, and revives.
 - https://peak-game.wiki/peak-solo-and-public-lobbies - Solo and Public Lobbies: official multiplayer facts, solo planning, finding a group, and first-run checks.
+- https://peak-game.wiki/peak-multiplayer-mod - PEAK Multiplayer Mod: Thunderstore and r2modman installation, host/client requirements, profile matching, compatibility checks, and reversible troubleshooting.
 
 ## 4. FAQ and Common Questions
 
@@ -91,6 +92,10 @@ No. Steam achievements are platform progress; in-game badges are a separate game
 
 Pending means the current repository sources do not verify the claim strongly enough for a definitive statement. The editor leaves the gap visible and points to the current game or official source rather than filling it by inference.
 
+### How do I install a PEAK multiplayer mod?
+
+Use the current PEAK community package page on Thunderstore and a supported profile manager such as r2modman. Read the package version, dependency list, and host/client requirement, then compare the full profile with friends and test a fresh lobby before loading a valuable save. Community packages are not official PEAK features, and a package page is the authority for its own compatibility notes.
+
 ## 5. Sources and Fact Boundaries
 
 ### Official facts
@@ -115,7 +120,7 @@ Community-maintained item or map references may be credited on the relevant page
 - Patch titles and update summaries are dated snapshots; the official Steam post remains the authority for full mechanics.
 - Prices, platforms, item effects, achievement conditions, multiplayer behavior, and save behavior can change with releases or regional settings.
 - When a source cannot be checked, the site uses pending or cautious language. It does not infer a price, feature, platform, download, fixed route, or unsupported product conclusion.
-- Last reviewed for this resource: 2026-10-08.
+- Last reviewed for this resource: 2026-10-14.
 
 ## 7. Multilingual Entry Points
 

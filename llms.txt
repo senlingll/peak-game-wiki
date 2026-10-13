@@ -42,6 +42,7 @@
 - [Gloom guide](https://peak-game.wiki/peak-gloom-guide)
 - [Citadel guide](https://peak-game.wiki/peak-citadel-guide)
 - [Solo and public lobbies](https://peak-game.wiki/peak-solo-and-public-lobbies)
+- [PEAK multiplayer mod guide](https://peak-game.wiki/peak-multiplayer-mod)
 
 ## Important Resources
 
@@ -62,4 +63,4 @@ The same page set is available in the existing locale routes: English at `/`, Ch
 - Treat practical route, loadout, and troubleshooting advice as editorial field guidance unless a page links a first-party source.
 - Do not infer live map results, fixed rotation sequences, exact item effects, prices, platforms, downloads, or achievement conditions when the current source does not verify them.
 - Recheck time-sensitive map, patch, item, multiplayer, and achievement details in the current game and official sources after an update.
-- Last reviewed for this resource: 2026-10-08.
+- Last reviewed for this resource: 2026-10-14.
