@@ -920,7 +920,9 @@ function localizedArticleGuide(locale, slug) {
     return {
       ...section,
       ...translated,
-      table: translated.table ? { ...section.table, ...translated.table } : section.table,
+      table: Object.prototype.hasOwnProperty.call(translated, 'table')
+        ? (translated.table ? { ...section.table, ...translated.table } : null)
+        : section.table,
       image: translated.image ? { ...section.image, ...translated.image } : section.image,
       heroImage: translated.heroImage ? { ...section.heroImage, ...translated.heroImage } : section.heroImage,
       afterTable: locale === 'en' ? (translated.afterTable ?? section.afterTable) : translated.afterTable,

@@ -3167,8 +3167,10 @@ img {
 
   .article-hero h1 {
     max-width: 100%;
-    overflow-wrap: break-word;
-    font-size: 40px;
+    overflow-wrap: anywhere;
+    word-break: break-all;
+    font-size: 36px;
+    line-height: 1.15;
   }
 
   .article-hero-lede {

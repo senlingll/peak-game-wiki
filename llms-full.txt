@@ -55,6 +55,7 @@ Each guide below is a crawlable page with localized alternates where the route e
 - https://peak-game.wiki/peak-revive-guide - How to Revive in PEAK: downed scouts, Scout Effigy context, co-op checks, and final-level limits.
 - https://peak-game.wiki/rope-chain - PEAK Rope and Chain Guide: spools, launchers, route mechanics, and planning boundaries.
 - https://peak-game.wiki/room-codes/ - PEAK Multiplayer and Room Codes: co-op joining, room-code context, and cross-platform caveats.
+- https://peak-game.wiki/peak-crossplay-guide - PEAK crossplay status: dated Steam/PC evidence, Landfall's console and cross-platform plan, room-code boundaries, and a pre-session verification checklist.
 - https://peak-game.wiki/peak-photon-troubleshooting - Disconnected from Photon and ClientTimeout: reversible checks, official guidance, and separated player reports.
 - https://peak-game.wiki/peak-cooking-guide - PEAK Cooking Guide: Portable Stove steps, maintained food notes, non-food hazards, and patch-sensitive rules.
 - https://peak-game.wiki/peak-secret-ending-guide - PEAK Secret Ending Guide: four-amulet route context, Nadir planning, and version-aware uncertainty.

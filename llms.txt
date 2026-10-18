@@ -33,6 +33,7 @@
 - [How to revive in PEAK](https://peak-game.wiki/peak-revive-guide)
 - [Rope and chain guide](https://peak-game.wiki/rope-chain)
 - [Room codes and multiplayer](https://peak-game.wiki/room-codes/)
+- [PEAK crossplay status](https://peak-game.wiki/peak-crossplay-guide): Current Steam/PC status, Landfall's console and cross-platform plan, room-code limits, and checks before a mixed-platform session.
 - [Photon troubleshooting](https://peak-game.wiki/peak-photon-troubleshooting)
 - [Cooking guide](https://peak-game.wiki/peak-cooking-guide)
 - [Secret ending guide](https://peak-game.wiki/peak-secret-ending-guide)
