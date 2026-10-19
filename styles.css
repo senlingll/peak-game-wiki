@@ -1357,6 +1357,79 @@ img {
   line-height: 1.8;
 }
 
+.freshness-strip {
+  max-width: 680px;
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 253, 249, 0.18);
+  border-radius: 5px;
+  background: rgba(255, 253, 249, 0.06);
+  color: rgba(255, 253, 249, 0.88);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.freshness-strip p {
+  margin: 0;
+}
+
+.freshness-strip p + p {
+  margin-top: 6px;
+}
+
+.freshness-strip strong,
+.freshness-strip time {
+  color: #fffdf9;
+  font-weight: 750;
+}
+
+.freshness-route {
+  display: block;
+  margin-top: 4px;
+  color: #fffdf9;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+.article-hero-lede .freshness-route {
+  display: block;
+  margin: 6px 0;
+  font-size: 26px;
+}
+
+.freshness-delta.is-changed {
+  color: #ffd7cf;
+}
+
+.freshness-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-weight: 750;
+}
+
+.freshness-links a {
+  color: var(--mint);
+}
+
+.freshness-links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.route-diff {
+  padding: 0 0.15em;
+  background: rgba(228, 110, 85, 0.18);
+  color: inherit;
+}
+
+.freshness-strip .route-diff,
+.article-hero .route-diff {
+  background: rgba(255, 180, 160, 0.28);
+  color: #fffdf9;
+}
+
 .article-hero .article-image {
   box-shadow: 16px 18px 0 rgba(228, 110, 85, 0.3);
   transform: rotate(1deg);
@@ -1654,6 +1727,10 @@ img {
   overflow-wrap: anywhere;
 }
 
+.today-map-panel h3.today-map-sequence {
+  font-size: 32px;
+}
+
 .today-map-route {
   margin: 0;
   color: var(--coral-dark);
@@ -1735,6 +1812,19 @@ img {
   color: var(--ink-soft);
   font-size: 12px;
   line-height: 1.55;
+}
+
+.today-map-build-note {
+  color: var(--ink);
+}
+
+.today-map-build-note.is-changed {
+  color: var(--coral-dark);
+}
+
+.today-map-build-diff {
+  display: block;
+  margin-top: 3px;
 }
 
 .today-map-related {
@@ -3175,6 +3265,15 @@ img {
 
   .article-hero-lede {
     font-size: 15px;
+  }
+
+  .article-hero-lede .freshness-route,
+  .freshness-route {
+    font-size: 20px;
+  }
+
+  .today-map-panel h3.today-map-sequence {
+    font-size: 26px;
   }
 
   .article-hero .article-image {
