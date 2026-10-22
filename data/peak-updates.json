@@ -5,6 +5,13 @@
   },
   "entries": [
     {
+      "date": "2026-10-22",
+      "title": "CROSSPLAY HAS ARRIVED TO PEAK",
+      "summary": "Official Steam news entry titled CROSSPLAY HAS ARRIVED TO PEAK; open the source for the complete details.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1847286114033058",
+      "kind": "UPDATE"
+    },
+    {
       "date": "2026-10-15",
       "title": "Crossplay is coming to PEAK next week!",
       "summary": "Official Steam news entry titled Crossplay is coming to PEAK next week!; open the source for the complete details.",
@@ -100,20 +107,6 @@
       "title": "patch 1.65.a",
       "summary": "Official patch or fix post titled patch 1.65.a; open the source for the exact changes.",
       "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1839041357027333",
-      "kind": "PATCH"
-    },
-    {
-      "date": "2026-07-16",
-      "title": "BETA PATCH 0.65.d",
-      "summary": "Official patch or fix post titled BETA PATCH 0.65.d; open the source for the exact changes.",
-      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1838407329257886",
-      "kind": "PATCH"
-    },
-    {
-      "date": "2026-07-07",
-      "title": "BETA PATCH 0.65.c",
-      "summary": "Official patch or fix post titled BETA PATCH 0.65.c; open the source for the exact changes.",
-      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1836506165578642",
       "kind": "PATCH"
     }
   ]
