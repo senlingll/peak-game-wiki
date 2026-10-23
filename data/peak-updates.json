@@ -5,6 +5,13 @@
   },
   "entries": [
     {
+      "date": "2026-10-23",
+      "title": "Patch Notes 3.0.1",
+      "summary": "Official patch or fix post titled Patch Notes 3.0.1; open the source for the exact changes.",
+      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1847286114037507",
+      "kind": "PATCH"
+    },
+    {
       "date": "2026-10-22",
       "title": "CROSSPLAY HAS ARRIVED TO PEAK",
       "summary": "Official Steam news entry titled CROSSPLAY HAS ARRIVED TO PEAK; open the source for the complete details.",
@@ -101,13 +108,6 @@
       "summary": "Official content or announcement post titled THE FINAL BIOME UPDATE ARRIVES AUGUST 11!; open the source for the complete release details.",
       "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1840310314342574",
       "kind": "CONTENT"
-    },
-    {
-      "date": "2026-07-23",
-      "title": "patch 1.65.a",
-      "summary": "Official patch or fix post titled patch 1.65.a; open the source for the exact changes.",
-      "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1839041357027333",
-      "kind": "PATCH"
     }
   ]
 }
