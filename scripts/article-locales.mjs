@@ -14,6 +14,7 @@ import { peakGamePriceTranslations } from './article-price-locales.mjs';
 import { peakSecretEndingTranslations } from './article-secret-ending-locales.mjs';
 import { articleSupplementalLocaleTranslations } from './article-supplemental-locales.mjs';
 import { articleSupplementalGeneratedLocaleTranslations } from './article-supplemental-generated-locales.mjs';
+import { peakSoloLocaleOverrides } from './article-solo-locales.mjs';
 import { peakMultiplayerModTranslations } from './article-multiplayer-mod-locales.mjs';
 import { peakCrossplayTranslations } from './article-crossplay-locales.mjs';
 
@@ -1314,6 +1315,30 @@ for (const [locale, translations] of Object.entries(articleSupplementalGenerated
       ...translation,
     };
   }
+}
+
+for (const [locale, translation] of Object.entries(peakSoloLocaleOverrides)) {
+  const slug = 'peak-solo-and-public-lobbies';
+  const current = articleLocaleTranslations[locale]?.[slug];
+  if (!current) throw new Error(`Missing PEAK solo translation base: ${locale}`);
+
+  articleLocaleTranslations[locale][slug] = {
+    ...current,
+    ...translation,
+    heroImage: { ...current.heroImage, ...translation.heroImage },
+    sections: current.sections.map((section, index) => {
+      const sectionTranslation = translation.sections?.[index];
+      if (!sectionTranslation) return section;
+      return {
+        ...section,
+        ...sectionTranslation,
+        table: sectionTranslation.table ? { ...section.table, ...sectionTranslation.table } : section.table,
+        image: sectionTranslation.image ? { ...section.image, ...sectionTranslation.image } : section.image,
+      };
+    }),
+    faq: { ...current.faq, ...translation.faq },
+    source: { ...current.source, ...translation.source },
+  };
 }
 
 for (const [locale, translation] of Object.entries(peakMultiplayerModTranslations)) {
