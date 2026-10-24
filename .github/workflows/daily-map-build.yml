@@ -26,6 +26,7 @@ jobs:
           node-version: 20
 
       - name: Freeze site date in the configured timezone
+        # scripts/build.mjs keeps the map estimate on the Asia/Shanghai calendar day of the write, even if this hint drifts.
         run: echo "BUILD_DATE=$(TZ="$SITE_TIMEZONE" date +%F)" >> "$GITHUB_ENV"
 
       - name: Compute today's estimated map

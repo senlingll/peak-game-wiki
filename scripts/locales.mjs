@@ -1,5 +1,6 @@
 import { mapGuides } from './map-guide.mjs';
 import { todayMapCopy } from './today-map-copy.mjs';
+import { compareRouteToHistory, CURRENT_GAME_VERSION, siteCalendarDay, siteOffsetIso, SITE_TIMEZONE } from './today-map-rotation.mjs';
 import { achievementGuides } from './achievement-guide.mjs';
 import { articleGuides, articleOrder } from './article-guides.mjs';
 import { articleLiveMapCopy, articleLocaleTranslations } from './article-locales.mjs';
@@ -10,7 +11,7 @@ import { itemsPageCopy } from './items-page-locales.mjs';
 import { badgeGuideCopy, badgeGuideEntries, badgeGuideSource, badgeGrantCopy, badgeCardLabels } from './badges-guide.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
-const STYLESHEET_HREF = '/styles.css?v=20261008-geo';
+const STYLESHEET_HREF = '/styles.css?v=20261019-freshness';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
 const STEAM_NEWS_API_HTML_URL = 'https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json';
 const SUPPORT_EMAIL = 'support@peak-game.wiki';
@@ -562,6 +563,63 @@ function formatDateTimeLabel(locale, value) {
   return `${formatted} UTC`;
 }
 
+const EN_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function monthDayParts(isoDate) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(isoDate || ''));
+  if (!match) return null;
+  return { year: match[1], month: Number(match[2]), day: Number(match[3]) };
+}
+
+function zhMonthDay(isoDate) {
+  const parts = monthDayParts(isoDate);
+  return parts ? `${parts.month}月${parts.day}日` : String(isoDate || '');
+}
+
+function enMonthDay(isoDate, withYear = false) {
+  const parts = monthDayParts(isoDate);
+  if (!parts) return String(isoDate || '');
+  const label = `${EN_MONTHS[parts.month - 1]} ${parts.day}`;
+  return withYear ? `${label}, ${parts.year}` : label;
+}
+
+function siteZoneLabel(locale) {
+  return locale === 'zh' ? '上海' : 'Shanghai';
+}
+
+function formatSiteDateTimeLabel(locale, value) {
+  const date = parseDateValue(value);
+  if (!date) return String(value ?? '');
+  const formatted = new Intl.DateTimeFormat(localeMeta[locale].lang, {
+    year: 'numeric',
+    month: locale === 'zh' ? 'long' : 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+    timeZone: SITE_TIMEZONE,
+  }).format(date);
+  return locale === 'zh' ? `${formatted}（${siteZoneLabel(locale)}）` : `${formatted} (${siteZoneLabel(locale)})`;
+}
+
+function mapPageHeading(locale, estimateDay) {
+  const guide = mapGuides[locale];
+  if (locale === 'zh') {
+    const day = zhMonthDay(estimateDay);
+    return {
+      title: `PEAK 今日地图（${day}更新）：轮换估算、生物群系与重置时间`,
+      h1: `PEAK 今日地图：${day}轮换估算与重置倒计时`,
+    };
+  }
+  if (locale === 'en') {
+    return {
+      title: `PEAK Map Today (Updated ${enMonthDay(estimateDay)}): Daily Rotation Estimate & Reset`,
+      h1: guide.h1,
+    };
+  }
+  return { title: guide.meta.title, h1: guide.h1 };
+}
+
 const todayMapDetailCopy = {
   en: {
     currentVersion: 'Current game version',
@@ -851,34 +909,131 @@ function renderTodayMapMedia(locale, data) {
   return `<div class="today-map-carousel" data-today-carousel tabindex="0" aria-roledescription="carousel" aria-label="${escapeHtml(copy.title)}"><div class="today-map-carousel-viewport"><div class="today-map-carousel-track" data-carousel-track>${cards}</div>${controls}</div><div class="today-map-carousel-dots" role="group" aria-label="${escapeHtml(copy.mediaSlides)}">${indicators}</div></div>`;
 }
 
-function renderTodayMap(locale, data, buildDate, buildTimestamp) {
-  const copy = todayMapCopy[locale] ?? todayMapCopy.en;
-  const detailCopy = todayMapDetailCopy[locale] ?? defaultTodayMapDetailCopy;
+const freshnessDetailCopy = {
+  en: { buildNote: 'This build', sameAsYesterday: 'Same as yesterday', changedFromYesterday: 'Changed from yesterday', noEarlierBuild: 'No earlier build to compare', nextResetShanghai: 'Next reset (Shanghai)' },
+  zh: { buildNote: '本次构建备注', sameAsYesterday: '与昨日相同', changedFromYesterday: '已变化', noEarlierBuild: '尚无更早的构建可对比', nextResetShanghai: '下次重置（上海）' },
+  es: { buildNote: 'Nota de esta compilación', sameAsYesterday: 'Igual que ayer', changedFromYesterday: 'Cambió respecto a ayer', noEarlierBuild: 'No hay una compilación anterior para comparar', nextResetShanghai: 'Próximo reinicio (Shanghái)' },
+  ja: { buildNote: '今回のビルドメモ', sameAsYesterday: '昨日と同じ', changedFromYesterday: '昨日から変化', noEarlierBuild: '比較できる前回のビルドがありません', nextResetShanghai: '次回リセット（上海）' },
+  ko: { buildNote: '이번 빌드 메모', sameAsYesterday: '어제와 같음', changedFromYesterday: '어제와 달라짐', noEarlierBuild: '비교할 이전 빌드가 없습니다', nextResetShanghai: '다음 초기화 (상하이)' },
+  de: { buildNote: 'Hinweis zu diesem Build', sameAsYesterday: 'Gleich wie gestern', changedFromYesterday: 'Gegenüber gestern geändert', noEarlierBuild: 'Kein früherer Build zum Vergleich', nextResetShanghai: 'Nächster Reset (Shanghai)' },
+  fr: { buildNote: 'Note de ce build', sameAsYesterday: 'Identique à hier', changedFromYesterday: 'Modifié depuis hier', noEarlierBuild: 'Aucune compilation précédente à comparer', nextResetShanghai: 'Prochaine réinitialisation (Shanghai)' },
+  pt: { buildNote: 'Nota desta compilação', sameAsYesterday: 'Igual a ontem', changedFromYesterday: 'Mudou em relação a ontem', noEarlierBuild: 'Não há compilação anterior para comparar', nextResetShanghai: 'Próximo reinício (Xangai)' },
+  it: { buildNote: 'Nota di questa build', sameAsYesterday: 'Uguale a ieri', changedFromYesterday: 'Cambiato rispetto a ieri', noEarlierBuild: 'Nessuna build precedente da confrontare', nextResetShanghai: 'Prossimo reset (Shanghai)' },
+};
+
+function freshnessExtras(locale) {
+  return freshnessDetailCopy[locale] ?? freshnessDetailCopy.en;
+}
+
+function mapFreshnessContext(locale, data, buildDate, buildTimestamp, mapHistory) {
   const snapshot = normalizeTodayMap(data, buildDate, buildTimestamp);
+  const writtenAt = parseDateValue(buildTimestamp) ? buildTimestamp : snapshot.updatedAt;
+  const estimateDay = snapshot.date;
+  const writtenDay = siteCalendarDay(writtenAt);
+  return {
+    snapshot,
+    writtenAt,
+    estimateDay,
+    writtenDay,
+    countdown: formatCountdown(locale, snapshot.resetAt, writtenAt),
+    delta: compareRouteToHistory(snapshot.map, mapHistory, estimateDay),
+  };
+}
+
+function freshnessDeltaText(locale, delta) {
+  const extras = freshnessExtras(locale);
+  if (delta.status === 'unknown') return extras.noEarlierBuild;
+  if (delta.yesterday || (locale !== 'zh' && locale !== 'en')) {
+    const phrase = delta.status === 'same' ? extras.sameAsYesterday : extras.changedFromYesterday;
+    return delta.yesterday ? phrase : `${phrase} (${delta.previousDate})`;
+  }
+  if (locale === 'zh') return delta.status === 'same' ? `与 ${delta.previousDate} 相同` : `相对 ${delta.previousDate} 已变化`;
+  return delta.status === 'same' ? `Same as ${delta.previousDate}` : `Changed from ${delta.previousDate}`;
+}
+
+function routeDiffHtml(previousMap, currentMap) {
+  const previous = String(previousMap || '').split(' → ');
+  const current = String(currentMap || '').split(' → ');
+  return current.map((name, index) => {
+    const safe = escapeHtml(name);
+    return name === previous[index] ? safe : `<mark class="route-diff">${safe}</mark>`;
+  }).join(' → ');
+}
+
+function poolBuildNote(locale, delta, mapValue) {
+  const extras = freshnessExtras(locale);
+  const changed = delta.status === 'changed' ? ' is-changed' : '';
+  let body = escapeHtml(freshnessDeltaText(locale, delta));
+  if (delta.status === 'changed' && delta.previousMap && mapValue) {
+    body += ` <span class="today-map-build-diff">${escapeHtml(delta.previousMap)} / ${routeDiffHtml(delta.previousMap, mapValue)}</span>`;
+  }
+  return `<li class="today-map-build-note${changed}"><strong>${escapeHtml(extras.buildNote)}</strong> ${body}</li>`;
+}
+
+function zhTodayLede(ctx) {
+  if (!ctx.snapshot.available || !ctx.snapshot.map) {
+    return `<p class="article-hero-lede"><strong>今天（${escapeHtml(ctx.estimateDay)}）</strong>的社区估算还在等待本次构建写入。本估算非官方发布，请以游戏内路线为准。</p>`;
+  }
+  const reset = ctx.snapshot.resetAt ? formatSiteDateTimeLabel('zh', ctx.snapshot.resetAt) : '待确认';
+  return `<p class="article-hero-lede"><strong>今天（${escapeHtml(ctx.estimateDay)}）</strong>社区估算路线为 <strong class="freshness-route">${escapeHtml(ctx.snapshot.map)}</strong>（版本 ${escapeHtml(CURRENT_GAME_VERSION)}）。下次重置约在 <strong>${escapeHtml(reset)}</strong>。以下说明如何核对游戏内路线；本估算非官方发布。</p>`;
+}
+
+function enTodayLede(guide, estimateDay) {
+  const dated = `Short answer: today is ${enMonthDay(estimateDay, true)} (version ${CURRENT_GAME_VERSION}).`;
+  const rest = String(guide.intro || '').replace(/^Short answer:\s*/i, '');
+  const sentence = rest ? `${rest.charAt(0).toUpperCase()}${rest.slice(1)}` : '';
+  return `<p class="article-hero-lede">${escapeHtml(`${dated} ${sentence}`.trim())}</p>`;
+}
+
+function renderFreshnessStrip(locale, ctx) {
+  if (locale !== 'zh' && locale !== 'en') return '';
+  const writtenIso = siteOffsetIso(ctx.writtenAt);
+  const writtenLabel = formatSiteDateTimeLabel(locale, ctx.writtenAt);
+  const resetShanghai = ctx.snapshot.resetAt ? formatSiteDateTimeLabel(locale, ctx.snapshot.resetAt) : '';
+  const deltaText = freshnessDeltaText(locale, ctx.delta);
+  const route = ctx.snapshot.map
+    ? (ctx.delta.status === 'changed' ? routeDiffHtml(ctx.delta.previousMap, ctx.snapshot.map) : escapeHtml(ctx.snapshot.map))
+    : '';
+  const deltaClass = ctx.delta.status === 'changed' ? ' is-changed' : '';
+  if (locale === 'zh') {
+    const compared = ctx.delta.status === 'unknown' ? '上次构建' : (ctx.delta.yesterday ? '昨日' : ctx.delta.previousDate);
+    const deltaStatus = ctx.delta.status === 'same' ? '路线相同' : ctx.delta.status === 'changed' ? '已变化' : '尚无更早的构建可对比';
+    return `<div class="freshness-strip" data-estimate-day="${escapeHtml(ctx.estimateDay)}" data-written-day="${escapeHtml(ctx.writtenDay)}"><p><strong>今日估算</strong> · <time datetime="${escapeHtml(ctx.estimateDay)}">${escapeHtml(ctx.estimateDay)}</time>（上海时区）</p><p>游戏版本 ${escapeHtml(CURRENT_GAME_VERSION)} · 下次重置还有 ${escapeHtml(ctx.countdown)}${resetShanghai ? ` · <time datetime="${escapeHtml(siteOffsetIso(ctx.snapshot.resetAt))}">${escapeHtml(resetShanghai)}</time>` : ''} · 数据写入 <time datetime="${escapeHtml(writtenIso)}" data-written-day="${escapeHtml(ctx.writtenDay)}">${escapeHtml(writtenLabel)}</time></p>${route ? `<p class="freshness-route">${route}</p>` : ''}<p class="freshness-delta${deltaClass}">相对${escapeHtml(compared)}：${escapeHtml(deltaStatus)}</p><p>来源：PEAK Wiki 计时器社区脚本 · 非官方 · 请以游戏内为准</p><p class="freshness-links"><a href="${routeFor(locale, 'home')}">中文枢纽</a><a href="${routeFor(locale, 'items')}">道具目录</a></p></div>`;
+  }
+  return `<div class="freshness-strip" data-estimate-day="${escapeHtml(ctx.estimateDay)}" data-written-day="${escapeHtml(ctx.writtenDay)}"><p>Estimate for ${escapeHtml(enMonthDay(ctx.estimateDay, true))} · v${escapeHtml(CURRENT_GAME_VERSION)} · Next reset ${escapeHtml(ctx.countdown)} · ${escapeHtml(deltaText)} · <time datetime="${escapeHtml(writtenIso)}" data-written-day="${escapeHtml(ctx.writtenDay)}">Written ${escapeHtml(writtenLabel)}</time> · Community estimate, not official</p><p class="freshness-links"><a href="#today-map">Jump to Today's PEAK Map</a></p></div>`;
+}
+
+function renderTodayMap(locale, data, buildDate, buildTimestamp, mapHistory) {
+  const copy = todayMapCopy[locale] ?? todayMapCopy.en;
+  const detailCopy = { ...defaultTodayMapDetailCopy, ...(todayMapDetailCopy[locale] ?? {}) };
+  const extras = freshnessExtras(locale);
+  const ctx = mapFreshnessContext(locale, data, buildDate, buildTimestamp, mapHistory);
+  const snapshot = ctx.snapshot;
   const mapValue = snapshot.map || copy.pending;
   const routeValue = snapshot.route === 'Daily biome sequence' ? copy.dailyRoute : snapshot.route || copy.pending;
   const biomeValue = snapshot.biome || copy.pending;
-  const countdown = formatCountdown(locale, snapshot.resetAt, buildTimestamp);
-  const dataUpdatedAt = snapshot.recordUpdatedAt || snapshot.updatedAt;
-  const dataUpdatedLabel = formatDateTimeLabel(locale, dataUpdatedAt);
+  const writtenIso = siteOffsetIso(ctx.writtenAt);
+  const writtenLabel = formatSiteDateTimeLabel(locale, ctx.writtenAt);
   const nextResetLabel = snapshot.resetAt ? formatDateTimeLabel(locale, snapshot.resetAt) : copy.resetPending;
+  const nextResetShanghaiLabel = snapshot.resetAt ? formatSiteDateTimeLabel(locale, snapshot.resetAt) : copy.resetPending;
   const sourceMarkup = snapshot.source
     ? `<p>${escapeHtml(copy.attributionPrefix)}${escapeHtml(copy.wikiSourceLabel || snapshot.source.label || copy.source)}${escapeHtml(copy.attributionBetween)}${escapeHtml(copy.licenseLabel)}${escapeHtml(copy.attributionSuffix)}</p><p class="today-map-estimate-note">${escapeHtml(copy.estimateNote)}</p>`
     : `<span>${escapeHtml(copy.pending)}</span>`;
   const status = snapshot.estimated ? copy.estimated : snapshot.available ? copy.verified : copy.pending;
   const panel = snapshot.available
-    ? `<h3>${escapeHtml(mapValue)}</h3><p class="today-map-route">${escapeHtml(routeValue)}</p>`
+    ? `<h3 class="today-map-sequence">${escapeHtml(mapValue)}</h3><p class="today-map-route">${escapeHtml(routeValue)}</p>`
     : `<div class="today-map-pending-copy"><h3>${escapeHtml(copy.pendingTitle)}</h3><p>${escapeHtml(copy.pendingBody)}</p></div>`;
   const statusClass = snapshot.estimated ? ' is-estimated' : snapshot.available ? ' is-verified' : '';
-  const poolItems = detailCopy.poolItems.map(([version, text]) => `<li><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">${escapeHtml(version)}</a> ${escapeHtml(text)}</li>`).join('');
+  const poolItems = `${poolBuildNote(locale, ctx.delta, snapshot.map)}${detailCopy.poolItems.map(([version, text]) => `<li><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">${escapeHtml(version)}</a> ${escapeHtml(text)}</li>`).join('')}`;
   const relatedLinks = detailCopy.relatedLinks.map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
-  return `<section id="today-map" class="today-map-section" aria-labelledby="today-map-title"><div class="container today-map-heading"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h2 id="today-map-title">${escapeHtml(copy.title)}</h2><p>${escapeHtml(copy.lede)}</p></div><span class="today-map-status${statusClass}">${escapeHtml(status)}</span></div><div class="container today-map-grid"><div>${renderTodayMapMedia(locale, snapshot)}</div><div class="today-map-panel"><div class="today-map-panel-top"><span class="status-pill"><i></i>${escapeHtml(status)}</span><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></div>${panel}<dl class="today-map-facts"><div><dt>${escapeHtml(copy.currentMap)}</dt><dd>${escapeHtml(mapValue)}</dd></div><div><dt>${escapeHtml(copy.route)}</dt><dd>${escapeHtml(routeValue)}</dd></div><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(countdown)}</dd></div><div><dt>${escapeHtml(detailCopy.currentVersion)}</dt><dd><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">2.6.b</a></dd></div><div><dt>${escapeHtml(detailCopy.nextResetAt)}</dt><dd><time datetime="${escapeHtml(snapshot.resetAt || '')}">${escapeHtml(nextResetLabel)}</time></dd></div><div><dt>${escapeHtml(detailCopy.dataUpdated)}</dt><dd><time datetime="${escapeHtml(dataUpdatedAt || '')}">${escapeHtml(dataUpdatedLabel)}</time></dd></div></dl><div class="today-map-pool-changes"><h3>${escapeHtml(detailCopy.poolChanges)}</h3><ul>${poolItems}</ul></div><div class="today-map-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="today-map-updated"><span>${escapeHtml(copy.updated)}</span> ${escapeHtml(formatDateTimeLabel(locale, snapshot.updatedAt))}</p><nav class="today-map-related" aria-label="${escapeHtml(detailCopy.related)}"><span>${escapeHtml(detailCopy.related)}</span>${relatedLinks}</nav>${snapshot.available ? '' : `<p class="today-map-note">${escapeHtml(copy.pendingNote)}</p>`}</div></div></section>`;
+  const shanghaiReset = `<div><dt>${escapeHtml(extras.nextResetShanghai)}</dt><dd><time datetime="${escapeHtml(snapshot.resetAt ? siteOffsetIso(snapshot.resetAt) : '')}">${escapeHtml(nextResetShanghaiLabel)}</time></dd></div>`;
+  return `<section id="today-map" class="today-map-section" data-estimate-day="${escapeHtml(ctx.estimateDay)}" data-written-day="${escapeHtml(ctx.writtenDay)}" aria-labelledby="today-map-title"><div class="container today-map-heading"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h2 id="today-map-title">${escapeHtml(copy.title)}</h2><p>${escapeHtml(copy.lede)}</p></div><span class="today-map-status${statusClass}">${escapeHtml(status)}</span></div><div class="container today-map-grid"><div>${renderTodayMapMedia(locale, snapshot)}</div><div class="today-map-panel"><div class="today-map-panel-top"><span class="status-pill"><i></i>${escapeHtml(status)}</span><time datetime="${escapeHtml(snapshot.date)}" data-estimate-day="${escapeHtml(ctx.estimateDay)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></div>${panel}<dl class="today-map-facts"><div><dt>${escapeHtml(copy.currentMap)}</dt><dd>${escapeHtml(mapValue)}</dd></div><div><dt>${escapeHtml(copy.route)}</dt><dd>${escapeHtml(routeValue)}</dd></div><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(ctx.countdown)}</dd></div><div><dt>${escapeHtml(detailCopy.currentVersion)}</dt><dd><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">${escapeHtml(CURRENT_GAME_VERSION)}</a></dd></div><div><dt>${escapeHtml(detailCopy.nextResetAt)}</dt><dd><time datetime="${escapeHtml(snapshot.resetAt || '')}">${escapeHtml(nextResetLabel)}</time></dd></div>${shanghaiReset}<div><dt>${escapeHtml(detailCopy.dataUpdated)}</dt><dd><time datetime="${escapeHtml(writtenIso)}" data-written-day="${escapeHtml(ctx.writtenDay)}">${escapeHtml(writtenLabel)}</time></dd></div></dl><div class="today-map-pool-changes"><h3>${escapeHtml(detailCopy.poolChanges)}</h3><ul>${poolItems}</ul></div><div class="today-map-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="today-map-updated"><span>${escapeHtml(copy.updated)}</span> <time datetime="${escapeHtml(writtenIso)}" data-written-day="${escapeHtml(ctx.writtenDay)}">${escapeHtml(writtenLabel)}</time></p><nav class="today-map-related" aria-label="${escapeHtml(detailCopy.related)}"><span>${escapeHtml(detailCopy.related)}</span>${relatedLinks}</nav>${snapshot.available ? '' : `<p class="today-map-note">${escapeHtml(copy.pendingNote)}</p>`}</div></div></section>`;
 }
 
-export function injectTodayMapSection(html, locale, data, buildDate, buildTimestamp) {
+export function injectTodayMapSection(html, locale, data, buildDate, buildTimestamp, mapHistory = []) {
   const marker = '</section><div class="container article-layout">';
   if (!html.includes(marker)) throw new Error(`Map guide insertion marker not found: ${locale}`);
-  return html.replace(marker, `</section>${renderTodayMap(locale, data, buildDate, buildTimestamp)}<div class="container article-layout">`);
+  return html.replace(marker, `</section>${renderTodayMap(locale, data, buildDate, buildTimestamp, mapHistory)}<div class="container article-layout">`);
 }
 
 const articleLinkPages = new Set(['home', 'map-rotation', 'achievements', 'items', 'badges-guide', ...articleOrder]);
@@ -1242,6 +1397,9 @@ function head(locale, page, title, description, schema, options = {}) {
   const canonical = `${BASE_URL}${routeFor(locale, page)}`;
   const pageDescription = metaDescriptionOverrides[locale]?.[page] ?? description;
   const scripts = [];
+  const articleModified = page === 'map-rotation' && options.articleModified
+    ? `\n    <meta property="article:modified_time" content="${escapeHtml(options.articleModified)}" />\n    <meta property="og:updated_time" content="${escapeHtml(options.articleModified)}" />`
+    : '';
   const article = options.article ?? articleGuides[page];
   const socialImage = article?.heroImage?.src ? `${BASE_URL}${article.heroImage.src}` : `${BASE_URL}/media/peak-climb-ridge.webp`;
   if (article) {
@@ -1263,8 +1421,10 @@ function head(locale, page, title, description, schema, options = {}) {
   }
   if (page === 'map-rotation') {
     const guide = mapGuides[locale];
-    scripts.push({ '@context': 'https://schema.org', '@type': 'Article', headline: guide.h1, description: pageDescription, image: [`${BASE_URL}/media/peak-map-route.webp`], datePublished: '2026-08-19', dateModified: options.dateModified || process.env.BUILD_DATE || new Date().toISOString().slice(0, 10), inLanguage: meta.lang, author: { '@type': 'Organization', name: 'PEAK Game Wiki' }, publisher: { '@type': 'Organization', name: 'PEAK Game Wiki' }, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical } });
-    scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: guide.h1, item: canonical }] });
+    const headline = options.mapHeadline || guide.h1;
+    const modified = options.dateModified || process.env.BUILD_DATE || new Date().toISOString().slice(0, 10);
+    scripts.push({ '@context': 'https://schema.org', '@type': 'Article', headline, description: pageDescription, image: [`${BASE_URL}/media/peak-map-route.webp`], datePublished: '2026-08-19', dateModified: modified, inLanguage: meta.lang, author: { '@type': 'Organization', name: 'PEAK Game Wiki' }, publisher: { '@type': 'Organization', name: 'PEAK Game Wiki' }, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical } });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: headline, item: canonical }] });
     scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: guide.faq.items.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) });
   }
   if (page === 'achievements') {
@@ -1296,7 +1456,7 @@ function head(locale, page, title, description, schema, options = {}) {
     scripts.push({ '@context': 'https://schema.org', '@type': 'ContactPage', '@id': `${canonical}#contact`, url: canonical, name: contact.h1, description: pageDescription, inLanguage: meta.lang, isPartOf: { '@id': `${BASE_URL}/#website` }, about: { '@type': 'VideoGame', name: 'PEAK' }, mainEntity: { '@type': 'Organization', name: 'PEAK Game Wiki', url: BASE_URL, email: SUPPORT_EMAIL, contactPoint: { '@type': 'ContactPoint', email: SUPPORT_EMAIL, contactType: contact.emailTitle } } });
     scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: contact.h1, item: canonical }] });
   }
-  return `<!doctype html>\n<html lang="${meta.lang}" data-locale="${locale}">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <title>${escapeHtml(title)}</title>\n    <meta name="description" content="${escapeHtml(pageDescription)}" />\n    <meta name="theme-color" content="#17212d" />\n    <link rel="canonical" href="${canonical}" />\n    ${alternateLinks(page)}\n    <link rel="icon" href="/assets/favicon.ico" sizes="any" />\n    <link rel="manifest" href="/manifest.webmanifest" />\n    \n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(pageDescription)}" />\n    <meta property="og:image" content="${socialImage}" />\n    <meta property="og:url" content="${canonical}" />\n    <meta property="og:locale" content="${meta.lang}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:title" content="${escapeHtml(title)}" />\n    <meta name="twitter:description" content="${escapeHtml(pageDescription)}" />\n    <meta name="twitter:image" content="${socialImage}" />\n    <link rel="stylesheet" href="${STYLESHEET_HREF}" />\n    \n    <script>\n      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","y3c9ye040x");\n    </script>${scripts.map((value) => `\n    <script type="application/ld+json">${jsonLd(value)}</script>`).join('')}\n  </head>`;
+  return `<!doctype html>\n<html lang="${meta.lang}" data-locale="${locale}">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <title>${escapeHtml(title)}</title>\n    <meta name="description" content="${escapeHtml(pageDescription)}" />\n    <meta name="theme-color" content="#17212d" />\n    <link rel="canonical" href="${canonical}" />\n    ${alternateLinks(page)}\n    <link rel="icon" href="/assets/favicon.ico" sizes="any" />\n    <link rel="manifest" href="/manifest.webmanifest" />\n    \n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(pageDescription)}" />\n    <meta property="og:image" content="${socialImage}" />\n    <meta property="og:url" content="${canonical}" />\n    <meta property="og:locale" content="${meta.lang}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:title" content="${escapeHtml(title)}" />\n    <meta name="twitter:description" content="${escapeHtml(pageDescription)}" />\n    <meta name="twitter:image" content="${socialImage}" />${articleModified}\n    <link rel="stylesheet" href="${STYLESHEET_HREF}" />\n    \n    <script>\n      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","y3c9ye040x");\n    </script>${scripts.map((value) => `\n    <script type="application/ld+json">${jsonLd(value)}</script>`).join('')}\n  </head>`;
 }
 
 const NATIVE_BANNER_SRC = 'https://pl30883299.profitableratecpmnetwork.com/3531361214596141d25dc216fd8ebe0f/invoke.js';
@@ -1514,9 +1674,18 @@ export function renderItemsPage(locale, options = {}) {
 
 function renderMapGuideHtml(locale, options = {}) {
   const buildDate = resolveBuildDate(options);
+  const buildTimestamp = options.buildTimestamp || new Date().toISOString();
+  const freshness = mapFreshnessContext(locale, options.todayMap, buildDate, buildTimestamp, options.mapHistory);
+  const heading = mapPageHeading(locale, freshness.estimateDay);
   const sourceCopy = locales[locale];
   const copy = { ...sourceCopy, ui: { ...sourceCopy.ui, snapshot: formatSnapshotDate(locale, buildDate) } };
   const guide = mapGuides[locale];
+  const heroLede = locale === 'zh'
+    ? zhTodayLede(freshness)
+    : locale === 'en'
+      ? enTodayLede(guide, freshness.estimateDay)
+      : `<p class="article-hero-lede">${escapeHtml(guide.intro)}</p>`;
+  const freshnessStrip = renderFreshnessStrip(locale, freshness);
   activeGuideLocale = locale;
   const toc = guide.sections.map((section, index) => `<li><a href="#${escapeHtml(section.id)}">${index + 1}. ${escapeHtml(section.title)}</a></li>`).join('');
   const sections = guide.sections.map((section) => {
@@ -1532,8 +1701,8 @@ function renderMapGuideHtml(locale, options = {}) {
     const label = page === 'items' ? copy.database.title : localizedArticleGuide(locale, page).h1;
     return `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`;
   }).join('');
-  return `${head(locale, 'map-rotation', guide.meta.title, guide.meta.description, guide.meta.schema, options)}
-  <body class="article-page"><div id="top"></div>${header(locale, 'map-rotation', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(guide.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(guide.related.homeAnchor)}</p><h1 id="article-title">${escapeHtml(guide.h1)}</h1><p class="article-hero-lede">${escapeHtml(guide.intro)}</p></div>${renderArticleImage({ src: '/media/peak-map-route.webp', alt: locale === 'en' ? 'PEAK route screenshot with a rope crossing a volcanic hazard' : guide.sections[1].image.alt, caption: locale === 'en' ? 'Official Steam screenshot - a route decision is more useful than an unverified live-map claim.' : guide.sections[1].image.caption })}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#rotation-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(guide.answerLabel)}</p><h2 id="answer-title">${escapeHtml(guide.answerLabel)}</h2><p>${escapeHtml(guide.answer)}</p></section>${sections}<section id="rotation-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noopener">${escapeHtml(guide.source.news)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#maps">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a>${mapRelatedLinks}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
+  return `${head(locale, 'map-rotation', heading.title, guide.meta.description, guide.meta.schema, { ...options, mapHeadline: heading.h1, dateModified: freshness.estimateDay, articleModified: siteOffsetIso(freshness.writtenAt) })}
+  <body class="article-page"><div id="top"></div>${header(locale, 'map-rotation', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(guide.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(guide.related.homeAnchor)}</p><h1 id="article-title">${escapeHtml(heading.h1)}</h1>${heroLede}${freshnessStrip}</div>${renderArticleImage({ src: '/media/peak-map-route.webp', alt: locale === 'en' ? 'PEAK route screenshot with a rope crossing a volcanic hazard' : guide.sections[1].image.alt, caption: locale === 'en' ? 'Official Steam screenshot - a route decision is more useful than an unverified live-map claim.' : guide.sections[1].image.caption })}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#rotation-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(guide.answerLabel)}</p><h2 id="answer-title">${escapeHtml(guide.answerLabel)}</h2><p>${escapeHtml(guide.answer)}</p></section>${sections}<section id="rotation-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noopener">${escapeHtml(guide.source.news)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#maps">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a>${mapRelatedLinks}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
 }
 
 export function renderMapGuide(locale, options = {}) {
