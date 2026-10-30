@@ -17,6 +17,7 @@ import { articleSupplementalGeneratedLocaleTranslations } from './article-supple
 import { peakSoloLocaleOverrides } from './article-solo-locales.mjs';
 import { peakMultiplayerModTranslations } from './article-multiplayer-mod-locales.mjs';
 import { peakCrossplayTranslations } from './article-crossplay-locales.mjs';
+import { controllerSupportTranslations } from './article-controller-locales.mjs';
 
 const liveMapCopy = {
   en: {
@@ -1347,4 +1348,26 @@ for (const [locale, translation] of Object.entries(peakMultiplayerModTranslation
 
 for (const [locale, translation] of Object.entries(peakCrossplayTranslations)) {
   articleLocaleTranslations[locale]['peak-crossplay-guide'] = translation;
+}
+
+for (const [locale, translation] of Object.entries(controllerSupportTranslations)) {
+  articleLocaleTranslations[locale]['peak-controller-support'] = translation;
+}
+
+const controllerHowToPlayLinkLabels = {
+  zh: '查看 PEAK 手柄支持与连接排错',
+  es: 'Consultar el soporte de mandos de PEAK',
+  ja: 'PEAKのコントローラー対応を確認する',
+  fr: 'Vérifier la prise en charge des manettes dans PEAK',
+  de: 'PEAK-Controller-Unterstützung prüfen',
+  pt: 'Verificar o suporte a controles em PEAK',
+  ko: 'PEAK 컨트롤러 지원 확인하기',
+  it: 'Controllare il supporto controller di PEAK',
+};
+
+for (const [locale, label] of Object.entries(controllerHowToPlayLinkLabels)) {
+  articleLocaleTranslations[locale]['how-to-play-peak'].related.push([
+    'peak-controller-support',
+    label,
+  ]);
 }
