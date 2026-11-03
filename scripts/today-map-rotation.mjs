@@ -72,8 +72,13 @@ export function buildTodayMapSnapshot(value, displayDate, { timerText, mapsText,
     source: { label: 'PEAK Wiki community map pool', url: PEAK_WIKI_MAPS_URL, timerUrl: PEAK_WIKI_TIMER_URL,
       mapsSha256: hash(mapsText), timerSha256: hash(timerText), poolSize: config.rotations.length, rotationIndex: index },
     license: { label: 'CC BY-SA 4.0', url: CC_BY_SA_URL },
-    // Existing images show biome examples, not the exact island or variant.
-    media: [],
+    media: entries.map(({ biome }) => ({
+      type: 'image',
+      biome: BIOME_DISPLAY_NAMES[biome],
+      illustrative: true,
+      url: `/media/peak-map-${biome}.webp`,
+      sourceUrl: `https://peak.wiki.gg/wiki/${biome === 'kiln' ? 'Kiln' : BIOME_DISPLAY_NAMES[biome]}`,
+    })),
   };
 }
 

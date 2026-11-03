@@ -1511,14 +1511,18 @@ img {
   font-size: 13px;
 }
 
+.today-map-media-card figcaption a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .today-map-media-card figcaption span {
   min-width: 0;
-  overflow: hidden;
   color: rgba(255, 253, 249, 0.75);
   font-size: 11px;
   line-height: 1.45;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .today-map-carousel-arrow {

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { buildTodayMapSnapshot, isCurrentMapSnapshot, parseWikiRotation } from '../today-map-rotation.mjs';
+import { access } from 'node:fs/promises';
+import { buildTodayMapSnapshot, isCurrentMapSnapshot, parseWikiRotation, BIOME_DISPLAY_NAMES } from '../today-map-rotation.mjs';
 import { fetchTodayMap } from '../fetch-today-map.mjs';
 import { renderHome, injectTodayMapSection, localeOrder, renderArticlePage } from '../locales.mjs';
 import { officialUpdateFacts } from '../official-update-facts.mjs';
@@ -45,7 +46,13 @@ test('17:00 UTC changes the community map and retains variant names', () => {
   assert.equal(after.map, 'Shore (BlueBeach) → Roots → Mesa → Gloom → Citadel');
   assert.equal(before.resetAt, after.currentResetAt);
   assert.equal(after.estimated, true);
-  assert.deepEqual(after.media, []);
+  assert.deepEqual(after.media.map(item => item.url), ['shore', 'roots', 'mesa', 'gloom', 'citadel'].map(biome => `/media/peak-map-${biome}.webp`));
+  assert.equal(after.media[0].biome, 'Shore');
+  assert.ok(after.media.every(item => item.illustrative === true));
+});
+
+test('all supported biomes have local WebP reference images', async () => {
+  await Promise.all(Object.keys(BIOME_DISPLAY_NAMES).map(biome => access(new URL(`../../public/media/peak-map-${biome}.webp`, import.meta.url))));
 });
 
 test('expired, future, legacy and relabelled source records are rejected', () => {
@@ -89,10 +96,15 @@ test('all nine locales share the official patch, FAQ schema and pending map stat
     assert.ok(map.includes('>3.0.1</a>'), locale);
     assert.ok(!map.includes('is-estimated'), locale);
     assert.ok(!map.includes('BlueBeach'), locale);
+    assert.ok(!map.includes('data-carousel-slide'), locale);
     assert.ok(!map.includes('peak-gloom-guide'), locale);
     assert.ok(!map.includes('peak-citadel-guide'), locale);
     const article = renderArticlePage(locale, 'peak-game-update', { buildDate: '2026-11-03', updateData });
     assert.match(article, /article-answer[\s\S]*?3\.0\.1/, locale);
+    const current = injectTodayMapSection('</section><div class="container article-layout">', locale, snapshot('2026-11-03T12:00:00Z'), '2026-11-03', '2026-11-03T12:01:00Z', updateData);
+    assert.equal([...current.matchAll(/data-carousel-slide /g)].length, 5, locale);
+    assert.ok(current.includes('https://peak.wiki.gg/wiki/Shore'), locale);
+    assert.ok(!current.includes('today-map-media-pending'), locale);
     const missing = renderHome(locale, { buildDate: '2026-11-03' });
     assert.ok(!missing.includes('Patch Notes 3.0.1'), locale);
   }

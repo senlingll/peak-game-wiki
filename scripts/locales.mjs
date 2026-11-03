@@ -12,7 +12,7 @@ import { itemsPageCopy } from './items-page-locales.mjs';
 import { badgeGuideCopy, badgeGuideEntries, badgeGuideSource, badgeGrantCopy, badgeCardLabels } from './badges-guide.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
-const STYLESHEET_HREF = '/styles.css?v=20261008-geo';
+const STYLESHEET_HREF = '/styles.css?v=20261103-map-media';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
 const STEAM_NEWS_API_HTML_URL = 'https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json';
 const SUPPORT_EMAIL = 'support@peak-game.wiki';
@@ -795,7 +795,10 @@ function renderTodayMapMedia(locale, data) {
       ? `<video controls preload="metadata" width="1200" height="675"><source src="${escapeHtml(item.url)}"${item.mimeType ? ` type="${escapeHtml(item.mimeType)}"` : ''} /></video>`
       : `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(alt)}" width="1200" height="675" loading="eager" />`;
     const active = index === 0;
-    return `<figure id="today-map-slide-${index}" class="today-map-media-card${active ? ' is-active' : ''}" data-carousel-slide role="group" aria-roledescription="slide" aria-label="${index + 1} of ${data.media.length}" aria-hidden="${active ? 'false' : 'true'}">${media}<figcaption><strong>${escapeHtml(label)}</strong><span>${escapeHtml(caption)}</span></figcaption></figure>`;
+    const labelMarkup = isSafeHttpUrl(item.sourceUrl)
+      ? `<a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener" tabindex="${active ? '0' : '-1'}">${escapeHtml(label)}</a>`
+      : escapeHtml(label);
+    return `<figure id="today-map-slide-${index}" class="today-map-media-card${active ? ' is-active' : ''}" data-carousel-slide role="group" aria-roledescription="slide" aria-label="${index + 1} of ${data.media.length}" aria-hidden="${active ? 'false' : 'true'}">${media}<figcaption><strong>${labelMarkup}</strong><span>${escapeHtml(caption)}</span></figcaption></figure>`;
   }).join('');
   const indicators = data.media.map((item, index) => {
     const label = item.biome || `${copy.title} ${index + 1}`;

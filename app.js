@@ -151,6 +151,7 @@ function bindTodayMapCarousels() {
         const active = index === activeIndex;
         slide.classList.toggle('is-active', active);
         slide.setAttribute('aria-hidden', String(!active));
+        slide.querySelectorAll('a').forEach((link) => { link.tabIndex = active ? 0 : -1; });
       });
       dots.forEach((dot, index) => {
         const active = index === activeIndex;

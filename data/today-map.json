@@ -5,8 +5,8 @@
   "biome": "Shore, Roots, Mesa, Caldera, The Kiln",
   "resetAt": "2026-11-03T17:00:00.000Z",
   "currentResetAt": "2026-11-02T17:00:00.000Z",
-  "updatedAt": "2026-11-03T11:13:36.507Z",
-  "sourceFetchedAt": "2026-11-03T11:13:36.507Z",
+  "updatedAt": "2026-11-03T11:34:56.378Z",
+  "sourceFetchedAt": "2026-11-03T11:34:56.378Z",
   "estimated": true,
   "source": {
     "label": "PEAK Wiki community map pool",
@@ -21,5 +21,41 @@
     "label": "CC BY-SA 4.0",
     "url": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
-  "media": []
+  "media": [
+    {
+      "type": "image",
+      "biome": "Shore",
+      "illustrative": true,
+      "url": "/media/peak-map-shore.webp",
+      "sourceUrl": "https://peak.wiki.gg/wiki/Shore"
+    },
+    {
+      "type": "image",
+      "biome": "Roots",
+      "illustrative": true,
+      "url": "/media/peak-map-roots.webp",
+      "sourceUrl": "https://peak.wiki.gg/wiki/Roots"
+    },
+    {
+      "type": "image",
+      "biome": "Mesa",
+      "illustrative": true,
+      "url": "/media/peak-map-mesa.webp",
+      "sourceUrl": "https://peak.wiki.gg/wiki/Mesa"
+    },
+    {
+      "type": "image",
+      "biome": "Caldera",
+      "illustrative": true,
+      "url": "/media/peak-map-caldera.webp",
+      "sourceUrl": "https://peak.wiki.gg/wiki/Caldera"
+    },
+    {
+      "type": "image",
+      "biome": "The Kiln",
+      "illustrative": true,
+      "url": "/media/peak-map-kiln.webp",
+      "sourceUrl": "https://peak.wiki.gg/wiki/Kiln"
+    }
+  ]
 }
