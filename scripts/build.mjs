@@ -2,7 +2,6 @@ import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderBadgesGuide, renderContact, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap, STYLESHEET_HREF } from './locales.mjs';
 import { articleOrder } from './article-guides.mjs';
-import { buildTodayMapSnapshot } from './today-map-rotation.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const outputRoot = resolve(projectRoot, 'dist');
@@ -12,12 +11,14 @@ const buildDate = /^\d{4}-\d{2}-\d{2}$/.test(process.env.BUILD_DATE ?? '')
   ? process.env.BUILD_DATE
   : buildTimestamp.slice(0, 10);
 const publishedArticleOrder = process.env.PUBLISHED_ARTICLES
-  ? process.env.PUBLISHED_ARTICLES.split(',').map((slug) => slug.trim().toLowerCase()).filter((slug) => articleOrder.includes(slug))
+  ? [...new Set(process.env.PUBLISHED_ARTICLES.split(',').map((slug) => slug.trim().toLowerCase()).filter(Boolean))]
   : articleOrder;
 
 if (!publishedArticleOrder.length) {
   throw new Error('PUBLISHED_ARTICLES must include at least one known article slug.');
 }
+const unknownArticles = publishedArticleOrder.filter((slug) => !articleOrder.includes(slug));
+if (unknownArticles.length) throw new Error(`Unknown PUBLISHED_ARTICLES: ${unknownArticles.join(', ')}`);
 
 async function readJsonFile(file, fallback) {
   try {
@@ -64,12 +65,12 @@ async function validateSitemap(outputRoot) {
   }
 }
 
-const todayMap = buildTodayMapSnapshot(buildTimestamp, buildDate);
+const todayMap = await readJsonFile('data/today-map.json', null);
 const updateData = await readJsonFile('data/peak-updates.json', { entries: [] });
 const mapHistory = await readJsonFile('data/peak-map-history.json', []);
 
 const renderOptions = { buildDate, dateModified: buildDate, buildTimestamp, todayMap, updateData, mapHistory, publishedArticles: publishedArticleOrder };
-const renderMapGuidePage = (locale) => injectTodayMapSection(renderMapGuide(locale, renderOptions), locale, todayMap, buildDate, buildTimestamp);
+const renderMapGuidePage = (locale) => injectTodayMapSection(renderMapGuide(locale, renderOptions), locale, todayMap, buildDate, buildTimestamp, updateData, publishedArticleOrder);
 const notFoundHtml = `<!doctype html>
 <html lang="en">
   <head>

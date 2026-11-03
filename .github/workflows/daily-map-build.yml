@@ -15,7 +15,7 @@ jobs:
     env:
       TODAY_MAP_FETCH_TIMEOUT_MS: 20000
       SITE_TIMEZONE: Asia/Shanghai
-      PUBLISHED_ARTICLES: peak-biomes-list,peak-game-update,what-is-peak-game,peak-game-price,peak-map-rotation-schedule,room-codes,peak-photon-troubleshooting,peak-revive-guide,peak-cooking-guide,peak-secret-ending-guide,peak-solo-and-public-lobbies,peak-multiplayer-mod
+      PUBLISHED_ARTICLES: peak-biomes-list,peak-game-update,what-is-peak-game,peak-game-price,peak-map-rotation-schedule,room-codes,peak-photon-troubleshooting,peak-revive-guide,peak-cooking-guide,peak-secret-ending-guide,peak-solo-and-public-lobbies,peak-multiplayer-mod,peak-controller-support
     steps:
       - name: Check out the site
         uses: actions/checkout@v4
@@ -28,12 +28,18 @@ jobs:
       - name: Freeze site date in the configured timezone
         run: echo "BUILD_DATE=$(TZ="$SITE_TIMEZONE" date +%F)" >> "$GITHUB_ENV"
 
-      - name: Compute today's estimated map
+      - name: Fetch and validate today's community map estimate
         run: npm run fetch:today-map
 
       - name: Fetch official PEAK update entries
         run: npm run fetch:updates
         continue-on-error: true
+
+      - name: Test map validity and localized update rendering
+        run: npm test
+
+      - name: Build static pages
+        run: npm run build
 
       - name: Commit daily map and update data
         run: |
@@ -46,9 +52,6 @@ jobs:
             git commit -m "Update daily map and news data"
             git push origin HEAD:main
           fi
-
-      - name: Build static pages
-        run: npm run build
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

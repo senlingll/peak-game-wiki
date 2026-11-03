@@ -1,7 +1,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { buildTodayMapSnapshot } from './today-map-rotation.mjs';
+import { buildTodayMapSnapshot, emptyTodayMap, PEAK_WIKI_TIMER_URL, PEAK_WIKI_MAPS_URL } from './today-map-rotation.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const dataPath = resolve(projectRoot, 'data/today-map.json');
@@ -10,23 +10,6 @@ const historyPath = resolve(projectRoot, 'data/peak-map-history.json');
 function resolveBuildDate() {
   const configured = process.env.BUILD_DATE;
   return /^\d{4}-\d{2}-\d{2}$/.test(configured ?? '') ? configured : new Date().toISOString().slice(0, 10);
-}
-
-function emptyTodayMap(buildDate, updatedAt = new Date().toISOString()) {
-  return {
-    date: buildDate,
-    map: null,
-    route: null,
-    biome: null,
-    resetAt: null,
-    currentResetAt: null,
-    updatedAt,
-    sourceFetchedAt: updatedAt,
-    estimated: false,
-    source: null,
-    license: null,
-    media: [],
-  };
 }
 
 async function writeTodayMap(value) {
@@ -51,19 +34,37 @@ async function appendMapHistory(value) {
     estimated: value.estimated === true,
     source: value.source || null,
     license: value.license || null,
+    sourceFetchedAt: value.sourceFetchedAt || null,
   };
   const next = [entry, ...history.filter((item) => item?.date !== entry.date)].slice(0, 30);
   await writeFile(historyPath, `${JSON.stringify(next, null, 2)}\n`, 'utf8');
 }
 
+export async function fetchTodayMap(buildDate, fetchImpl = fetch) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), Number(process.env.TODAY_MAP_FETCH_TIMEOUT_MS) || 20000);
+  try {
+    const texts = await Promise.all([PEAK_WIKI_TIMER_URL, PEAK_WIKI_MAPS_URL].map(async (url) => {
+      const response = await fetchImpl(url, { signal: controller.signal, headers: { 'user-agent': 'peak-game-wiki-map/2.0 (+https://peak-game.wiki/map-rotation)' } });
+      if (!response.ok) throw new Error(`Community map source returned HTTP ${response.status}`);
+      return response.text();
+    }));
+    const sourceFetchedAt = new Date().toISOString();
+    return buildTodayMapSnapshot(sourceFetchedAt, buildDate, { timerText: texts[0], mapsText: texts[1], sourceFetchedAt });
+  } catch {
+    console.warn('Community map source could not be verified; publishing a pending entry.');
+    return emptyTodayMap(buildDate);
+  } finally {
+    controller.abort();
+    clearTimeout(timeout);
+  }
+}
+
 async function main() {
-  const buildDate = resolveBuildDate();
-  const updatedAt = new Date();
-  const result = buildTodayMapSnapshot(updatedAt, buildDate);
+  const result = await fetchTodayMap(resolveBuildDate());
   await writeTodayMap(result);
-  await appendMapHistory(result);
-  console.log(`Computed today's estimated PEAK map for ${result.date}: ${result.map}`);
-  console.log(`Next reset: ${result.resetAt}`);
+  if (result.map) await appendMapHistory(result);
+  console.log(`PEAK map for ${result.date}: ${result.map || 'pending'}`);
 }
 
 export { appendMapHistory, buildTodayMapSnapshot, emptyTodayMap };

@@ -4,6 +4,8 @@ import { achievementGuides } from './achievement-guide.mjs';
 import { articleGuides, articleOrder } from './article-guides.mjs';
 import { articleLiveMapCopy, articleLocaleTranslations } from './article-locales.mjs';
 import { articleUpdateCopy } from './article-update-locales.mjs';
+import { checkedUpdateSummary, officialEntries, latestOfficialPatch, officialUpdateFacts } from './official-update-facts.mjs';
+import { isCurrentMapSnapshot } from './today-map-rotation.mjs';
 import { articleScheduleDynamicFallback } from './article-schedule-locales.mjs';
 import { itemsCatalog } from './items-catalog.mjs';
 import { itemsPageCopy } from './items-page-locales.mjs';
@@ -417,83 +419,38 @@ for (const code of localeOrder) {
 const homepageOverrides = {
   en: {
     title: "PEAK Game Wiki — Today's Map, Items, Badges & Patch Notes",
-    patchValue: 'Patch 2.6.b',
-    patchNote: 'Checked 6 Oct 2026: mid-game joins, Gloom/Citadel revival badges, t-pose skeletons, and slow-network late-join loading.',
-    latestUpdate: ['OCT', '06', '2026', 'CURRENT', 'Patch Notes 2.6.b', 'Fixed several mid-game join cases, Gloom and Citadel revive badge attribution, t-pose skeletons on late joins, and slow-network late-join loading.'],
-    latestFaq: 'Patch 2.6.b is the latest confirmed update checked on 6 October 2026. It addresses mid-game joins, Gloom and Citadel revive badge attribution, t-pose skeletons on late joins, and slow-network loading; see the full timeline for earlier fixes and remaining player reports.',
-    mapParagraph: "This page keeps the rotation language honest. See today's verified map at the top of our map rotation guide, updated daily. The official game and update feed remain the authority for the active route.",
     dailyFaq: "PEAK uses a changing map rotation. Check the daily update section at the top of the map rotation guide, then confirm the active route in the game.",
   },
   zh: {
     title: 'PEAK 游戏 Wiki：今日地图（每日更新）· 道具、徽章与更新',
-    patchValue: 'Patch 2.6.b',
-    patchNote: '2026 年 10 月 6 日核对：修复中途加入、Gloom/Citadel 复活徽章、晚加入 T-pose 骷髅和慢网络加载问题。',
-    latestUpdate: ['10月', '06', '2026', '当前', 'Patch Notes 2.6.b', '修复多种中途加入、Gloom 与 Citadel 复活徽章归属、晚加入 T-pose 骷髅以及慢网络晚加入加载问题。'],
-    latestFaq: '截至 2026 年 10 月 6 日核对，Patch 2.6.b 是最新确认版本，主要处理多种中途加入、Gloom/Citadel 复活徽章归属、晚加入 T-pose 骷髅和慢网络加载问题；更早修复及仍可能发生的玩家反馈请查看完整时间线。',
-    mapParagraph: '这个页面会明确区分轮换信息和推测。请查看地图轮换指南顶部的每日更新区块，页面会每日更新；游戏和官方更新仍是当前路线的最终依据。',
     dailyFaq: 'PEAK 会更换地图轮换。请查看地图轮换指南顶部的每日更新区块，再在游戏中确认当前路线。',
   },
   es: {
     title: 'Mapa PEAK hoy (diario): objetos, insignias y novedades',
-    patchValue: 'Patch 2.6.b',
-    patchNote: 'Comprobado el 6 de octubre de 2026: entradas durante la partida, insignias de reanimación de Gloom/Citadel, esqueletos en T-pose y Loading con redes lentas.',
-    latestUpdate: ['OCT', '06', '2026', 'ACTUAL', 'Patch Notes 2.6.b', 'Corrigió varios casos de entrada durante la partida, la atribución de insignias de reanimación de Gloom y Citadel, esqueletos en T-pose y Loading de entradas tardías con redes lentas.'],
-    latestFaq: 'Patch 2.6.b es la última actualización confirmada, comprobada el 6 de octubre de 2026. Aborda entradas durante la partida, insignias de reanimación de Gloom y Citadel, esqueletos en T-pose y Loading lento; consulta la cronología para correcciones anteriores y reportes pendientes.',
-    mapParagraph: 'Esta página separa la rotación verificada de la especulación. Consulta el bloque de actualización diaria en la parte superior de la guía de rotación, actualizado a diario, y confirma la ruta activa en el juego.',
     dailyFaq: 'PEAK usa una rotación cambiante. Consulta el bloque de actualización diaria en la parte superior de la guía de rotación y confirma la ruta activa en el juego.',
   },
   ja: {
     title: 'PEAK Wiki：今日のマップ（毎日更新）・アイテム、バッジと更新',
-    patchValue: 'Patch 2.6.b',
-    patchNote: '2026年10月6日確認：途中参加、Gloom/Citadel の復活バッジ、遅れて参加した際のTポーズ骸骨、低速回線のLoadingを修正。',
-    latestUpdate: ['10月', '06', '2026', '現在', 'Patch Notes 2.6.b', '途中参加、Gloom と Citadel の復活バッジ判定、遅れて参加した際のTポーズ骸骨、低速回線でのLoadingを複数修正。'],
-    latestFaq: '2026年10月6日に確認した最新の確定アップデートは Patch 2.6.b です。途中参加、Gloom/Citadel の復活バッジ、Tポーズ骸骨、低速回線のLoadingを対象にしています。以前の修正と未確認のプレイヤー報告は更新年表で確認してください。',
-    mapParagraph: 'このページでは、確認済みのローテーションと推測を分けています。ローテーションガイド上部の毎日更新セクションを確認し、ゲーム内で現在のルートを確かめてください。',
     dailyFaq: 'PEAK のマップローテーションは変化します。ローテーションガイド上部の毎日更新セクションを確認し、ゲーム内で現在のルートを確かめてください。',
   },
   ko: {
     title: 'PEAK 위키: 오늘의 맵(매일 업데이트) · 아이템, 배지와 업데이트',
-    patchValue: 'Patch 2.6.b',
-    patchNote: '2026년 10월 6일 확인: 중도 참가, Gloom/Citadel 부활 배지, 늦은 참가의 T-pose 해골, 느린 네트워크 Loading을 수정했습니다.',
-    latestUpdate: ['10월', '06', '2026', '현재', 'Patch Notes 2.6.b', '중도 참가, Gloom과 Citadel 부활 배지 귀속, 늦은 참가의 T-pose 해골과 느린 네트워크 Loading 문제를 수정했습니다.',],
-    latestFaq: '2026년 10월 6일 확인 기준 최신 확정 업데이트는 Patch 2.6.b입니다. 중도 참가, Gloom/Citadel 부활 배지 귀속, 늦은 참가의 T-pose 해골과 느린 네트워크 Loading을 다룹니다. 이전 수정과 아직 확인되지 않은 플레이어 제보는 전체 연표에서 확인하세요.',
-    mapParagraph: '이 페이지는 확인된 로테이션과 추측을 구분합니다. 맵 로테이션 가이드 상단의 매일 업데이트 영역을 확인하고 게임에서 현재 경로를 확인하세요.',
     dailyFaq: 'PEAK은 변화하는 맵 로테이션을 사용합니다. 맵 로테이션 가이드 상단의 매일 업데이트 영역을 확인한 뒤 게임에서 활성 경로를 확인하세요.',
   },
   de: {
     title: 'PEAK Wiki: Tageskarte (täglich), Items, Abzeichen & Updates',
-    patchValue: 'Patch 2.6.b',
-    patchNote: 'Am 6. Oktober 2026 geprüft: Mid-Game-Beitritte, Gloom/Citadel-Wiederbelebungsabzeichen, T-Pose-Skelette und Loading bei langsamen Netzwerken.',
-    latestUpdate: ['OKT', '06', '2026', 'AKTUELL', 'Patch Notes 2.6.b', 'Behebt mehrere Mid-Game-Beitritte, die Zuordnung von Gloom- und Citadel-Wiederbelebungsabzeichen, T-Pose-Skelette bei späten Beitritten und Loading bei langsamen Netzwerken.'],
-    latestFaq: 'Patch 2.6.b ist das letzte bestätigte Update, geprüft am 6. Oktober 2026. Es behandelt Mid-Game-Beitritte, Gloom- und Citadel-Wiederbelebungsabzeichen, T-Pose-Skelette und langsames Loading; die vollständige Zeitleiste nennt frühere Fixes und offene Spielerberichte.',
-    mapParagraph: 'Diese Seite trennt bestätigte Rotation von Vermutungen. Sieh im täglichen Update-Bereich oben im Kartenrotations-Ratgeber nach und prüfe die aktive Route zusätzlich im Spiel.',
     dailyFaq: 'PEAK nutzt eine wechselnde Kartenrotation. Prüfe den täglichen Update-Bereich oben im Kartenrotations-Ratgeber und bestätige die aktive Route im Spiel.',
   },
   fr: {
     title: 'Wiki PEAK : carte quotidienne, objets, badges & actus',
-    patchValue: 'Patch 2.6.b',
-    patchNote: 'Vérifié le 6 octobre 2026 : entrées en cours de partie, badges de réanimation Gloom/Citadel, squelettes en T-pose et Loading sur réseau lent.',
-    latestUpdate: ['OCT', '06', '2026', 'ACTUEL', 'Patch Notes 2.6.b', 'Correction de plusieurs entrées en cours de partie, de l’attribution des badges de réanimation de Gloom et Citadel, des squelettes en T-pose et du Loading des entrées tardives sur réseau lent.'],
-    latestFaq: 'Patch 2.6.b est la dernière mise à jour confirmée, vérifiée le 6 octobre 2026. Elle concerne les entrées en cours de partie, les badges de réanimation Gloom/Citadel, les squelettes en T-pose et le Loading lent ; consultez la chronologie pour les correctifs précédents et les signalements en attente.',
-    mapParagraph: 'Cette page distingue la rotation vérifiée des suppositions. Consultez la section des mises à jour quotidiennes en haut du guide de rotation, puis confirmez la route active dans le jeu.',
     dailyFaq: 'PEAK utilise une rotation variable. Consultez la section des mises à jour quotidiennes en haut du guide de rotation, puis confirmez la route active dans le jeu.',
   },
   pt: {
     title: 'Wiki PEAK: mapa diário, itens, distintivos e atualizações',
-    patchValue: 'Patch 2.6.b',
-    patchNote: 'Conferido em 6 de outubro de 2026: entradas durante a partida, distintivos de reviver de Gloom/Citadel, esqueletos em T-pose e Loading em redes lentas.',
-    latestUpdate: ['OUT', '06', '2026', 'ATUAL', 'Patch Notes 2.6.b', 'Corrigiu vários casos de entrada durante a partida, a atribuição de distintivos de reviver de Gloom e Citadel, esqueletos em T-pose e Loading de entradas tardias em redes lentas.'],
-    latestFaq: 'Patch 2.6.b é a atualização mais recente confirmada, conferida em 6 de outubro de 2026. Ela trata de entradas durante a partida, distintivos de reviver de Gloom e Citadel, esqueletos em T-pose e Loading lento; veja a linha do tempo para correções anteriores e relatos pendentes.',
-    mapParagraph: 'Esta página separa a rotação verificada das suposições. Consulte a seção de atualização diária no topo do guia de rotação e confirme a rota ativa no jogo.',
     dailyFaq: 'PEAK usa uma rotação de mapas variável. Consulte a seção de atualização diária no topo do guia de rotação e confirme a rota ativa no jogo.',
   },
   it: {
     title: 'Wiki PEAK: mappa quotidiana, oggetti, badge e aggiornamenti',
-    patchValue: 'Patch 2.6.b',
-    patchNote: 'Verificato il 6 ottobre 2026: ingressi durante la partita, badge di resurrezione Gloom/Citadel, scheletri in T-pose e Loading su reti lente.',
-    latestUpdate: ['OTT', '06', '2026', 'ATTUALE', 'Patch Notes 2.6.b', 'Corretti diversi casi di ingresso durante la partita, l’attribuzione dei badge di resurrezione di Gloom e Citadel, gli scheletri in T-pose e il Loading degli ingressi tardivi su reti lente.'],
-    latestFaq: 'Patch 2.6.b è l’ultimo aggiornamento confermato, verificato il 6 ottobre 2026. Riguarda gli ingressi durante la partita, i badge di resurrezione Gloom/Citadel, gli scheletri in T-pose e il Loading lento; la cronologia completa mostra le correzioni precedenti e le segnalazioni ancora da verificare.',
-    mapParagraph: 'Questa pagina separa la rotazione verificata dalle ipotesi. Consulta la sezione degli aggiornamenti quotidiani in cima alla guida alla rotazione e conferma il percorso attivo nel gioco.',
     dailyFaq: 'PEAK usa una rotazione variabile. Consulta la sezione degli aggiornamenti quotidiani in cima alla guida alla rotazione e conferma il percorso attivo nel gioco.',
   },
 };
@@ -784,9 +741,8 @@ function isLocalMapMediaUrl(value) {
 
 function normalizeTodayMap(data, buildDate, buildTimestamp) {
   const source = data?.source;
-  const hasLocation = [data?.map, data?.route, data?.biome].some((value) => typeof value === 'string' && value.trim());
-  const datedSource = data?.date === buildDate && isSafeHttpUrl(source?.url);
-  const available = datedSource && hasLocation;
+  const datedSource = isCurrentMapSnapshot(data, buildDate, buildTimestamp);
+  const available = datedSource;
   const mediaValues = Array.isArray(data?.media) ? data.media : data?.media ? [data.media] : [];
   const media = datedSource
     ? mediaValues.filter((item) => item && ['image', 'video'].includes(item.type) && isLocalMapMediaUrl(item.url))
@@ -851,34 +807,36 @@ function renderTodayMapMedia(locale, data) {
   return `<div class="today-map-carousel" data-today-carousel tabindex="0" aria-roledescription="carousel" aria-label="${escapeHtml(copy.title)}"><div class="today-map-carousel-viewport"><div class="today-map-carousel-track" data-carousel-track>${cards}</div>${controls}</div><div class="today-map-carousel-dots" role="group" aria-label="${escapeHtml(copy.mediaSlides)}">${indicators}</div></div>`;
 }
 
-function renderTodayMap(locale, data, buildDate, buildTimestamp) {
+function renderTodayMap(locale, data, buildDate, buildTimestamp, updateData, publishedArticles = articleOrder) {
   const copy = todayMapCopy[locale] ?? todayMapCopy.en;
   const detailCopy = todayMapDetailCopy[locale] ?? defaultTodayMapDetailCopy;
   const snapshot = normalizeTodayMap(data, buildDate, buildTimestamp);
+  const patch = latestOfficialPatch(updateData, buildDate);
+  const currentVersion = patch?.title.match(/\d[\w.]*/)?.[0] || copy.pending;
   const mapValue = snapshot.map || copy.pending;
   const routeValue = snapshot.route === 'Daily biome sequence' ? copy.dailyRoute : snapshot.route || copy.pending;
   const biomeValue = snapshot.biome || copy.pending;
   const countdown = formatCountdown(locale, snapshot.resetAt, buildTimestamp);
-  const dataUpdatedAt = snapshot.recordUpdatedAt || snapshot.updatedAt;
-  const dataUpdatedLabel = formatDateTimeLabel(locale, dataUpdatedAt);
+  const dataUpdatedAt = data?.sourceFetchedAt || null;
+  const dataUpdatedLabel = dataUpdatedAt ? formatDateTimeLabel(locale, dataUpdatedAt) : copy.pending;
   const nextResetLabel = snapshot.resetAt ? formatDateTimeLabel(locale, snapshot.resetAt) : copy.resetPending;
   const sourceMarkup = snapshot.source
-    ? `<p>${escapeHtml(copy.attributionPrefix)}${escapeHtml(copy.wikiSourceLabel || snapshot.source.label || copy.source)}${escapeHtml(copy.attributionBetween)}${escapeHtml(copy.licenseLabel)}${escapeHtml(copy.attributionSuffix)}</p><p class="today-map-estimate-note">${escapeHtml(copy.estimateNote)}</p>`
+    ? `<p>${escapeHtml(copy.attributionPrefix)}<a href="${escapeHtml(snapshot.source.url)}" rel="noopener">${escapeHtml(copy.wikiSourceLabel || snapshot.source.label || copy.source)}</a>${escapeHtml(copy.attributionBetween)}<a href="${escapeHtml(snapshot.license?.url || CC_BY_SA_URL)}" rel="license noopener">${escapeHtml(copy.licenseLabel)}</a>${escapeHtml(copy.attributionSuffix)}</p><p class="today-map-estimate-note">${escapeHtml(copy.estimateNote)}</p>`
     : `<span>${escapeHtml(copy.pending)}</span>`;
   const status = snapshot.estimated ? copy.estimated : snapshot.available ? copy.verified : copy.pending;
   const panel = snapshot.available
     ? `<h3>${escapeHtml(mapValue)}</h3><p class="today-map-route">${escapeHtml(routeValue)}</p>`
     : `<div class="today-map-pending-copy"><h3>${escapeHtml(copy.pendingTitle)}</h3><p>${escapeHtml(copy.pendingBody)}</p></div>`;
   const statusClass = snapshot.estimated ? ' is-estimated' : snapshot.available ? ' is-verified' : '';
-  const poolItems = detailCopy.poolItems.map(([version, text]) => `<li><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">${escapeHtml(version)}</a> ${escapeHtml(text)}</li>`).join('');
-  const relatedLinks = detailCopy.relatedLinks.map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
-  return `<section id="today-map" class="today-map-section" aria-labelledby="today-map-title"><div class="container today-map-heading"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h2 id="today-map-title">${escapeHtml(copy.title)}</h2><p>${escapeHtml(copy.lede)}</p></div><span class="today-map-status${statusClass}">${escapeHtml(status)}</span></div><div class="container today-map-grid"><div>${renderTodayMapMedia(locale, snapshot)}</div><div class="today-map-panel"><div class="today-map-panel-top"><span class="status-pill"><i></i>${escapeHtml(status)}</span><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></div>${panel}<dl class="today-map-facts"><div><dt>${escapeHtml(copy.currentMap)}</dt><dd>${escapeHtml(mapValue)}</dd></div><div><dt>${escapeHtml(copy.route)}</dt><dd>${escapeHtml(routeValue)}</dd></div><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(countdown)}</dd></div><div><dt>${escapeHtml(detailCopy.currentVersion)}</dt><dd><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">2.6.b</a></dd></div><div><dt>${escapeHtml(detailCopy.nextResetAt)}</dt><dd><time datetime="${escapeHtml(snapshot.resetAt || '')}">${escapeHtml(nextResetLabel)}</time></dd></div><div><dt>${escapeHtml(detailCopy.dataUpdated)}</dt><dd><time datetime="${escapeHtml(dataUpdatedAt || '')}">${escapeHtml(dataUpdatedLabel)}</time></dd></div></dl><div class="today-map-pool-changes"><h3>${escapeHtml(detailCopy.poolChanges)}</h3><ul>${poolItems}</ul></div><div class="today-map-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="today-map-updated"><span>${escapeHtml(copy.updated)}</span> ${escapeHtml(formatDateTimeLabel(locale, snapshot.updatedAt))}</p><nav class="today-map-related" aria-label="${escapeHtml(detailCopy.related)}"><span>${escapeHtml(detailCopy.related)}</span>${relatedLinks}</nav>${snapshot.available ? '' : `<p class="today-map-note">${escapeHtml(copy.pendingNote)}</p>`}</div></div></section>`;
+  const poolItems = `${officialEntries(updateData, buildDate).some((entry) => entry.title === 'CROSSPLAY HAS ARRIVED TO PEAK') ? `<li><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">2026-10-22</a> ${escapeHtml(officialUpdateFacts[locale].crossplay)}</li>` : ''}${detailCopy.poolItems.map(([version, text]) => `<li><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">${escapeHtml(version)}</a> ${escapeHtml(text)}</li>`).join('')}`;
+  const relatedLinks = detailCopy.relatedLinks.filter(([page]) => !articleOrder.includes(page) || publishedArticles.includes(page)).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
+  return `<section id="today-map" class="today-map-section" aria-labelledby="today-map-title"><div class="container today-map-heading"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h2 id="today-map-title">${escapeHtml(copy.title)}</h2><p>${escapeHtml(copy.lede)}</p></div><span class="today-map-status${statusClass}">${escapeHtml(status)}</span></div><div class="container today-map-grid"><div>${renderTodayMapMedia(locale, snapshot)}</div><div class="today-map-panel"><div class="today-map-panel-top"><span class="status-pill"><i></i>${escapeHtml(status)}</span><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></div>${panel}<dl class="today-map-facts"><div><dt>${escapeHtml(copy.currentMap)}</dt><dd>${escapeHtml(mapValue)}</dd></div><div><dt>${escapeHtml(copy.route)}</dt><dd>${escapeHtml(routeValue)}</dd></div><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(countdown)}</dd></div><div><dt>${escapeHtml(detailCopy.currentVersion)}</dt><dd><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">${escapeHtml(currentVersion)}</a></dd></div><div><dt>${escapeHtml(detailCopy.nextResetAt)}</dt><dd><time datetime="${escapeHtml(snapshot.resetAt || '')}">${escapeHtml(nextResetLabel)}</time></dd></div><div><dt>${escapeHtml(detailCopy.dataUpdated)}</dt><dd><time datetime="${escapeHtml(dataUpdatedAt || '')}">${escapeHtml(dataUpdatedLabel)}</time></dd></div></dl><div class="today-map-pool-changes"><h3>${escapeHtml(detailCopy.poolChanges)}</h3><ul>${poolItems}</ul></div><div class="today-map-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="today-map-updated"><span>${escapeHtml(copy.updated)}</span> ${escapeHtml(formatDateTimeLabel(locale, snapshot.updatedAt))}</p><nav class="today-map-related" aria-label="${escapeHtml(detailCopy.related)}"><span>${escapeHtml(detailCopy.related)}</span>${relatedLinks}</nav>${snapshot.available ? '' : `<p class="today-map-note">${escapeHtml(copy.pendingNote)}</p>`}</div></div></section>`;
 }
 
-export function injectTodayMapSection(html, locale, data, buildDate, buildTimestamp) {
+export function injectTodayMapSection(html, locale, data, buildDate, buildTimestamp, updateData, publishedArticles) {
   const marker = '</section><div class="container article-layout">';
   if (!html.includes(marker)) throw new Error(`Map guide insertion marker not found: ${locale}`);
-  return html.replace(marker, `</section>${renderTodayMap(locale, data, buildDate, buildTimestamp)}<div class="container article-layout">`);
+  return html.replace(marker, `</section>${renderTodayMap(locale, data, buildDate, buildTimestamp, updateData, publishedArticles)}<div class="container article-layout">`);
 }
 
 const articleLinkPages = new Set(['home', 'map-rotation', 'achievements', 'items', 'badges-guide', ...articleOrder]);
@@ -1023,7 +981,7 @@ function renderArticleUpdates(locale, data) {
   if (!entries.length) return `<p class="article-data-pending">${escapeHtml(copy.empty)}</p>`;
   const rows = entries.map((entry) => {
     const kind = String(entry.kind || 'UPDATE').toUpperCase();
-    const summary = copy.summaries?.[entry.title] ?? copy.generic?.[kind] ?? copy.generic?.default ?? entry.summary ?? copy.sourceFallback;
+    const summary = checkedUpdateSummary(locale, entry.title) ?? copy.summaries?.[entry.title] ?? copy.generic?.[kind] ?? copy.generic?.default ?? entry.summary ?? copy.sourceFallback;
     return `<tr><td><time datetime="${escapeHtml(entry.date)}">${escapeHtml(formatDateLabel(locale, entry.date))}</time></td><td><span class="article-data-tag">${escapeHtml(copy.kind?.[kind] || kind)}</span></td><td><a href="${escapeHtml(entry.url || STEAM_NEWS_URL)}" target="_blank" rel="noopener">${escapeHtml(entry.title)} <span aria-hidden="true">\u2192</span></a></td><td>${escapeHtml(summary)}</td></tr>`;
   }).join('');
   return `<div class="article-table-wrap article-data-table-wrap"><table><caption>${escapeHtml(copy.caption)}</caption><thead><tr><th scope="col">${escapeHtml(copy.date)}</th><th scope="col">${escapeHtml(copy.type)}</th><th scope="col">${escapeHtml(copy.entry)}</th><th scope="col">${escapeHtml(copy.summary)}</th></tr></thead><tbody>${rows}</tbody></table></div><p class="article-data-note">${escapeHtml(copy.note)}</p>`;
@@ -1036,7 +994,7 @@ function renderArticleHistory(locale, data, todayMap, buildDate, buildTimestamp)
   if (current.available && !history.some((entry) => entry?.date === current.date)) {
     history.unshift({ date: current.date, map: current.map, route: current.route, biome: current.biome, resetAt: current.resetAt, estimated: current.estimated, source: current.source });
   }
-  const entries = history.filter((entry) => entry?.date && (entry.map || entry.route || entry.biome)).sort((left, right) => right.date.localeCompare(left.date)).slice(0, 14);
+  const entries = history.filter((entry) => entry?.date && entry?.sourceFetchedAt && entry?.source?.mapsSha256 && (entry.map || entry.biome)).sort((left, right) => right.date.localeCompare(left.date)).slice(0, 14);
   if (!entries.length) return `<p class="article-data-pending">${escapeHtml(copy.historyEmpty)}</p>`;
   const mapCopy = todayMapCopy[locale] ?? todayMapCopy.en;
   const rows = entries.map((entry) => `<tr><td><time datetime="${escapeHtml(entry.date)}">${escapeHtml(formatDateLabel(locale, entry.date))}</time></td><td>${escapeHtml(entry.map || entry.route || copy.historyPending)}</td><td>${escapeHtml(entry.biome || copy.historyPending)}</td><td>${entry.source?.url ? `<a href="${escapeHtml(entry.source.url)}" rel="noopener">${escapeHtml(entry.estimated ? mapCopy.estimated : entry.source.label || copy.historySourceVerified)} <span aria-hidden="true">\u2192</span></a>` : escapeHtml(copy.historySourcePending)}</td></tr>`).join('');
@@ -1376,7 +1334,16 @@ function itemCards(copy) {
 function renderHomeBase(locale, options = {}) {
   const buildDate = resolveBuildDate(options);
   const sourceCopy = locales[locale];
-  const homepageCopy = homepageOverrides[locale];
+  const latest = latestOfficialPatch(options.updateData, buildDate);
+  const updateCopy = articleUpdateCopy[locale] ?? articleUpdateCopy.en;
+  const summary = latest ? (checkedUpdateSummary(locale, latest.title) ?? updateCopy.generic?.PATCH ?? latest.summary) : updateCopy.empty;
+  const latestText = latest ? `${latest.title} · ${formatDateLabel(locale, latest.date)} — ${summary}` : updateCopy.empty;
+  const homepageCopy = {
+    ...homepageOverrides[locale],
+    patchValue: latest?.title || updateCopy.empty,
+    patchNote: latestText,
+    latestFaq: latestText,
+  };
   const copy = {
     ...sourceCopy,
     locale,
@@ -1389,13 +1356,14 @@ function renderHomeBase(locale, options = {}) {
     map: {
       ...sourceCopy.map,
       date: formatDateLabel(locale, buildDate),
-      paragraphs: homepageCopy ? [sourceCopy.map.paragraphs[0], homepageCopy.mapParagraph] : sourceCopy.map.paragraphs,
+      paragraphs: homepageCopy ? [sourceCopy.map.paragraphs[0], homepageCopy.dailyFaq] : sourceCopy.map.paragraphs,
     },
-    updates: homepageCopy?.latestUpdate
-      ? { ...sourceCopy.updates, rows: [homepageCopy.latestUpdate, ...sourceCopy.updates.rows.slice(1)] }
-      : sourceCopy.updates,
+    updates: { ...sourceCopy.updates, rows: officialEntries(options.updateData, buildDate).slice(0, 6).map((entry) => {
+      const kind = String(entry.kind || 'UPDATE').toUpperCase();
+      return [new Intl.DateTimeFormat(locale, { month: 'short', timeZone: 'UTC' }).format(new Date(`${entry.date}T12:00:00Z`)), entry.date.slice(8), entry.date.slice(0, 4), updateCopy.kind?.[kind] || kind, entry.title, checkedUpdateSummary(locale, entry.title) ?? updateCopy.summaries?.[entry.title] ?? updateCopy.generic?.[kind] ?? updateCopy.generic?.default ?? entry.summary];
+    }) },
     faq: homepageCopy
-      ? { ...sourceCopy.faq, items: sourceCopy.faq.items.map((item, index) => index === 3 ? [item[0], homepageCopy.dailyFaq] : index === 4 && homepageCopy.latestFaq ? [item[0], homepageCopy.latestFaq] : item) }
+      ? { ...sourceCopy.faq, items: sourceCopy.faq.items.map((item, index) => index === 1 && officialEntries(options.updateData, buildDate).some((entry) => entry.title === 'CROSSPLAY HAS ARRIVED TO PEAK') ? [item[0], officialUpdateFacts[locale].crossplay] : index === 3 ? [item[0], homepageCopy.dailyFaq] : index === 4 && homepageCopy.latestFaq ? [item[0], homepageCopy.latestFaq] : item) }
       : sourceCopy.faq,
   };
   const controls = HOME_CONTROL_COPY[locale] ?? HOME_CONTROL_COPY.en;
@@ -1527,7 +1495,7 @@ function renderMapGuideHtml(locale, options = {}) {
     return `<section id="${escapeHtml(section.id)}" class="article-section"><h2>${escapeHtml(section.title)}</h2>${paragraphs}${image}${bullets}${table}</section>`;
   }).join('');
   const faq = guide.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary><h3>${escapeHtml(question)}</h3></summary><p>${escapeHtml(answer)}</p></details>`).join('');
-  const mapRelatedPages = ['peak-biomes-list', 'peak-gloom-guide', 'peak-citadel-guide', 'items'];
+  const mapRelatedPages = ['peak-biomes-list', 'peak-gloom-guide', 'peak-citadel-guide', 'items'].filter((page) => page === 'items' || (options.publishedArticles ?? articleOrder).includes(page));
   const mapRelatedLinks = mapRelatedPages.map((page) => {
     const label = page === 'items' ? copy.database.title : localizedArticleGuide(locale, page).h1;
     return `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`;
@@ -1642,10 +1610,16 @@ function renderNewArticleSection(locale, section, options) {
 }
 
 export function renderArticlePage(locale, slug, options = {}) {
-  const article = localizedArticleGuide(locale, slug);
+  let article = localizedArticleGuide(locale, slug);
   if (!article) throw new Error(`Missing article configuration: ${slug}`);
   const sourceCopy = locales[locale];
   const buildDate = resolveBuildDate(options);
+  if (slug === 'peak-game-update') {
+    const latest = latestOfficialPatch(options.updateData, buildDate);
+    const updateCopy = articleUpdateCopy[locale] ?? articleUpdateCopy.en;
+    const summary = latest ? (checkedUpdateSummary(locale, latest.title) ?? updateCopy.generic?.PATCH ?? latest.summary) : updateCopy.empty;
+    article = { ...article, answer: latest ? `${latest.title} · ${formatDateLabel(locale, latest.date)} — ${summary}` : updateCopy.empty };
+  }
   const publishedArticles = Array.isArray(options.publishedArticles) ? options.publishedArticles : articleOrder;
   const copy = { ...sourceCopy, ui: { ...sourceCopy.ui, snapshot: formatSnapshotDate(locale, buildDate) } };
   const toc = article.sections.map((section, index) => `<li><a href="#${escapeHtml(section.id)}">${index + 1}. ${escapeHtml(section.title)}</a></li>`).join('');
