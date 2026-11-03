@@ -2,15 +2,18 @@ import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderBadgesGuide, renderContact, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap, STYLESHEET_HREF } from './locales.mjs';
 import { articleOrder } from './article-guides.mjs';
-import { buildTodayMapSnapshot } from './today-map-rotation.mjs';
+import { buildTodayMapSnapshot, siteCalendarDay, SITE_TIMEZONE } from './today-map-rotation.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const outputRoot = resolve(projectRoot, 'dist');
 const indexNowKeyFile = '486e54d85508048c925002fb4ab792b7.txt';
 const buildTimestamp = new Date().toISOString();
-const buildDate = /^\d{4}-\d{2}-\d{2}$/.test(process.env.BUILD_DATE ?? '')
-  ? process.env.BUILD_DATE
-  : buildTimestamp.slice(0, 10);
+const siteDay = siteCalendarDay(buildTimestamp);
+const configuredBuildDate = /^\d{4}-\d{2}-\d{2}$/.test(process.env.BUILD_DATE ?? '') ? process.env.BUILD_DATE : '';
+if (configuredBuildDate && configuredBuildDate !== siteDay) {
+  console.warn(`BUILD_DATE=${configuredBuildDate} does not match the ${SITE_TIMEZONE} calendar day ${siteDay} of this write. Using ${siteDay} so the map estimate day matches Written.`);
+}
+const buildDate = siteDay;
 const publishedArticleOrder = process.env.PUBLISHED_ARTICLES
   ? process.env.PUBLISHED_ARTICLES.split(',').map((slug) => slug.trim().toLowerCase()).filter((slug) => articleOrder.includes(slug))
   : articleOrder;
@@ -65,11 +68,14 @@ async function validateSitemap(outputRoot) {
 }
 
 const todayMap = buildTodayMapSnapshot(buildTimestamp, buildDate);
+if (todayMap.date !== siteCalendarDay(todayMap.updatedAt)) {
+  throw new Error(`Map estimate day ${todayMap.date} does not match written day ${siteCalendarDay(todayMap.updatedAt)}.`);
+}
 const updateData = await readJsonFile('data/peak-updates.json', { entries: [] });
 const mapHistory = await readJsonFile('data/peak-map-history.json', []);
 
 const renderOptions = { buildDate, dateModified: buildDate, buildTimestamp, todayMap, updateData, mapHistory, publishedArticles: publishedArticleOrder };
-const renderMapGuidePage = (locale) => injectTodayMapSection(renderMapGuide(locale, renderOptions), locale, todayMap, buildDate, buildTimestamp);
+const renderMapGuidePage = (locale) => injectTodayMapSection(renderMapGuide(locale, renderOptions), locale, todayMap, buildDate, buildTimestamp, mapHistory);
 const notFoundHtml = `<!doctype html>
 <html lang="en">
   <head>

@@ -7,6 +7,7 @@
     "predev": "npm run build",
     "dev": "python -m http.server 4173 --directory dist",
     "build": "node scripts/build.mjs",
+    "check:map-freshness": "node scripts/check-map-freshness.mjs",
     "fetch:today-map": "node scripts/fetch-today-map.mjs",
     "fetch:updates": "node scripts/fetch-updates.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs",

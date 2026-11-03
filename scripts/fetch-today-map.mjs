@@ -1,15 +1,14 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { buildTodayMapSnapshot } from './today-map-rotation.mjs';
+import { buildTodayMapSnapshot, siteCalendarDay } from './today-map-rotation.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const dataPath = resolve(projectRoot, 'data/today-map.json');
 const historyPath = resolve(projectRoot, 'data/peak-map-history.json');
 
-function resolveBuildDate() {
-  const configured = process.env.BUILD_DATE;
-  return /^\d{4}-\d{2}-\d{2}$/.test(configured ?? '') ? configured : new Date().toISOString().slice(0, 10);
+function resolveBuildDate(now = new Date()) {
+  return siteCalendarDay(now);
 }
 
 function emptyTodayMap(buildDate, updatedAt = new Date().toISOString()) {
@@ -57,8 +56,8 @@ async function appendMapHistory(value) {
 }
 
 async function main() {
-  const buildDate = resolveBuildDate();
   const updatedAt = new Date();
+  const buildDate = resolveBuildDate(updatedAt);
   const result = buildTodayMapSnapshot(updatedAt, buildDate);
   await writeTodayMap(result);
   await appendMapHistory(result);
