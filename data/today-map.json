@@ -1,12 +1,12 @@
 {
-  "date": "2026-11-03",
-  "map": "Shore → Roots → Mesa → Caldera → The Kiln",
+  "date": "2026-11-04",
+  "map": "Shore (RedBeach) → Roots (DeepWoods) → Alpine → Gloom → Citadel",
   "route": "Daily biome sequence",
-  "biome": "Shore, Roots, Mesa, Caldera, The Kiln",
-  "resetAt": "2026-11-03T17:00:00.000Z",
-  "currentResetAt": "2026-11-02T17:00:00.000Z",
-  "updatedAt": "2026-11-03T11:34:56.378Z",
-  "sourceFetchedAt": "2026-11-03T11:34:56.378Z",
+  "biome": "Shore (RedBeach), Roots (DeepWoods), Alpine, Gloom, Citadel",
+  "resetAt": "2026-11-04T17:00:00.000Z",
+  "currentResetAt": "2026-11-03T17:00:00.000Z",
+  "updatedAt": "2026-11-03T22:16:43.420Z",
+  "sourceFetchedAt": "2026-11-03T22:16:43.420Z",
   "estimated": true,
   "source": {
     "label": "PEAK Wiki community map pool",
@@ -15,7 +15,7 @@
     "mapsSha256": "c34b7358cf619e8ea2f3c956d59b4b9a09984f01a0fad0d06fde07456b6662af",
     "timerSha256": "a9b11ec2f14cf9f008fd2fb334c4ce0895ff7a0edeb416c9a5e967c6a87aa0ee",
     "poolSize": 208,
-    "rotationIndex": 90
+    "rotationIndex": 91
   },
   "license": {
     "label": "CC BY-SA 4.0",
@@ -38,24 +38,24 @@
     },
     {
       "type": "image",
-      "biome": "Mesa",
+      "biome": "Alpine",
       "illustrative": true,
-      "url": "/media/peak-map-mesa.webp",
-      "sourceUrl": "https://peak.wiki.gg/wiki/Mesa"
+      "url": "/media/peak-map-alpine.webp",
+      "sourceUrl": "https://peak.wiki.gg/wiki/Alpine"
     },
     {
       "type": "image",
-      "biome": "Caldera",
+      "biome": "Gloom",
       "illustrative": true,
-      "url": "/media/peak-map-caldera.webp",
-      "sourceUrl": "https://peak.wiki.gg/wiki/Caldera"
+      "url": "/media/peak-map-gloom.webp",
+      "sourceUrl": "https://peak.wiki.gg/wiki/Gloom"
     },
     {
       "type": "image",
-      "biome": "The Kiln",
+      "biome": "Citadel",
       "illustrative": true,
-      "url": "/media/peak-map-kiln.webp",
-      "sourceUrl": "https://peak.wiki.gg/wiki/Kiln"
+      "url": "/media/peak-map-citadel.webp",
+      "sourceUrl": "https://peak.wiki.gg/wiki/Citadel"
     }
   ]
 }
