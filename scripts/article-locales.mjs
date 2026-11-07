@@ -11,6 +11,7 @@ import { photonTroubleshootingTranslations } from './article-photon-locales.mjs'
 import { reviveGuideTranslations } from './article-revive-locales.mjs';
 import { cookingGuideTranslations } from './article-cooking-locales.mjs';
 import { peakGamePriceTranslations } from './article-price-locales.mjs';
+import { peakSystemRequirementsTranslations } from './article-system-requirements-locales.mjs';
 import { peakSecretEndingTranslations } from './article-secret-ending-locales.mjs';
 import { articleSupplementalLocaleTranslations } from './article-supplemental-locales.mjs';
 import { articleSupplementalGeneratedLocaleTranslations } from './article-supplemental-generated-locales.mjs';
@@ -1301,6 +1302,25 @@ for (const [locale, translation] of Object.entries(peakGamePriceTranslations)) {
     'peak-game-price',
     peakPriceLinkLabels[locale],
   ]);
+}
+
+const peakSystemRequirementsLinkLabels = {
+  zh: '查看 PEAK 配置要求',
+  es: 'Consultar los requisitos de PEAK',
+  ja: 'PEAKの動作環境を確認する',
+  ko: 'PEAK 시스템 요구 사양 확인하기',
+  de: 'PEAK Systemanforderungen prüfen',
+  fr: 'Consulter la configuration requise de PEAK',
+  pt: 'Conferir os requisitos de PEAK',
+  it: 'Consultare i requisiti di PEAK',
+};
+
+for (const [locale, translation] of Object.entries(peakGamePriceTranslations)) {
+  translation.related.push(['peak-system-requirements', peakSystemRequirementsLinkLabels[locale]]);
+}
+
+for (const [locale, translation] of Object.entries(peakSystemRequirementsTranslations)) {
+  articleLocaleTranslations[locale]['peak-system-requirements'] = translation;
 }
 
 for (const [locale, translations] of Object.entries(articleSupplementalLocaleTranslations)) {

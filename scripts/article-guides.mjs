@@ -5,6 +5,7 @@ export const articleOrder = [
   'peak-game-update',
   'what-is-peak-game',
   'peak-game-price',
+  'peak-system-requirements',
   'peak-controller-support',
   'peak-map-rotation-schedule',
   'peak-levels-biomes-difficulty',
@@ -2427,6 +2428,7 @@ export const articleGuides = {
       ['what-is-peak-game', 'Read what PEAK is'],
       ['room-codes', 'Check platforms and multiplayer'],
       ['peak-game-update', 'Review official PEAK updates'],
+      ['peak-system-requirements', 'Check PEAK system requirements'],
     ],
     relatedLabel: 'Related PEAK guides',
   },
@@ -2582,6 +2584,166 @@ export const articleGuides = {
       ['peak-photon-troubleshooting', 'Troubleshoot connection symptoms'],
     ],
     relatedLabel: 'Related PEAK input and multiplayer guides',
+  },
+  'peak-system-requirements': {
+    slug: 'peak-system-requirements',
+    meta: {
+      title: 'PEAK System Requirements: Minimum & Recommended PC Specs',
+      description: 'Check the official PEAK system requirements for Windows: minimum and recommended CPU, GPU, RAM, DirectX, storage, and how to compare your PC.',
+      schema: 'An official-source guide to PEAK minimum and recommended Windows PC requirements, with a checklist for comparing CPU, graphics, memory, DirectX, and storage.',
+    },
+    published: '2026-11-07',
+    primaryKeyword: 'PEAK system requirements',
+    eyebrow: 'Official Windows PC specifications - checked November 7, 2026',
+    h1: 'PEAK System Requirements: Minimum & Recommended Specs',
+    intro: 'PEAK system requirements are listed for 64-bit Windows PCs. Steam gives a minimum of an Intel Core i5 at 2.5 GHz or equivalent, 8 GB RAM, and a GTX 1060 or RX 6600 XT; its recommended tier lists an i5 at 3.0 GHz or Ryzen 5, 16 GB RAM, and an RTX 2060 or RX 7600 XT. Both tiers specify DirectX 12 and 16 GB of available storage. These are the current store-listed specifications checked on November 7, 2026, not an FPS benchmark.',
+    answerLabel: 'Quick answer',
+    answer: 'For the minimum, compare your 64-bit Windows PC with an i5 2.5 GHz or equivalent, 8 GB RAM, and a GTX 1060 or RX 6600 XT. For the recommended tier, Steam lists an i5 3.0 GHz or Ryzen 5, 16 GB RAM, and an RTX 2060 or RX 7600 XT. Both list DirectX 12 and 16 GB of free storage.',
+    tocLabel: 'On this page',
+    tocFaq: 'System requirements FAQ',
+    heroImage: {
+      src: '/media/peak-final-ascent.webp',
+      alt: 'Official PEAK Final Ascent artwork with scouts climbing toward a summit',
+      caption: 'Official PEAK artwork for game context; it does not show a hardware benchmark or graphics setting.',
+      width: 1280,
+      height: 600,
+    },
+    sections: [
+      {
+        id: 'official-specifications',
+        title: 'PEAK system requirements at a glance',
+        paragraphs: [
+          'The table below transcribes the minimum and recommended PC fields shown on PEAK’s official Steam listing. “Minimum” and “recommended” are the store’s own labels. The listing does not attach a target frame rate, resolution, graphics preset, or guarantee that every PC near a listed part will behave the same way.',
+          'Read each row as a separate check. A faster processor does not cancel out a graphics card below the listed tier, and extra memory does not replace the operating-system or DirectX requirement. If a part name differs from the examples, keep the exact model number and compare it with a trusted hardware reference rather than relying on a broad brand label.',
+        ],
+        table: {
+          caption: 'Official PEAK Windows PC requirements checked November 7, 2026',
+          headers: ['Tier', 'Operating system', 'Processor', 'Memory', 'Graphics', 'DirectX', 'Available storage'],
+          rows: [
+            ['Minimum', '64-bit Windows 10', 'Intel Core i5 at 2.5 GHz or equivalent', '8 GB RAM', 'GTX 1060 or RX 6600 XT', 'Version 12', '16 GB'],
+            ['Recommended', '64-bit Windows 11', 'Intel Core i5 at 3.0 GHz or AMD Ryzen 5 or equivalent', '16 GB RAM', 'RTX 2060 or RX 7600 XT', 'Version 12', '16 GB'],
+          ],
+        },
+        afterTable: 'The source is the official PEAK Steam listing. Check it again before installing because store requirements can change.',
+      },
+      {
+        id: 'minimum-requirements',
+        title: 'What the PEAK minimum requirements mean',
+        paragraphs: [
+          'The minimum row is the store-published baseline to compare before buying or launching the game. It names a 64-bit Windows 10 system, 8 GB of memory, DirectX 12, and one of two example graphics cards. The processor line gives an Intel Core i5 at 2.5 GHz or an equivalent CPU; “equivalent” is not a model-by-model list, so the exact generation still matters when comparing parts.',
+          'A machine that matches the minimum should not be treated as a promise of a particular frame rate. PEAK’s store page does not pair the minimum row with a resolution or quality setting. The machine’s cooling, driver state, power profile, background applications, and other hardware can also affect a real session. If you are close to the line, verify the full model names and leave room for Windows and other applications.',
+        ],
+        bullets: [
+          ['Check the whole row', 'Compare Windows, processor, memory, graphics, DirectX, and free storage separately.'],
+          ['Use exact model names', '“Core i5” or “GTX” alone is too broad to establish a match.'],
+          ['Treat the result as a baseline', 'The minimum line does not state an FPS target or guarantee identical performance.'],
+        ],
+      },
+      {
+        id: 'recommended-requirements',
+        title: 'Recommended requirements versus minimum specs',
+        paragraphs: [
+          'The recommended row raises memory from 8 GB to 16 GB and lists a higher CPU and graphics tier: an Intel Core i5 at 3.0 GHz or AMD Ryzen 5, plus an RTX 2060 or RX 7600 XT. The operating-system entry moves from Windows 10 to Windows 11. DirectX 12 and 16 GB of available storage appear in both rows.',
+          'Use the recommended row as the closer comparison when choosing between two PCs or considering an upgrade, while keeping the same caveat: Steam does not state what frame rate, resolution, or preset this tier is intended to deliver. The labels do not reveal a tested equivalence list for every laptop GPU, processor generation, or graphics driver.',
+        ],
+        image: {
+          src: '/media/peak-solo-citadel.webp',
+          width: 1200,
+          height: 675,
+          alt: 'A PEAK scout approaches Citadel through a foggy game environment',
+          caption: 'Official Steam gameplay capture showing PEAK in play; it is illustrative media, not a comparison between minimum and recommended hardware.',
+        },
+      },
+      {
+        id: 'check-your-pc',
+        title: 'How to check whether your PC matches PEAK requirements',
+        paragraphs: [
+          'Compare the machine that will actually run the game, especially if you use a laptop with both integrated and discrete graphics. Windows can show the processor and installed memory in Settings, while Task Manager or the graphics control panel can reveal which GPU is active. Write down full model numbers before comparing them with Steam’s two rows.',
+          'This is a comparison checklist, not a compatibility scanner. It does not query your computer, test a benchmark, or decide whether an unlisted component is equivalent. When a label is unfamiliar, search the manufacturer’s product page for the exact model and architecture; do not infer a match from memory size or a product-family name alone.',
+        ],
+        bullets: [
+          ['1. Find the processor and memory', 'Open Settings > System > About. Note the processor model, installed RAM, and whether Windows identifies a 64-bit operating system.'],
+          ['2. Identify the active graphics card', 'Open Task Manager > Performance or the GPU control panel. If two GPUs appear, note both and check which one launches games.'],
+          ['3. Check DirectX and free space', 'Run dxdiag to inspect DirectX information, then confirm at least 16 GB is available on the drive used for installation.'],
+          ['4. Compare each field', 'Match every component to the minimum or recommended row; treat unknown equivalents as unverified rather than assumed passes.'],
+        ],
+      },
+      {
+        id: 'laptop-compatibility',
+        title: 'Can my PC or laptop run PEAK?',
+        paragraphs: [
+          'Start with the graphics model, then check CPU, RAM, operating system, DirectX, and storage. Laptop names can hide substantial hardware differences: two devices with similar screens or processor labels may use different GPUs and power limits. Compare the exact configuration in your device’s specification sheet, not just the laptop family name.',
+          'The official requirements do not publish a separate laptop list or name integrated graphics as a supported tier. They also do not test a specific Surface model or every low-power GPU. A laptop that falls below the named examples is therefore an unknown comparison, not a confirmed failure or success. Check the current Steam listing and avoid buying a new component based only on a guessed equivalence.',
+        ],
+        image: {
+          src: '/media/peak-solo-route-hazard.webp',
+          width: 1200,
+          height: 675,
+          alt: 'PEAK scouts crossing a hazard route inside a game level',
+          caption: 'Official Steam gameplay capture; no laptop, settings, or frame-rate result is represented.',
+        },
+      },
+      {
+        id: 'storage-and-directx',
+        title: 'PEAK storage size and DirectX requirement',
+        paragraphs: [
+          'Steam lists 16 GB of available storage for both tiers and DirectX version 12. The storage field is the published free-space requirement; it is not an exact download-file size and does not describe how much space temporary updates or other installed files may use. Keep additional room available if your system drive is also handling updates.',
+          'A search for “PEAK download size” or “PEAK Steam size” can mean either the download amount or the disk space needed after installation. The official field checked for this page answers the latter as 16 GB available. The listing does not provide a stable download size in this requirements table, so this page does not turn that number into a file-size claim.',
+        ],
+      },
+      {
+        id: 'supported-platforms',
+        title: 'Does PEAK run on Windows, Mac, or Linux?',
+        paragraphs: [
+          'The official Steam app-details data checked on November 7, 2026 listed Windows support and did not list macOS or Linux support. The Windows requirements above are therefore the verified PC target in this snapshot. Store platform availability can change, so confirm the live product listing when deciding where to install the game.',
+          'A Steam Deck is a separate compatibility question from the Windows system-requirements table. The PC specification rows do not prove that a handheld is verified, playable, or unsupported. Check Steam’s current Steam Deck compatibility label and recent official notes rather than inferring a rating from the controller or operating-system fields.',
+        ],
+      },
+      {
+        id: 'what-requirements-do-not-tell-you',
+        title: 'What the official specs do not tell you',
+        paragraphs: [
+          'The store requirements are useful for screening, but they are not a benchmark report. They do not state expected FPS, resolution, graphics presets, minimum GPU memory, supported driver versions, or a detailed list of processors and graphics cards that count as equivalent. No FPS estimate is added here because the reviewed official source does not provide one.',
+          'If your PC meets the minimum but the game stutters, record the exact CPU and GPU, driver version, power mode, and the setting that changed before trying a fix. Compare one change at a time and check recent [[link:peak-game-update|official PEAK updates]] for relevant fixes. A symptom after a patch is not proof that your hardware has become unsupported.',
+          'Before a hardware purchase, confirm the current Steam requirements and compare independent benchmark evidence for the exact parts and settings you plan to use. This wiki page reports the publisher’s listed baseline; it does not certify an unlisted configuration or replace a return policy, benchmark, or live compatibility test.',
+        ],
+        bullets: [
+          ['Official fact', 'The minimum and recommended parts, DirectX version, platform flags, and storage amount transcribed from Steam.'],
+          ['Not established here', 'A target frame rate, exact equivalent hardware list, laptop benchmark, or Steam Deck verification result.'],
+          ['Practical next step', 'Compare exact models and recheck the official store page close to purchase or installation.'],
+        ],
+      },
+    ],
+    faq: {
+      eyebrow: 'Quick answers',
+      title: 'PEAK system requirements FAQ',
+      items: [
+        ['What are the minimum system requirements for PEAK?', 'Steam lists 64-bit Windows 10, an Intel Core i5 at 2.5 GHz or equivalent, 8 GB RAM, a GTX 1060 or RX 6600 XT, DirectX 12, and 16 GB available storage.'],
+        ['What are the recommended PC requirements for PEAK?', 'The recommended row lists 64-bit Windows 11, an Intel Core i5 at 3.0 GHz or AMD Ryzen 5 or equivalent, 16 GB RAM, an RTX 2060 or RX 7600 XT, DirectX 12, and 16 GB available storage.'],
+        ['Can my PC or laptop run PEAK?', 'Compare the exact CPU and GPU model, RAM, Windows version, DirectX, and available storage with the official table. Steam does not publish a separate laptop list or a universal FPS guarantee.'],
+        ['How much space does PEAK need?', 'The official requirements list 16 GB of available storage. That is not the same as a verified download-file size.'],
+        ['Can you play PEAK on Mac or Linux?', 'The official Steam data checked on November 7, 2026 listed Windows support but not macOS or Linux. Recheck the live store page because platform support can change.'],
+        ['Is PEAK verified for Steam Deck?', 'This requirements check did not establish a Steam Deck rating. Read the current Steam Deck compatibility label on the official listing instead of inferring a result from the PC requirements.'],
+        ['Does meeting the minimum guarantee smooth performance?', 'No. The listing does not specify a frame rate, resolution, or graphics preset for the minimum tier. Actual results can vary by the full PC configuration and software state.'],
+      ],
+    },
+    source: {
+      eyebrow: 'Sources and limits',
+      title: 'Official Steam requirements checked November 7, 2026',
+      body: 'The minimum and recommended specifications, supported-platform flags, and storage amount were read from Steam’s official app-details response for PEAK on November 7, 2026. Steam is the first-party store source for the fields reproduced here. Requirements and platform availability may change; the current public product page remains authoritative. Gameplay artwork is included only as visual context, not as evidence of performance.',
+      links: [
+        ['Official PEAK Steam listing', 'https://store.steampowered.com/app/3527290/PEAK/'],
+        ['Steam app-details data checked for this guide', 'https://store.steampowered.com/api/appdetails?appids=3527290&cc=us&l=en'],
+        ['Official PEAK update feed', 'https://store.steampowered.com/news/app/3527290'],
+      ],
+    },
+    related: [
+      ['what-is-peak-game', 'Read what PEAK is'],
+      ['peak-controller-support', 'Check PEAK controller support'],
+      ['peak-game-update', 'Review official PEAK updates'],
+      ['peak-game-price', 'Compare PEAK Steam prices by region'],
+    ],
+    relatedLabel: 'Related PEAK guides',
   },
 };
 
