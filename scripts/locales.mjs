@@ -472,9 +472,11 @@ function escapeHtml(value) {
 }
 
 function routeFor(code, page) {
-  if (page === 'items' || page === 'contact' || page === 'room-codes' || page === 'badges-guide') return code === 'en' ? `/${page}/` : `/${code}/${page}/`;
-  if (code === 'en') return page === 'home' ? '/' : `/${page}`;
-  return page === 'home' ? `/${code}/` : `/${code}/${page}/`;
+  const [pagePath, hash = ''] = String(page).split('#', 2);
+  const suffix = hash ? `#${hash}` : '';
+  if (pagePath === 'items' || pagePath === 'contact' || pagePath === 'room-codes' || pagePath === 'badges-guide') return `${code === 'en' ? `/${pagePath}/` : `/${code}/${pagePath}/`}${suffix}`;
+  if (code === 'en') return `${pagePath === 'home' ? '/' : `/${pagePath}`}${suffix}`;
+  return `${pagePath === 'home' ? `/${code}/` : `/${code}/${pagePath}/`}${suffix}`;
 }
 
 function alternateLinks(page) {
@@ -1633,7 +1635,10 @@ export function renderArticlePage(locale, slug, options = {}) {
     const rel = url.includes('steamcommunity.com/') || hostname === 'peak.wiki.gg' || hostname.endsWith('.peak.wiki.gg') || hostname === 'thunderstore.io' || hostname.endsWith('.thunderstore.io') ? 'nofollow noopener' : 'noopener';
     return `<a href="${escapeHtml(url)}" target="_blank" rel="${rel}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`;
   }).join('');
-  const related = article.related.filter(([page]) => page === 'map-rotation' || page === 'achievements' || page === 'items' || page === 'badges-guide' || publishedArticles.includes(page)).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
+  const related = article.related.filter(([page]) => {
+    const pagePath = String(page).split('#', 1)[0];
+    return pagePath === 'map-rotation' || pagePath === 'achievements' || pagePath === 'items' || pagePath === 'badges-guide' || publishedArticles.includes(pagePath);
+  }).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
   const pageHtml = `${head(locale, slug, article.meta.title, article.meta.description, article.meta.schema, { ...options, article, dateModified: buildDate })}
   <body class="article-page"><div id="top"></div>${header(locale, slug, copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(article.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(article.h1)}</p><h1 id="article-title">${escapeHtml(article.h1)}</h1><p class="article-hero-lede">${renderArticleInline(article.intro, locale, publishedArticles)}</p></div>${renderArticleImage({ ...article.heroImage, loading: 'eager', fetchpriority: 'high' }, false)}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(article.tocLabel)}"><p class="eyebrow">${escapeHtml(article.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#article-faq">${escapeHtml(article.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(article.answerLabel)}</p><h2 id="answer-title">${escapeHtml(article.answerLabel)}</h2><p>${renderArticleInline(article.answer, locale, publishedArticles)}</p></section>${sections}<section id="article-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(article.faq.eyebrow)}</p><h2>${escapeHtml(article.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(article.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(article.source.title)}</h2><p>${renderArticleInline(article.source.body, locale, publishedArticles)}</p><div class="source-links">${sourceLinks}</div></section><nav class="article-related" aria-label="${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}"><p class="eyebrow">${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}</p>${related}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
   return normalizeSteamNewsLinks(pageHtml);

@@ -15,6 +15,7 @@ const steamNews = {
 
 const officialStore = 'https://store.steampowered.com/app/3527290/PEAK/';
 const badgesWiki = 'https://peak.wiki.gg/wiki/Badges';
+const checkpointFlagWikiUrl = 'https://peak.wiki.gg/wiki/Checkpoint_Flag';
 
 const commonSource = {
   eyebrow: 'Sources and limits',
@@ -29,6 +30,160 @@ const commonSource = {
 };
 
 export const supplementalArticleGuides = {
+  'peak-checkpoint-flag': {
+    slug: 'peak-checkpoint-flag',
+    meta: {
+      title: 'PEAK Checkpoint Flag Guide: Respawn, Placement & Limits',
+      description: 'What does the PEAK Checkpoint Flag do? Learn how its one-use respawn checkpoint works, what status it restores, what it cannot prove, and how it differs from Scout Effigy and saves.',
+      schema: 'A source-aware PEAK Checkpoint Flag guide covering one-use respawn behavior, placement decisions, saved status, troubleshooting, and the boundary between checkpoint, resurrection, and campfire saves.',
+    },
+    published: '2026-11-08',
+    primaryKeyword: 'PEAK checkpoint flag',
+    eyebrow: 'Item mechanics guide - checked 2026-11-08',
+    h1: 'PEAK Checkpoint Flag Guide: Respawn, Placement & Limits',
+    intro: 'The PEAK Checkpoint Flag is a one-use respawn checkpoint for the Scout who placed it. The maintained item record says it saves and restores that Scout\'s statuses at the moment of placement. That makes it a personal fallback for a dangerous route, not a universal revive altar, a teammate resurrection item, or proof of a fixed final checkpoint on every map.',
+    answerLabel: 'The short answer',
+    answer: 'Place the Checkpoint Flag when the current Scout has a recoverable position and the next commitment could cost the run. It records the placing Scout\'s state, can be used once, and should be treated as a version-sensitive item interaction. It does not by itself establish that another Scout will revive at the flag, that every mode can spawn it, or that the game exposes a permanent last-revive location.',
+    tocLabel: 'On this page',
+    tocFaq: 'Checkpoint Flag FAQ',
+    heroImage: {
+      src: '/media/peak-coop-climb.webp',
+      alt: 'PEAK scouts coordinating a cooperative climb before a risky route commitment',
+      caption: 'Official Steam gameplay context - choose a recovery fallback before the next irreversible climb.',
+      width: 1200,
+      height: 675,
+    },
+    sections: [
+      {
+        id: 'what-it-does',
+        title: 'What does the PEAK Checkpoint Flag do?',
+        paragraphs: [
+          'The clearest maintained description is narrow: Checkpoint Flag creates a single-use respawn checkpoint for the Scout who placed it, saving and restoring that Scout\'s statuses when it was placed. In practical terms, the flag belongs to the player who deploys it. The useful decision is therefore when to create a personal fallback, not where to place a shared revive altar.',
+          'That wording also sets the evidence boundary. It supports a checkpoint and a status snapshot. It does not publish a universal spawn rate, a guaranteed placement surface, a teammate-revival rule, or a permanent map coordinate. When a community post uses “last revive point” loosely, compare its mode, level, item state, and game version before turning it into a rule.',
+        ],
+        table: {
+          caption: 'Checkpoint Flag facts and limits',
+          headers: ['Question', 'What the maintained record supports', 'What remains unverified'],
+          rows: [
+            ['Who owns the checkpoint?', 'The Scout who placed the flag.', 'A shared checkpoint for every teammate.'],
+            ['How many uses?', 'One use.', 'A reusable or permanent respawn point.'],
+            ['What is saved?', 'The placing Scout\'s statuses at placement time.', 'Every inventory, world object, or teammate state.'],
+            ['Is it a resurrection item?', 'It is described as respawn, a different term from resurrection.', 'Reviving another Scout at their body.'],
+            ['Is the spawn chance known?', 'The catalog does not publish a rate.', 'A universal chance by biome or map.'],
+          ],
+        },
+        image: {
+          src: '/media/items/checkpoint-flag.webp',
+          alt: 'Checkpoint Flag item icon from the PEAK item catalog',
+          caption: 'Catalog item icon - this identifies the item; the running game remains the authority for its current prompt and state.',
+          width: 112,
+          height: 112,
+        },
+      },
+      {
+        id: 'how-to-use',
+        title: 'How to use the Checkpoint Flag in PEAK',
+        paragraphs: [
+          'Use the flag as a route decision. Carry it until the team can name the next risk, then choose a position that is stable enough to record rather than placing it in the middle of an unresolved hazard. The exact button prompt and allowed surface can change, so follow the interaction shown by the current build instead of relying on an old clip.',
+          'A good placement answers three questions: can this Scout survive the current platform long enough to use the checkpoint, is the next section more dangerous than the route behind it, and can the team remember who owns the flag? Writing the owner and the next commitment in voice chat prevents a teammate from assuming that the flag is a shared rescue tool.',
+        ],
+        bullets: [
+          ['1. Check the state', 'Confirm the Scout is in a stable, usable position and that the item is actually in the inventory.'],
+          ['2. Read the prompt', 'Use the placement prompt shown by the current game; do not infer a valid surface from a screenshot.'],
+          ['3. Name the owner', 'Tell the team which Scout placed the flag and what risk it is covering.'],
+          ['4. Spend the fallback deliberately', 'Treat it as one use and avoid taking a second major risk on the assumption that it can be reset.'],
+          ['5. Record the version', 'If the result differs, note the patch, mode, route, and exact state before reporting it.'],
+        ],
+      },
+      {
+        id: 'respawn-vs-revive',
+        title: 'Checkpoint Flag versus revive, resurrection, and saves',
+        paragraphs: [
+          'Searches often mix “revive,” “resurrect,” and “respawn.” They are not interchangeable in the current item record. The Checkpoint Flag is tied to the Scout who placed it. Scout Effigy is listed separately as a consumable that can resurrect a dead Scout at a target and does not appear in solo play. Ordinary recovery of an unconscious Scout is another state again.',
+          'A campfire save is also different. Save and reconnect behavior describes a world or run state, while a Checkpoint Flag describes a one-use personal fallback. If a loaded run has missing items, a dead reconnect, or a host mismatch, use the [[link:peak-save-and-reconnect|save and reconnect guide]] rather than treating the flag as a save repair. For the wider “how do I bring a teammate back?” question, use the [[link:peak-revive-guide|revive guide]].',
+        ],
+        table: {
+          caption: 'Recovery terms to keep separate',
+          headers: ['Mechanic', 'Primary target', 'Decision boundary'],
+          rows: [
+            ['Checkpoint Flag', 'The Scout who placed it', 'One-use respawn fallback tied to that Scout.'],
+            ['Scout Effigy', 'A dead Scout at a listed target', 'A resurrection item; verify mode and target.'],
+            ['Ordinary recovery', 'An unconscious Scout', 'Follow the current action or item prompt before death.'],
+            ['Campfire save', 'Run/world state', 'Use for save and reconnect context, not as proof of a flag effect.'],
+          ],
+        },
+      },
+      {
+        id: 'limits-and-troubleshooting',
+        title: 'Why the Checkpoint Flag may seem not to work',
+        paragraphs: [
+          'Start with the smallest reversible check. Confirm the item name, mode, placement prompt, owner, and whether the flag has already been consumed. Then repeat a short test in the same version. A failed prompt does not prove that the item is globally broken; it may be a surface, state, route, or version difference that the public description does not enumerate.',
+          'Do not publish a guessed spawn rate or delete a save as a first fix. Capture the exact message, the flag location, the Scout state, and what happened after one use. If the symptom involves Continue Run, a non-host save, missing objects, or a reconnect death, follow the [[link:peak-multiplayer-troubleshooting|multiplayer troubleshooting guide]] and [[link:peak-save-and-reconnect|save guide]] because those are separate systems.',
+        ],
+        bullets: [
+          ['Item check', 'Confirm that the inventory still shows Checkpoint Flag and that it was not already used.'],
+          ['Mode check', 'Record solo or co-op and avoid assuming that an item available in one mode is available in every mode.'],
+          ['Surface check', 'Use the current placement prompt and note the surface type when it fails.'],
+          ['State check', 'Write down whether the Scout was alive, downed, dead, or reconnecting.'],
+          ['Report check', 'Include patch, biome/route, host role, and exact result without exposing private room codes.'],
+        ],
+        image: {
+          src: '/media/peak-final-ascent.webp',
+          alt: 'Official PEAK Final Ascent artwork showing a difficult route toward the summit',
+          caption: 'Official Steam artwork used for route context; it is not evidence of a specific Checkpoint Flag placement.',
+          width: 1280,
+          height: 600,
+        },
+      },
+      {
+        id: 'route-planning',
+        title: 'When should you place a Checkpoint Flag?',
+        paragraphs: [
+          'The best placement is a decision point with a known retreat and a meaningful next risk: before a long exposed climb, before a route where a mistake would remove the safe rest behind you, or before a final commitment that the team has already inspected. The item is more useful when it protects a deliberate plan than when it is dropped reactively after the Scout is already falling.',
+          'Pair the flag with route notes and shared language. Check [[link:map-rotation#today-map|today\'s map rotation]] for current route context, then read the actual session for surfaces and hazards. Keep the [[link:items|item catalog]] open when the group is comparing tools, and do not call the flag a badge item just because a search query mentions achievements. The [[link:achievements|achievement guide]] owns those conditions.',
+        ],
+        bullets: [
+          ['Before the commitment', 'Place it while the Scout still has a stable platform and time to read the next move.'],
+          ['After route inspection', 'Use the current geometry, not a biome stereotype or an old screenshot.'],
+          ['With a team callout', 'State the owner, the protected section, and the one-use limit.'],
+          ['With a fallback rule', 'Agree whether the group retreats, waits, or continues if the owner returns.'],
+        ],
+      },
+    ],
+    faq: {
+      eyebrow: 'Quick answers',
+      title: 'PEAK Checkpoint Flag FAQ',
+      items: [
+        ['What does the Checkpoint Flag do in PEAK?', 'The maintained item record describes it as a single-use respawn checkpoint for the Scout who placed it, saving and restoring that Scout\'s statuses at placement time.'],
+        ['Is the PEAK Checkpoint Flag shared with teammates?', 'The description ties the checkpoint to the Scout who placed it. Do not treat it as a shared altar or as proof that another Scout will respawn there.'],
+        ['Does the Checkpoint Flag revive a dead Scout?', 'It is described as a respawn checkpoint for the placing Scout. Scout Effigy is a separate resurrection item with its own target and mode limits.'],
+        ['How many times can you use a Checkpoint Flag?', 'The maintained description says it is single-use. Confirm the current in-game state after use rather than assuming it can be reset.'],
+        ['Why is my Checkpoint Flag not working?', 'Check the item state, mode, placement prompt, surface, owner, and game version. Record the exact result before treating it as a general bug.'],
+        ['Does the Checkpoint Flag have a known spawn chance?', 'The catalog used for this guide does not publish a universal spawn rate. Do not turn one route or community report into a biome-wide percentage.'],
+        ['Can the Checkpoint Flag unlock a PEAK badge?', 'A query mentioning a badge does not establish a condition. Use the [[link:achievements|achievement guide]] for verified badge/achievement boundaries and test the current mode separately.'],
+        ['Where did I respawn after using the flag?', 'The source describes a checkpoint for the placing Scout but does not promise a universal map marker or a fixed last location. Record the route and version if the result is unclear.'],
+      ],
+    },
+    source: {
+      eyebrow: 'Sources and limits',
+      title: 'How this Checkpoint Flag guide is maintained',
+      body: 'The exact item wording is transcribed from the maintained PEAK item catalog, which links its Checkpoint Flag entry to the community PEAK Wiki reference. That wording supports a one-use personal respawn checkpoint and a saved status snapshot. It does not establish a universal spawn rate, teammate resurrection, permanent map coordinate, or achievement rule. Official Steam store and Steam News links provide the game and version context; recheck the current build when an interaction changes.',
+      links: [
+        ['PEAK Wiki: Checkpoint Flag reference', checkpointFlagWikiUrl],
+        ['PEAK item catalog source page', 'https://peak.wiki.gg/wiki/Items'],
+        ['Official PEAK Steam page', officialStore],
+        ['Official Steam News feed', steamNews.feed],
+      ],
+    },
+    related: [
+      ['items#item-checkpoint-flag-107', 'Open the Checkpoint Flag catalog entry'],
+      ['peak-revive-guide', 'Read the PEAK revive guide'],
+      ['peak-save-and-reconnect', 'Check saves and reconnects'],
+      ['peak-achievements-not-unlocking', 'Troubleshoot achievement conditions'],
+      ['map-rotation', "Check today's PEAK map"],
+    ],
+    relatedLabel: 'Related PEAK item and recovery guides',
+  },
   'peak-game-update': {
     slug: 'peak-game-update',
     meta: {

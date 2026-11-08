@@ -9,6 +9,7 @@ import { ropeChainTranslations } from './article-rope-chain-locales.mjs';
 import { roomCodesTranslations } from './article-room-codes-locales.mjs';
 import { photonTroubleshootingTranslations } from './article-photon-locales.mjs';
 import { reviveGuideTranslations } from './article-revive-locales.mjs';
+import { checkpointFlagTranslations } from './article-checkpoint-flag-locales.mjs';
 import { cookingGuideTranslations } from './article-cooking-locales.mjs';
 import { peakGamePriceTranslations } from './article-price-locales.mjs';
 import { peakSystemRequirementsTranslations } from './article-system-requirements-locales.mjs';
@@ -1238,6 +1239,28 @@ for (const [locale, translation] of Object.entries(photonTroubleshootingTranslat
 
 for (const [locale, translation] of Object.entries(reviveGuideTranslations)) {
   articleLocaleTranslations[locale]['peak-revive-guide'] = translation;
+}
+
+for (const [locale, translation] of Object.entries(checkpointFlagTranslations)) {
+  articleLocaleTranslations[locale]['peak-checkpoint-flag'] = translation;
+}
+
+const checkpointFlagReviveLinkLabels = {
+  zh: '\u67e5\u770b PEAK Checkpoint Flag \u6307\u5357',
+  es: 'Leer la gu\u00eda de Checkpoint Flag de PEAK',
+  ja: 'PEAK Checkpoint Flag \u30ac\u30a4\u30c9\u3092\u8aad\u3080',
+  fr: 'Lire le guide du Checkpoint Flag de PEAK',
+  de: 'PEAK-Checkpoint-Flaggen-Guide lesen',
+  pt: 'Ler o guia da Checkpoint Flag do PEAK',
+  ko: 'PEAK Checkpoint Flag \uac00\uc774\ub4dc \uc77d\uae30',
+  it: 'Leggi la guida alla Checkpoint Flag di PEAK',
+};
+
+for (const [locale, label] of Object.entries(checkpointFlagReviveLinkLabels)) {
+  articleLocaleTranslations[locale]['peak-revive-guide'].related.push([
+    'peak-checkpoint-flag',
+    label,
+  ]);
 }
 
 for (const [locale, translation] of Object.entries(cookingGuideTranslations)) {
