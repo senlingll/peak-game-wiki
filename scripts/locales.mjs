@@ -10,6 +10,8 @@ import { articleScheduleDynamicFallback } from './article-schedule-locales.mjs';
 import { itemsCatalog } from './items-catalog.mjs';
 import { itemsPageCopy } from './items-page-locales.mjs';
 import { badgeGuideCopy, badgeGuideEntries, badgeGuideSource, badgeGrantCopy, badgeCardLabels } from './badges-guide.mjs';
+import { germanAmuletPages } from './german-amulet-pages.mjs';
+import { REDIRECT_ARTICLES, isGonePath, isLocalizedRedirectRoute, isRedirectedArticle } from './route-policy.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
 const STYLESHEET_HREF = '/styles.css?v=20261103-map-media';
@@ -455,6 +457,81 @@ const homepageOverrides = {
   },
 };
 
+const dailyMapPageOverrides = {
+  en: { title: "Today's PEAK Map", description: "Today's PEAK map route, local reset time, Mesa/Tomb check and charm status, with Patch 3.1.0 and cross-platform room-code notes.", intro: "Today's answer is the dated route below: read the full biome order first, then the next reset in your local time and the actions that are actually confirmed. Patch 3.1.0 lengthened room codes, changed controller sprint and climb to hold input, and added anti-harassment changes. Crossplay now covers Steam, PS5, Xbox Series X|S and Nintendo Switch 2; progress does not transfer between platforms.", answer: "Use the static daily tool below as the first answer. It prints the full biome order, local reset, Mesa/Tomb status and four charm rows without inventing point locations. Confirm every time-sensitive result in PEAK." },
+  zh: { title: 'PEAK 今日地图', description: '查看 PEAK 今日完整生物群系顺序、当地重置时间、Mesa/Tomb 与护符状态，并同步 3.1.0 与跨平台房间码规则。', intro: '先看下面带日期的今日答案：完整生物群系顺序、当地时间的下次重置，以及今天真正确认能推进的事项。Patch 3.1.0 加长了房间码，手柄冲刺和攀爬改为按住操作，并加入防骚扰改动。现在 Steam、PS5、Xbox Series X|S 与 Nintendo Switch 2 可通过房间码跨平台联机，但进度不跨平台转移。', answer: '下面的静态每日工具先给出答案：完整路线、当地重置、Mesa/Tomb 状态和四个护符栏位；没有来源的点位显示“今日待确认”。时间敏感结果请以游戏内为准。' },
+  ko: { title: 'PEAK 오늘의 맵', description: 'PEAK 오늘의 전체 생물군계 순서와 현지 초기화 시간, Mesa/Tomb, 부적 상태 및 Patch 3.1.0 방 코드 규칙을 확인하세요.', intro: '아래 날짜가 있는 오늘의 답에서 전체 생물군계 순서, 현지 다음 초기화, 확인된 행동을 먼저 확인하세요. Patch 3.1.0은 방 코드를 늘리고 컨트롤러 달리기·등반을 누르고 유지하는 방식으로 바꾸었으며 괴롭힘 방지 변경을 포함합니다. Steam, PS5, Xbox Series X|S, Nintendo Switch 2 간 방 코드 크로스플레이가 가능하지만 진행 상황은 플랫폼 간 이전되지 않습니다.', answer: '정적 일일 도구가 전체 경로, 현지 초기화, Mesa/Tomb 상태와 네 부적 행을 먼저 보여 줍니다. 확인되지 않은 위치는 오늘 미확인으로 남기며, 게임 안에서 다시 확인하세요.' },
+  ja: { title: 'PEAK 今日のマップ', description: 'PEAK 今日のバイオーム順、現地リセット時刻、Mesa/Tomb とアミュレットの確認状況、Patch 3.1.0 のルームコード規則。', intro: '日付付きの今日の答えで、完全なバイオーム順、現地時間の次回リセット、確認できる行動を先に見てください。Patch 3.1.0 でルームコードが長くなり、コントローラーのダッシュと登攀は長押しになり、嫌がらせ対策が追加されました。Steam、PS5、Xbox Series X|S、Nintendo Switch 2 はルームコードでクロスプレイできますが、進行状況はプラットフォーム間で共有されません。', answer: '静的なデイリーツールが完全なルート、現地リセット、Mesa/Tomb の状態、4つのアミュレット欄を先に表示します。未確認の場所は今日未確認とし、ゲーム内で確かめてください。' },
+  es: { title: 'Mapa PEAK hoy', description: 'Ruta completa de biomas de PEAK hoy, reinicio local, comprobación de Mesa/Tomb y estado de amuletos, con las reglas de códigos de sala de 3.1.0.', intro: 'La respuesta fechada de abajo muestra primero el orden completo de biomas, el próximo reinicio en tu hora local y las acciones confirmadas. El Patch 3.1.0 alargó los códigos de sala, cambió el sprint y la escalada con mando a mantener pulsado y añadió medidas contra el acoso. El juego cruzado conecta Steam, PS5, Xbox Series X|S y Nintendo Switch 2 mediante códigos, pero el progreso no se transfiere.', answer: 'La herramienta diaria estática muestra la ruta completa, el reinicio local, Mesa/Tomb y cuatro filas de amuletos. Lo que no tiene fuente queda como no confirmado hoy; compruébalo en el juego.' },
+  de: { title: 'PEAK heutige Karte', description: 'PEAK heutige Karte mit vollständiger Biome-Reihenfolge, Reset in Ortszeit, Mesa/Tomb-Prüfung und Amulettstatus sowie Patch-3.1.0-Raumcode-Regeln.', intro: 'Die datierte Antwort unten zeigt zuerst die vollständige Biome-Reihenfolge, den nächsten Reset in Ortszeit und die heute bestätigten Schritte. Patch 3.1.0 verlängerte Raumcodes, stellte Sprinten und Klettern mit dem Controller auf Gedrückthalten um und ergänzte Maßnahmen gegen Belästigung. Crossplay verbindet Steam, PS5, Xbox Series X|S und Nintendo Switch 2 über Raumcodes; der Fortschritt wird zwischen Plattformen nicht übertragen.', answer: 'Das statische Tageswerkzeug zeigt Route, Reset in Ortszeit, Mesa/Tomb und vier Amulettzeilen. Fehlende Quellen bleiben „Heute nicht bestätigt“ – bitte im Spiel prüfen.' },
+  fr: { title: 'Carte PEAK du jour', description: 'Ordre complet des biomes de PEAK aujourd’hui, heure locale du reset, vérification Mesa/Tomb et état des amulettes avec les règles 3.1.0.', intro: 'La réponse datée ci-dessous donne d’abord l’ordre complet des biomes, le prochain reset en heure locale et les actions confirmées. Le Patch 3.1.0 a allongé les codes de salle, changé le sprint et l’escalade à la manette en maintien et ajouté des mesures anti-harcèlement. Le crossplay relie Steam, PS5, Xbox Series X|S et Nintendo Switch 2 par code, sans transfert de progression entre plateformes.', answer: 'L’outil quotidien statique affiche la route, le reset local, Mesa/Tomb et quatre lignes d’amulettes. Une donnée sans source reste non confirmée aujourd’hui ; vérifiez en jeu.' },
+  pt: { title: 'Mapa de PEAK hoje', description: 'Ordem completa dos biomas de PEAK hoje, reinício local, verificação de Mesa/Tomb e estado dos amuletos com as regras de códigos da 3.1.0.', intro: 'A resposta datada abaixo mostra primeiro a ordem completa dos biomas, o próximo reinício na hora local e as ações confirmadas. O Patch 3.1.0 alongou os códigos de sala, mudou corrida e escalada no controle para manter pressionado e adicionou medidas contra assédio. O crossplay liga Steam, PS5, Xbox Series X|S e Nintendo Switch 2 por códigos, mas o progresso não é transferido entre plataformas.', answer: 'A ferramenta diária estática mostra a rota, o reinício local, Mesa/Tomb e quatro linhas de amuletos. Sem fonte, fica não confirmado hoje; confirme no jogo.' },
+  it: { title: 'Mappa di PEAK di oggi', description: 'Ordine completo dei biomi di PEAK oggi, reset locale, controllo Mesa/Tomb e stato degli amuleti con le regole dei codici 3.1.0.', intro: 'La risposta datata qui sotto mostra prima l’ordine completo dei biomi, il prossimo reset nell’ora locale e le azioni confermate. La Patch 3.1.0 ha allungato i codici stanza, trasformato corsa e arrampicata col controller in input tenuto premuto e aggiunto misure anti-molestie. Il crossplay collega Steam, PS5, Xbox Series X|S e Nintendo Switch 2 tramite codici, ma i progressi non passano tra piattaforme.', answer: 'Lo strumento giornaliero statico mostra percorso, reset locale, Mesa/Tomb e quattro righe di amuleti. Se manca una fonte, resta non confermato oggi: verifica nel gioco.' },
+};
+for (const [code, override] of Object.entries(dailyMapPageOverrides)) {
+  mapGuides[code] = { ...mapGuides[code], meta: { ...mapGuides[code].meta, title: override.title, description: override.description }, h1: override.title, intro: override.intro, answer: override.answer };
+}
+
+const roomCodeCurrentCopy = {
+  en: { title: 'PEAK Room Codes: Current Crossplay Rules', intro: 'Patch 3.1.0 lengthened room codes. The host copies the current code from the lobby pause menu; the joining player enters it through JOIN GAME. Crossplay now covers Steam, PS5, Xbox Series X|S and Nintendo Switch 2, while progress does not transfer between platforms. Controller sprint and climbing use hold input after 3.1.0.', answer: 'Use the current room code shown by the host, then confirm the platform and build before joining. A room code joins an existing lobby; it is not matchmaking.' },
+  zh: { title: 'PEAK 房间码：现行跨平台规则', intro: 'Patch 3.1.0 后房间码已加长。房主在大厅暂停菜单复制当前代码，加入方在 JOIN GAME 输入。现在 Steam、PS5、Xbox Series X|S 与 Nintendo Switch 2 可通过房间码跨平台联机，但进度不跨平台转移。3.1.0 后手柄冲刺和攀爬改为按住操作。', answer: '使用房主当前显示的房间码，加入前确认平台和版本。房间码用于进入已有大厅，不是随机匹配。' },
+  es: { title: 'Códigos de sala de PEAK: reglas actuales', intro: 'El Patch 3.1.0 alargó los códigos de sala. El anfitrión copia el código en la pausa de la sala y quien entra lo escribe en JOIN GAME. El juego cruzado cubre Steam, PS5, Xbox Series X|S y Nintendo Switch 2, pero el progreso no se transfiere. Con mando, sprintar y escalar requieren mantener pulsado.', answer: 'Usa el código que muestra el anfitrión y confirma plataforma y versión. El código entra en una sala existente; no es matchmaking.' },
+  ja: { title: 'PEAK ルームコード：現在のクロスプレイ規則', intro: 'Patch 3.1.0 でルームコードが長くなりました。ホストはロビーのポーズメニューでコピーし、参加者は JOIN GAME に入力します。Steam、PS5、Xbox Series X|S、Nintendo Switch 2 のクロスプレイに対応しますが、進行状況は共有されません。コントローラーのダッシュと登攀は長押しです。', answer: 'ホストが表示する現在のコードとプラットフォーム、バージョンを確認して参加します。コードは既存ロビー用で、マッチメイキングではありません。' },
+  ko: { title: 'PEAK 방 코드: 현재 크로스플레이 규칙', intro: 'Patch 3.1.0에서 방 코드가 길어졌습니다. 호스트는 로비 일시정지 메뉴에서 복사하고 참가자는 JOIN GAME에 입력합니다. Steam, PS5, Xbox Series X|S, Nintendo Switch 2 간 크로스플레이가 가능하지만 진행 상황은 이전되지 않습니다. 컨트롤러 달리기와 등반은 누르고 유지합니다.', answer: '호스트가 표시한 현재 코드와 플랫폼·버전을 확인한 뒤 참가하세요. 방 코드는 기존 로비 입장용이며 매치메이킹이 아닙니다.' },
+  de: { title: 'PEAK-Raumcodes: aktuelle Crossplay-Regeln', intro: 'Patch 3.1.0 hat die Raumcodes verlängert. Der Host kopiert den aktuellen Code im Pausenmenü der Lobby; der Beitretende gibt ihn über JOIN GAME ein. Crossplay verbindet Steam, PS5, Xbox Series X|S und Nintendo Switch 2, aber der Fortschritt wird nicht zwischen Plattformen übertragen. Sprinten und Klettern mit dem Controller erfordern Gedrückthalten.', answer: 'Prüfe den aktuellen Code des Hosts sowie Plattform und Version. Ein Raumcode öffnet eine vorhandene Lobby und ist kein Matchmaking.' },
+  fr: { title: 'Codes de salle PEAK : règles actuelles du crossplay', intro: 'Le Patch 3.1.0 a allongé les codes de salle. L’hôte copie le code dans le menu pause de la lobby et le joueur le saisit avec JOIN GAME. Le crossplay relie Steam, PS5, Xbox Series X|S et Nintendo Switch 2, sans transfert de progression. À la manette, sprint et escalade se font en maintenant le bouton.', answer: 'Utilisez le code affiché par l’hôte et vérifiez plateforme et version. Le code rejoint une lobby existante, ce n’est pas du matchmaking.' },
+  pt: { title: 'Códigos de sala de PEAK: regras atuais de crossplay', intro: 'O Patch 3.1.0 alongou os códigos de sala. O anfitrião copia o código no menu de pausa da sala e o jogador usa JOIN GAME. O crossplay liga Steam, PS5, Xbox Series X|S e Nintendo Switch 2, mas o progresso não é transferido. No controle, corrida e escalada usam manter pressionado.', answer: 'Confira o código atual do anfitrião e a plataforma e versão antes de entrar. O código abre uma sala existente; não é matchmaking.' },
+  it: { title: 'Codici stanza di PEAK: regole attuali del crossplay', intro: 'La Patch 3.1.0 ha allungato i codici stanza. L’host copia il codice dal menu pausa della lobby e chi entra lo inserisce con JOIN GAME. Il crossplay collega Steam, PS5, Xbox Series X|S e Nintendo Switch 2, ma i progressi non vengono trasferiti. Con il controller corsa e arrampicata richiedono di tenere premuto.', answer: 'Controlla il codice mostrato dall’host, la piattaforma e la versione. Il codice apre una lobby esistente, non è matchmaking.' },
+};
+for (const [code, override] of Object.entries(roomCodeCurrentCopy)) {
+  const existing = articleLocaleTranslations[code]?.['room-codes'];
+  if (existing) {
+    articleLocaleTranslations[code]['room-codes'] = { ...existing, meta: { ...existing.meta, title: override.title, description: override.intro }, h1: override.title, intro: override.intro, answer: override.answer, sections: [{ id: 'current-room-code-rules', title: override.title, paragraphs: [override.intro, override.answer], bullets: [['Host', 'Copy the current code from the lobby pause menu.'], ['Joining player', 'Enter it through JOIN GAME.'], ['Platform state', 'Crossplay is live, but progress does not transfer between platforms.']] }], faq: { ...(existing.faq ?? {}), items: [[existing.faq?.items?.[0]?.[0] ?? 'Room codes?', override.answer], [existing.faq?.items?.[1]?.[0] ?? 'How do I join?', override.intro], [existing.faq?.items?.[2]?.[0] ?? 'Is crossplay live?', override.intro]] }, source: { ...(existing.source ?? {}), body: override.intro, links: [['Official Steam announcements', 'https://steamcommunity.com/app/3527290/announcements/'], ['Official PEAK Steam page', 'https://store.steampowered.com/app/3527290/PEAK/']] } };
+  } else if (code === 'en' && articleGuides['room-codes']) {
+    articleGuides['room-codes'] = { ...articleGuides['room-codes'], meta: { ...articleGuides['room-codes'].meta, title: override.title, description: override.intro }, h1: override.title, intro: override.intro, answer: override.answer, sections: [{ id: 'current-room-code-rules', title: override.title, paragraphs: [override.intro, override.answer], bullets: [['Host', 'Copy the current code from the lobby pause menu.'], ['Joining player', 'Enter it through JOIN GAME.'], ['Platform state', 'Crossplay is live, but progress does not transfer between platforms.']] }], faq: { ...articleGuides['room-codes'].faq, items: [['Do PEAK room codes work now?', override.answer], ['How do I join with a code?', override.intro], ['Is crossplay live?', override.intro]] }, source: { ...articleGuides['room-codes'].source, body: override.intro, links: [['Official Steam announcements', 'https://steamcommunity.com/app/3527290/announcements/'], ['Official PEAK Steam page', 'https://store.steampowered.com/app/3527290/PEAK/']] } };
+  }
+}
+
+const shortToolCopies = {
+  zh: {
+    'peak-revive-guide': ['PEAK 现行复活规则查询', '查看当前复活方式、可确认的限制与官方版本背景。3.1.0 的房间码与跨平台规则不等于复活规则；具体行为以 2.6.b、3.1.0 官方说明和游戏内提示为准。', '需要复活时先确认当前版本、目标状态和游戏内提示，不把旧版 2.04.a 说明当作现行规则。'],
+    'peak-multiplayer-mod': ['PEAK 联机与跨平台查询', '这里按工具页说明现行联机：Steam、PS5、Xbox Series X|S、Nintendo Switch 2 可用房间码跨平台加入，进度不跨平台转移。不要把本页当作模组百科。', '使用最新房间码加入已有大厅；跨平台进度不会同步，控制器按住冲刺和攀爬规则见 3.1.0。'],
+    'peak-photon-troubleshooting': ['PEAK Photon 现行排查', '先确认 3.1.0 后的长房间码、JOIN GAME、平台和版本，再排查 Steam 服务、文件、网络与防火墙。记录错误原文，不把旧版 Photon 文章当成唯一答案。', '排查顺序是：确认代码和平台、重试 JOIN GAME、检查 Steam 与文件、再查看官方公告。'],
+    'peak-cooking-guide': ['PEAK 今日烹饪查询', '烹饪只服务于今天的路线和可见资源。先打开今日地图；页面没有来源支持的当前食谱或点位时，显示今日待确认，不沿用旧版百科。', '今天能推进什么取决于当前生物群系和游戏内可见材料；先查路线，再在游戏中确认食材。'],
+    'peak-secret-ending-guide': ['PEAK 秘密结局任务查询', '把秘密结局当作短任务核对：先看今日路线、版本和官方公告，再按游戏内提示推进。未被官方或当前版本确认的触发条件保持待确认。', '不要把旧补丁的推测条件写成保证；记录版本、路线和实际提示后再复现。'],
+  },
+  es: {
+    'peak-multiplayer-mod': ['Consulta de multijugador y crossplay de PEAK', 'Steam, PS5, Xbox Series X|S y Nintendo Switch 2 pueden unirse mediante códigos de sala; el progreso no se transfiere entre plataformas. Esta página es una herramienta breve, no una enciclopedia de mods.', 'Usa el código largo actual para entrar en una sala existente y comprueba la versión.'],
+    'peak-secret-ending-guide': ['Consulta de la misión del final secreto de PEAK', 'Comprueba la ruta de hoy, la versión y las indicaciones dentro del juego. Las condiciones no confirmadas por una fuente actual quedan como pendientes.', 'Registra la versión y el mensaje del juego antes de repetir una condición.'],
+  },
+  ja: {
+    'peak-controller-support': ['PEAK コントローラー現行メモ', 'Patch 3.1.0 でコントローラーのダッシュと登攀はボタンを押し続ける操作になりました。ルームコードとクロスプレイは別の確認なので、参加時は [[link:room-codes|ルームコード]] を使い、詳細は Steam の公式告知を確認してください。', '操作表示が違うときはゲーム内設定と現在のバージョンを確認し、古いキー配置を現行仕様とみなさないでください。'],
+  },
+};
+for (const [locale, entries] of Object.entries(shortToolCopies)) {
+  for (const [slug, [title, intro, answer]] of Object.entries(entries)) {
+    const translation = articleLocaleTranslations[locale]?.[slug];
+    if (translation) {
+      articleLocaleTranslations[locale][slug] = { ...translation, meta: { ...translation.meta, title, description: intro }, h1: title, intro, answer };
+    }
+  }
+}
+for (const locale of ['zh', 'ja']) {
+  if (itemsPageCopy[locale]) {
+    itemsPageCopy[locale] = { ...itemsPageCopy[locale], meta: { ...itemsPageCopy[locale].meta, title: locale === 'zh' ? 'PEAK 今日物品查询' : 'PEAK 今日アイテム検索' }, h1: locale === 'zh' ? 'PEAK 今日物品查询' : 'PEAK 今日アイテム検索', intro: locale === 'zh' ? '先看今日地图和今日护符，再查询与当前生物群系相关的物品。没有今日来源的点位保持待确认。' : '今日のマップとアミュレットを先に確認し、現在のバイオームに関係するアイテムだけを調べます。出典のない場所は未確認です。', answer: locale === 'zh' ? '物品名称和基础字段来自目录；今日能否找到或使用请以地图和游戏内状态为准。' : '名称と基本項目はカタログ、今日の可否はマップとゲーム内の状態を確認してください。' };
+  }
+}
+for (const locale of ['zh', 'es', 'ja']) {
+  const guide = achievementGuides[locale];
+  if (guide) {
+    const title = locale === 'zh' ? 'PEAK 今日成就查询' : locale === 'es' ? 'Consulta de logros de PEAK hoy' : 'PEAK 今日の実績検索';
+    guide.meta = { ...guide.meta, title, description: title };
+    guide.h1 = title;
+    guide.intro = locale === 'zh' ? '按今日生物群系检查被路线锁定的成就或徽章，未确认条件保持待确认。' : locale === 'es' ? 'Comprueba los logros ligados al bioma de hoy y deja pendientes las condiciones no verificadas.' : '今日のバイオームに関係する実績を確認し、未検証の条件は保留にします。';
+    guide.answer = locale === 'zh' ? '先看今日地图，再在游戏内确认条件；Steam 成就与游戏内徽章分开记录。' : locale === 'es' ? 'Mira el mapa de hoy y confirma la condición dentro del juego; los logros de Steam y las insignias son sistemas distintos.' : '今日のマップを確認してゲーム内で条件を確かめ、Steam 実績とゲーム内バッジを分けて記録します。';
+  }
+}
+
 const requiredKeys = ['meta', 'ui', 'hero', 'signal', 'map', 'updates', 'database', 'badges', 'guide', 'faq', 'source', 'legal', 'items'];
 for (const code of localeOrder) {
   const locale = locales[code];
@@ -471,20 +548,33 @@ function escapeHtml(value) {
   return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function routeFor(code, page) {
+function rawRouteFor(code, page) {
   const [pagePath, hash = ''] = String(page).split('#', 2);
+  if (isLocalizedRedirectRoute(code, pagePath)) return `${rawRouteFor(code, 'home')}${hash ? `#${hash}` : ''}`;
+  const resolvedPagePath = REDIRECT_ARTICLES[pagePath] ?? pagePath;
   const suffix = hash ? `#${hash}` : '';
-  if (pagePath === 'items' || pagePath === 'contact' || pagePath === 'room-codes' || pagePath === 'badges-guide') return `${code === 'en' ? `/${pagePath}/` : `/${code}/${pagePath}/`}${suffix}`;
-  if (code === 'en') return `${pagePath === 'home' ? '/' : `/${pagePath}`}${suffix}`;
-  return `${pagePath === 'home' ? `/${code}/` : `/${code}/${pagePath}/`}${suffix}`;
+  if (resolvedPagePath === 'items' || resolvedPagePath === 'contact' || resolvedPagePath === 'room-codes' || resolvedPagePath === 'badges-guide') return `${code === 'en' ? `/${resolvedPagePath}/` : `/${code}/${resolvedPagePath}/`}${suffix}`;
+  if (code === 'en') return `${resolvedPagePath === 'home' ? '/' : `/${resolvedPagePath}`}${suffix}`;
+  return `${resolvedPagePath === 'home' ? `/${code}/` : `/${code}/${resolvedPagePath}/`}${suffix}`;
+}
+
+function routeFor(code, page) {
+  const href = rawRouteFor(code, page);
+  if (!isGonePath(href)) return href;
+  const [, hash = ''] = String(page).split('#', 2);
+  return `${rawRouteFor(code, 'home')}${hash ? `#${hash}` : ''}`;
 }
 
 function alternateLinks(page) {
-  return localeOrder.map((code) => `<link rel="alternate" hreflang="${localeMeta[code].lang}" href="${BASE_URL}${routeFor(code, page)}" />`).concat(`<link rel="alternate" hreflang="x-default" href="${BASE_URL}${routeFor('en', page)}" />`).join('\n    ');
+  const codes = /^grossmut-des-pfadfinders$|^beharrlichkeit-des-pfadfinders$/.test(String(page)) ? ['de'] : localeOrder;
+  const links = codes.map((code) => `<link rel="alternate" hreflang="${localeMeta[code].lang}" href="${BASE_URL}${routeFor(code, page)}" />`);
+  if (codes.includes('en')) links.push(`<link rel="alternate" hreflang="x-default" href="${BASE_URL}${routeFor('en', page)}" />`);
+  return links.join('\n    ');
 }
 
 function languageMenu(current, page, copy) {
-  const links = localeOrder.map((code) => `<a href="${routeFor(code, page)}" hreflang="${localeMeta[code].lang}">${escapeHtml(localeMeta[code].label)}</a>`).join('');
+  const codes = /^grossmut-des-pfadfinders$|^beharrlichkeit-des-pfadfinders$/.test(String(page)) ? ['de'] : localeOrder;
+  const links = codes.map((code) => `<a href="${routeFor(code, page)}" hreflang="${localeMeta[code].lang}">${escapeHtml(localeMeta[code].label)}</a>`).join('');
   return `<details class="language-menu"><summary aria-label="${escapeHtml(copy.ui.language)}">${escapeHtml(localeMeta[current].short)} <span aria-hidden="true">\u25be</span></summary><div class="language-menu-list">${links}</div></details>`;
 }
 
@@ -509,6 +599,7 @@ function formatDateLabel(locale, value) {
 function formatDateTimeLabel(locale, value) {
   const date = parseDateValue(value);
   if (!date) return String(value ?? '');
+  const timeZones = { en: 'UTC', zh: 'Asia/Shanghai', es: 'Europe/Madrid', ja: 'Asia/Tokyo', fr: 'Europe/Paris', de: 'Europe/Berlin', pt: 'Europe/Lisbon', ko: 'Asia/Seoul', it: 'Europe/Rome' };
   const formatted = new Intl.DateTimeFormat(localeMeta[locale].lang, {
     year: 'numeric',
     month: 'short',
@@ -516,9 +607,9 @@ function formatDateTimeLabel(locale, value) {
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
-    timeZone: 'UTC',
+    timeZone: timeZones[locale] ?? 'UTC',
   }).format(date);
-  return `${formatted} UTC`;
+  return `${formatted} ${locale === 'en' ? 'UTC' : localeMeta[locale].short}`;
 }
 
 const todayMapDetailCopy = {
@@ -688,6 +779,28 @@ const todayMapDetailCopy = {
 
 const defaultTodayMapDetailCopy = todayMapDetailCopy.en;
 
+const dailyToolCopy = {
+  en: { date: "Today's date", route: 'Full biome order', reset: 'Next reset (local)', action: 'What can you do today?', mesa: 'Mesa: Tomb check', noMesa: 'No Mesa today', charms: "Today's charms", pending: 'Today not confirmed', timestamp: 'Data timestamp · confirm in game' },
+  zh: { date: '今日日期', route: '完整生物群系顺序', reset: '下次重置（当地时间）', action: '今日能做什么', mesa: 'Mesa：检查 Tomb', noMesa: '今日无 Mesa', charms: '今日护符', pending: '今日待确认', timestamp: '数据时间戳 · 请以游戏内为准' },
+  es: { date: 'Fecha de hoy', route: 'Orden completo de biomas', reset: 'Próximo reinicio (hora local)', action: 'Qué puedes hacer hoy', mesa: 'Mesa: comprueba Tomb', noMesa: 'Hoy no hay Mesa', charms: 'Amuletos de hoy', pending: 'Hoy no confirmado', timestamp: 'Marca de datos · confirma en el juego' },
+  ja: { date: '今日の日付', route: 'バイオームの完全な順序', reset: '次回リセット（現地時間）', action: '今日できること', mesa: 'Mesa：Tomb を確認', noMesa: '今日は Mesa なし', charms: '今日のアミュレット', pending: '今日は未確認', timestamp: 'データ時刻 · ゲーム内で確認' },
+  ko: { date: '오늘 날짜', route: '전체 생물군계 순서', reset: '다음 초기화(현지 시간)', action: '오늘 할 수 있는 일', mesa: 'Mesa: Tomb 확인', noMesa: '오늘은 Mesa 없음', charms: '오늘의 부적', pending: '오늘 미확인', timestamp: '데이터 시각 · 게임에서 확인' },
+  de: { date: 'Heutiges Datum', route: 'Vollständige Biome-Reihenfolge', reset: 'Nächster Reset (Ortszeit)', action: 'Heute möglich', mesa: 'Mesa: Tomb prüfen', noMesa: 'Heute kein Mesa', charms: 'Heute: Amulette', pending: 'Heute nicht bestätigt', timestamp: 'Datenzeitpunkt · im Spiel prüfen' },
+  fr: { date: "Date d’aujourd’hui", route: 'Ordre complet des biomes', reset: 'Prochain reset (heure locale)', action: 'À faire aujourd’hui', mesa: 'Mesa : vérifier Tomb', noMesa: 'Pas de Mesa aujourd’hui', charms: 'Amulettes du jour', pending: 'Non confirmé aujourd’hui', timestamp: 'Horodatage · vérifiez en jeu' },
+  pt: { date: 'Data de hoje', route: 'Ordem completa dos biomas', reset: 'Próximo reinício (hora local)', action: 'O que fazer hoje', mesa: 'Mesa: verificar Tomb', noMesa: 'Sem Mesa hoje', charms: 'Amuletos de hoje', pending: 'Não confirmado hoje', timestamp: 'Horário dos dados · confirme no jogo' },
+  it: { date: 'Data di oggi', route: 'Ordine completo dei biomi', reset: 'Prossimo reset (ora locale)', action: 'Cosa fare oggi', mesa: 'Mesa: controlla Tomb', noMesa: 'Nessuna Mesa oggi', charms: 'Amuleti di oggi', pending: 'Non confermato oggi', timestamp: 'Timestamp dati · verifica nel gioco' },
+};
+
+function renderDailyToolSummary(locale, data, buildTimestamp) {
+  const copy = dailyToolCopy[locale] ?? dailyToolCopy.en;
+  const route = data?.biome || data?.map || copy.pending;
+  const hasMesa = /\bMesa\b/i.test(route);
+  const reset = data?.resetAt ? formatDateTimeLabel(locale, data.resetAt) : copy.pending;
+  const charms = ["Scout's Generosity", "Scout's Tenacity", "Scout's Ambition", "Scout's Initiative"];
+  const charmMarkup = charms.map((name) => `<li><strong>${escapeHtml(name)}</strong><span>${escapeHtml(copy.pending)}</span></li>`).join('');
+  return `<section class="daily-tool-summary" aria-label="${escapeHtml(copy.route)}"><div class="daily-tool-card daily-tool-date"><span>${escapeHtml(copy.date)}</span><strong>${escapeHtml(formatDateLabel(locale, data?.date || ''))}</strong></div><div class="daily-tool-card daily-tool-route"><span>${escapeHtml(copy.route)}</span><strong>${escapeHtml(route)}</strong></div><div class="daily-tool-card daily-tool-reset"><span>${escapeHtml(copy.reset)}</span><strong>${escapeHtml(reset)}</strong></div><div class="daily-tool-card daily-tool-action"><span>${escapeHtml(copy.action)}</span><strong>${escapeHtml(hasMesa ? copy.mesa : copy.noMesa)}</strong><ul class="daily-tool-charms"><li><strong>${escapeHtml(copy.charms)}</strong><span></span></li>${charmMarkup}</ul></div><p class="daily-tool-timestamp">${escapeHtml(copy.timestamp)}: ${escapeHtml(formatDateTimeLabel(locale, data?.sourceFetchedAt || buildTimestamp))}</p></section>`;
+}
+
 export function formatSnapshotDate(locale, buildDate) {
   const date = formatDateLabel(locale, buildDate);
   const formatters = {
@@ -835,7 +948,7 @@ function renderTodayMap(locale, data, buildDate, buildTimestamp, updateData, pub
   const statusClass = snapshot.estimated ? ' is-estimated' : snapshot.available ? ' is-verified' : '';
   const poolItems = `${officialEntries(updateData, buildDate).some((entry) => entry.title === 'CROSSPLAY HAS ARRIVED TO PEAK') ? `<li><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">2026-10-22</a> ${escapeHtml(officialUpdateFacts[locale].crossplay)}</li>` : ''}${detailCopy.poolItems.map(([version, text]) => `<li><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">${escapeHtml(version)}</a> ${escapeHtml(text)}</li>`).join('')}`;
   const relatedLinks = detailCopy.relatedLinks.filter(([page]) => !articleOrder.includes(page) || publishedArticles.includes(page)).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
-  return `<section id="today-map" class="today-map-section" aria-labelledby="today-map-title"><div class="container today-map-heading"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h2 id="today-map-title">${escapeHtml(copy.title)}</h2><p>${escapeHtml(copy.lede)}</p></div><span class="today-map-status${statusClass}">${escapeHtml(status)}</span></div><div class="container today-map-grid"><div>${renderTodayMapMedia(locale, snapshot)}</div><div class="today-map-panel"><div class="today-map-panel-top"><span class="status-pill"><i></i>${escapeHtml(status)}</span><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></div>${panel}<dl class="today-map-facts"><div><dt>${escapeHtml(copy.currentMap)}</dt><dd>${escapeHtml(mapValue)}</dd></div><div><dt>${escapeHtml(copy.route)}</dt><dd>${escapeHtml(routeValue)}</dd></div><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(countdown)}</dd></div><div><dt>${escapeHtml(detailCopy.currentVersion)}</dt><dd><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">${escapeHtml(currentVersion)}</a></dd></div><div><dt>${escapeHtml(detailCopy.nextResetAt)}</dt><dd><time datetime="${escapeHtml(snapshot.resetAt || '')}">${escapeHtml(nextResetLabel)}</time></dd></div><div><dt>${escapeHtml(detailCopy.dataUpdated)}</dt><dd><time datetime="${escapeHtml(dataUpdatedAt || '')}">${escapeHtml(dataUpdatedLabel)}</time></dd></div></dl><div class="today-map-pool-changes"><h3>${escapeHtml(detailCopy.poolChanges)}</h3><ul>${poolItems}</ul></div><div class="today-map-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="today-map-updated"><span>${escapeHtml(copy.updated)}</span> ${escapeHtml(formatDateTimeLabel(locale, snapshot.updatedAt))}</p><nav class="today-map-related" aria-label="${escapeHtml(detailCopy.related)}"><span>${escapeHtml(detailCopy.related)}</span>${relatedLinks}</nav>${snapshot.available ? '' : `<p class="today-map-note">${escapeHtml(copy.pendingNote)}</p>`}</div></div></section>`;
+  return `<section id="today-map" class="today-map-section" aria-labelledby="today-map-title"><div class="container today-map-heading"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h2 id="today-map-title">${escapeHtml(copy.title)}</h2><p>${escapeHtml(copy.lede)}</p></div><span class="today-map-status${statusClass}">${escapeHtml(status)}</span></div><div class="container">${renderDailyToolSummary(locale, data, buildTimestamp)}</div><div class="container today-map-grid"><div>${renderTodayMapMedia(locale, snapshot)}</div><div class="today-map-panel"><div class="today-map-panel-top"><span class="status-pill"><i></i>${escapeHtml(status)}</span><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></div>${panel}<dl class="today-map-facts"><div><dt>${escapeHtml(copy.currentMap)}</dt><dd>${escapeHtml(mapValue)}</dd></div><div><dt>${escapeHtml(copy.route)}</dt><dd>${escapeHtml(routeValue)}</dd></div><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(countdown)}</dd></div><div><dt>${escapeHtml(detailCopy.currentVersion)}</dt><dd><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">${escapeHtml(currentVersion)}</a></dd></div><div><dt>${escapeHtml(detailCopy.nextResetAt)}</dt><dd><time datetime="${escapeHtml(snapshot.resetAt || '')}">${escapeHtml(nextResetLabel)}</time></dd></div><div><dt>${escapeHtml(detailCopy.dataUpdated)}</dt><dd><time datetime="${escapeHtml(dataUpdatedAt || '')}">${escapeHtml(dataUpdatedLabel)}</time></dd></div></dl><div class="today-map-pool-changes"><h3>${escapeHtml(detailCopy.poolChanges)}</h3><ul>${poolItems}</ul></div><div class="today-map-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="today-map-updated"><span>${escapeHtml(copy.updated)}</span> ${escapeHtml(formatDateTimeLabel(locale, snapshot.updatedAt))}</p><nav class="today-map-related" aria-label="${escapeHtml(detailCopy.related)}"><span>${escapeHtml(detailCopy.related)}</span>${relatedLinks}</nav>${snapshot.available ? '' : `<p class="today-map-note">${escapeHtml(copy.pendingNote)}</p>`}</div></div></section>`;
 }
 
 export function injectTodayMapSection(html, locale, data, buildDate, buildTimestamp, updateData, publishedArticles) {
@@ -1400,12 +1513,17 @@ export function renderHome(locale, options = {}) {
     .replace('datetime="2026-08-17"', `datetime="${escapeHtml(buildDate)}"`)
     .replace('<a class="button button-primary" href="#maps">', `<a class="button button-primary" href="${todayMapHref}">`)
     .replace(/(<section id="maps"[\s\S]*?<div class="container section-heading-row">[\s\S]*?)<span class="section-kicker">([\s\S]*?)<\/span>/, `$1<a class="section-kicker" href="${todayMapHref}">$2</a>`);
-  const marker = '<section id="updates"';
+  const dailySummary = `<div class="container home-daily-tool">${renderDailyToolSummary(locale, options.todayMap, options.buildTimestamp ?? new Date().toISOString())}</div>`;
+  const mapsMarker = '<section id="maps"';
+  const updatesMarker = '<section id="updates"';
   const publishedArticles = options.publishedArticles ?? articleOrder;
   const articleLinks = publishedArticles.map((slug) => `<a class="section-link" href="${routeFor(locale, slug)}">${escapeHtml(localizedArticleGuide(locale, slug).h1)} <span aria-hidden="true">\u2192</span></a>`).join('');
+  const germanAmuletLinks = locale === 'de'
+    ? ['grossmut-des-pfadfinders', 'beharrlichkeit-des-pfadfinders'].map((slug) => `<a class="section-link" href="${routeFor(locale, slug)}">${escapeHtml(germanAmuletPages[slug].h1)} <span aria-hidden="true">\u2192</span></a>`).join('')
+    : '';
   const bandCopy = articleLinkBandCopy[locale] ?? articleLinkBandCopy.en;
-  const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(bandCopy.aria)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(bandCopy.eyebrow)}</p><h2>${escapeHtml(bandCopy.title)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a><a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a>${articleLinks}</div></div></section>`;
-  return html.replace(marker, `${linkBand}${marker}`);
+  const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(bandCopy.aria)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(bandCopy.eyebrow)}</p><h2>${escapeHtml(bandCopy.title)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a><a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a>${articleLinks}${germanAmuletLinks}</div></div></section>`;
+  return html.replace(mapsMarker, `${dailySummary}${mapsMarker}`).replace(updatesMarker, `${linkBand}${updatesMarker}`);
 }
 
 function renderArticleImage(image, localizeMapMedia = true) {
@@ -1505,8 +1623,11 @@ function renderMapGuideHtml(locale, options = {}) {
     const label = page === 'items' ? copy.database.title : localizedArticleGuide(locale, page).h1;
     return `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`;
   }).join('');
+  const germanAmuletLinks = locale === 'de'
+    ? ['grossmut-des-pfadfinders', 'beharrlichkeit-des-pfadfinders'].map((page) => `<a href="${routeFor(locale, page)}">${escapeHtml(germanAmuletPages[page].h1)} <span aria-hidden="true">\u2192</span></a>`).join('')
+    : '';
   return `${head(locale, 'map-rotation', guide.meta.title, guide.meta.description, guide.meta.schema, options)}
-  <body class="article-page"><div id="top"></div>${header(locale, 'map-rotation', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(guide.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(guide.related.homeAnchor)}</p><h1 id="article-title">${escapeHtml(guide.h1)}</h1><p class="article-hero-lede">${escapeHtml(guide.intro)}</p></div>${renderArticleImage({ src: '/media/peak-map-route.webp', alt: locale === 'en' ? 'PEAK route screenshot with a rope crossing a volcanic hazard' : guide.sections[1].image.alt, caption: locale === 'en' ? 'Official Steam screenshot - a route decision is more useful than an unverified live-map claim.' : guide.sections[1].image.caption })}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#rotation-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(guide.answerLabel)}</p><h2 id="answer-title">${escapeHtml(guide.answerLabel)}</h2><p>${escapeHtml(guide.answer)}</p></section>${sections}<section id="rotation-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noopener">${escapeHtml(guide.source.news)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#maps">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a>${mapRelatedLinks}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
+  <body class="article-page"><div id="top"></div>${header(locale, 'map-rotation', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(guide.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(guide.related.homeAnchor)}</p><h1 id="article-title">${escapeHtml(guide.h1)}</h1><p class="article-hero-lede">${escapeHtml(guide.intro)}</p></div>${renderArticleImage({ src: '/media/peak-map-route.webp', alt: locale === 'en' ? 'PEAK route screenshot with a rope crossing a volcanic hazard' : guide.sections[1].image.alt, caption: locale === 'en' ? 'Official Steam screenshot - a route decision is more useful than an unverified live-map claim.' : guide.sections[1].image.caption })}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#rotation-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(guide.answerLabel)}</p><h2 id="answer-title">${escapeHtml(guide.answerLabel)}</h2><p>${escapeHtml(guide.answer)}</p></section>${sections}<section id="rotation-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noopener">${escapeHtml(guide.source.news)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#maps">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a>${mapRelatedLinks}${germanAmuletLinks}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
 }
 
 export function renderMapGuide(locale, options = {}) {
@@ -1686,9 +1807,13 @@ export function renderContact(locale, options = {}) {
 }
 
 export function renderSitemap(buildDate = '2026-08-19', publishedArticles = articleOrder) {
-  const pages = ['home', 'about', 'contact', 'privacy', 'terms', 'map-rotation', 'achievements', 'items', 'badges-guide', ...publishedArticles];
-  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'contact', 'map-rotation', 'achievements', 'items', 'badges-guide', ...publishedArticles].map((page) => `${BASE_URL}${routeFor(code, page)}`)));
-  const urls = localeOrder.flatMap((code) => pages.map((page) => `${BASE_URL}${routeFor(code, page)}`));
+  const pages = ['home', 'about', 'contact', 'privacy', 'terms', 'map-rotation', 'achievements', 'items', 'badges-guide', ...publishedArticles.filter((slug) => !isRedirectedArticle(slug))];
+  const livePages = (code) => pages.filter((page) => !isLocalizedRedirectRoute(code, page) && !isGonePath(rawRouteFor(code, page)));
+  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'contact', 'map-rotation', 'achievements', 'items', 'badges-guide', ...publishedArticles].filter((page) => !isLocalizedRedirectRoute(code, page) && !isGonePath(rawRouteFor(code, page))).map((page) => `${BASE_URL}${rawRouteFor(code, page)}`)));
+  updatedUrls.add(`${BASE_URL}/de/grossmut-des-pfadfinders/`);
+  updatedUrls.add(`${BASE_URL}/de/beharrlichkeit-des-pfadfinders/`);
+  const urls = localeOrder.flatMap((code) => livePages(code).map((page) => `${BASE_URL}${rawRouteFor(code, page)}`));
+  urls.push(`${BASE_URL}/de/grossmut-des-pfadfinders/`, `${BASE_URL}/de/beharrlichkeit-des-pfadfinders/`);
   const rows = urls.map((url) => {
     const lastmod = updatedUrls.has(url) ? buildDate : '2026-08-17';
     return `  <url><loc>${url}</loc><lastmod>${lastmod}</lastmod></url>`;

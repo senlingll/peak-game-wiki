@@ -2,6 +2,7 @@ import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderBadgesGuide, renderContact, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap, STYLESHEET_HREF } from './locales.mjs';
 import { articleOrder } from './article-guides.mjs';
+import { GONE_PATHS, isLocalizedRedirectRoute, isRedirectedArticle } from './route-policy.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const outputRoot = resolve(projectRoot, 'dist');
@@ -10,9 +11,10 @@ const buildTimestamp = new Date().toISOString();
 const buildDate = /^\d{4}-\d{2}-\d{2}$/.test(process.env.BUILD_DATE ?? '')
   ? process.env.BUILD_DATE
   : buildTimestamp.slice(0, 10);
-const publishedArticleOrder = process.env.PUBLISHED_ARTICLES
+const requestedArticleOrder = process.env.PUBLISHED_ARTICLES
   ? [...new Set(process.env.PUBLISHED_ARTICLES.split(',').map((slug) => slug.trim().toLowerCase()).filter(Boolean))]
   : articleOrder;
+const publishedArticleOrder = requestedArticleOrder.filter((slug) => !isRedirectedArticle(slug));
 
 if (!publishedArticleOrder.length) {
   throw new Error('PUBLISHED_ARTICLES must include at least one known article slug.');
@@ -71,6 +73,7 @@ const mapHistory = await readJsonFile('data/peak-map-history.json', []);
 
 const renderOptions = { buildDate, dateModified: buildDate, buildTimestamp, todayMap, updateData, mapHistory, publishedArticles: publishedArticleOrder };
 const renderMapGuidePage = (locale) => injectTodayMapSection(renderMapGuide(locale, renderOptions), locale, todayMap, buildDate, buildTimestamp, updateData, publishedArticleOrder);
+
 const notFoundHtml = `<!doctype html>
 <html lang="en">
   <head>
@@ -157,10 +160,26 @@ for (const locale of localeOrder.filter((code) => code !== 'en')) {
   await mkdir(itemsLocaleRoot, { recursive: true });
   await writeFile(resolve(itemsLocaleRoot, 'index.html'), renderItemsPage(locale, renderOptions), 'utf8');
   for (const slug of publishedArticleOrder) {
+    if (isLocalizedRedirectRoute(locale, slug)) continue;
     const articleRoot = resolve(localeRoot, slug);
     await mkdir(articleRoot, { recursive: true });
     await writeFile(resolve(articleRoot, 'index.html'), renderArticlePage(locale, slug, renderOptions), 'utf8');
   }
+}
+
+// 德文护符页是单独的德语工具页，不创建其他语言壳页。
+for (const slug of ['grossmut-des-pfadfinders', 'beharrlichkeit-des-pfadfinders']) {
+  const amuletRoot = resolve(outputRoot, 'de', slug);
+  await mkdir(amuletRoot, { recursive: true });
+  await writeFile(resolve(amuletRoot, 'index.html'), renderArticlePage('de', slug, renderOptions), 'utf8');
+}
+
+// 生成器仍可为共享组件构建中间页面，但已核对的 410 地址必须从最终产物中移除。
+for (const pathname of GONE_PATHS) {
+  const relative = pathname.replace(/^\//, '');
+  await rm(resolve(outputRoot, `${relative}.html`), { force: true });
+  await rm(resolve(outputRoot, relative, 'index.html'), { force: true });
+  await rm(resolve(outputRoot, relative), { recursive: true, force: true });
 }
 
 await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(buildDate, publishedArticleOrder), 'utf8');

@@ -1,4 +1,5 @@
 import { supplementalArticleGuides } from './article-supplemental-guides.mjs';
+import { germanAmuletPages } from './german-amulet-pages.mjs';
 
 export const articleOrder = [
   'peak-biomes-list',
@@ -2750,3 +2751,4 @@ export const articleGuides = {
 };
 
 Object.assign(articleGuides, supplementalArticleGuides);
+Object.assign(articleGuides, germanAmuletPages);

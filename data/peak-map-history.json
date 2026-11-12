@@ -20,7 +20,7 @@
       "label": "CC BY-SA 4.0",
       "url": "https://creativecommons.org/licenses/by-sa/4.0/"
     },
-    "sourceFetchedAt": "2026-11-11T23:26:41.172Z"
+    "sourceFetchedAt": "2026-11-12T14:25:49.906Z"
   },
   {
     "date": "2026-11-11",
@@ -559,6 +559,57 @@
     "biome": "Shore, Roots, Mesa, Gloom, Citadel",
     "resetAt": "2026-10-14T17:00:00.000Z",
     "currentResetAt": "2026-10-13T17:00:00.000Z",
+    "estimated": true,
+    "source": {
+      "label": "PEAK Wiki timer",
+      "url": "https://peak.wiki.gg/wiki/MediaWiki:Common.js"
+    },
+    "license": {
+      "label": "CC BY-SA 4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    }
+  },
+  {
+    "date": "2026-10-13",
+    "map": "Shore → Roots → Alpine → Caldera → The Kiln",
+    "route": "Daily biome sequence",
+    "biome": "Shore, Roots, Alpine, Caldera, The Kiln",
+    "resetAt": "2026-10-13T17:00:00.000Z",
+    "currentResetAt": "2026-10-12T17:00:00.000Z",
+    "estimated": true,
+    "source": {
+      "label": "PEAK Wiki timer",
+      "url": "https://peak.wiki.gg/wiki/MediaWiki:Common.js"
+    },
+    "license": {
+      "label": "CC BY-SA 4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    }
+  },
+  {
+    "date": "2026-10-12",
+    "map": "Shore → Tropics → Mesa → Gloom → Citadel",
+    "route": "Daily biome sequence",
+    "biome": "Shore, Tropics, Mesa, Gloom, Citadel",
+    "resetAt": "2026-10-12T17:00:00.000Z",
+    "currentResetAt": "2026-10-11T17:00:00.000Z",
+    "estimated": true,
+    "source": {
+      "label": "PEAK Wiki timer",
+      "url": "https://peak.wiki.gg/wiki/MediaWiki:Common.js"
+    },
+    "license": {
+      "label": "CC BY-SA 4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    }
+  },
+  {
+    "date": "2026-10-11",
+    "map": "Shore → Roots → Mesa → Caldera → The Kiln",
+    "route": "Daily biome sequence",
+    "biome": "Shore, Roots, Mesa, Caldera, The Kiln",
+    "resetAt": "2026-10-11T17:00:00.000Z",
+    "currentResetAt": "2026-10-10T17:00:00.000Z",
     "estimated": true,
     "source": {
       "label": "PEAK Wiki timer",
