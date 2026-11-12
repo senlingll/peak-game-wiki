@@ -1,12 +1,12 @@
 {
-  "date": "2026-11-12",
-  "map": "Shore → Tropics (Lava) → Alpine → Gloom → Citadel",
+  "date": "2026-11-13",
+  "map": "Shore (RedBeach) → Roots → Mesa → Caldera → The Kiln",
   "route": "Daily biome sequence",
-  "biome": "Shore, Tropics (Lava), Alpine, Gloom, Citadel",
-  "resetAt": "2026-11-12T17:00:00.000Z",
-  "currentResetAt": "2026-11-11T17:00:00.000Z",
-  "updatedAt": "2026-11-12T14:25:49.906Z",
-  "sourceFetchedAt": "2026-11-12T14:25:49.906Z",
+  "biome": "Shore (RedBeach), Roots, Mesa, Caldera, The Kiln",
+  "resetAt": "2026-11-13T17:00:00.000Z",
+  "currentResetAt": "2026-11-12T17:00:00.000Z",
+  "updatedAt": "2026-11-12T22:42:40.451Z",
+  "sourceFetchedAt": "2026-11-12T22:42:40.451Z",
   "estimated": true,
   "source": {
     "label": "PEAK Wiki community map pool",
@@ -15,7 +15,7 @@
     "mapsSha256": "c34b7358cf619e8ea2f3c956d59b4b9a09984f01a0fad0d06fde07456b6662af",
     "timerSha256": "a9b11ec2f14cf9f008fd2fb334c4ce0895ff7a0edeb416c9a5e967c6a87aa0ee",
     "poolSize": 208,
-    "rotationIndex": 99
+    "rotationIndex": 100
   },
   "license": {
     "label": "CC BY-SA 4.0",
@@ -31,31 +31,31 @@
     },
     {
       "type": "image",
-      "biome": "Tropics",
+      "biome": "Roots",
       "illustrative": true,
-      "url": "/media/peak-map-tropics.webp",
-      "sourceUrl": "https://peak.wiki.gg/wiki/Tropics"
+      "url": "/media/peak-map-roots.webp",
+      "sourceUrl": "https://peak.wiki.gg/wiki/Roots"
     },
     {
       "type": "image",
-      "biome": "Alpine",
+      "biome": "Mesa",
       "illustrative": true,
-      "url": "/media/peak-map-alpine.webp",
-      "sourceUrl": "https://peak.wiki.gg/wiki/Alpine"
+      "url": "/media/peak-map-mesa.webp",
+      "sourceUrl": "https://peak.wiki.gg/wiki/Mesa"
     },
     {
       "type": "image",
-      "biome": "Gloom",
+      "biome": "Caldera",
       "illustrative": true,
-      "url": "/media/peak-map-gloom.webp",
-      "sourceUrl": "https://peak.wiki.gg/wiki/Gloom"
+      "url": "/media/peak-map-caldera.webp",
+      "sourceUrl": "https://peak.wiki.gg/wiki/Caldera"
     },
     {
       "type": "image",
-      "biome": "Citadel",
+      "biome": "The Kiln",
       "illustrative": true,
-      "url": "/media/peak-map-citadel.webp",
-      "sourceUrl": "https://peak.wiki.gg/wiki/Citadel"
+      "url": "/media/peak-map-kiln.webp",
+      "sourceUrl": "https://peak.wiki.gg/wiki/Kiln"
     }
   ]
 }
