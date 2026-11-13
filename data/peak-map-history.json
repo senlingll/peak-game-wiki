@@ -1,5 +1,28 @@
 [
   {
+    "date": "2026-11-14",
+    "map": "Shore (RedBeach) → Roots (DeepWater) → Alpine → Gloom → Citadel",
+    "route": "Daily biome sequence",
+    "biome": "Shore (RedBeach), Roots (DeepWater), Alpine, Gloom, Citadel",
+    "resetAt": "2026-11-14T17:00:00.000Z",
+    "currentResetAt": "2026-11-13T17:00:00.000Z",
+    "estimated": true,
+    "source": {
+      "label": "PEAK Wiki community map pool",
+      "url": "https://peak.wiki.gg/wiki/MediaWiki:Maps.json?action=raw",
+      "timerUrl": "https://peak.wiki.gg/wiki/MediaWiki:Common.js?action=raw",
+      "mapsSha256": "c34b7358cf619e8ea2f3c956d59b4b9a09984f01a0fad0d06fde07456b6662af",
+      "timerSha256": "a9b11ec2f14cf9f008fd2fb334c4ce0895ff7a0edeb416c9a5e967c6a87aa0ee",
+      "poolSize": 208,
+      "rotationIndex": 101
+    },
+    "license": {
+      "label": "CC BY-SA 4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "sourceFetchedAt": "2026-11-13T22:34:29.010Z"
+  },
+  {
     "date": "2026-11-13",
     "map": "Shore (RedBeach) → Roots → Mesa → Caldera → The Kiln",
     "route": "Daily biome sequence",
@@ -548,23 +571,6 @@
     "biome": "Shore, Roots, Alpine, Gloom, Citadel",
     "resetAt": "2026-10-16T17:00:00.000Z",
     "currentResetAt": "2026-10-15T17:00:00.000Z",
-    "estimated": true,
-    "source": {
-      "label": "PEAK Wiki timer",
-      "url": "https://peak.wiki.gg/wiki/MediaWiki:Common.js"
-    },
-    "license": {
-      "label": "CC BY-SA 4.0",
-      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
-    }
-  },
-  {
-    "date": "2026-10-15",
-    "map": "Shore → Tropics → Alpine → Caldera → The Kiln",
-    "route": "Daily biome sequence",
-    "biome": "Shore, Tropics, Alpine, Caldera, The Kiln",
-    "resetAt": "2026-10-15T17:00:00.000Z",
-    "currentResetAt": "2026-10-14T17:00:00.000Z",
     "estimated": true,
     "source": {
       "label": "PEAK Wiki timer",
