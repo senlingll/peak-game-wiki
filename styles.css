@@ -3328,4 +3328,156 @@ img {
   }
 }
 /* Daily tool summary stays readable in static HTML before JavaScript loads. */
-.daily-tool-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin:1.25rem 0 2rem;padding:1rem;border:1px solid rgba(255,255,255,.12);background:rgba(11,20,30,.72);border-radius:1rem}.daily-tool-card{min-height:7rem;padding:1rem;border-radius:.75rem;background:rgba(255,255,255,.05)}.daily-tool-card>span,.daily-tool-timestamp{display:block;color:var(--muted,#a9b6c3);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase}.daily-tool-card>strong{display:block;margin-top:.55rem;font-size:1.15rem;line-height:1.35}.daily-tool-charms{margin:.75rem 0 0;padding:0;list-style:none}.daily-tool-charms li{display:flex;justify-content:space-between;gap:.5rem;padding:.25rem 0;border-top:1px solid rgba(255,255,255,.08);font-size:.82rem}.daily-tool-charms li strong{font-weight:600}.daily-tool-charms li span{color:var(--muted,#a9b6c3);text-align:right}.daily-tool-timestamp{grid-column:1/-1;margin:.25rem 0 0;text-transform:none;letter-spacing:0}.home-daily-tool{margin-top:1rem}.home-daily-tool .daily-tool-summary{margin-bottom:0}@media (max-width:900px){.daily-tool-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (max-width:560px){.daily-tool-summary{grid-template-columns:1fr}.daily-tool-timestamp{grid-column:auto}}
+.daily-tool-summary {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.9fr) minmax(260px, 1.45fr) minmax(210px, 1.1fr) minmax(280px, 1.3fr);
+  gap: 0.75rem;
+  margin: 1.5rem 0 2rem;
+  padding: 0.75rem;
+  border: 1px solid rgba(23, 33, 45, 0.16);
+  border-radius: 1.25rem;
+  background: linear-gradient(135deg, #1b2a39 0%, #263b4d 100%);
+  box-shadow: 0 20px 42px rgba(23, 33, 45, 0.16);
+}
+
+.daily-tool-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 13.5rem;
+  overflow: hidden;
+  padding: 1.25rem 1.3rem 1.15rem;
+  border: 1px solid rgba(23, 33, 45, 0.08);
+  border-radius: 0.9rem;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 8px 18px rgba(23, 33, 45, 0.08);
+}
+
+.daily-tool-card::before {
+  position: absolute;
+  top: 0;
+  right: 1.3rem;
+  left: 1.3rem;
+  height: 0.25rem;
+  border-radius: 0 0 0.3rem 0.3rem;
+  background: var(--coral);
+  content: '';
+}
+
+.daily-tool-route::before {
+  background: var(--lavender-deep);
+}
+
+.daily-tool-reset::before {
+  background: var(--blue);
+}
+
+.daily-tool-action {
+  display: block;
+  background: #fffaf0;
+}
+
+.daily-tool-action::before {
+  background: var(--mint);
+}
+
+.daily-tool-card > span,
+.daily-tool-timestamp {
+  display: block;
+  color: var(--lavender-deep);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.daily-tool-card > strong {
+  display: block;
+  margin-top: 0.65rem;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.15rem, 1.55vw, 1.45rem);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.daily-tool-route > strong {
+  max-width: 28ch;
+}
+
+.daily-tool-action > strong {
+  color: var(--coral-dark);
+}
+
+.daily-tool-charms {
+  margin: 1rem 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(23, 33, 45, 0.12);
+  list-style: none;
+}
+
+.daily-tool-charms li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(6.5rem, auto);
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(23, 33, 45, 0.1);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.daily-tool-charms li strong {
+  font-weight: 750;
+}
+
+.daily-tool-charms li span {
+  color: var(--ink-soft);
+  text-align: right;
+}
+
+.daily-tool-timestamp {
+  grid-column: 1 / -1;
+  margin: 0.1rem 0.35rem 0.15rem;
+  color: rgba(255, 253, 249, 0.72);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.home-daily-tool {
+  margin-top: 1rem;
+}
+
+.home-daily-tool .daily-tool-summary {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1050px) {
+  .daily-tool-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .daily-tool-summary {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+    padding: 0.65rem;
+    border-radius: 1rem;
+  }
+
+  .daily-tool-card {
+    min-height: 0;
+    padding: 1.15rem 1.1rem 1rem;
+  }
+
+  .daily-tool-timestamp {
+    grid-column: auto;
+    margin: 0.25rem 0.2rem 0.1rem;
+  }
+}
