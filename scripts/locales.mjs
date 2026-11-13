@@ -14,7 +14,7 @@ import { germanAmuletPages } from './german-amulet-pages.mjs';
 import { REDIRECT_ARTICLES, isGonePath, isLocalizedRedirectRoute, isRedirectedArticle } from './route-policy.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
-const STYLESHEET_HREF = '/styles.css?v=20261103-map-media';
+const STYLESHEET_HREF = '/styles.css?v=20261113-daily-cards';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
 const STEAM_NEWS_API_HTML_URL = 'https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json';
 const SUPPORT_EMAIL = 'support@peak-game.wiki';
