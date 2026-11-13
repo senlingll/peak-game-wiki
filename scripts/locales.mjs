@@ -106,7 +106,7 @@ const locales = {
     ui: { maps: 'Maps', data: 'Data', updates: 'Updates', guides: 'Co-op guide', faq: 'FAQ', official: 'Official Steam', menu: 'Menu', language: 'Language', home: 'PEAK Game Wiki', sourceNotes: 'Source notes', footerTag: 'Field notes for the next ascent.', independent: 'Independent fan reference', snapshot: 'Snapshot 17 Aug 2026', officialLabel: 'Official source links are labeled.', steamStore: 'Steam store', steamNews: 'Official Steam news' },
     hero: { eyebrow: 'Independent PEAK reference - research snapshot 17 Aug 2026', title: 'PEAK Game Wiki', lede: 'A calm, useful field guide for the climb: check the current map rhythm, look up equipment before you leave camp, and follow the latest version notes without digging through scattered posts.', primary: "Check today's map", secondary: 'Find an item', players: 'players', achievements: 'Steam achievements', biomes: 'biome slots', imageAlt: 'A PEAK climber facing a towering structure above a misty island', caption: 'Official Steam screenshot - the climb is the route, not a menu.' },
      signal: { patch: 'CURRENT PATCH', patchValue: 'HOTFIX 2.4.b', patchNote: 'Hotfix on top of Patch 2.04.a (THE KILN IS BACK)', update: 'FEATURED UPDATE', updateValue: 'Final Ascent', updateNote: 'new route context to track', source: 'SOURCE POLICY', sourceValue: 'Official first', sourceNote: 'Steam notes before community summaries', view: 'View update log' },
-    map: { eyebrow: '01 - Rotation desk', title: "Today's map rotation", kicker: 'Daily map entry point', status: 'Rotation desk', date: '17 Aug 2026', heading: 'Final Ascent cycle', lede: 'The map rotates, while your plan should stay simple: check the route, pack for the hazards you expect, and leave room for a recovery item. This field guide keeps the entry point visible while a reliable live rotation source is being connected.', steps: [['Read the route', 'Confirm the current biome in-game.', 'ready'], ['Pack for the climb', 'Compare rope, piton and food utility.', 'plan'], ['Log the result', 'Keep a note of hazards and safe rests.', 'next']], copy: 'Copy rotation note', copyValue: 'Final Ascent cycle - confirm the active route in PEAK before climbing', imageAlt: 'A bright PEAK island route with cliffs, palms, and a floating summit', caption: 'Official Steam screenshot - use the in-game route as the final source of truth.', paragraphs: ['For a PEAK player, map today is a practical question rather than a lore question. The route determines how much time you can spend looking for food, how much climbing equipment is worth carrying, and when a team should stop pushing upward.', "This page keeps the rotation language honest. See today's verified map at the top of our map rotation guide, updated daily. The official game and update feed remain the authority for the active route."] },
+    map: { eyebrow: '01 - Rotation desk', title: "Today's map rotation", kicker: 'Daily map entry point', status: 'Rotation desk', date: '17 Aug 2026', heading: 'Final Ascent cycle', lede: 'The map rotates, while your plan should stay simple: check the route, pack for the hazards you expect, and leave room for a recovery item. The dated daily tool above keeps the route visible; confirm the active route in-game.', steps: [['Read the route', 'Confirm the current biome in-game.', 'ready'], ['Pack for the climb', 'Compare rope, piton and food utility.', 'plan'], ['Log the result', 'Keep a note of hazards and safe rests.', 'next']], copy: 'Copy rotation note', copyValue: 'Final Ascent cycle - confirm the active route in PEAK before climbing', imageAlt: 'A bright PEAK island route with cliffs, palms, and a floating summit', caption: 'Official Steam screenshot - use the in-game route as the final source of truth.', paragraphs: ['For a PEAK player, map today is a practical question rather than a lore question. The route determines how much time you can spend looking for food, how much climbing equipment is worth carrying, and when a team should stop pushing upward.', "This page keeps the rotation language honest. See today's verified map at the top of our map rotation guide, updated daily. The official game and update feed remain the authority for the active route."] },
     updates: { eyebrow: '02 - Version desk', title: 'Patch notes without the noise', link: 'Official news feed', rows: [['SEP', '02', '2026', 'CURRENT', 'HOTFIX 2.4.b', 'Fixed Render Scales looking bad below Native and fixed Steam Avatars not showing in the right spot in the pause menu.'], ['SEP', '02', '2026', 'PATCH', 'Patch 2.04.a THE KILN IS BACK', 'The CALDERA and THE KILN have been re-added to the map rotation; Condors now fly around the CALDERA, and petrifying rocks plus hot rock bridges have been added to THE KILN.'], ['AUG', '27', '2026', 'PATCH', 'Patch Notes 2.03.a', 'Added a new batch of maps with Gloom/Citadel to the daily rotation.'], ['AUG', '18', '2026', 'PATCH', 'PATCH 2.02.a', 'Reverted the rope change that made starting a grab cost stamina based on distance, and reduced Clown Luggages needed for the Jester Achievement from 3 to 2.'], ['AUG', '14', '2026', 'PATCH', 'Patch 2.01.a: Frog cooldown and bug fixes', 'Track the exact official post first; use the wiki to connect the patch to affected hazards, items, and route advice.'], ['AUG', '12', '2026', 'FEATURE', 'The Final Ascent', 'A larger update milestone that gives the site an anchor for new map, biome, equipment, and badge pages.'], ['AUG', '07', '2026', 'ANNOUNCEMENT', 'The final biome update arrives August 11', 'Use this note as the bridge between announcement coverage and the practical pages players need after an update lands.']], paragraphs: ['Update pages connect a temporary search spike to a durable reference structure. A patch headline can earn the first visit, but a player deciding what to carry next wants a clean item entry, a hazard explanation, and a note about whether an old route tip still applies.', 'The current snapshot favors official names and dates. Community explanations can add practical detail later, but they should be labeled as field notes and checked against the game.'], imageAlt: 'Official PEAK Final Ascent key art showing climbers below the PEAK title', caption: 'Official Steam header art - Final Ascent update context.' },
     database: { eyebrow: '03 - Field database', title: 'Find the right item before you climb', kicker: 'Searchable field notes', search: 'Search items, food, gear...', filters: ['All', 'Gear', 'Food', 'Utility'], empty: 'No matching field notes yet. Try a different item name or category.', note: 'Item entries are concise field notes covering names, categories and route roles. Check exact effects and values in-game, as patches may change them.', type: { gear: 'GEAR', utility: 'UTILITY', food: 'FOOD' }, state: { route: 'route', team: 'team', coop: 'co-op', consumable: 'consumable', camp: 'camp', carry: 'carry' } },
     badges: { eyebrow: '04 - Progress tracker', title: 'Badges and achievements in one place', lede: 'PEAK has two different kinds of progress language: in-game badges and platform achievements. A useful wiki should make that distinction visible, then give each entry a clear unlock condition, related biome, and source note.', stats: [['64', 'Steam achievements'], ['4', 'biome slots to organize'], ['1', 'shared progress index']], button: 'See the FAQ distinction', rows: [['Achievement record', 'Platform-facing completion status and the official achievement name.'], ['Badge collection', 'In-game progress notes grouped by route, hazard, and teamwork.'], ['Cosmetic context', 'Keep unlockable cosmetics connected to the action that earned them.'], ['Version history', 'Mark entries that changed after Final Ascent or a later patch.']] },
@@ -420,42 +420,107 @@ for (const code of localeOrder) {
 
 const homepageOverrides = {
   en: {
-    title: "PEAK Game Wiki — Today's Map, Items, Badges & Patch Notes",
+    title: "Today's PEAK Map",
+    heroTitle: "Today's PEAK Map",
     dailyFaq: "PEAK uses a changing map rotation. Check the daily update section at the top of the map rotation guide, then confirm the active route in the game.",
   },
   zh: {
-    title: 'PEAK 游戏 Wiki：今日地图（每日更新）· 道具、徽章与更新',
+    title: 'PEAK 今日地图',
+    heroTitle: 'PEAK 今日地图',
     dailyFaq: 'PEAK 会更换地图轮换。请查看地图轮换指南顶部的每日更新区块，再在游戏中确认当前路线。',
   },
   es: {
     title: 'Mapa PEAK hoy (diario): objetos, insignias y novedades',
+    heroTitle: 'Mapa PEAK hoy',
     dailyFaq: 'PEAK usa una rotación cambiante. Consulta el bloque de actualización diaria en la parte superior de la guía de rotación y confirma la ruta activa en el juego.',
   },
   ja: {
-    title: 'PEAK Wiki：今日のマップ（毎日更新）・アイテム、バッジと更新',
+    title: 'PEAK 今日のマップ',
+    heroTitle: 'PEAK 今日のマップ',
     dailyFaq: 'PEAK のマップローテーションは変化します。ローテーションガイド上部の毎日更新セクションを確認し、ゲーム内で現在のルートを確かめてください。',
   },
   ko: {
-    title: 'PEAK 위키: 오늘의 맵(매일 업데이트) · 아이템, 배지와 업데이트',
+    title: 'PEAK 오늘의 맵',
+    heroTitle: 'PEAK 오늘의 맵',
     dailyFaq: 'PEAK은 변화하는 맵 로테이션을 사용합니다. 맵 로테이션 가이드 상단의 매일 업데이트 영역을 확인한 뒤 게임에서 활성 경로를 확인하세요.',
   },
   de: {
-    title: 'PEAK Wiki: Tageskarte (täglich), Items, Abzeichen & Updates',
+    title: 'PEAK heutige Karte',
+    heroTitle: 'PEAK heutige Karte',
     dailyFaq: 'PEAK nutzt eine wechselnde Kartenrotation. Prüfe den täglichen Update-Bereich oben im Kartenrotations-Ratgeber und bestätige die aktive Route im Spiel.',
   },
   fr: {
-    title: 'Wiki PEAK : carte quotidienne, objets, badges & actus',
+    title: 'Carte PEAK du jour',
+    heroTitle: 'Carte PEAK du jour',
     dailyFaq: 'PEAK utilise une rotation variable. Consultez la section des mises à jour quotidiennes en haut du guide de rotation, puis confirmez la route active dans le jeu.',
   },
   pt: {
-    title: 'Wiki PEAK: mapa diário, itens, distintivos e atualizações',
+    title: 'Mapa PEAK de hoje',
+    heroTitle: 'Mapa PEAK de hoje',
     dailyFaq: 'PEAK usa uma rotação de mapas variável. Consulte a seção de atualização diária no topo do guia de rotação e confirme a rota ativa no jogo.',
   },
   it: {
-    title: 'Wiki PEAK: mappa quotidiana, oggetti, badge e aggiornamenti',
+    title: 'Mappa PEAK di oggi',
+    heroTitle: 'Mappa PEAK di oggi',
     dailyFaq: 'PEAK usa una rotazione variabile. Consulta la sezione degli aggiornamenti quotidiani in cima alla guida alla rotazione e conferma il percorso attivo nel gioco.',
   },
 };
+
+function replaceGermanAscii(value) {
+  if (typeof value === 'string') {
+    return value
+      .replaceAll('AUSRUESTUNG', 'AUSRÜSTUNG')
+      .replaceAll('Kletterausruestung', 'Kletterausrüstung')
+      .replaceAll('Kaelteausruestung', 'Kälteausrüstung')
+      .replaceAll('Erholungsausruestung', 'Erholungsausrüstung')
+      .replaceAll('Ausruestung', 'Ausrüstung')
+      .replaceAll('ausruestung', 'ausrüstung')
+      .replaceAll('Erholungsgegenstaende', 'Erholungsgegenstände')
+      .replaceAll('Gegenstaende', 'Gegenstände')
+      .replaceAll('Anwendungsfaelle', 'Anwendungsfälle')
+      .replaceAll('Beitraege', 'Beiträge')
+      .replaceAll('Eintraege', 'Einträge')
+      .replaceAll('Erklaerungen', 'Erklärungen')
+      .replaceAll('geaendert', 'geändert')
+      .replaceAll('Kaelteschutz', 'Kälteschutz')
+      .replaceAll('kaelte', 'kälte')
+      .replaceAll('Kapazitaetsnotiz', 'Kapazitätsnotiz')
+      .replaceAll('kapazitaet', 'kapazität')
+      .replaceAll('laesst', 'lässt')
+      .replaceAll('Nachpruefbar', 'Nachprüfbar')
+      .replaceAll('geprueft', 'geprüft')
+      .replaceAll('Pruefung', 'Prüfung')
+      .replaceAll('Pruefe', 'Prüfe')
+      .replaceAll('pruefen', 'prüfen')
+      .replaceAll('pruefe', 'prüfe')
+      .replaceAll('Taeglicher', 'Täglicher')
+      .replaceAll('taegliche', 'tägliche')
+      .replaceAll('bestaetigen', 'bestätigen')
+      .replaceAll('bestaetigte', 'bestätigte')
+      .replaceAll('naechster', 'nächster')
+      .replaceAll('naechsten', 'nächsten')
+      .replaceAll('Naechste', 'Nächste')
+      .replaceAll('oeffnen', 'öffnen')
+      .replaceAll('Ueber', 'Über')
+      .replaceAll('ueber', 'über')
+      .replaceAll('fuer', 'für')
+      .replaceAll('koennen', 'können')
+      .replaceAll('aendern', 'ändern')
+      .replaceAll('gehoeren', 'gehören')
+      .replaceAll('moegliche', 'mögliche')
+      .replaceAll('noetig', 'nötig')
+      .replaceAll('ausloes', 'auslös')
+      .replaceAll('hinzufuegen', 'hinzufügen')
+      .replaceAll('Ratschlaege', 'Ratschläge')
+      .replaceAll('unabhaengige', 'unabhängige')
+      .replaceAll('Unterstuetzt', 'Unterstützt')
+      .replaceAll('verlaengern', 'verlängern')
+      .replaceAll('waerme', 'wärme');
+  }
+  if (Array.isArray(value)) return value.map((item) => replaceGermanAscii(item));
+  if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, replaceGermanAscii(item)]));
+  return value;
+}
 
 const dailyMapPageOverrides = {
   en: { title: "Today's PEAK Map", description: "Today's PEAK map route, local reset time, Mesa/Tomb check and charm status, with Patch 3.1.0 and cross-platform room-code notes.", intro: "Today's answer is the dated route below: read the full biome order first, then the next reset in your local time and the actions that are actually confirmed. Patch 3.1.0 lengthened room codes, changed controller sprint and climb to hold input, and added anti-harassment changes. Crossplay now covers Steam, PS5, Xbox Series X|S and Nintendo Switch 2; progress does not transfer between platforms.", answer: "Use the static daily tool below as the first answer. It prints the full biome order, local reset, Mesa/Tomb status and four charm rows without inventing point locations. Confirm every time-sensitive result in PEAK." },
@@ -1451,7 +1516,7 @@ function itemCards(copy) {
 
 function renderHomeBase(locale, options = {}) {
   const buildDate = resolveBuildDate(options);
-  const sourceCopy = locales[locale];
+  const sourceCopy = locale === 'de' ? replaceGermanAscii(locales[locale]) : locales[locale];
   const latest = latestOfficialPatch(options.updateData, buildDate);
   const updateCopy = articleUpdateCopy[locale] ?? articleUpdateCopy.en;
   const summary = latest ? (checkedUpdateSummary(locale, latest.title) ?? updateCopy.generic?.PATCH ?? latest.summary) : updateCopy.empty;
@@ -1462,11 +1527,11 @@ function renderHomeBase(locale, options = {}) {
     patchNote: latestText,
     latestFaq: latestText,
   };
-  const copy = {
+  let copy = {
     ...sourceCopy,
     locale,
     meta: homepageCopy ? { ...sourceCopy.meta, title: homepageCopy.title } : sourceCopy.meta,
-    hero: { ...sourceCopy.hero, eyebrow: formatHeroSnapshot(locale, buildDate) },
+    hero: { ...sourceCopy.hero, title: homepageCopy.heroTitle ?? sourceCopy.hero.title, eyebrow: formatHeroSnapshot(locale, buildDate) },
     signal: homepageCopy?.patchValue
       ? { ...sourceCopy.signal, patchValue: homepageCopy.patchValue, patchNote: homepageCopy.patchNote }
       : sourceCopy.signal,
@@ -1484,6 +1549,7 @@ function renderHomeBase(locale, options = {}) {
       ? { ...sourceCopy.faq, items: sourceCopy.faq.items.map((item, index) => index === 1 && officialEntries(options.updateData, buildDate).some((entry) => entry.title === 'CROSSPLAY HAS ARRIVED TO PEAK') ? [item[0], officialUpdateFacts[locale].crossplay] : index === 3 ? [item[0], homepageCopy.dailyFaq] : index === 4 && homepageCopy.latestFaq ? [item[0], homepageCopy.latestFaq] : item) }
       : sourceCopy.faq,
   };
+  if (locale === 'de') copy = replaceGermanAscii(copy);
   const controls = HOME_CONTROL_COPY[locale] ?? HOME_CONTROL_COPY.en;
   const meta = copy.meta;
   const heroFacts = [[copy.hero.players, '1-4'], [copy.hero.achievements, '64'], [copy.hero.biomes, '4']];

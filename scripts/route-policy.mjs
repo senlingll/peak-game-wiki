@@ -21,6 +21,7 @@ export const LOCALIZED_REDIRECTS = {
 const gonePaths = [
   '/achievements',
   '/de/achievements', '/fr/achievements', '/it/achievements', '/ko/achievements', '/pt/achievements',
+  '/badges', '/de/badges', '/es/badges', '/fr/badges', '/it/badges', '/ja/badges', '/ko/badges', '/pt/badges', '/zh/badges',
   '/badges-guide', '/de/badges-guide', '/es/badges-guide', '/fr/badges-guide', '/it/badges-guide', '/ja/badges-guide', '/ko/badges-guide', '/pt/badges-guide', '/zh/badges-guide',
   '/items', '/de/items', '/es/items', '/fr/items', '/it/items', '/ko/items', '/pt/items',
   '/de/peak-controller-support', '/es/peak-controller-support', '/fr/peak-controller-support', '/it/peak-controller-support', '/ko/peak-controller-support', '/peak-controller-support', '/pt/peak-controller-support', '/zh/peak-controller-support',
