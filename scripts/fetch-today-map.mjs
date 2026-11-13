@@ -12,6 +12,11 @@ function resolveBuildDate() {
   return /^\d{4}-\d{2}-\d{2}$/.test(configured ?? '') ? configured : new Date().toISOString().slice(0, 10);
 }
 
+function resolveFetchTimestamp(value = process.env.TODAY_MAP_FETCH_AT) {
+  const parsed = value && Number.isFinite(Date.parse(value)) ? new Date(value) : new Date();
+  return parsed.toISOString();
+}
+
 async function writeTodayMap(value) {
   await writeFile(dataPath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
 }
@@ -40,7 +45,7 @@ async function appendMapHistory(value) {
   await writeFile(historyPath, `${JSON.stringify(next, null, 2)}\n`, 'utf8');
 }
 
-export async function fetchTodayMap(buildDate, fetchImpl = fetch) {
+export async function fetchTodayMap(buildDate, fetchImpl = fetch, fetchTimestamp = null) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), Number(process.env.TODAY_MAP_FETCH_TIMEOUT_MS) || 20000);
   try {
@@ -49,7 +54,7 @@ export async function fetchTodayMap(buildDate, fetchImpl = fetch) {
       if (!response.ok) throw new Error(`Community map source returned HTTP ${response.status}`);
       return response.text();
     }));
-    const sourceFetchedAt = new Date().toISOString();
+    const sourceFetchedAt = resolveFetchTimestamp(fetchTimestamp);
     return buildTodayMapSnapshot(sourceFetchedAt, buildDate, { timerText: texts[0], mapsText: texts[1], sourceFetchedAt });
   } catch {
     console.warn('Community map source could not be verified; publishing a pending entry.');
@@ -61,7 +66,7 @@ export async function fetchTodayMap(buildDate, fetchImpl = fetch) {
 }
 
 async function main() {
-  const result = await fetchTodayMap(resolveBuildDate());
+  const result = await fetchTodayMap(resolveBuildDate(), fetch, process.env.TODAY_MAP_FETCH_AT);
   await writeTodayMap(result);
   if (result.map) await appendMapHistory(result);
   console.log(`PEAK map for ${result.date}: ${result.map || 'pending'}`);

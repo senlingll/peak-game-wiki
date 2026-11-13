@@ -109,3 +109,26 @@ test('all nine locales share the official patch, FAQ schema and pending map stat
     assert.ok(!missing.includes('Patch Notes 3.0.1'), locale);
   }
 });
+
+test('homepage summaries fail closed after a reset instead of repeating yesterday', () => {
+  const stale = snapshot('2026-08-05T12:00:00Z');
+  const html = renderHome('en', {
+    buildDate: '2026-08-06',
+    buildTimestamp: '2026-08-05T17:10:00Z',
+    todayMap: stale,
+  });
+  assert.match(html, /August 6, 2026/);
+  assert.match(html, /Today not confirmed/);
+  assert.doesNotMatch(html, /Shore \u2192 Tropics \u2192 Alpine/);
+});
+
+test('Portuguese reset labels use Brasilia time', () => {
+  const current = snapshot('2026-08-05T12:00:00Z');
+  const html = renderHome('pt', {
+    buildDate: '2026-08-05',
+    buildTimestamp: '2026-08-05T12:00:00Z',
+    todayMap: current,
+  });
+  assert.match(html, /14:00 PT/);
+  assert.doesNotMatch(html, /17:00 PT/);
+});

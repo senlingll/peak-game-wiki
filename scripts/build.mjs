@@ -7,7 +7,11 @@ import { GONE_PATHS, isLocalizedRedirectRoute, isRedirectedArticle } from './rou
 const projectRoot = resolve(import.meta.dirname, '..');
 const outputRoot = resolve(projectRoot, 'dist');
 const indexNowKeyFile = '486e54d85508048c925002fb4ab792b7.txt';
-const buildTimestamp = new Date().toISOString();
+const configuredBuildTimestamp = process.env.BUILD_TIMESTAMP;
+const parsedBuildTimestamp = configuredBuildTimestamp && Number.isFinite(Date.parse(configuredBuildTimestamp))
+  ? new Date(configuredBuildTimestamp).toISOString()
+  : null;
+const buildTimestamp = parsedBuildTimestamp || new Date().toISOString();
 const buildDate = /^\d{4}-\d{2}-\d{2}$/.test(process.env.BUILD_DATE ?? '')
   ? process.env.BUILD_DATE
   : buildTimestamp.slice(0, 10);
