@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { formatSnapshotDate, localeOrder, renderAchievementGuide, renderArticlePage, renderBadgesGuide, renderContact, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap, STYLESHEET_HREF } from './locales.mjs';
+import { formatSnapshotDate, localeOrder, renderAchievementGuide, renderArticlePage, renderBadgesGuide, renderContact, renderHome, renderItemComparePage, renderItemsPage, renderLegal, renderMapGuide, renderSitemap, STYLESHEET_HREF } from './locales.mjs';
 import { articleOrder } from './article-guides.mjs';
 import { GONE_PATHS, isLocalizedRedirectRoute, isRedirectedArticle } from './route-policy.mjs';
 
@@ -184,6 +184,12 @@ for (const pathname of GONE_PATHS) {
   await rm(resolve(outputRoot, `${relative}.html`), { force: true });
   await rm(resolve(outputRoot, relative, 'index.html'), { force: true });
   await rm(resolve(outputRoot, relative), { recursive: true, force: true });
+}
+
+for (const locale of localeOrder) {
+  const comparisonRoot = resolve(outputRoot, locale === 'en' ? '' : locale, 'item-compare');
+  await mkdir(comparisonRoot, { recursive: true });
+  await writeFile(resolve(comparisonRoot, 'index.html'), renderItemComparePage(locale, renderOptions), 'utf8');
 }
 
 await writeFile(resolve(outputRoot, 'sitemap.xml'), renderSitemap(buildDate, publishedArticleOrder), 'utf8');

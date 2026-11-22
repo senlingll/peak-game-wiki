@@ -3346,3 +3346,130 @@ img {
     grid-column: 1 / -1;
   }
 }
+
+.compare-page {
+  max-width: 980px;
+}
+
+.compare-goal {
+  max-width: 320px;
+  margin-bottom: 10px;
+}
+
+.item-comparison form label {
+  display: block;
+  margin-bottom: 3px;
+  font-weight: 650;
+}
+
+.item-comparison select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 7px 9px;
+  border: 1px solid var(--ink-soft);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+
+.compare-slots {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.compare-slot {
+  min-width: 0;
+  margin: 0;
+  padding: 8px 12px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.compare-slot legend {
+  padding-inline: 4px;
+  font-weight: 700;
+}
+
+.compare-slot label {
+  margin-top: 6px;
+}
+
+.compare-result {
+  margin-block: 15px 5px;
+}
+
+.compare-result h2 {
+  scroll-margin-top: 90px;
+}
+
+.compare-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 8px;
+  border: 1px solid var(--line);
+  overflow-wrap: anywhere;
+  text-align: start;
+}
+
+.compare-table th:first-child {
+  width: 30%;
+}
+
+.compare-table thead th {
+  vertical-align: top;
+  background: var(--paper);
+}
+
+.item-comparison table small {
+  display: block;
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.compare-table a,
+.item-comparison .compare-source a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.compare-table .is-comparison-goal {
+  background: var(--mint);
+  font-weight: 700;
+}
+
+.item-comparison .compare-source {
+  margin-bottom: 0;
+  font-size: .9rem;
+}
+
+.item-comparison .article-table-wrap table {
+  min-width: 680px;
+}
+
+.item-comparison .article-table-wrap th:first-child {
+  width: 36%;
+}
+
+@media (max-width: 560px) {
+  .compare-slots {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    padding: 6px;
+    font-size: .875rem;
+  }
+}

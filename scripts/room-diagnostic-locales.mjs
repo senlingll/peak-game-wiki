@@ -1,5 +1,7 @@
 export const roomDiagnosticLocales = {
   en: {
+    questions: ["What does a PEAK room code do?","Where do I find and enter a room code?","What should I try if a Steam invite fails?"],
+    sources: ["PEAK Steam announcements","PEAK on Steam"],
     title: "PEAK connection troubleshooter",
     description: "Diagnose PEAK room-code errors, crossplay lobbies stuck loading, failed Steam invites and Photon disconnects. Find the first check for your platform.",
     intro: "Choose your platforms, how you joined and what went wrong to get a short checklist.",
@@ -20,6 +22,8 @@ export const roomDiagnosticLocales = {
     },
   },
   zh: {
+    questions: ["PEAK 房间码有什么用？","在哪里复制和输入房间码？","Steam 邀请失败时可以怎么做？"],
+    sources: ["PEAK Steam 公告","PEAK Steam 商店页"],
     title: "PEAK 联机故障诊断",
     description: "排查 PEAK 房间码失效、跨平台联机卡加载、Steam 邀请失败和 Photon 掉线，按平台找到下一步。",
     intro: "选择双方平台、加入方式和遇到的问题，查看对应的排查步骤。",
@@ -40,6 +44,8 @@ export const roomDiagnosticLocales = {
     },
   },
   es: {
+    questions: ["¿Para qué sirve un código de sala de PEAK?","¿Dónde copio e introduzco el código?","¿Qué hago si falla una invitación de Steam?"],
+    sources: ["Anuncios de PEAK en Steam","PEAK en Steam"],
     title: "Diagnóstico de conexión de PEAK",
     description: "Soluciona problemas con códigos de sala, bloqueos del juego cruzado, invitaciones de Steam y desconexiones de Photon en PEAK.",
     intro: "Elige las plataformas, la forma de entrar y el fallo para ver qué comprobar.",
@@ -60,6 +66,8 @@ export const roomDiagnosticLocales = {
     },
   },
   ja: {
+    questions: ["PEAKのルームコードは何に使いますか？","ルームコードはどこでコピーして入力しますか？","Steamの招待に失敗したらどうしますか？"],
+    sources: ["PEAKのSteam告知","SteamのPEAKページ"],
     title: "PEAK 接続トラブル診断",
     description: "PEAKのルームコード、クロスプレイの読み込み、Steam招待、Photon切断を症状別に確認できます。",
     intro: "双方の機種、参加方法、症状を選ぶと、確認手順が表示されます。",
@@ -80,6 +88,8 @@ export const roomDiagnosticLocales = {
     },
   },
   ko: {
+    questions: ["PEAK 방 코드는 어디에 쓰나요?","방 코드는 어디서 복사하고 입력하나요?","Steam 초대가 안 되면 무엇을 하나요?"],
+    sources: ["PEAK Steam 공지","Steam의 PEAK 페이지"],
     title: "PEAK 멀티플레이 연결 진단",
     description: "PEAK 방 코드 오류, 크로스플레이 로딩, Steam 초대 실패, Photon 연결 끊김을 상황에 맞춰 확인하세요.",
     intro: "양쪽 플랫폼, 참가 방법, 증상을 선택하면 확인할 순서를 볼 수 있습니다.",
@@ -100,6 +110,8 @@ export const roomDiagnosticLocales = {
     },
   },
   de: {
+    questions: ["Wozu dient ein PEAK-Raumcode?","Wo kopiere ich den Raumcode und wo gebe ich ihn ein?","Was tun, wenn die Steam-Einladung scheitert?"],
+    sources: ["PEAK-Ankündigungen auf Steam","PEAK auf Steam"],
     title: "PEAK-Verbindungsdiagnose",
     description: "Prüfe Raumcodes, Crossplay-Ladeprobleme, Steam-Einladungen und Photon-Verbindungsabbrüche in PEAK.",
     intro: "Wähle die Plattformen, den Beitrittsweg und das Problem. Du erhältst passende Prüfschritte.",
@@ -120,6 +132,8 @@ export const roomDiagnosticLocales = {
     },
   },
   fr: {
+    questions: ["À quoi sert un code de salle PEAK ?","Où copier et saisir le code de salle ?","Que faire si une invitation Steam échoue ?"],
+    sources: ["Annonces PEAK sur Steam","PEAK sur Steam"],
     title: "Diagnostic de connexion PEAK",
     description: "Diagnostiquez les codes de salle refusés, le chargement en crossplay, les invitations Steam et les déconnexions Photon dans PEAK.",
     intro: "Choisissez les plateformes, le mode de connexion et le symptôme pour obtenir les vérifications à faire.",
@@ -140,6 +154,8 @@ export const roomDiagnosticLocales = {
     },
   },
   pt: {
+    questions: ["Para que serve um código de sala do PEAK?","Onde copio e digito o código da sala?","O que faço se um convite do Steam falhar?"],
+    sources: ["Anúncios do PEAK no Steam","PEAK no Steam"],
     title: "Diagnóstico de conexão do PEAK",
     description: "Confira como resolver problemas com código de sala, carregamento no crossplay, convites Steam e quedas de Photon no PEAK.",
     intro: "Escolha as plataformas, como entrou e o que aconteceu para ver os passos de verificação.",
@@ -160,6 +176,8 @@ export const roomDiagnosticLocales = {
     },
   },
   it: {
+    questions: ["A cosa serve un codice stanza di PEAK?","Dove copio e inserisco il codice stanza?","Cosa faccio se un invito su Steam non funziona?"],
+    sources: ["Annunci di PEAK su Steam","PEAK su Steam"],
     title: "Diagnosi della connessione di PEAK",
     description: "Controlla codici stanza, caricamento in crossplay, inviti Steam e disconnessioni Photon in PEAK.",
     intro: "Scegli le piattaforme, come hai provato a entrare e il problema per vedere i controlli da fare.",

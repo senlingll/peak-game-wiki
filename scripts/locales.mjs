@@ -1,4 +1,6 @@
 import { mapGuides } from './map-guide.mjs';
+import { itemCompareLocales } from './item-compare-locales.mjs';
+import { getItemEffects, getItemStages, itemCompareMetrics, itemCompareRecords, itemCompareSourceDate, itemCompareStages } from './item-compare-data.mjs';
 import { roomDiagnosticLocales } from './room-diagnostic-locales.mjs';
 import { dailyMapLocales } from './daily-map-locales.mjs';
 import { todayMapCopy } from './today-map-copy.mjs';
@@ -16,7 +18,7 @@ import { germanAmuletPages } from './german-amulet-pages.mjs';
 import { REDIRECT_ARTICLES, isGonePath, isLocalizedRedirectRoute, isRedirectedArticle } from './route-policy.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
-const STYLESHEET_HREF = '/styles.css?v=20261122-room-diagnostic';
+const STYLESHEET_HREF = '/styles.css?v=20261122-item-compare';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
 const STEAM_NEWS_API_HTML_URL = 'https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json';
 const SUPPORT_EMAIL = 'support@peak-game.wiki';
@@ -545,12 +547,33 @@ const roomCodeCurrentCopy = {
   it: { title: 'Codici stanza di PEAK: regole attuali del crossplay', intro: 'La Patch 3.1.0 ha allungato i codici stanza. L’host copia il codice dal menu pausa della lobby e chi entra lo inserisce con JOIN GAME. Il crossplay collega Steam, PS5, Xbox Series X|S e Nintendo Switch 2, ma i progressi non vengono trasferiti. Con il controller corsa e arrampicata richiedono di tenere premuto.', answer: 'Controlla il codice mostrato dall’host, la piattaforma e la versione. Il codice apre una lobby esistente, non è matchmaking.' },
 };
 for (const [code, override] of Object.entries(roomCodeCurrentCopy)) {
-  const existing = articleLocaleTranslations[code]?.['room-codes'];
-  if (existing) {
-    articleLocaleTranslations[code]['room-codes'] = { ...existing, meta: { ...existing.meta, title: override.title, description: override.intro }, h1: override.title, intro: override.intro, answer: override.answer, sections: [{ id: 'current-room-code-rules', title: override.title, paragraphs: [override.intro, override.answer], bullets: [['Host', 'Copy the current code from the lobby pause menu.'], ['Joining player', 'Enter it through JOIN GAME.'], ['Platform state', 'Crossplay is live, but progress does not transfer between platforms.']] }], faq: { ...(existing.faq ?? {}), items: [[existing.faq?.items?.[0]?.[0] ?? 'Room codes?', override.answer], [existing.faq?.items?.[1]?.[0] ?? 'How do I join?', override.intro], [existing.faq?.items?.[2]?.[0] ?? 'Is crossplay live?', override.intro]] }, source: { ...(existing.source ?? {}), body: override.intro, links: [['Official Steam announcements', 'https://steamcommunity.com/app/3527290/announcements/'], ['Official PEAK Steam page', 'https://store.steampowered.com/app/3527290/PEAK/']] } };
-  } else if (code === 'en' && articleGuides['room-codes']) {
-    articleGuides['room-codes'] = { ...articleGuides['room-codes'], meta: { ...articleGuides['room-codes'].meta, title: override.title, description: override.intro }, h1: override.title, intro: override.intro, answer: override.answer, sections: [{ id: 'current-room-code-rules', title: override.title, paragraphs: [override.intro, override.answer], bullets: [['Host', 'Copy the current code from the lobby pause menu.'], ['Joining player', 'Enter it through JOIN GAME.'], ['Platform state', 'Crossplay is live, but progress does not transfer between platforms.']] }], faq: { ...articleGuides['room-codes'].faq, items: [['Do PEAK room codes work now?', override.answer], ['How do I join with a code?', override.intro], ['Is crossplay live?', override.intro]] }, source: { ...articleGuides['room-codes'].source, body: override.intro, links: [['Official Steam announcements', 'https://steamcommunity.com/app/3527290/announcements/'], ['Official PEAK Steam page', 'https://store.steampowered.com/app/3527290/PEAK/']] } };
-  }
+  const localized = roomDiagnosticLocales[code];
+  const pages = code === 'en' ? articleGuides : articleLocaleTranslations[code];
+  const existing = pages['room-codes'];
+  const [, hostStep, joinStep] = localized.cases.useCode;
+  pages['room-codes'] = {
+    ...existing,
+    meta: { ...existing.meta, title: override.title, description: localized.description },
+    h1: override.title,
+    intro: override.intro,
+    answer: override.answer,
+    sections: [{ id: 'current-room-code-rules', title: localized.questions[1], paragraphs: [hostStep, joinStep] }],
+    faq: {
+      ...existing.faq,
+      items: localized.questions.map((question, index) => [
+        question, [override.answer, `${hostStep} ${joinStep}`, localized.cases.invite[1]][index],
+      ]),
+    },
+    source: {
+      ...existing.source,
+      body: localized.intro,
+      links: [
+        [localized.sources[0], 'https://steamcommunity.com/app/3527290/announcements/'],
+        [localized.sources[1], 'https://store.steampowered.com/app/3527290/PEAK/'],
+        [localized.actions[2], 'https://landfall.se/peak-faq'],
+      ],
+    },
+  };
 }
 
 const shortToolCopies = {
@@ -615,7 +638,7 @@ function rawRouteFor(code, page) {
   const resolvedPagePath = REDIRECT_ARTICLES[pagePath] ?? pagePath;
   const anchor = hash || { 'peak-game-update': 'version-timeline', 'peak-map-rotation-schedule': 'today-map' }[pagePath];
   const suffix = anchor ? `#${anchor}` : '';
-  if (resolvedPagePath === 'items' || resolvedPagePath === 'contact' || resolvedPagePath === 'room-codes' || resolvedPagePath === 'badges-guide') return `${code === 'en' ? `/${resolvedPagePath}/` : `/${code}/${resolvedPagePath}/`}${suffix}`;
+  if (resolvedPagePath === 'items' || resolvedPagePath === 'item-compare' || resolvedPagePath === 'contact' || resolvedPagePath === 'room-codes' || resolvedPagePath === 'badges-guide') return `${code === 'en' ? `/${resolvedPagePath}/` : `/${code}/${resolvedPagePath}/`}${suffix}`;
   if (code === 'en') return `${resolvedPagePath === 'home' ? '/' : `/${resolvedPagePath}`}${suffix}`;
   return `${resolvedPagePath === 'home' ? `/${code}/` : `/${code}/${resolvedPagePath}/`}${suffix}`;
 }
@@ -1328,6 +1351,10 @@ function head(locale, page, title, description, schema, options = {}) {
     scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: guide.h1, item: canonical }] });
     scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: guide.faq.items.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) });
   }
+  if (page === 'item-compare') {
+    scripts.push({ '@context': 'https://schema.org', '@type': 'WebApplication', name: title, description: pageDescription, url: canonical, inLanguage: meta.lang, applicationCategory: 'GameApplication', operatingSystem: 'Web' });
+    scripts.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: options.comparisonFaq.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) });
+  }
   if (page === 'contact') {
     const contact = options.contact ?? contactPageCopy[locale] ?? contactPageCopy.en;
     scripts.push({ '@context': 'https://schema.org', '@type': 'ContactPage', '@id': `${canonical}#contact`, url: canonical, name: contact.h1, description: pageDescription, inLanguage: meta.lang, isPartOf: { '@id': `${BASE_URL}/#website` }, about: { '@type': 'VideoGame', name: 'PEAK' }, mainEntity: { '@type': 'Organization', name: 'PEAK Game Wiki', url: BASE_URL, email: SUPPORT_EMAIL, contactPoint: { '@type': 'ContactPoint', email: SUPPORT_EMAIL, contactType: contact.emailTitle } } });
@@ -1486,7 +1513,8 @@ export function renderHome(locale, options = {}) {
     ? ['grossmut-des-pfadfinders', 'beharrlichkeit-des-pfadfinders'].map((slug) => `<a class="section-link" href="${routeFor(locale, slug)}">${escapeHtml(germanAmuletPages[slug].h1)} <span aria-hidden="true">\u2192</span></a>`).join('')
     : '';
   const bandCopy = articleLinkBandCopy[locale] ?? articleLinkBandCopy.en;
-  const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(bandCopy.aria)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(bandCopy.eyebrow)}</p><h2>${escapeHtml(bandCopy.title)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a><a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a>${articleLinks}${germanAmuletLinks}</div></div></section>`;
+  const compareLink = `<a class="section-link" href="${routeFor(locale, 'item-compare')}">${escapeHtml(itemCompareLocales[locale].title)} <span aria-hidden="true">→</span></a>`;
+  const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(bandCopy.aria)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(bandCopy.eyebrow)}</p><h2>${escapeHtml(bandCopy.title)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a><a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a>${compareLink}${articleLinks}${germanAmuletLinks}</div></div></section>`;
   const withSummary = locale === 'es'
     ? html.replace('</h1>', `</h1>${dailySummary}`)
     : html.replace(mapsMarker, `<div class="container home-daily-tool">${dailySummary}</div>${mapsMarker}`);
@@ -1547,6 +1575,83 @@ function renderItemsCatalogSection(copy, category) {
   return `<section id="items-${escapeHtml(category)}" class="items-category" data-items-section="${escapeHtml(category)}" aria-labelledby="${escapeHtml(headingId)}"><div class="items-category-heading"><div><p class="eyebrow">${escapeHtml(copy.catalog.categoryLabels[category])}</p><h2 id="${escapeHtml(headingId)}">${escapeHtml(sectionCopy.title)}</h2></div><p>${escapeHtml(sectionCopy.intro)}</p></div><div class="items-card-grid">${renderItemsCatalogCards(category, copy)}</div></section>`;
 }
 
+export function renderItemComparePage(locale, options = {}) {
+  const config = itemCompareLocales[locale];
+  const source = locales[locale];
+  const copy = { ...source, ui: { ...source.ui, snapshot: formatSnapshotDate(locale, resolveBuildDate(options)) } };
+  const [goal, first, second, stageLabel, compare, result, basics, none, unknown, all, upTo, adds, duplicate, checked, sources, catalog] = config.ui;
+  const number = new Intl.NumberFormat(localeMeta[locale].lang);
+  const stageLabels = Object.fromEntries(itemCompareStages.map((stage, index) => [stage, config.stages[index]]));
+  const noteLabels = Object.fromEntries(
+    ['bugle', 'button', 'coconut', 'antidote', 'antidoteCloud', 'bandages', 'firstAid', 'fungus', 'incinerated']
+      .map((key, index) => [key, config.notes[index]]),
+  );
+  const names = [...new Set(itemCompareRecords.map((item) => item.name))];
+  const records = itemCompareRecords.map((item) => {
+    const alias = config.names[names.indexOf(item.name)];
+    const variant = item.variant ? ` · ${config.variants[['normal', 'poisonous', 'unknown'].indexOf(item.variant)]}` : '';
+    const name = `${locale === 'en' ? item.name : `${alias} (${item.name})`}${variant}`;
+    const stages = Object.fromEntries(getItemStages(item).map((stage) => {
+      const effects = getItemEffects(item, stage);
+      const values = itemCompareMetrics.map((metric) => {
+        const value = effects[metric];
+        if (value === null) return metric === 'weight' ? none : unknown;
+        if (value === 'all') return all;
+        if (value < 0) return adds.replace('{n}', number.format(-value));
+        if (effects.conditional?.includes(metric)) return upTo.replace('{n}', number.format(value));
+        return value === 0 && metric !== 'weight' ? '—' : number.format(value);
+      });
+      return [stage, { values, note: noteLabels[effects.note] || '' }];
+    }));
+    return { id: item.id, name, stages, url: `https://peak.wiki.gg/wiki/${item.source}` };
+  });
+  const slot = (label, id, selected) => `<fieldset class="compare-slot" data-compare-slot>
+    <legend>${escapeHtml(label)}</legend>
+    <select id="compare-${id}" data-compare-item aria-label="${escapeHtml(label)}">${records.map((item) => `<option value="${item.id}"${item.id === selected ? ' selected' : ''}>${escapeHtml(item.name)}</option>`).join('')}</select>
+    <label for="stage-${id}">${escapeHtml(stageLabel)}</label>
+    <select id="stage-${id}" data-compare-stage></select>
+  </fieldset>`;
+  const metrics = itemCompareMetrics.map((key, index) => `<tr data-metric="${key}"><th scope="row">${escapeHtml(config.metrics[index])}</th><td></td><td></td></tr>`).join('');
+  const staticItems = records.map(({ name, stages, url }) =>
+    `<tr><th scope="row"><a href="${url}">${escapeHtml(name)}</a>${stages.base.note ? `<small>${escapeHtml(stages.base.note)}</small>` : ''}</th>${stages.base.values.map((value) => `<td>${escapeHtml(value)}</td>`).join('')}</tr>`,
+  ).join('');
+  const faq = [0, 2, 4].map((index) => config.faq.slice(index, index + 2));
+  return `${head(locale, 'item-compare', config.title, config.description, config.description, { ...options, comparisonFaq: faq })}
+  <body class="article-page"><div id="top"></div>${header(locale, 'item-compare', copy)}
+  <main class="container room-diagnostic-hero compare-page">
+    <h1 id="item-compare-title">${escapeHtml(config.title)}</h1>
+    <section id="comparison" class="room-diagnostic item-comparison" data-item-comparison aria-labelledby="item-compare-title">
+      <p>${escapeHtml(config.intro)}</p>
+      <form data-compare-form hidden>
+        <div class="compare-goal"><label for="compare-goal">${escapeHtml(goal)}</label>
+          <select id="compare-goal" data-compare-goal>${itemCompareMetrics.map((key, index) => `<option value="${key}">${escapeHtml(config.goals[index])}</option>`).join('')}</select>
+        </div>
+        <div class="compare-slots">${slot(first, 'first', 'airline-food')}${slot(second, 'second', 'granola-bar')}</div>
+        <button class="button button-primary" type="submit">${escapeHtml(compare)}</button>
+      </form>
+      <section class="compare-result" data-compare-result hidden>
+        <h2 tabindex="-1">${escapeHtml(result)}</h2>
+        <table class="compare-table">
+          <thead><tr><th scope="col">${escapeHtml(goal)}</th><th scope="col" data-compare-heading></th><th scope="col" data-compare-heading></th></tr></thead>
+          <tbody>${metrics}</tbody>
+        </table>
+        <ul class="compare-notes" data-compare-notes hidden></ul>
+      </section>
+      <details class="room-diagnostic-checklist">
+        <summary>${escapeHtml(basics)}</summary>
+        <div class="article-table-wrap"><table><thead><tr><th scope="col">${escapeHtml(catalog)}</th>${config.metrics.map((label) => `<th scope="col">${escapeHtml(label)}</th>`).join('')}</tr></thead><tbody>${staticItems}</tbody></table></div>
+      </details>
+      <p class="compare-source">${escapeHtml(checked)} <time datetime="${itemCompareSourceDate}">${escapeHtml(formatDateLabel(locale, itemCompareSourceDate))}</time> · ${escapeHtml(sources)} <a href="https://peak.wiki.gg/wiki/Food">PEAK Wiki</a> · <a href="https://peak.wiki.gg/wiki/Cooking">${escapeHtml(stageLabel)}</a></p>
+      <script type="application/json" data-compare-data>${jsonLd({ records, stageLabels, duplicate })}</script>
+    </section>
+    <section class="article-section article-faq" aria-labelledby="compare-faq-title">
+      <h2 id="compare-faq-title">${escapeHtml(itemsPageCopy[locale].faq.title)}</h2>
+      <div class="faq-grid">${faq.map(([question, answer]) => `<details><summary><h3>${escapeHtml(question)}</h3></summary><p>${escapeHtml(answer)}</p></details>`).join('')}</div>
+    </section>
+    <p><a class="section-link" href="${routeFor(locale, 'map-rotation')}#today-map">${escapeHtml(todayMapCopy[locale].title)} <span aria-hidden="true">→</span></a></p>
+  </main>${footer(locale, copy)}<script src="/app.js" defer></script><script src="/item-compare.js?v=20261122" defer></script></body></html>`;
+}
+
 function renderItemsPageHtml(locale, options = {}) {
   const sourceCopy = locales[locale];
   const copy = { ...sourceCopy, ui: { ...sourceCopy.ui, snapshot: formatSnapshotDate(locale, resolveBuildDate(options)) } };
@@ -1563,7 +1668,7 @@ function renderItemsPageHtml(locale, options = {}) {
   const guidesHref = publishedArticles.includes('peak-game-tips') ? routeFor(locale, 'peak-game-tips') : `${routeFor(locale, 'home')}#guides`;
   const cookingGuide = publishedArticles.includes('peak-cooking-guide') ? localizedArticleGuide(locale, 'peak-cooking-guide') : null;
   return `${head(locale, 'items', catalog.meta.title, catalog.meta.description, catalog.meta.schema, { ...options, copy, itemsPage: catalog, dateModified: resolveBuildDate(options) })}
-  <body class="article-page items-page"><div id="top"></div>${header(locale, 'items', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(catalog.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(catalog.catalog.title)}</p><h1 id="article-title">${escapeHtml(catalog.h1)}</h1><p class="article-hero-lede">${escapeHtml(catalog.intro)}</p></div>${renderArticleImage({ ...catalog.hero, loading: 'eager', fetchpriority: 'high' }, false)}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(catalog.tocLabel)}"><p class="eyebrow">${escapeHtml(catalog.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#items-faq">${escapeHtml(catalog.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="items-answer-title"><p class="eyebrow">${escapeHtml(catalog.answerLabel)}</p><h2 id="items-answer-title">${escapeHtml(catalog.answerLabel)}</h2><p>${escapeHtml(catalog.answer)}</p></section><section class="article-section items-browser" aria-labelledby="items-catalog-title"><div class="items-browser-heading"><div><p class="eyebrow">${escapeHtml(catalog.catalog.filterLabel)}</p><h2 id="items-catalog-title">${escapeHtml(catalog.catalog.title)}</h2></div><p>${escapeHtml(catalog.catalog.lede)}</p></div><nav class="items-category-nav" aria-label="${escapeHtml(catalog.catalog.filterLabel)}">${categoryLinks}</nav><div class="items-toolbar"><label for="items-search"><span>${escapeHtml(catalog.catalog.searchLabel)}</span><input id="items-search" type="search" placeholder="${escapeHtml(catalog.catalog.searchPlaceholder)}" autocomplete="off" /></label><label for="items-type"><span>${escapeHtml(catalog.catalog.typeLabel)}</span><select id="items-type"><option value="">${escapeHtml(catalog.catalog.typeAll)}</option>${typeOptions}</select></label><label for="items-biome"><span>${escapeHtml(catalog.catalog.biomeLabel)}</span><select id="items-biome"><option value="">${escapeHtml(catalog.catalog.biomeAll)}</option>${biomeOptions}</select></label><div class="items-category-filters" role="group" aria-label="${escapeHtml(catalog.catalog.filterLabel)}"><button class="items-filter-button is-active" type="button" data-catalog-category="all">${escapeHtml(catalog.catalog.categoryLabels.all)}</button>${categories.map((category) => `<button class="items-filter-button" type="button" data-catalog-category="${escapeHtml(category)}">${escapeHtml(catalog.catalog.categoryLabels[category])}</button>`).join('')}</div><span id="items-result-count" class="items-result-count" data-result-label="${escapeHtml(catalog.catalog.resultLabel)}">${itemsCatalog.length} ${escapeHtml(catalog.catalog.resultLabel)}</span></div><p class="items-no-local-names">${escapeHtml(catalog.catalog.noLocalNames)}</p><p id="items-empty" class="items-empty" hidden>${escapeHtml(catalog.catalog.empty)}</p>${categories.map((category) => renderItemsCatalogSection(catalog, category)).join('')}<p class="items-source-note"><span class="note-mark">i</span><span>${escapeHtml(catalog.catalog.sourceNote)}</span></p></section><section id="items-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(catalog.faq.eyebrow)}</p><h2>${escapeHtml(catalog.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="items-sources-title"><p class="eyebrow">${escapeHtml(catalog.sources.eyebrow)}</p><h2 id="items-sources-title">${escapeHtml(catalog.sources.title)}</h2><p>${escapeHtml(catalog.sources.body)}</p><div class="source-links"><a href="https://peak.wiki.gg/wiki/Items" target="_blank" rel="noopener">${escapeHtml(catalog.sources.official)} <span aria-hidden="true">\u2192</span></a><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(catalog.sources.store)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(catalog.catalog.title)}"><p class="eyebrow">${escapeHtml(catalog.catalog.title)}</p><a href="${routeFor(locale, 'home')}#database">${escapeHtml(catalog.related.home)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'map-rotation')}">${escapeHtml(catalog.related.map)} <span aria-hidden="true">\u2192</span></a><a href="${escapeHtml(guidesHref)}">${escapeHtml(catalog.related.guides)} <span aria-hidden="true">\u2192</span></a>${cookingGuide ? `<a href="${routeFor(locale, 'peak-cooking-guide')}">${escapeHtml(cookingGuide.h1)} <span aria-hidden="true">\u2192</span></a>` : ''}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script><script src="/items.js" defer></script></body></html>`;
+  <body class="article-page items-page"><div id="top"></div>${header(locale, 'items', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(catalog.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(catalog.catalog.title)}</p><h1 id="article-title">${escapeHtml(catalog.h1)}</h1><p class="article-hero-lede">${escapeHtml(catalog.intro)}</p><a class="section-link" href="${routeFor(locale, 'item-compare')}">${escapeHtml(itemCompareLocales[locale].title)} <span aria-hidden="true">→</span></a></div>${renderArticleImage({ ...catalog.hero, loading: 'eager', fetchpriority: 'high' }, false)}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(catalog.tocLabel)}"><p class="eyebrow">${escapeHtml(catalog.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#items-faq">${escapeHtml(catalog.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="items-answer-title"><p class="eyebrow">${escapeHtml(catalog.answerLabel)}</p><h2 id="items-answer-title">${escapeHtml(catalog.answerLabel)}</h2><p>${escapeHtml(catalog.answer)}</p></section><section class="article-section items-browser" aria-labelledby="items-catalog-title"><div class="items-browser-heading"><div><p class="eyebrow">${escapeHtml(catalog.catalog.filterLabel)}</p><h2 id="items-catalog-title">${escapeHtml(catalog.catalog.title)}</h2></div><p>${escapeHtml(catalog.catalog.lede)}</p></div><nav class="items-category-nav" aria-label="${escapeHtml(catalog.catalog.filterLabel)}">${categoryLinks}</nav><div class="items-toolbar"><label for="items-search"><span>${escapeHtml(catalog.catalog.searchLabel)}</span><input id="items-search" type="search" placeholder="${escapeHtml(catalog.catalog.searchPlaceholder)}" autocomplete="off" /></label><label for="items-type"><span>${escapeHtml(catalog.catalog.typeLabel)}</span><select id="items-type"><option value="">${escapeHtml(catalog.catalog.typeAll)}</option>${typeOptions}</select></label><label for="items-biome"><span>${escapeHtml(catalog.catalog.biomeLabel)}</span><select id="items-biome"><option value="">${escapeHtml(catalog.catalog.biomeAll)}</option>${biomeOptions}</select></label><div class="items-category-filters" role="group" aria-label="${escapeHtml(catalog.catalog.filterLabel)}"><button class="items-filter-button is-active" type="button" data-catalog-category="all">${escapeHtml(catalog.catalog.categoryLabels.all)}</button>${categories.map((category) => `<button class="items-filter-button" type="button" data-catalog-category="${escapeHtml(category)}">${escapeHtml(catalog.catalog.categoryLabels[category])}</button>`).join('')}</div><span id="items-result-count" class="items-result-count" data-result-label="${escapeHtml(catalog.catalog.resultLabel)}">${itemsCatalog.length} ${escapeHtml(catalog.catalog.resultLabel)}</span></div><p class="items-no-local-names">${escapeHtml(catalog.catalog.noLocalNames)}</p><p id="items-empty" class="items-empty" hidden>${escapeHtml(catalog.catalog.empty)}</p>${categories.map((category) => renderItemsCatalogSection(catalog, category)).join('')}<p class="items-source-note"><span class="note-mark">i</span><span>${escapeHtml(catalog.catalog.sourceNote)}</span></p></section><section id="items-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(catalog.faq.eyebrow)}</p><h2>${escapeHtml(catalog.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="items-sources-title"><p class="eyebrow">${escapeHtml(catalog.sources.eyebrow)}</p><h2 id="items-sources-title">${escapeHtml(catalog.sources.title)}</h2><p>${escapeHtml(catalog.sources.body)}</p><div class="source-links"><a href="https://peak.wiki.gg/wiki/Items" target="_blank" rel="noopener">${escapeHtml(catalog.sources.official)} <span aria-hidden="true">\u2192</span></a><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(catalog.sources.store)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(catalog.catalog.title)}"><p class="eyebrow">${escapeHtml(catalog.catalog.title)}</p><a href="${routeFor(locale, 'home')}#database">${escapeHtml(catalog.related.home)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'map-rotation')}">${escapeHtml(catalog.related.map)} <span aria-hidden="true">\u2192</span></a><a href="${escapeHtml(guidesHref)}">${escapeHtml(catalog.related.guides)} <span aria-hidden="true">\u2192</span></a>${cookingGuide ? `<a href="${routeFor(locale, 'peak-cooking-guide')}">${escapeHtml(cookingGuide.h1)} <span aria-hidden="true">\u2192</span></a>` : ''}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script><script src="/items.js" defer></script></body></html>`;
 }
 
 export function renderItemsPage(locale, options = {}) {
@@ -1834,9 +1939,9 @@ export function renderContact(locale, options = {}) {
 }
 
 export function renderSitemap(buildDate = '2026-08-19', publishedArticles = articleOrder) {
-  const pages = ['home', 'about', 'contact', 'privacy', 'terms', 'map-rotation', 'achievements', 'items', 'badges-guide', ...publishedArticles.filter((slug) => !isRedirectedArticle(slug))];
+  const pages = ['home', 'about', 'contact', 'privacy', 'terms', 'map-rotation', 'achievements', 'items', 'item-compare', 'badges-guide', ...publishedArticles.filter((slug) => !isRedirectedArticle(slug))];
   const livePages = (code) => pages.filter((page) => !isLocalizedRedirectRoute(code, page) && !isGonePath(rawRouteFor(code, page)));
-  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'contact', 'map-rotation', 'achievements', 'items', 'badges-guide', ...publishedArticles].filter((page) => !isLocalizedRedirectRoute(code, page) && !isGonePath(rawRouteFor(code, page))).map((page) => `${BASE_URL}${rawRouteFor(code, page)}`)));
+  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'contact', 'map-rotation', 'achievements', 'items', 'item-compare', 'badges-guide', ...publishedArticles].filter((page) => !isLocalizedRedirectRoute(code, page) && !isGonePath(rawRouteFor(code, page))).map((page) => `${BASE_URL}${rawRouteFor(code, page)}`)));
   updatedUrls.add(`${BASE_URL}/de/grossmut-des-pfadfinders/`);
   updatedUrls.add(`${BASE_URL}/de/beharrlichkeit-des-pfadfinders/`);
   const urls = localeOrder.flatMap((code) => livePages(code).map((page) => `${BASE_URL}${rawRouteFor(code, page)}`));
