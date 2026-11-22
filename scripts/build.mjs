@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { formatSnapshotDate, injectTodayMapSection, localeOrder, renderAchievementGuide, renderArticlePage, renderBadgesGuide, renderContact, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap, STYLESHEET_HREF } from './locales.mjs';
+import { formatSnapshotDate, localeOrder, renderAchievementGuide, renderArticlePage, renderBadgesGuide, renderContact, renderHome, renderItemsPage, renderLegal, renderMapGuide, renderSitemap, STYLESHEET_HREF } from './locales.mjs';
 import { articleOrder } from './article-guides.mjs';
 import { GONE_PATHS, isLocalizedRedirectRoute, isRedirectedArticle } from './route-policy.mjs';
 
@@ -76,7 +76,7 @@ const updateData = await readJsonFile('data/peak-updates.json', { entries: [] })
 const mapHistory = await readJsonFile('data/peak-map-history.json', []);
 
 const renderOptions = { buildDate, dateModified: buildDate, buildTimestamp, todayMap, updateData, mapHistory, publishedArticles: publishedArticleOrder };
-const renderMapGuidePage = (locale) => injectTodayMapSection(renderMapGuide(locale, renderOptions), locale, todayMap, buildDate, buildTimestamp, updateData, publishedArticleOrder);
+const renderMapGuidePage = (locale) => renderMapGuide(locale, renderOptions);
 
 const notFoundHtml = `<!doctype html>
 <html lang="en">

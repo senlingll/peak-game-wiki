@@ -3,7 +3,7 @@ import test from 'node:test';
 import { access } from 'node:fs/promises';
 import { buildTodayMapSnapshot, isCurrentMapSnapshot, parseWikiRotation, BIOME_DISPLAY_NAMES } from '../today-map-rotation.mjs';
 import { fetchTodayMap } from '../fetch-today-map.mjs';
-import { renderHome, injectTodayMapSection, localeOrder, renderArticlePage } from '../locales.mjs';
+import { renderHome, renderMapGuide, localeOrder, renderArticlePage } from '../locales.mjs';
 import { officialUpdateFacts } from '../official-update-facts.mjs';
 
 // A small source fixture exercises reset boundaries and biome variants without a network dependency.
@@ -92,19 +92,28 @@ test('all nine locales share the official patch, FAQ schema and pending map stat
     assert.ok(faq.mainEntity.some(item => item.acceptedAnswer.text.includes('3.0.1')), locale);
     assert.ok(faq.mainEntity.some(item => item.acceptedAnswer.text === officialUpdateFacts[locale].crossplay), locale);
     assert.ok(html.includes(officialUpdateFacts[locale].patch), locale);
-    const map = injectTodayMapSection('</section><div class="container article-layout">', locale, snapshot('2026-08-05T12:00:00Z'), '2026-11-03', '2026-11-03T12:00:00Z', updateData, ['peak-game-update', 'peak-biomes-list']);
-    assert.ok(map.includes('>3.0.1</a>'), locale);
-    assert.ok(!map.includes('is-estimated'), locale);
+    const map = renderMapGuide(locale, {
+      buildDate: '2026-11-03', buildTimestamp: '2026-11-03T12:00:00Z',
+      todayMap: snapshot('2026-08-05T12:00:00Z'), updateData, publishedArticles: [],
+    });
+    assert.match(map, /<h1[^>]*>[^<]+<\/h1><section id="today-map"/, locale);
+    assert.match(map, /id="version-timeline"[\s\S]*?Patch Notes 3\.0\.1[\s\S]*?room-codes\//, locale);
+    assert.match(map, /data-map-valid-until=""/, locale);
+    assert.match(map, /data-map-reset[^>]*datetime="2026-11-03T17:00:00.000Z"/, locale);
     assert.ok(!map.includes('BlueBeach'), locale);
     assert.ok(!map.includes('data-carousel-slide'), locale);
     assert.ok(!map.includes('peak-gloom-guide'), locale);
     assert.ok(!map.includes('peak-citadel-guide'), locale);
     const article = renderArticlePage(locale, 'peak-game-update', { buildDate: '2026-11-03', updateData });
     assert.match(article, /article-answer[\s\S]*?3\.0\.1/, locale);
-    const current = injectTodayMapSection('</section><div class="container article-layout">', locale, snapshot('2026-11-03T12:00:00Z'), '2026-11-03', '2026-11-03T12:01:00Z', updateData);
+    const current = renderMapGuide(locale, {
+      buildDate: '2026-11-03', buildTimestamp: '2026-11-03T12:01:00Z',
+      todayMap: snapshot('2026-11-03T12:00:00Z'), updateData,
+    });
     assert.equal([...current.matchAll(/data-carousel-slide /g)].length, 5, locale);
     assert.ok(current.includes('https://peak.wiki.gg/wiki/Shore'), locale);
-    assert.ok(!current.includes('today-map-media-pending'), locale);
+    assert.ok(current.indexOf('id="today-map"') < current.indexOf('data-carousel-slide'), locale);
+    assert.match(current, /data-map-updated datetime="2026-11-03T12:00:00.000Z"/, locale);
     const missing = renderHome(locale, { buildDate: '2026-11-03' });
     assert.ok(!missing.includes('Patch Notes 3.0.1'), locale);
   }
@@ -117,18 +126,29 @@ test('homepage summaries fail closed after a reset instead of repeating yesterda
     buildTimestamp: '2026-08-05T17:10:00Z',
     todayMap: stale,
   });
-  assert.match(html, /August 6, 2026/);
-  assert.match(html, /Today not confirmed/);
+  assert.match(html, /data-map-date datetime="2026-08-05"/);
+  assert.match(html, /Waiting for a fresh route/);
+  assert.match(html, /data-map-reset[^>]*datetime="2026-08-06T17:00:00.000Z"/);
   assert.doesNotMatch(html, /Shore \u2192 Tropics \u2192 Alpine/);
 });
 
-test('Portuguese reset labels use Brasilia time', () => {
+test('static reset times keep their exact UTC instant until the browser localizes them', () => {
   const current = snapshot('2026-08-05T12:00:00Z');
   const html = renderHome('pt', {
     buildDate: '2026-08-05',
     buildTimestamp: '2026-08-05T12:00:00Z',
     todayMap: current,
   });
-  assert.match(html, /14:00 PT/);
-  assert.doesNotMatch(html, /17:00 PT/);
+  assert.match(html, /data-map-reset[^>]*datetime="2026-08-05T17:00:00.000Z"[^>]*>[^<]*17:00 UTC/);
+});
+
+test('Tomb is unconfirmed with Mesa and inapplicable on a supported route without Mesa', () => {
+  const routeWithMesa = snapshot('2026-08-05T18:00:00Z');
+  const routeWithoutMesa = snapshot('2026-08-05T12:00:00Z');
+  const render = (value) => renderMapGuide('en', {
+    todayMap: value, buildDate: value.date, buildTimestamp: value.sourceFetchedAt,
+  }).match(/<section class="daily-map-objective"[\s\S]+?<\/section>/)[0];
+  assert.match(render(routeWithMesa), /Confirmed in the community route<\/strong> Mesa is on the route/);
+  assert.match(render(routeWithMesa), /Unconfirmed<\/strong> Check for the Tomb when you reach Mesa/);
+  assert.match(render(routeWithoutMesa), /Not applicable today<\/strong> This route has no Mesa/);
 });

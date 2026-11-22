@@ -220,11 +220,109 @@ function bindCopyAction() {
   });
 }
 
+function bindDailyMaps() {
+  const summaries = document.querySelectorAll('[data-daily-map]');
+  if (!summaries.length) return;
+  const interval = 24 * 60 * 60 * 1000;
+  const language = document.documentElement.lang;
+  const localDay = new Intl.DateTimeFormat(language, { dateStyle: 'long' });
+  const localTime = new Intl.DateTimeFormat(language, {
+    year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
+    hourCycle: 'h23', timeZoneName: 'shortOffset',
+  });
+  const dateParts = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+  summaries.forEach((summary) => {
+    const day = summary.querySelector('[data-map-date]');
+    const reset = summary.querySelector('[data-map-reset]');
+    const route = summary.querySelector('[data-map-route]');
+    const status = summary.querySelector('[data-map-status]');
+    const countdown = summary.querySelector('[data-map-countdown]');
+    const share = summary.querySelector('[data-map-share]');
+    const shareText = summary.querySelector('[data-map-share-text]');
+    const shareStatus = summary.querySelector('.copy-status');
+    const updated = summary.querySelector('[data-map-updated]');
+    const reference = summary.id === 'today-map' ? document.querySelector('[data-map-reference]') : null;
+    const expiry = Date.parse(summary.dataset.mapValidUntil);
+    const initialReset = Date.parse(summary.dataset.mapNextReset);
+    let current = Number.isFinite(expiry);
+
+    if (updated) updated.textContent = localTime.format(Date.parse(updated.dateTime));
+    const refresh = () => {
+      const now = Date.now();
+      if (current && now >= expiry) {
+        current = false;
+        route.textContent = summary.dataset.mapWaiting;
+        status.textContent = summary.dataset.mapWaiting;
+        summary.querySelectorAll('[data-map-current]').forEach((element) => { element.hidden = true; });
+        summary.querySelectorAll('[data-map-pending]').forEach((element) => { element.hidden = false; });
+        if (reference) reference.hidden = true;
+        if (shareText) {
+          shareText.hidden = true;
+          shareText.value = '';
+        }
+      }
+      const parts = Object.fromEntries(dateParts.formatToParts(now).map(({ type, value }) => [type, value]));
+      const date = parts.year + '-' + parts.month + '-' + parts.day;
+      if (day.dateTime !== date) {
+        day.dateTime = date;
+        day.textContent = localDay.format(now);
+      }
+
+      const elapsedIntervals = now < initialReset ? 0 : Math.floor((now - initialReset) / interval) + 1;
+      const nextReset = initialReset + elapsedIntervals * interval;
+      const resetIso = new Date(nextReset).toISOString();
+      const resetLabel = localTime.format(nextReset);
+      if (reset.dateTime !== resetIso || reset.textContent !== resetLabel) {
+        reset.dateTime = resetIso;
+        reset.textContent = resetLabel;
+      }
+      if (countdown) {
+        const seconds = Math.ceil((nextReset - now) / 1000);
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor(seconds / 60) % 60;
+        countdown.textContent = [hours, minutes, seconds % 60].map((part) => String(part).padStart(2, '0')).join(':');
+      }
+    };
+
+    refresh();
+    const countdownRow = summary.querySelector('[data-map-countdown-row]');
+    if (countdownRow) countdownRow.hidden = false;
+    window.setInterval(refresh, 1000);
+    window.addEventListener('pageshow', refresh);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) refresh();
+    });
+
+    if (!share) return;
+    share.hidden = false;
+    share.addEventListener('click', async () => {
+      refresh();
+      const value = [
+        day.closest('.daily-map-date').textContent.trim(),
+        route.dataset.copyLabel + ' — ' + route.textContent + (current ? ' (' + status.textContent + ')' : ''),
+        reset.dataset.copyLabel + ' — ' + reset.textContent + ' (' + reset.dateTime.slice(0, 10) + ' ' + reset.dateTime.slice(11, 16) + ' UTC)',
+      ].join('\n');
+      try {
+        await navigator.clipboard.writeText(value);
+        shareText.hidden = true;
+        shareStatus.textContent = copy.copied;
+      } catch {
+        shareText.hidden = false;
+        shareText.value = value;
+        shareText.select();
+        shareStatus.textContent = copy.manual;
+      }
+    });
+  });
+}
+
 bindLogoFallbacks();
 bindMenu();
 bindFilters();
 bindUpdateToggle();
 bindItemToggle();
+bindDailyMaps();
 bindTodayMapCarousels();
 bindCopyAction();
 updateItemResults();

@@ -1,11 +1,12 @@
 import { mapGuides } from './map-guide.mjs';
+import { dailyMapLocales } from './daily-map-locales.mjs';
 import { todayMapCopy } from './today-map-copy.mjs';
 import { achievementGuides } from './achievement-guide.mjs';
 import { articleGuides, articleOrder } from './article-guides.mjs';
 import { articleLiveMapCopy, articleLocaleTranslations } from './article-locales.mjs';
 import { articleUpdateCopy } from './article-update-locales.mjs';
 import { checkedUpdateSummary, officialEntries, latestOfficialPatch, officialUpdateFacts } from './official-update-facts.mjs';
-import { isCurrentMapSnapshot } from './today-map-rotation.mjs';
+import { isCurrentMapSnapshot, nextObservedReset } from './today-map-rotation.mjs';
 import { articleScheduleDynamicFallback } from './article-schedule-locales.mjs';
 import { itemsCatalog } from './items-catalog.mjs';
 import { itemsPageCopy } from './items-page-locales.mjs';
@@ -14,7 +15,7 @@ import { germanAmuletPages } from './german-amulet-pages.mjs';
 import { REDIRECT_ARTICLES, isGonePath, isLocalizedRedirectRoute, isRedirectedArticle } from './route-policy.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
-const STYLESHEET_HREF = '/styles.css?v=20261113-daily-cards';
+const STYLESHEET_HREF = '/styles.css?v=20261122-daily-map';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
 const STEAM_NEWS_API_HTML_URL = 'https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json';
 const SUPPORT_EMAIL = 'support@peak-game.wiki';
@@ -522,19 +523,13 @@ function replaceGermanAscii(value) {
   return value;
 }
 
-const dailyMapPageOverrides = {
-  en: { title: "Today's PEAK Map", description: "Today's PEAK map route, local reset time, Mesa/Tomb check and charm status, with Patch 3.1.0 and cross-platform room-code notes.", intro: "Today's answer is the dated route below: read the full biome order first, then the next reset in your local time and the actions that are actually confirmed. Patch 3.1.0 lengthened room codes, changed controller sprint and climb to hold input, and added anti-harassment changes. Crossplay now covers Steam, PS5, Xbox Series X|S and Nintendo Switch 2; progress does not transfer between platforms.", answer: "Use the dated daily tool below as the first answer. It prints the full biome order, local reset, Mesa/Tomb status and four charm rows without inventing point locations. Confirm every time-sensitive result in PEAK." },
-  zh: { title: 'PEAK 今日地图', description: '查看 PEAK 今日完整生物群系顺序、当地重置时间、Mesa/Tomb 与护符状态，并同步 3.1.0 与跨平台房间码规则。', intro: '先看下面带日期的今日答案：完整生物群系顺序、当地时间的下次重置，以及今天真正确认能推进的事项。Patch 3.1.0 加长了房间码，手柄冲刺和攀爬改为按住操作，并加入防骚扰改动。现在 Steam、PS5、Xbox Series X|S 与 Nintendo Switch 2 可通过房间码跨平台联机，但进度不跨平台转移。', answer: '下面的每日工具先给出答案：完整路线、当地重置、Mesa/Tomb 状态和四个护符栏位；没有来源的点位显示“今日待确认”。时间敏感结果请以游戏内为准。' },
-  ko: { title: 'PEAK 오늘의 맵', description: 'PEAK 오늘의 전체 생물군계 순서와 현지 초기화 시간, Mesa/Tomb, 부적 상태 및 Patch 3.1.0 방 코드 규칙을 확인하세요.', intro: '아래 날짜가 있는 오늘의 답에서 전체 생물군계 순서, 현지 다음 초기화, 확인된 행동을 먼저 확인하세요. Patch 3.1.0은 방 코드를 늘리고 컨트롤러 달리기·등반을 누르고 유지하는 방식으로 바꾸었으며 괴롭힘 방지 변경을 포함합니다. Steam, PS5, Xbox Series X|S, Nintendo Switch 2 간 방 코드 크로스플레이가 가능하지만 진행 상황은 플랫폼 간 이전되지 않습니다.', answer: '날짜가 있는 오늘의 도구가 전체 경로, 현지 초기화, Mesa/Tomb 상태와 네 부적 행을 먼저 보여 줍니다. 확인되지 않은 위치는 오늘 미확인으로 남기며, 게임 안에서 다시 확인하세요.' },
-  ja: { title: 'PEAK 今日のマップ', description: 'PEAK 今日のバイオーム順、現地リセット時刻、Mesa/Tomb とアミュレットの確認状況、Patch 3.1.0 のルームコード規則。', intro: '日付付きの今日の答えで、完全なバイオーム順、現地時間の次回リセット、確認できる行動を先に見てください。Patch 3.1.0 でルームコードが長くなり、コントローラーのダッシュと登攀は長押しになり、嫌がらせ対策が追加されました。Steam、PS5、Xbox Series X|S、Nintendo Switch 2 はルームコードでクロスプレイできますが、進行状況はプラットフォーム間で共有されません。', answer: '日付付きのデイリーツールが完全なルート、現地リセット、Mesa/Tomb の状態、4つのアミュレット欄を先に表示します。未確認の場所は今日未確認とし、ゲーム内で確かめてください。' },
-  es: { title: 'Mapa PEAK hoy', description: 'Ruta completa de biomas de PEAK hoy, reinicio local, comprobación de Mesa/Tomb y estado de amuletos, con las reglas de códigos de sala de 3.1.0.', intro: 'La respuesta fechada de abajo muestra primero el orden completo de biomas, el próximo reinicio en tu hora local y las acciones confirmadas. El Patch 3.1.0 alargó los códigos de sala, cambió el sprint y la escalada con mando a mantener pulsado y añadió medidas contra el acoso. El juego cruzado conecta Steam, PS5, Xbox Series X|S y Nintendo Switch 2 mediante códigos, pero el progreso no se transfiere.', answer: 'La herramienta diaria fechada muestra la ruta completa, el reinicio local, Mesa/Tomb y cuatro filas de amuletos. Lo que no tiene fuente queda como no confirmado hoy; compruébalo en el juego.' },
-  de: { title: 'PEAK heutige Karte', description: 'PEAK heutige Karte mit vollständiger Biome-Reihenfolge, Reset in Ortszeit, Mesa/Tomb-Prüfung und Amulettstatus sowie Patch-3.1.0-Raumcode-Regeln.', intro: 'Die datierte Antwort unten zeigt zuerst die vollständige Biome-Reihenfolge, den nächsten Reset in Ortszeit und die heute bestätigten Schritte. Patch 3.1.0 verlängerte Raumcodes, stellte Sprinten und Klettern mit dem Controller auf Gedrückthalten um und ergänzte Maßnahmen gegen Belästigung. Crossplay verbindet Steam, PS5, Xbox Series X|S und Nintendo Switch 2 über Raumcodes; der Fortschritt wird zwischen Plattformen nicht übertragen.', answer: 'Das datierte Tageswerkzeug zeigt Route, Reset in Ortszeit, Mesa/Tomb und vier Amulettzeilen. Fehlende Quellen bleiben „Heute nicht bestätigt“ – bitte im Spiel prüfen.' },
-  fr: { title: 'Carte PEAK du jour', description: 'Ordre complet des biomes de PEAK aujourd’hui, heure locale du reset, vérification Mesa/Tomb et état des amulettes avec les règles 3.1.0.', intro: 'La réponse datée ci-dessous donne d’abord l’ordre complet des biomes, le prochain reset en heure locale et les actions confirmées. Le Patch 3.1.0 a allongé les codes de salle, changé le sprint et l’escalade à la manette en maintien et ajouté des mesures anti-harcèlement. Le crossplay relie Steam, PS5, Xbox Series X|S et Nintendo Switch 2 par code, sans transfert de progression entre plateformes.', answer: 'L’outil quotidien daté affiche la route, le reset local, Mesa/Tomb et quatre lignes d’amulettes. Une donnée sans source reste non confirmée aujourd’hui ; vérifiez en jeu.' },
-  pt: { title: 'Mapa de PEAK hoje', description: 'Ordem completa dos biomas de PEAK hoje, reinício local, verificação de Mesa/Tomb e estado dos amuletos com as regras de códigos da 3.1.0.', intro: 'A resposta datada abaixo mostra primeiro a ordem completa dos biomas, o próximo reinício na hora local e as ações confirmadas. O Patch 3.1.0 alongou os códigos de sala, mudou corrida e escalada no controle para manter pressionado e adicionou medidas contra assédio. O crossplay liga Steam, PS5, Xbox Series X|S e Nintendo Switch 2 por códigos, mas o progresso não é transferido entre plataformas.', answer: 'A ferramenta diária com data mostra a rota, o reinício local, Mesa/Tomb e quatro linhas de amuletos. Sem fonte, fica não confirmado hoje; confirme no jogo.' },
-  it: { title: 'Mappa di PEAK di oggi', description: 'Ordine completo dei biomi di PEAK oggi, reset locale, controllo Mesa/Tomb e stato degli amuleti con le regole dei codici 3.1.0.', intro: 'La risposta datata qui sotto mostra prima l’ordine completo dei biomi, il prossimo reset nell’ora locale e le azioni confermate. La Patch 3.1.0 ha allungato i codici stanza, trasformato corsa e arrampicata col controller in input tenuto premuto e aggiunto misure anti-molestie. Il crossplay collega Steam, PS5, Xbox Series X|S e Nintendo Switch 2 tramite codici, ma i progressi non passano tra piattaforme.', answer: 'Lo strumento giornaliero datato mostra percorso, reset locale, Mesa/Tomb e quattro righe di amuleti. Se manca una fonte, resta non confermato oggi: verifica nel gioco.' },
-};
-for (const [code, override] of Object.entries(dailyMapPageOverrides)) {
-  mapGuides[code] = { ...mapGuides[code], meta: { ...mapGuides[code].meta, title: override.title, description: override.description }, h1: override.title, intro: override.intro, answer: override.answer };
+for (const [code, copy] of Object.entries(dailyMapLocales)) {
+  const title = {
+    en: "Today's PEAK Map", zh: 'PEAK 今日地图', es: 'Mapa PEAK hoy', ko: 'PEAK 오늘의 맵',
+    ja: 'PEAK 今日のマップ', de: 'PEAK heutige Karte', fr: 'Carte PEAK du jour',
+    pt: 'Mapa de PEAK hoje', it: 'Mappa di PEAK di oggi',
+  }[code];
+  mapGuides[code] = { ...mapGuides[code], meta: { ...mapGuides[code].meta, title, description: copy.description }, h1: title };
 }
 
 const roomCodeCurrentCopy = {
@@ -617,7 +612,8 @@ function rawRouteFor(code, page) {
   const [pagePath, hash = ''] = String(page).split('#', 2);
   if (isLocalizedRedirectRoute(code, pagePath)) return `${rawRouteFor(code, 'home')}${hash ? `#${hash}` : ''}`;
   const resolvedPagePath = REDIRECT_ARTICLES[pagePath] ?? pagePath;
-  const suffix = hash ? `#${hash}` : '';
+  const anchor = hash || { 'peak-game-update': 'version-timeline', 'peak-map-rotation-schedule': 'today-map' }[pagePath];
+  const suffix = anchor ? `#${anchor}` : '';
   if (resolvedPagePath === 'items' || resolvedPagePath === 'contact' || resolvedPagePath === 'room-codes' || resolvedPagePath === 'badges-guide') return `${code === 'en' ? `/${resolvedPagePath}/` : `/${code}/${resolvedPagePath}/`}${suffix}`;
   if (code === 'en') return `${resolvedPagePath === 'home' ? '/' : `/${resolvedPagePath}`}${suffix}`;
   return `${resolvedPagePath === 'home' ? `/${code}/` : `/${code}/${resolvedPagePath}/`}${suffix}`;
@@ -661,211 +657,139 @@ function formatDateLabel(locale, value) {
   return new Intl.DateTimeFormat(localeMeta[locale].lang, { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(date);
 }
 
-function formatDateTimeLabel(locale, value) {
-  const date = parseDateValue(value);
-  if (!date) return String(value ?? '');
-  const timeZones = { en: 'UTC', zh: 'Asia/Shanghai', es: 'Europe/Madrid', ja: 'Asia/Tokyo', fr: 'Europe/Paris', de: 'Europe/Berlin', pt: 'America/Sao_Paulo', ko: 'Asia/Seoul', it: 'Europe/Rome' };
-  const formatted = new Intl.DateTimeFormat(localeMeta[locale].lang, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-    timeZone: timeZones[locale] ?? 'UTC',
-  }).format(date);
-  return `${formatted} ${locale === 'en' ? 'UTC' : localeMeta[locale].short}`;
+function formatUtcDateTime(locale, value) {
+  return new Intl.DateTimeFormat(localeMeta[locale].lang, {
+    year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
+    hourCycle: 'h23', timeZone: 'UTC', timeZoneName: 'short',
+  }).format(new Date(value));
 }
 
 const todayMapDetailCopy = {
   en: {
-    currentVersion: 'Current game version',
     dataUpdated: 'Data updated',
-    nextResetAt: 'Next reset at',
     poolChanges: 'Recent map-pool changes',
-    related: 'Related guides',
     poolItems: [
       ['Patch 2.6.a', 'The island pool was replaced with properly randomized islands.'],
       ['Patch 2.04.a', 'Caldera and The Kiln returned to the rotation.'],
       ['Patch 2.03.a', 'A Gloom/Citadel map batch entered the daily rotation.'],
     ],
-    relatedLinks: [
-      ['peak-biomes-list', 'Biomes list'],
-      ['peak-gloom-guide', 'Gloom guide'],
-      ['peak-citadel-guide', 'Citadel guide'],
-      ['items', 'Item catalog'],
-    ],
   },
   zh: {
-    currentVersion: '当前游戏版本',
     dataUpdated: '数据更新时间',
-    nextResetAt: '下次重置时间',
     poolChanges: '最近地图池变化',
-    related: '相关攻略',
     poolItems: [
       ['Patch 2.6.a', '地图池改为正确随机的岛屿组合。'],
       ['Patch 2.04.a', 'Caldera 与 The Kiln 回归轮换。'],
       ['Patch 2.03.a', '包含 Gloom/Citadel 的地图批次进入每日轮换。'],
     ],
-    relatedLinks: [
-      ['peak-biomes-list', '生物群系列表'],
-      ['peak-gloom-guide', 'Gloom 指南'],
-      ['peak-citadel-guide', 'Citadel 指南'],
-      ['items', '道具目录'],
-    ],
   },
   es: {
-    currentVersion: 'Versión actual del juego',
     dataUpdated: 'Datos actualizados',
-    nextResetAt: 'Próximo reinicio a las',
     poolChanges: 'Cambios recientes del grupo de mapas',
-    related: 'Guías relacionadas',
     poolItems: [
       ['Patch 2.6.a', 'El grupo de islas pasó a estar correctamente aleatorizado.'],
       ['Patch 2.04.a', 'Caldera y The Kiln volvieron a la rotación.'],
       ['Patch 2.03.a', 'Una tanda de mapas con Gloom/Citadel entró en la rotación diaria.'],
     ],
-    relatedLinks: [
-      ['peak-biomes-list', 'Lista de biomas'],
-      ['peak-gloom-guide', 'Guía de Gloom'],
-      ['peak-citadel-guide', 'Guía de Citadel'],
-      ['items', 'Catálogo de objetos'],
-    ],
   },
   ja: {
-    currentVersion: '現在のゲームバージョン',
     dataUpdated: 'データ更新',
-    nextResetAt: '次回リセット',
     poolChanges: '最近のマッププール変更',
-    related: '関連ガイド',
     poolItems: [
       ['Patch 2.6.a', '島のプールが正しくランダム化されました。'],
       ['Patch 2.04.a', 'Caldera と The Kiln がローテーションに戻りました。'],
       ['Patch 2.03.a', 'Gloom/Citadel を含むマップ群がデイリーローテーションに入りました。'],
     ],
-    relatedLinks: [
-      ['peak-biomes-list', 'バイオーム一覧'],
-      ['peak-gloom-guide', 'Gloom 攻略'],
-      ['peak-citadel-guide', 'Citadel 攻略'],
-      ['items', 'アイテム一覧'],
-    ],
   },
   ko: {
-    currentVersion: '현재 게임 버전',
     dataUpdated: '데이터 업데이트',
-    nextResetAt: '다음 초기화 시각',
     poolChanges: '최근 맵 풀 변경',
-    related: '관련 가이드',
     poolItems: [
       ['Patch 2.6.a', '섬 맵 풀이 올바르게 무작위화되었습니다.'],
       ['Patch 2.04.a', 'Caldera와 The Kiln이 로테이션으로 돌아왔습니다.'],
       ['Patch 2.03.a', 'Gloom/Citadel이 포함된 맵 묶음이 일일 로테이션에 들어왔습니다.'],
     ],
-    relatedLinks: [
-      ['peak-biomes-list', '생물군계 목록'],
-      ['peak-gloom-guide', 'Gloom 가이드'],
-      ['peak-citadel-guide', 'Citadel 가이드'],
-      ['items', '아이템 목록'],
-    ],
   },
   de: {
-    currentVersion: 'Aktuelle Spielversion',
     dataUpdated: 'Daten aktualisiert',
-    nextResetAt: 'Nächster Reset um',
     poolChanges: 'Aktuelle Kartenpool-Änderungen',
-    related: 'Verwandte Guides',
     poolItems: [
       ['Patch 2.6.a', 'Der Inselpool wurde richtig zufällig gemacht.'],
       ['Patch 2.04.a', 'Caldera und The Kiln kehrten in die Rotation zurück.'],
       ['Patch 2.03.a', 'Eine Kartenserie mit Gloom/Citadel kam in die tägliche Rotation.'],
     ],
-    relatedLinks: [
-      ['peak-biomes-list', 'Biome-Liste'],
-      ['peak-gloom-guide', 'Gloom-Guide'],
-      ['peak-citadel-guide', 'Citadel-Guide'],
-      ['items', 'Item-Katalog'],
-    ],
   },
   fr: {
-    currentVersion: 'Version actuelle du jeu',
     dataUpdated: 'Données mises à jour',
-    nextResetAt: 'Prochaine réinitialisation à',
     poolChanges: 'Changements récents du pool de cartes',
-    related: 'Guides associés',
     poolItems: [
       ['Patch 2.6.a', 'Le pool d’îles est désormais correctement aléatoire.'],
       ['Patch 2.04.a', 'Caldera et The Kiln sont revenus dans la rotation.'],
       ['Patch 2.03.a', 'Une série de cartes avec Gloom/Citadel est entrée dans la rotation quotidienne.'],
     ],
-    relatedLinks: [
-      ['peak-biomes-list', 'Liste des biomes'],
-      ['peak-gloom-guide', 'Guide Gloom'],
-      ['peak-citadel-guide', 'Guide Citadel'],
-      ['items', 'Catalogue des objets'],
-    ],
   },
   pt: {
-    currentVersion: 'Versão atual do jogo',
     dataUpdated: 'Dados atualizados',
-    nextResetAt: 'Próximo reinício às',
     poolChanges: 'Mudanças recentes no conjunto de mapas',
-    related: 'Guias relacionados',
     poolItems: [
       ['Patch 2.6.a', 'O conjunto de ilhas passou a ser corretamente aleatório.'],
       ['Patch 2.04.a', 'Caldera e The Kiln voltaram à rotação.'],
       ['Patch 2.03.a', 'Um grupo de mapas com Gloom/Citadel entrou na rotação diária.'],
     ],
-    relatedLinks: [
-      ['peak-biomes-list', 'Lista de biomas'],
-      ['peak-gloom-guide', 'Guia de Gloom'],
-      ['peak-citadel-guide', 'Guia de Citadel'],
-      ['items', 'Catálogo de itens'],
-    ],
   },
   it: {
-    currentVersion: 'Versione attuale del gioco',
     dataUpdated: 'Dati aggiornati',
-    nextResetAt: 'Prossimo reset alle',
     poolChanges: 'Cambiamenti recenti del pool di mappe',
-    related: 'Guide correlate',
     poolItems: [
       ['Patch 2.6.a', 'Il pool delle isole è stato reso correttamente casuale.'],
       ['Patch 2.04.a', 'Caldera e The Kiln sono tornati nella rotazione.'],
       ['Patch 2.03.a', 'Un gruppo di mappe con Gloom/Citadel è entrato nella rotazione giornaliera.'],
     ],
-    relatedLinks: [
-      ['peak-biomes-list', 'Elenco dei biomi'],
-      ['peak-gloom-guide', 'Guida a Gloom'],
-      ['peak-citadel-guide', 'Guida a Citadel'],
-      ['items', 'Catalogo oggetti'],
-    ],
   },
 };
 
-const defaultTodayMapDetailCopy = todayMapDetailCopy.en;
-
-const dailyToolCopy = {
-  en: { date: "Today's date", route: 'Full biome order', reset: 'Next reset (local)', action: 'What can you do today?', mesa: 'Mesa: Tomb check', noMesa: 'No Mesa today', charms: "Today's charms", pending: 'Today not confirmed', timestamp: 'Data timestamp · confirm in game' },
-  zh: { date: '今日日期', route: '完整生物群系顺序', reset: '下次重置（当地时间）', action: '今日能做什么', mesa: 'Mesa：检查 Tomb', noMesa: '今日无 Mesa', charms: '今日护符', pending: '今日待确认', timestamp: '数据时间戳 · 请以游戏内为准' },
-  es: { date: 'Fecha de hoy', route: 'Orden completo de biomas', reset: 'Próximo reinicio (hora local)', action: 'Qué puedes hacer hoy', mesa: 'Mesa: comprueba Tomb', noMesa: 'Hoy no hay Mesa', charms: 'Amuletos de hoy', pending: 'Hoy no confirmado', timestamp: 'Marca de datos · confirma en el juego' },
-  ja: { date: '今日の日付', route: 'バイオームの完全な順序', reset: '次回リセット（現地時間）', action: '今日できること', mesa: 'Mesa：Tomb を確認', noMesa: '今日は Mesa なし', charms: '今日のアミュレット', pending: '今日は未確認', timestamp: 'データ時刻 · ゲーム内で確認' },
-  ko: { date: '오늘 날짜', route: '전체 생물군계 순서', reset: '다음 초기화(현지 시간)', action: '오늘 할 수 있는 일', mesa: 'Mesa: Tomb 확인', noMesa: '오늘은 Mesa 없음', charms: '오늘의 부적', pending: '오늘 미확인', timestamp: '데이터 시각 · 게임에서 확인' },
-  de: { date: 'Heutiges Datum', route: 'Vollständige Biome-Reihenfolge', reset: 'Nächster Reset (Ortszeit)', action: 'Heute möglich', mesa: 'Mesa: Tomb prüfen', noMesa: 'Heute kein Mesa', charms: 'Heute: Amulette', pending: 'Heute nicht bestätigt', timestamp: 'Datenzeitpunkt · im Spiel prüfen' },
-  fr: { date: "Date d’aujourd’hui", route: 'Ordre complet des biomes', reset: 'Prochain reset (heure locale)', action: 'À faire aujourd’hui', mesa: 'Mesa : vérifier Tomb', noMesa: 'Pas de Mesa aujourd’hui', charms: 'Amulettes du jour', pending: 'Non confirmé aujourd’hui', timestamp: 'Horodatage · vérifiez en jeu' },
-  pt: { date: 'Data de hoje', route: 'Ordem completa dos biomas', reset: 'Próximo reinício (hora local)', action: 'O que fazer hoje', mesa: 'Mesa: verificar Tomb', noMesa: 'Sem Mesa hoje', charms: 'Amuletos de hoje', pending: 'Não confirmado hoje', timestamp: 'Horário dos dados · confirme no jogo' },
-  it: { date: 'Data di oggi', route: 'Ordine completo dei biomi', reset: 'Prossimo reset (ora locale)', action: 'Cosa fare oggi', mesa: 'Mesa: controlla Tomb', noMesa: 'Nessuna Mesa oggi', charms: 'Amuleti di oggi', pending: 'Non confermato oggi', timestamp: 'Timestamp dati · verifica nel gioco' },
-};
-
-function renderDailyToolSummary(locale, data, buildDate, buildTimestamp) {
-  const copy = dailyToolCopy[locale] ?? dailyToolCopy.en;
-  const snapshot = normalizeTodayMap(data, buildDate, buildTimestamp);
-  const route = snapshot.biome || snapshot.map || copy.pending;
-  const hasMesa = /\bMesa\b/i.test(route);
-  const reset = snapshot.resetAt ? formatDateTimeLabel(locale, snapshot.resetAt) : copy.pending;
-  const charms = ["Scout's Generosity", "Scout's Tenacity", "Scout's Ambition", "Scout's Initiative"];
-  const charmMarkup = charms.map((name) => `<li><strong>${escapeHtml(name)}</strong><span>${escapeHtml(copy.pending)}</span></li>`).join('');
-  const timestamp = snapshot.available ? (data?.sourceFetchedAt || data?.updatedAt || buildTimestamp) : buildTimestamp;
-  return `<section class="daily-tool-summary" aria-label="${escapeHtml(copy.route)}"><div class="daily-tool-card daily-tool-date"><span>${escapeHtml(copy.date)}</span><strong>${escapeHtml(formatDateLabel(locale, snapshot.date || buildDate))}</strong></div><div class="daily-tool-card daily-tool-route"><span>${escapeHtml(copy.route)}</span><strong>${escapeHtml(route)}</strong></div><div class="daily-tool-card daily-tool-reset"><span>${escapeHtml(copy.reset)}</span><strong>${escapeHtml(reset)}</strong></div><div class="daily-tool-card daily-tool-action"><span>${escapeHtml(copy.action)}</span><strong>${escapeHtml(hasMesa ? copy.mesa : copy.noMesa)}</strong><ul class="daily-tool-charms"><li><strong>${escapeHtml(copy.charms)}</strong><span></span></li>${charmMarkup}</ul></div><p class="daily-tool-timestamp">${escapeHtml(copy.timestamp)}: ${escapeHtml(formatDateTimeLabel(locale, timestamp))}</p></section>`;
+function renderDailyMapSummary(locale, snapshot, buildTimestamp, { compact = false } = {}) {
+  const labels = dailyMapLocales[locale];
+  const copy = todayMapCopy[locale];
+  const detail = todayMapDetailCopy[locale];
+  const now = new Date(buildTimestamp);
+  const resetAt = snapshot.resetAt || nextObservedReset(now).toISOString();
+  const today = now.toISOString().slice(0, 10);
+  const status = snapshot.available ? copy.estimated : labels.waiting;
+  const updatedAt = snapshot.sourceFetchedAt;
+  const sourceLink = `<a href="${PEAK_WIKI_TIMER_URL}">${escapeHtml(copy.wikiSourceLabel)}</a>`;
+  const hasMesa = snapshot.map?.split(' → ').some((biome) => biome === 'Mesa' || biome.startsWith('Mesa ('));
+  const mesaCheck = hasMesa
+    ? `<li><strong>${escapeHtml(labels.confirmed)}</strong> ${escapeHtml(labels.mesa)}</li><li><strong>${escapeHtml(labels.unconfirmed)}</strong> ${escapeHtml(labels.tomb)}</li>`
+    : `<li><strong>${escapeHtml(labels.notApplicable)}</strong> ${escapeHtml(labels.noMesa)}</li>`;
+  const objective = compact ? '' : `
+    <section class="daily-map-objective" aria-labelledby="daily-objective-title">
+      <h2 id="daily-objective-title">${escapeHtml(labels.action)}</h2>
+      ${snapshot.available ? `<ul data-map-current>${mesaCheck}</ul>` : ''}
+      <p data-map-pending${snapshot.available ? ' hidden' : ''}><strong>${escapeHtml(labels.unconfirmed)}</strong> ${escapeHtml(labels.noRoute)}</p>
+    </section>`;
+  const controls = compact
+    ? `<a class="section-link" href="${routeFor(locale, 'map-rotation')}#today-map">${escapeHtml(labels.open)} <span aria-hidden="true">→</span></a>`
+    : `<button class="button button-outline" type="button" data-map-share hidden>${escapeHtml(labels.share)}</button><p class="copy-status" role="status"></p><textarea class="daily-map-share-text" data-map-share-text readonly hidden aria-label="${escapeHtml(labels.share)}"></textarea>`;
+  return `<section${compact ? '' : ' id="today-map"'} class="daily-map-summary${compact ? ' daily-map-compact' : ''}" aria-label="${escapeHtml(copy.title)}"
+    data-daily-map data-map-valid-until="${escapeHtml(snapshot.resetAt || '')}" data-map-next-reset="${escapeHtml(resetAt)}"
+    data-map-waiting="${escapeHtml(labels.waiting)}">
+    <div class="daily-map-date">
+      <span>${escapeHtml(labels.date)}</span> <time data-map-date datetime="${today}">${escapeHtml(formatDateLabel(locale, today))}</time>
+    </div>
+    <div class="daily-map-route">
+      <span>${escapeHtml(labels.route)}</span>
+      <strong data-map-route data-copy-label="${escapeHtml(labels.route)}">${escapeHtml(snapshot.map || labels.waiting)}</strong>
+    </div>
+    <dl class="daily-map-facts">
+      <div><dt>${escapeHtml(labels.reset)}</dt><dd><time data-map-reset data-copy-label="${escapeHtml(labels.reset)}" datetime="${escapeHtml(resetAt)}">${escapeHtml(formatUtcDateTime(locale, resetAt))}</time></dd></div>
+      <div data-map-countdown-row hidden><dt>${escapeHtml(labels.countdown)}</dt><dd data-map-countdown></dd></div>
+      ${compact ? '' : `<div><dt>${escapeHtml(detail.dataUpdated)}</dt><dd data-map-pending${updatedAt ? ' hidden' : ''}>${escapeHtml(copy.pending)}</dd>${updatedAt ? `<dd data-map-current><time data-map-updated datetime="${escapeHtml(updatedAt)}">${escapeHtml(formatUtcDateTime(locale, updatedAt))}</time></dd>` : ''}</div>`}
+    </dl>
+    <p class="daily-map-source"><span data-map-status role="status">${escapeHtml(status)}</span>${compact ? '' : ` <span aria-hidden="true">·</span> ${sourceLink}`}</p>
+    ${controls}
+    ${objective}
+  </section>`;
 }
 
 export function formatSnapshotDate(locale, buildDate) {
@@ -937,7 +861,7 @@ function normalizeTodayMap(data, buildDate, buildTimestamp) {
     route: available ? data.route : null,
     biome: available ? data.biome : null,
     resetAt: datedSource && parseDateValue(data.resetAt) ? data.resetAt : null,
-    updatedAt: datedSource ? (data.updatedAt || data.sourceFetchedAt || buildTimestamp) : buildTimestamp,
+    sourceFetchedAt: datedSource ? data.sourceFetchedAt : null,
     recordDate: data?.date || null,
     recordUpdatedAt: data?.updatedAt || data?.sourceFetchedAt || null,
     source: datedSource ? { label: source.label || '', url: source.url } : null,
@@ -946,36 +870,16 @@ function normalizeTodayMap(data, buildDate, buildTimestamp) {
   };
 }
 
-function formatCountdown(locale, resetAt, buildTimestamp) {
-  const resetDate = parseDateValue(resetAt);
-  const buildDate = parseDateValue(buildTimestamp);
-  const copy = todayMapCopy[locale] ?? todayMapCopy.en;
-  if (!resetDate || !buildDate) return copy.resetPending;
-  const remainingMinutes = Math.ceil((resetDate.getTime() - buildDate.getTime()) / 60000);
-  if (remainingMinutes <= 0) return copy.resetDue;
-  const days = Math.floor(remainingMinutes / 1440);
-  const hours = Math.floor((remainingMinutes % 1440) / 60);
-  const minutes = remainingMinutes % 60;
-  const parts = [];
-  if (days) parts.push(`${days}${copy.countdownUnits.days}`);
-  if (hours || days) parts.push(`${hours}${copy.countdownUnits.hours}`);
-  if (minutes || (!days && !hours)) parts.push(`${minutes}${copy.countdownUnits.minutes}`);
-  return parts.join(' ');
-}
-
 function renderTodayMapMedia(locale, data) {
   const copy = todayMapCopy[locale] ?? todayMapCopy.en;
   const formatMediaCopy = (template, label) => String(template ?? '').replaceAll('{biome}', label).replaceAll('{date}', formatDateLabel(locale, data.date));
-  if (!data.media.length) {
-    return `<div class="today-map-media today-map-media-pending" role="img" aria-label="${escapeHtml(copy.mediaPending)}"><strong>${escapeHtml(copy.mediaPending)}</strong><span>${escapeHtml(copy.mediaPendingNote)}</span></div>`;
-  }
   const cards = data.media.map((item, index) => {
     const label = item.biome || `${copy.title} ${index + 1}`;
     const alt = formatMediaCopy(copy.mediaAlt, label) || item.alt || label;
     const caption = formatMediaCopy(copy.mediaCaption, label) || item.caption || data.source?.label || copy.title;
     const media = item.type === 'video'
       ? `<video controls preload="metadata" width="1200" height="675"><source src="${escapeHtml(item.url)}"${item.mimeType ? ` type="${escapeHtml(item.mimeType)}"` : ''} /></video>`
-      : `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(alt)}" width="1200" height="675" loading="eager" />`;
+      : `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(alt)}" width="1200" height="675" loading="lazy" />`;
     const active = index === 0;
     const labelMarkup = isSafeHttpUrl(item.sourceUrl)
       ? `<a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener" tabindex="${active ? '0' : '-1'}">${escapeHtml(label)}</a>`
@@ -992,36 +896,26 @@ function renderTodayMapMedia(locale, data) {
   return `<div class="today-map-carousel" data-today-carousel tabindex="0" aria-roledescription="carousel" aria-label="${escapeHtml(copy.title)}"><div class="today-map-carousel-viewport"><div class="today-map-carousel-track" data-carousel-track>${cards}</div>${controls}</div><div class="today-map-carousel-dots" role="group" aria-label="${escapeHtml(copy.mediaSlides)}">${indicators}</div></div>`;
 }
 
-function renderTodayMap(locale, data, buildDate, buildTimestamp, updateData, publishedArticles = articleOrder) {
-  const copy = todayMapCopy[locale] ?? todayMapCopy.en;
-  const detailCopy = todayMapDetailCopy[locale] ?? defaultTodayMapDetailCopy;
-  const snapshot = normalizeTodayMap(data, buildDate, buildTimestamp);
-  const patch = latestOfficialPatch(updateData, buildDate);
-  const currentVersion = patch?.title.match(/\d[\w.]*/)?.[0] || copy.pending;
-  const mapValue = snapshot.map || copy.pending;
-  const routeValue = snapshot.route === 'Daily biome sequence' ? copy.dailyRoute : snapshot.route || copy.pending;
-  const biomeValue = snapshot.biome || copy.pending;
-  const countdown = formatCountdown(locale, snapshot.resetAt, buildTimestamp);
-  const dataUpdatedAt = snapshot.available ? (data?.sourceFetchedAt || data?.updatedAt || null) : null;
-  const dataUpdatedLabel = dataUpdatedAt ? formatDateTimeLabel(locale, dataUpdatedAt) : copy.pending;
-  const nextResetLabel = snapshot.resetAt ? formatDateTimeLabel(locale, snapshot.resetAt) : copy.resetPending;
-  const sourceMarkup = snapshot.source
-    ? `<p>${escapeHtml(copy.attributionPrefix)}<a href="${escapeHtml(snapshot.source.url)}" rel="noopener">${escapeHtml(copy.wikiSourceLabel || snapshot.source.label || copy.source)}</a>${escapeHtml(copy.attributionBetween)}<a href="${escapeHtml(snapshot.license?.url || CC_BY_SA_URL)}" rel="license noopener">${escapeHtml(copy.licenseLabel)}</a>${escapeHtml(copy.attributionSuffix)}</p><p class="today-map-estimate-note">${escapeHtml(copy.estimateNote)}</p>`
-    : `<span>${escapeHtml(copy.pending)}</span>`;
-  const status = snapshot.estimated ? copy.estimated : snapshot.available ? copy.verified : copy.pending;
-  const panel = snapshot.available
-    ? `<h3>${escapeHtml(mapValue)}</h3><p class="today-map-route">${escapeHtml(routeValue)}</p>`
-    : `<div class="today-map-pending-copy"><h3>${escapeHtml(copy.pendingTitle)}</h3><p>${escapeHtml(copy.pendingBody)}</p></div>`;
-  const statusClass = snapshot.estimated ? ' is-estimated' : snapshot.available ? ' is-verified' : '';
-  const poolItems = `${officialEntries(updateData, buildDate).some((entry) => entry.title === 'CROSSPLAY HAS ARRIVED TO PEAK') ? `<li><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">2026-10-22</a> ${escapeHtml(officialUpdateFacts[locale].crossplay)}</li>` : ''}${detailCopy.poolItems.map(([version, text]) => `<li><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">${escapeHtml(version)}</a> ${escapeHtml(text)}</li>`).join('')}`;
-  const relatedLinks = detailCopy.relatedLinks.filter(([page]) => !articleOrder.includes(page) || publishedArticles.includes(page)).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
-  return `<section id="today-map" class="today-map-section" aria-labelledby="today-map-title"><div class="container today-map-heading"><div><p class="eyebrow">${escapeHtml(copy.eyebrow)}</p><h2 id="today-map-title">${escapeHtml(copy.title)}</h2><p>${escapeHtml(copy.lede)}</p></div><span class="today-map-status${statusClass}">${escapeHtml(status)}</span></div><div class="container">${renderDailyToolSummary(locale, data, buildDate, buildTimestamp)}</div><div class="container today-map-grid"><div>${renderTodayMapMedia(locale, snapshot)}</div><div class="today-map-panel"><div class="today-map-panel-top"><span class="status-pill"><i></i>${escapeHtml(status)}</span><time datetime="${escapeHtml(snapshot.date)}">${escapeHtml(formatDateLabel(locale, snapshot.date))}</time></div>${panel}<dl class="today-map-facts"><div><dt>${escapeHtml(copy.currentMap)}</dt><dd>${escapeHtml(mapValue)}</dd></div><div><dt>${escapeHtml(copy.route)}</dt><dd>${escapeHtml(routeValue)}</dd></div><div><dt>${escapeHtml(copy.biome)}</dt><dd>${escapeHtml(biomeValue)}</dd></div><div><dt>${escapeHtml(copy.nextReset)}</dt><dd>${escapeHtml(countdown)}</dd></div><div><dt>${escapeHtml(detailCopy.currentVersion)}</dt><dd><a href="${routeFor(locale, 'peak-game-update')}#version-timeline">${escapeHtml(currentVersion)}</a></dd></div><div><dt>${escapeHtml(detailCopy.nextResetAt)}</dt><dd><time datetime="${escapeHtml(snapshot.resetAt || '')}">${escapeHtml(nextResetLabel)}</time></dd></div><div><dt>${escapeHtml(detailCopy.dataUpdated)}</dt><dd><time datetime="${escapeHtml(dataUpdatedAt || '')}">${escapeHtml(dataUpdatedLabel)}</time></dd></div></dl><div class="today-map-pool-changes"><h3>${escapeHtml(detailCopy.poolChanges)}</h3><ul>${poolItems}</ul></div><div class="today-map-source"><span>${escapeHtml(copy.source)}</span>${sourceMarkup}</div><p class="today-map-updated"><span>${escapeHtml(copy.updated)}</span> ${escapeHtml(formatDateTimeLabel(locale, snapshot.updatedAt))}</p><nav class="today-map-related" aria-label="${escapeHtml(detailCopy.related)}"><span>${escapeHtml(detailCopy.related)}</span>${relatedLinks}</nav>${snapshot.available ? '' : `<p class="today-map-note">${escapeHtml(copy.pendingNote)}</p>`}</div></div></section>`;
-}
-
-export function injectTodayMapSection(html, locale, data, buildDate, buildTimestamp, updateData, publishedArticles) {
-  const marker = '</section><div class="container article-layout">';
-  if (!html.includes(marker)) throw new Error(`Map guide insertion marker not found: ${locale}`);
-  return html.replace(marker, `</section>${renderTodayMap(locale, data, buildDate, buildTimestamp, updateData, publishedArticles)}<div class="container article-layout">`);
+function renderMapSupportingContent(locale, snapshot, updateData, buildDate) {
+  const labels = dailyMapLocales[locale];
+  const copy = todayMapCopy[locale];
+  const details = todayMapDetailCopy[locale];
+  const releases = officialEntries(updateData, buildDate);
+  const roomCodes = roomCodeCurrentCopy[locale];
+  return `<div class="container map-supporting">
+    ${snapshot.media.length ? `<div data-map-reference>${renderTodayMapMedia(locale, snapshot)}
+      <p class="article-data-note">${escapeHtml(copy.attributionPrefix)}<a href="${escapeHtml(snapshot.source.url)}">${escapeHtml(copy.wikiSourceLabel)}</a>${escapeHtml(copy.attributionBetween)}<a href="${escapeHtml(snapshot.license?.url || CC_BY_SA_URL)}" rel="license">${escapeHtml(copy.licenseLabel)}</a></p>
+    </div>` : ''}
+    <section id="version-timeline" class="article-section" aria-labelledby="version-timeline-title">
+      <h2 id="version-timeline-title">${escapeHtml(labels.timeline)}</h2>
+      ${renderArticleUpdates(locale, { entries: releases })}
+      <details class="map-pool-changes">
+        <summary>${escapeHtml(details.poolChanges)}</summary>
+        <ul>${details.poolItems.map(([version, note]) => `<li><strong>${escapeHtml(version)}</strong> ${escapeHtml(note)}</li>`).join('')}</ul>
+      </details>
+      <a class="section-link" href="${routeFor(locale, 'room-codes')}">${escapeHtml(roomCodes.title)} <span aria-hidden="true">→</span></a>
+    </section>
+  </div>`;
 }
 
 const articleLinkPages = new Set(['home', 'map-rotation', 'achievements', 'items', 'badges-guide', ...articleOrder]);
@@ -1198,7 +1092,7 @@ const metaDescriptionOverrides = {
     about: '了解 PEAK 游戏 Wiki 如何整理每日地图、地图轮换、道具、徽章、生物群系、Steam 成就、联机资料和版本更新，并区分官方信息、版本记录、玩家经验与需要再次核对的内容。',
     privacy: '查看 PEAK 游戏 Wiki 的隐私说明，了解 Cloudflare 交付数据、Microsoft Clarity 分析、Google AdSense Cookie、广告偏好和外部链接处理方式。',
     terms: '查看 PEAK 游戏 Wiki 的使用条款，了解独立玩家站点声明、资料来源边界、版本敏感信息、外部链接、合理使用规则、纠错责任、不提供游戏下载以及补丁后信息可能变化的说明。',
-    'map-rotation': '查看 PEAK 今日地图与地图轮换，了解当前路线、生物群系顺序、17:00 UTC 重置时间、每日更新状态和资料来源。页面也整理路线规划、装备准备、日期记录、版本信息与补丁背景；如果数据仍在等待，请在游戏内确认当前路线，不要把旧截图当作实时结果，再开始长线攀登，并按当前版本判断旧建议是否仍然适用，同时记录本次路线。',
+    'map-rotation': dailyMapLocales.zh.description,
     achievements: '查看 PEAK 成就攻略，追踪 Steam 成就、区分游戏内徽章，了解自定义局限制、版本变化、路线影响、解锁条件、资料来源、联机差异、来源核对和成就未解锁时的排查步骤。',
     'peak-game-update': '跟进 PEAK 游戏更新，查看新地图、补丁说明、地图轮换变化、今日地图入口和官方 Steam 新闻来源，出发前核对当前版本、路线状态、旧攻略适用性和后续调整建议。',
   },
@@ -1568,7 +1462,7 @@ function renderHomeBase(locale, options = {}) {
     const dailyMapLink = index === 3 ? ` <a href="${routeFor(locale, 'map-rotation')}#today-map">${escapeHtml((todayMapCopy[locale] ?? todayMapCopy.en).title)}</a>` : '';
     return `<details${index === 0 ? ' open' : ''}><summary><h3>${escapeHtml(question)}</h3></summary><p>${escapeHtml(answer)}${dailyMapLink}</p></details>`;
   }).join('');
-  return `${head(locale, 'home', meta.title, meta.description, meta.schema, { copy })}\n  <body><div id="top"></div>${header(locale, 'home', copy)}<div class="ad-slot ad-slot-top">${nativeBanner()}</div><main><section class="hero" aria-labelledby="hero-title"><div class="hero-backdrop" aria-hidden="true"></div><div class="container hero-grid"><div class="hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(copy.hero.eyebrow)}</p><h1 id="hero-title">${escapeHtml(copy.hero.title)}</h1><p class="hero-lede">${escapeHtml(copy.hero.lede)}</p><div class="hero-actions"><a class="button button-primary" href="#maps">${escapeHtml(copy.hero.primary)} <span aria-hidden="true">\u2192</span></a><a class="button button-quiet" href="#database">${escapeHtml(copy.hero.secondary)}</a></div><div class="hero-facts" aria-label="${escapeHtml(copy.ui.home)}"><div><strong>${heroFacts[0][1]}</strong><span>${escapeHtml(heroFacts[0][0])}</span></div><div><strong>${heroFacts[1][1]}</strong><span>${escapeHtml(heroFacts[1][0])}</span></div><div><strong>${heroFacts[2][1]}</strong><span>${escapeHtml(heroFacts[2][0])}</span></div></div></div><figure class="hero-media media-frame"><img src="/media/peak-climb-ridge.webp" alt="${escapeHtml(copy.hero.imageAlt)}" width="1200" height="675" fetchpriority="high" /><figcaption>${escapeHtml(copy.hero.caption)}</figcaption></figure></div></section><section class="signal-band" aria-label="${escapeHtml(copy.ui.home)}"><div class="container signal-grid"><div class="signal-item"><span class="signal-label">${escapeHtml(copy.signal.patch)}</span><strong>${escapeHtml(copy.signal.patchValue)}</strong><span>${escapeHtml(copy.signal.patchNote)}</span></div><div class="signal-item"><span class="signal-label">${escapeHtml(copy.signal.update)}</span><strong>${escapeHtml(copy.signal.updateValue)}</strong><span>${escapeHtml(copy.signal.updateNote)}</span></div><div class="signal-item"><span class="signal-label">${escapeHtml(copy.signal.source)}</span><strong>${escapeHtml(copy.signal.sourceValue)}</strong><span>${escapeHtml(copy.signal.sourceNote)}</span></div><a class="signal-link" href="#updates">${escapeHtml(copy.signal.view)} <span aria-hidden="true">\u2192</span></a></div></section><section id="maps" class="section section-map" aria-labelledby="maps-title"><div class="container section-heading-row"><div><p class="eyebrow">${escapeHtml(copy.map.eyebrow)}</p><h2 id="maps-title">${escapeHtml(copy.map.title)}</h2></div><span class="section-kicker">${escapeHtml(copy.map.kicker)}</span></div><div class="container map-layout"><figure class="media-frame map-media"><img src="/media/peak-map-route.webp" alt="${escapeHtml(copy.map.imageAlt)}" width="1200" height="675" loading="lazy" /><figcaption>${escapeHtml(copy.map.caption)}</figcaption></figure><div class="map-panel"><div class="panel-topline"><span class="status-pill"><i></i>${escapeHtml(copy.map.status)}</span><time datetime="2026-08-17">${escapeHtml(copy.map.date)}</time></div><h3>${escapeHtml(copy.map.heading)}</h3><p class="panel-lede">${escapeHtml(copy.map.lede)}</p><div class="route-list" role="list" aria-label="${escapeHtml(copy.map.title)}">${stepMarkup}</div><button class="text-button" type="button" data-copy="${escapeHtml(copy.map.copyValue)}">${escapeHtml(copy.map.copy)} <span aria-hidden="true">\u2192</span></button><p class="copy-status" role="status" aria-live="polite"></p></div></div><div class="container prose-grid">${copy.map.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div></section><section id="updates" class="section section-updates" aria-labelledby="updates-title"><div class="container section-heading-row"><div><p class="eyebrow">${escapeHtml(copy.updates.eyebrow)}</p><h2 id="updates-title">${escapeHtml(copy.updates.title)}</h2></div><a class="section-link" href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noreferrer">${escapeHtml(copy.updates.link)} <span aria-hidden="true">\u2192</span></a></div><div class="container updates-layout"><div class="update-feed"><div class="update-list" id="update-list">${updateMarkup}</div>${updateToggle}</div><figure class="media-frame update-media"><img src="/media/peak-final-ascent.webp" alt="${escapeHtml(copy.updates.imageAlt)}" width="1280" height="600" loading="lazy" /><figcaption>${escapeHtml(copy.updates.caption)}</figcaption></figure></div><div class="container prose-grid prose-grid-wide">${copy.updates.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div></section><section id="database" class="section section-database" aria-labelledby="database-title"><div class="container section-heading-row"><div><p class="eyebrow">${escapeHtml(copy.database.eyebrow)}</p><h2 id="database-title">${escapeHtml(copy.database.title)}</h2></div><span class="section-kicker">${escapeHtml(copy.database.kicker)}</span></div><div class="container database-toolbar"><label class="search-box" for="item-search"><span aria-hidden="true">\u2315</span><input id="item-search" type="search" placeholder="${escapeHtml(copy.database.search)}" autocomplete="off" /><kbd>/</kbd></label><div class="filter-group" role="group" aria-label="${escapeHtml(copy.database.title)}">${copy.database.filters.map((filter, index) => `<button class="filter-button${index === 0 ? ' is-active' : ''}" type="button" data-filter="${['all', 'gear', 'food', 'utility'][index]}">${escapeHtml(filter)}</button>`).join('')}</div>${itemViewLink}<span id="item-count" class="result-count">${copy.items.length}</span></div><div class="container item-grid" id="item-grid">${itemCards(copy)}</div><div class="container database-actions">${itemBrowseToggle}</div><p id="empty-items" class="empty-items" hidden>${escapeHtml(copy.database.empty)}</p><div class="container database-note"><span class="note-mark">i</span><p>${escapeHtml(copy.database.note)}</p></div></section><section class="section section-badges" aria-labelledby="badges-title"><div class="container badges-layout"><div><p class="eyebrow">${escapeHtml(copy.badges.eyebrow)}</p><h2 id="badges-title">${escapeHtml(copy.badges.title)}</h2><p class="section-lede">${escapeHtml(copy.badges.lede)}</p><div class="badge-stats">${copy.badges.stats.map(([number, label]) => `<div><strong>${escapeHtml(number)}</strong><span>${escapeHtml(label)}</span></div>`).join('')}</div><a class="button button-outline" href="#faq">${escapeHtml(copy.badges.button)} <span aria-hidden="true">\u2192</span></a></div><div class="badge-list" role="list" aria-label="${escapeHtml(copy.badges.title)}">${badgeMarkup}</div></div></section><section id="guides" class="section section-guide" aria-labelledby="guides-title"><div class="container guide-layout"><div class="guide-copy"><p class="eyebrow">${escapeHtml(copy.guide.eyebrow)}</p><h2 id="guides-title">${escapeHtml(copy.guide.title)}</h2><p class="section-lede">${escapeHtml(copy.guide.lede)}</p><div class="guide-points">${guideMarkup}</div></div><figure class="media-frame guide-media"><img src="/media/peak-coop-climb.webp" alt="${escapeHtml(copy.guide.imageAlt)}" width="1200" height="675" loading="lazy" /><figcaption>${escapeHtml(copy.guide.caption)}</figcaption></figure></div><div class="container prose-grid prose-grid-wide guide-prose">${copy.guide.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div></section><section id="faq" class="section section-faq" aria-labelledby="faq-title"><div class="container section-heading-row"><div><p class="eyebrow">${escapeHtml(copy.faq.eyebrow)}</p><h2 id="faq-title">${escapeHtml(copy.faq.title)}</h2></div><span class="section-kicker">${escapeHtml(copy.faq.kicker)}</span></div><div class="container faq-grid">${faqMarkup}</div></section><section class="source-section" aria-labelledby="sources-title"><div class="container source-inner"><div><p class="eyebrow">${escapeHtml(copy.source.eyebrow)}</p><h2 id="sources-title">${escapeHtml(copy.source.title)}</h2></div><div class="source-copy"><p>${escapeHtml(copy.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.steamStore)} <span aria-hidden="true">\u2192</span></a><a href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.steamNews)} <span aria-hidden="true">\u2192</span></a></div></div></div></section></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
+  return `${head(locale, 'home', meta.title, meta.description, meta.schema, { copy })}\n  <body><div id="top"></div>${header(locale, 'home', copy)}<div class="ad-slot ad-slot-top">${nativeBanner()}</div><main><section class="hero" aria-labelledby="hero-title"><div class="hero-backdrop" aria-hidden="true"></div><div class="container hero-grid"><div class="hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(copy.hero.eyebrow)}</p><h1 id="hero-title">${escapeHtml(copy.hero.title)}</h1><p class="hero-lede">${escapeHtml(copy.hero.lede)}</p><div class="hero-actions"><a class="button button-primary" href="#maps">${escapeHtml(copy.hero.primary)} <span aria-hidden="true">\u2192</span></a><a class="button button-quiet" href="#database">${escapeHtml(copy.hero.secondary)}</a></div><div class="hero-facts" aria-label="${escapeHtml(copy.ui.home)}"><div><strong>${heroFacts[0][1]}</strong><span>${escapeHtml(heroFacts[0][0])}</span></div><div><strong>${heroFacts[1][1]}</strong><span>${escapeHtml(heroFacts[1][0])}</span></div><div><strong>${heroFacts[2][1]}</strong><span>${escapeHtml(heroFacts[2][0])}</span></div></div></div><figure class="hero-media media-frame"><img src="/media/peak-climb-ridge.webp" alt="${escapeHtml(copy.hero.imageAlt)}" width="1200" height="675" fetchpriority="high" /><figcaption>${escapeHtml(copy.hero.caption)}</figcaption></figure></div></section><section class="signal-band" aria-label="${escapeHtml(copy.ui.home)}"><div class="container signal-grid"><div class="signal-item"><span class="signal-label">${escapeHtml(copy.signal.patch)}</span><strong>${escapeHtml(copy.signal.patchValue)}</strong><span>${escapeHtml(copy.signal.patchNote)}</span></div><div class="signal-item"><span class="signal-label">${escapeHtml(copy.signal.update)}</span><strong>${escapeHtml(copy.signal.updateValue)}</strong><span>${escapeHtml(copy.signal.updateNote)}</span></div><div class="signal-item"><span class="signal-label">${escapeHtml(copy.signal.source)}</span><strong>${escapeHtml(copy.signal.sourceValue)}</strong><span>${escapeHtml(copy.signal.sourceNote)}</span></div><a class="signal-link" href="#updates">${escapeHtml(copy.signal.view)} <span aria-hidden="true">\u2192</span></a></div></section><section id="maps" class="section section-map" aria-labelledby="maps-title"><div class="container section-heading-row"><div><p class="eyebrow">${escapeHtml(copy.map.eyebrow)}</p><h2 id="maps-title">${escapeHtml(copy.map.title)}</h2></div><span class="section-kicker">${escapeHtml(copy.map.kicker)}</span></div><div class="container map-layout"><figure class="media-frame map-media"><img src="/media/peak-map-route.webp" alt="${escapeHtml(copy.map.imageAlt)}" width="1200" height="675" loading="lazy" /><figcaption>${escapeHtml(copy.map.caption)}</figcaption></figure><div class="map-panel"><div class="panel-topline"><span class="status-pill"><i></i>${escapeHtml(copy.map.status)}</span><time datetime="2026-08-17">${escapeHtml(copy.map.date)}</time></div><h3>${escapeHtml(copy.map.heading)}</h3><p class="panel-lede">${escapeHtml(copy.map.lede)}</p><div class="route-list" role="list" aria-label="${escapeHtml(copy.map.title)}">${stepMarkup}</div><button class="text-button" type="button" data-copy="${escapeHtml(copy.map.copyValue)}">${escapeHtml(copy.map.copy)} <span aria-hidden="true">\u2192</span></button><p class="copy-status" role="status" aria-live="polite"></p></div></div><div class="container prose-grid">${copy.map.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div></section><section id="updates" class="section section-updates" aria-labelledby="updates-title"><div class="container section-heading-row"><div><p class="eyebrow">${escapeHtml(copy.updates.eyebrow)}</p><h2 id="updates-title">${escapeHtml(copy.updates.title)}</h2></div><a class="section-link" href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noreferrer">${escapeHtml(copy.updates.link)} <span aria-hidden="true">\u2192</span></a></div><div class="container updates-layout"><div class="update-feed"><div class="update-list" id="update-list">${updateMarkup}</div>${updateToggle}</div><figure class="media-frame update-media"><img src="/media/peak-final-ascent.webp" alt="${escapeHtml(copy.updates.imageAlt)}" width="1280" height="600" loading="lazy" /><figcaption>${escapeHtml(copy.updates.caption)}</figcaption></figure></div><div class="container prose-grid prose-grid-wide">${copy.updates.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div></section><section id="database" class="section section-database" aria-labelledby="database-title"><div class="container section-heading-row"><div><p class="eyebrow">${escapeHtml(copy.database.eyebrow)}</p><h2 id="database-title">${escapeHtml(copy.database.title)}</h2></div><span class="section-kicker">${escapeHtml(copy.database.kicker)}</span></div><div class="container database-toolbar"><label class="search-box" for="item-search"><span aria-hidden="true">\u2315</span><input id="item-search" type="search" placeholder="${escapeHtml(copy.database.search)}" autocomplete="off" /><kbd>/</kbd></label><div class="filter-group" role="group" aria-label="${escapeHtml(copy.database.title)}">${copy.database.filters.map((filter, index) => `<button class="filter-button${index === 0 ? ' is-active' : ''}" type="button" data-filter="${['all', 'gear', 'food', 'utility'][index]}">${escapeHtml(filter)}</button>`).join('')}</div>${itemViewLink}<span id="item-count" class="result-count">${copy.items.length}</span></div><div class="container item-grid" id="item-grid">${itemCards(copy)}</div><div class="container database-actions">${itemBrowseToggle}</div><p id="empty-items" class="empty-items" hidden>${escapeHtml(copy.database.empty)}</p><div class="container database-note"><span class="note-mark">i</span><p>${escapeHtml(copy.database.note)}</p></div></section><section class="section section-badges" aria-labelledby="badges-title"><div class="container badges-layout"><div><p class="eyebrow">${escapeHtml(copy.badges.eyebrow)}</p><h2 id="badges-title">${escapeHtml(copy.badges.title)}</h2><p class="section-lede">${escapeHtml(copy.badges.lede)}</p><div class="badge-stats">${copy.badges.stats.map(([number, label]) => `<div><strong>${escapeHtml(number)}</strong><span>${escapeHtml(label)}</span></div>`).join('')}</div><a class="button button-outline" href="#faq">${escapeHtml(copy.badges.button)} <span aria-hidden="true">\u2192</span></a></div><div class="badge-list" role="list" aria-label="${escapeHtml(copy.badges.title)}">${badgeMarkup}</div></div></section><section id="guides" class="section section-guide" aria-labelledby="guides-title"><div class="container guide-layout"><div class="guide-copy"><p class="eyebrow">${escapeHtml(copy.guide.eyebrow)}</p><h2 id="guides-title">${escapeHtml(copy.guide.title)}</h2><p class="section-lede">${escapeHtml(copy.guide.lede)}</p><div class="guide-points">${guideMarkup}</div></div><figure class="media-frame guide-media"><img src="/media/peak-coop-climb.webp" alt="${escapeHtml(copy.guide.imageAlt)}" width="1200" height="675" loading="lazy" /><figcaption>${escapeHtml(copy.guide.caption)}</figcaption></figure></div><div class="container prose-grid prose-grid-wide guide-prose">${copy.guide.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div></section><section id="faq" class="section section-faq" aria-labelledby="faq-title"><div class="container section-heading-row"><div><p class="eyebrow">${escapeHtml(copy.faq.eyebrow)}</p><h2 id="faq-title">${escapeHtml(copy.faq.title)}</h2></div><span class="section-kicker">${escapeHtml(copy.faq.kicker)}</span></div><div class="container faq-grid">${faqMarkup}</div></section><section class="source-section" aria-labelledby="sources-title"><div class="container source-inner"><div><p class="eyebrow">${escapeHtml(copy.source.eyebrow)}</p><h2 id="sources-title">${escapeHtml(copy.source.title)}</h2></div><div class="source-copy"><p>${escapeHtml(copy.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.steamStore)} <span aria-hidden="true">\u2192</span></a><a href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noreferrer">${escapeHtml(copy.ui.steamNews)} <span aria-hidden="true">\u2192</span></a></div></div></div></section></main>${footer(locale, copy)}<script src="/app.js?v=20261122-daily-map" defer></script></body></html>`;
 }
 
 export function renderHome(locale, options = {}) {
@@ -1582,7 +1476,8 @@ export function renderHome(locale, options = {}) {
     .replace('<a class="button button-primary" href="#maps">', `<a class="button button-primary" href="${todayMapHref}">`)
     .replace(/(<section id="maps"[\s\S]*?<div class="container section-heading-row">[\s\S]*?)<span class="section-kicker">([\s\S]*?)<\/span>/, `$1<a class="section-kicker" href="${todayMapHref}">$2</a>`);
   const buildTimestamp = options.buildTimestamp ?? new Date().toISOString();
-  const dailySummary = `<div class="container home-daily-tool">${renderDailyToolSummary(locale, options.todayMap, buildDate, buildTimestamp)}</div>`;
+  const snapshot = normalizeTodayMap(options.todayMap, buildDate, buildTimestamp);
+  const dailySummary = renderDailyMapSummary(locale, snapshot, buildTimestamp, { compact: true });
   const mapsMarker = '<section id="maps"';
   const updatesMarker = '<section id="updates"';
   const publishedArticles = options.publishedArticles ?? articleOrder;
@@ -1592,7 +1487,10 @@ export function renderHome(locale, options = {}) {
     : '';
   const bandCopy = articleLinkBandCopy[locale] ?? articleLinkBandCopy.en;
   const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(bandCopy.aria)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(bandCopy.eyebrow)}</p><h2>${escapeHtml(bandCopy.title)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a><a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a>${articleLinks}${germanAmuletLinks}</div></div></section>`;
-  return html.replace(mapsMarker, `${dailySummary}${mapsMarker}`).replace(updatesMarker, `${linkBand}${updatesMarker}`);
+  const withSummary = locale === 'es'
+    ? html.replace('</h1>', `</h1>${dailySummary}`)
+    : html.replace(mapsMarker, `<div class="container home-daily-tool">${dailySummary}</div>${mapsMarker}`);
+  return withSummary.replace(updatesMarker, `${linkBand}${updatesMarker}`);
 }
 
 function renderArticleImage(image, localizeMapMedia = true) {
@@ -1677,6 +1575,9 @@ function renderMapGuideHtml(locale, options = {}) {
   const sourceCopy = locales[locale];
   const copy = { ...sourceCopy, ui: { ...sourceCopy.ui, snapshot: formatSnapshotDate(locale, buildDate) } };
   const guide = mapGuides[locale];
+  const buildTimestamp = options.buildTimestamp ?? new Date().toISOString();
+  const snapshot = normalizeTodayMap(options.todayMap, buildDate, buildTimestamp);
+  const supporting = renderMapSupportingContent(locale, snapshot, options.updateData, buildDate);
   activeGuideLocale = locale;
   const toc = guide.sections.map((section, index) => `<li><a href="#${escapeHtml(section.id)}">${index + 1}. ${escapeHtml(section.title)}</a></li>`).join('');
   const sections = guide.sections.map((section) => {
@@ -1696,23 +1597,11 @@ function renderMapGuideHtml(locale, options = {}) {
     ? ['grossmut-des-pfadfinders', 'beharrlichkeit-des-pfadfinders'].map((page) => `<a href="${routeFor(locale, page)}">${escapeHtml(germanAmuletPages[page].h1)} <span aria-hidden="true">\u2192</span></a>`).join('')
     : '';
   return `${head(locale, 'map-rotation', guide.meta.title, guide.meta.description, guide.meta.schema, options)}
-  <body class="article-page"><div id="top"></div>${header(locale, 'map-rotation', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(guide.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(guide.related.homeAnchor)}</p><h1 id="article-title">${escapeHtml(guide.h1)}</h1><p class="article-hero-lede">${escapeHtml(guide.intro)}</p></div>${renderArticleImage({ src: '/media/peak-map-route.webp', alt: locale === 'en' ? 'PEAK route screenshot with a rope crossing a volcanic hazard' : guide.sections[1].image.alt, caption: locale === 'en' ? 'Official Steam screenshot - a route decision is more useful than an unverified live-map claim.' : guide.sections[1].image.caption })}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#rotation-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(guide.answerLabel)}</p><h2 id="answer-title">${escapeHtml(guide.answerLabel)}</h2><p>${escapeHtml(guide.answer)}</p></section>${sections}<section id="rotation-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noopener">${escapeHtml(guide.source.news)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#maps">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a>${mapRelatedLinks}${germanAmuletLinks}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
+  <body class="article-page"><div id="top"></div>${header(locale, 'map-rotation', copy)}<main class="article-main"><section class="container map-guide-hero" aria-labelledby="article-title"><h1 id="article-title">${escapeHtml(guide.h1)}</h1>${renderDailyMapSummary(locale, snapshot, buildTimestamp)}</section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#rotation-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a><a class="article-toc-faq" href="#version-timeline">${escapeHtml(dailyMapLocales[locale].timeline)} <span aria-hidden="true">→</span></a></aside><article class="article-copy">${sections}<section id="rotation-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noopener">${escapeHtml(guide.source.news)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#maps">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a>${mapRelatedLinks}${germanAmuletLinks}</nav></article></div>${supporting}</main>${footer(locale, copy)}<script src="/app.js?v=20261122-daily-map" defer></script></body></html>`;
 }
 
 export function renderMapGuide(locale, options = {}) {
-  const html = normalizeSteamNewsLinks(renderMapGuideHtml(locale, options));
-  const marker = '<div class="container article-layout">';
-  const publishedArticles = options.publishedArticles ?? articleOrder;
-  const scheduleBandCopy = articleLocaleTranslations[locale]?.['peak-map-rotation-schedule']?.scheduleBand ?? {
-    aria: 'PEAK schedule guide',
-    eyebrow: 'PEAK schedule guide',
-    title: 'Need the reset time? Check the PEAK Map Rotation Schedule.',
-    link: 'Read the schedule',
-  };
-  const scheduleBand = publishedArticles.includes('peak-map-rotation-schedule')
-    ? `<section class="article-link-band" aria-label="${escapeHtml(scheduleBandCopy.aria)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(scheduleBandCopy.eyebrow)}</p><h2>${escapeHtml(scheduleBandCopy.title)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'peak-map-rotation-schedule')}">${escapeHtml(scheduleBandCopy.link)} <span aria-hidden="true">\u2192</span></a></div></div></section>`
-    : '';
-  return html.replace(marker, `${scheduleBand}${marker}`);
+  return normalizeSteamNewsLinks(renderMapGuideHtml(locale, options));
 }
 
 function renderAchievementGuideHtml(locale, options = {}) {

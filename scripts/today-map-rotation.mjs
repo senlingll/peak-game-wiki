@@ -9,6 +9,14 @@ export const BIOME_DISPLAY_NAMES = {
   caldera: 'Caldera', kiln: 'The Kiln', gloom: 'Gloom', citadel: 'Citadel',
 };
 
+// The observed 17:00 UTC schedule is the fallback when no current route is available.
+export function nextObservedReset(now) {
+  const reset = new Date(now);
+  reset.setUTCHours(17, 0, 0, 0);
+  if (reset <= now) reset.setUTCDate(reset.getUTCDate() + 1);
+  return reset;
+}
+
 // Parse supported constants and data only; never execute downloaded JavaScript.
 export function parseWikiRotation(timerText, mapsText) {
   const constants = {};
