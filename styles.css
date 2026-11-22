@@ -3166,3 +3166,183 @@ img {
     scroll-margin-top: 76px;
   }
 }
+
+.room-diagnostic-hero {
+  padding-block: clamp(18px, 4vw, 48px) 18px;
+}
+
+.room-diagnostic-hero h1 {
+  margin: 0 0 16px;
+  font-size: clamp(1.85rem, 4.5vw, 3.75rem);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.room-diagnostic-hero .article-hero-lede {
+  margin: 16px 0 0;
+}
+
+.room-diagnostic {
+  padding: clamp(14px, 3vw, 26px);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--lavender-deep);
+  border-radius: 12px;
+  background: var(--surface);
+  scroll-margin-top: 100px;
+}
+
+.room-diagnostic h2 {
+  margin: 0 0 4px;
+  font-size: clamp(1.125rem, 2.65vw, 1.55rem);
+  line-height: 1.25;
+}
+
+.room-diagnostic > p {
+  margin: 0 0 14px;
+  color: var(--ink-soft);
+}
+
+.room-diagnostic-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+  max-width: 760px;
+  margin-bottom: 12px;
+}
+
+.room-diagnostic-fields label {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  font-weight: 650;
+}
+
+.room-diagnostic-fields select,
+.room-diagnostic textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 9px;
+  border: 1px solid var(--ink-soft);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+
+.room-diagnostic select:focus-visible,
+.room-diagnostic button:focus-visible,
+.room-diagnostic a:focus-visible,
+.room-diagnostic summary:focus-visible,
+.room-diagnostic h3:focus-visible {
+  outline: 2px solid var(--lavender-deep);
+  outline-offset: 3px;
+}
+
+.room-diagnostic .button-primary {
+  background: var(--ink);
+  color: var(--surface);
+}
+
+.room-diagnostic .button-primary:hover {
+  background: var(--lavender-deep);
+}
+
+.room-diagnostic-result {
+  max-width: 850px;
+  margin-block: 16px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.room-diagnostic h3 {
+  margin: 0;
+  line-height: 1.35;
+  scroll-margin-top: 90px;
+}
+
+.room-diagnostic ol {
+  margin: 8px 0 12px;
+  padding-inline-start: 1.5em;
+}
+
+.room-diagnostic li + li {
+  margin-top: 5px;
+}
+
+.room-diagnostic-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+
+.room-diagnostic .section-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.room-diagnostic-feedback {
+  min-width: 0;
+  margin: 12px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.room-diagnostic-feedback legend {
+  margin-bottom: 5px;
+  font-weight: 650;
+}
+
+.room-diagnostic-feedback [aria-pressed="true"] {
+  background: var(--mint);
+  color: var(--ink);
+}
+
+.room-diagnostic-feedback button:disabled {
+  cursor: default;
+}
+
+.room-diagnostic [role="status"] {
+  margin: 4px 0 0;
+  font-size: .9rem;
+}
+
+.room-diagnostic [role="status"]:empty {
+  margin: 0;
+}
+
+.room-diagnostic-checklist {
+  margin-top: 8px;
+}
+
+.room-diagnostic-checklist summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding-block: 9px;
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.room-diagnostic-checklist article {
+  margin-bottom: 12px;
+  padding: 10px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.room-diagnostic [hidden] {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .room-diagnostic {
+    scroll-margin-top: 76px;
+  }
+
+  .room-diagnostic-fields label:nth-child(n + 3) {
+    grid-column: 1 / -1;
+  }
+}

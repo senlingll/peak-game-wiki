@@ -1,4 +1,5 @@
 import { mapGuides } from './map-guide.mjs';
+import { roomDiagnosticLocales } from './room-diagnostic-locales.mjs';
 import { dailyMapLocales } from './daily-map-locales.mjs';
 import { todayMapCopy } from './today-map-copy.mjs';
 import { achievementGuides } from './achievement-guide.mjs';
@@ -15,7 +16,7 @@ import { germanAmuletPages } from './german-amulet-pages.mjs';
 import { REDIRECT_ARTICLES, isGonePath, isLocalizedRedirectRoute, isRedirectedArticle } from './route-policy.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
-const STYLESHEET_HREF = '/styles.css?v=20261122-daily-map';
+const STYLESHEET_HREF = '/styles.css?v=20261122-room-diagnostic';
 const STEAM_NEWS_URL = 'https://store.steampowered.com/news/app/3527290';
 const STEAM_NEWS_API_HTML_URL = 'https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json';
 const SUPPORT_EMAIL = 'support@peak-game.wiki';
@@ -533,7 +534,7 @@ for (const [code, copy] of Object.entries(dailyMapLocales)) {
 }
 
 const roomCodeCurrentCopy = {
-  en: { title: 'PEAK Room Codes: Current Crossplay Rules', intro: 'Patch 3.1.0 lengthened room codes. The host copies the current code from the lobby pause menu; the joining player enters it through JOIN GAME. Crossplay now covers Steam, PS5, Xbox Series X|S and Nintendo Switch 2, while progress does not transfer between platforms. Controller sprint and climbing use hold input after 3.1.0.', answer: 'Use the current room code shown by the host, then confirm the platform and build before joining. A room code joins an existing lobby; it is not matchmaking.' },
+  en: { title: 'PEAK Room Codes and Crossplay', intro: 'Patch 3.1.0 lengthened room codes. The host copies the current code from the lobby pause menu; the joining player enters it through JOIN GAME. Crossplay now covers Steam, PS5, Xbox Series X|S and Nintendo Switch 2, while progress does not transfer between platforms. Controller sprint and climbing use hold input after 3.1.0.', answer: 'Use the current room code shown by the host, then confirm the platform and build before joining. A room code joins an existing lobby; it is not matchmaking.' },
   zh: { title: 'PEAK 房间码：现行跨平台规则', intro: 'Patch 3.1.0 后房间码已加长。房主在大厅暂停菜单复制当前代码，加入方在 JOIN GAME 输入。现在 Steam、PS5、Xbox Series X|S 与 Nintendo Switch 2 可通过房间码跨平台联机，但进度不跨平台转移。3.1.0 后手柄冲刺和攀爬改为按住操作。', answer: '使用房主当前显示的房间码，加入前确认平台和版本。房间码用于进入已有大厅，不是随机匹配。' },
   es: { title: 'Códigos de sala de PEAK: reglas actuales', intro: 'El Patch 3.1.0 alargó los códigos de sala. El anfitrión copia el código en la pausa de la sala y quien entra lo escribe en JOIN GAME. El juego cruzado cubre Steam, PS5, Xbox Series X|S y Nintendo Switch 2, pero el progreso no se transfiere. Con mando, sprintar y escalar requieren mantener pulsado.', answer: 'Usa el código que muestra el anfitrión y confirma plataforma y versión. El código entra en una sala existente; no es matchmaking.' },
   ja: { title: 'PEAK ルームコード：現在のクロスプレイ規則', intro: 'Patch 3.1.0 でルームコードが長くなりました。ホストはロビーのポーズメニューでコピーし、参加者は JOIN GAME に入力します。Steam、PS5、Xbox Series X|S、Nintendo Switch 2 のクロスプレイに対応しますが、進行状況は共有されません。コントローラーのダッシュと登攀は長押しです。', answer: 'ホストが表示する現在のコードとプラットフォーム、バージョンを確認して参加します。コードは既存ロビー用で、マッチメイキングではありません。' },
@@ -901,7 +902,6 @@ function renderMapSupportingContent(locale, snapshot, updateData, buildDate) {
   const copy = todayMapCopy[locale];
   const details = todayMapDetailCopy[locale];
   const releases = officialEntries(updateData, buildDate);
-  const roomCodes = roomCodeCurrentCopy[locale];
   return `<div class="container map-supporting">
     ${snapshot.media.length ? `<div data-map-reference>${renderTodayMapMedia(locale, snapshot)}
       <p class="article-data-note">${escapeHtml(copy.attributionPrefix)}<a href="${escapeHtml(snapshot.source.url)}">${escapeHtml(copy.wikiSourceLabel)}</a>${escapeHtml(copy.attributionBetween)}<a href="${escapeHtml(snapshot.license?.url || CC_BY_SA_URL)}" rel="license">${escapeHtml(copy.licenseLabel)}</a></p>
@@ -913,7 +913,7 @@ function renderMapSupportingContent(locale, snapshot, updateData, buildDate) {
         <summary>${escapeHtml(details.poolChanges)}</summary>
         <ul>${details.poolItems.map(([version, note]) => `<li><strong>${escapeHtml(version)}</strong> ${escapeHtml(note)}</li>`).join('')}</ul>
       </details>
-      <a class="section-link" href="${routeFor(locale, 'room-codes')}">${escapeHtml(roomCodes.title)} <span aria-hidden="true">→</span></a>
+      <a class="section-link" href="${routeFor(locale, 'room-codes#connection-check')}">${escapeHtml(roomDiagnosticLocales[locale].title)} <span aria-hidden="true">→</span></a>
     </section>
   </div>`;
 }
@@ -1693,9 +1693,75 @@ function renderNewArticleSection(locale, section, options) {
   return `<section id="${escapeHtml(section.id)}" class="article-section"><h2>${escapeHtml(section.title)}</h2>${paragraphs}${dataMarkup}${image}${bullets}${table}${afterTable}</section>`;
 }
 
+const ROOM_PLATFORMS = [
+  ['steam', 'Steam (PC)'],
+  ['ps5', 'PS5'],
+  ['xbox', 'Xbox Series X|S'],
+  ['switch2', 'Switch 2'],
+];
+
+function renderRoomDiagnostic(locale) {
+  const config = roomDiagnosticLocales[locale];
+  const [show, browse, support, copy, feedback, solved, unresolved, recorded, copied, manual] = config.actions;
+  const platformOptions = [...ROOM_PLATFORMS, ['unknown', config.unknown]];
+  const select = (name, label, options) => `
+    <label for="room-${name}"><span>${escapeHtml(label)}</span>
+      <select id="room-${name}" name="${name}" required>
+        <option value="">${escapeHtml(config.select)}</option>
+        ${options.map(([value, text]) => `<option value="${value}">${escapeHtml(text)}</option>`).join('')}
+      </select>
+    </label>`;
+  const methods = ['code', 'invite', 'other'].map((id, index) => [id, config.methods[index]]);
+  const symptoms = ['code', 'loading', 'invite', 'photon', 'voice', 'other'].map((id, index) => [id, config.symptoms[index]]);
+  const [hostLabel, guestLabel, methodLabel, symptomLabel] = config.fields;
+  const checks = Object.entries(config.cases).map(([id, [heading, ...steps]]) => `
+    <article data-room-case="${id}">
+      <h3>${escapeHtml(heading)}</h3>
+      <ol>${steps.map((step) => `<li>${escapeHtml(step)}</li>`).join('')}</ol>
+    </article>`).join('');
+  return `<section id="connection-check" class="room-diagnostic" data-room-diagnostic aria-labelledby="room-diagnostic-title">
+    <h2 id="room-diagnostic-title">${escapeHtml(config.title)}</h2>
+    <p>${escapeHtml(config.intro)}</p>
+    <form data-room-form hidden>
+      <div class="room-diagnostic-fields">
+        ${select('host', hostLabel, platformOptions)}
+        ${select('guest', guestLabel, platformOptions)}
+        ${select('method', methodLabel, methods)}
+        ${select('symptom', symptomLabel, symptoms)}
+      </div>
+      <button class="button button-primary" type="submit">${escapeHtml(show)}</button>
+    </form>
+    <div class="room-diagnostic-result" data-room-result hidden>
+      <h3 tabindex="-1" data-room-result-title></h3>
+      <ol data-room-steps></ol>
+      <div class="room-diagnostic-actions">
+        <button type="button" class="button button-outline" data-room-copy data-copied="${escapeHtml(copied)}" data-manual="${escapeHtml(manual)}">${escapeHtml(copy)}</button>
+        <a class="section-link" href="https://landfall.se/peak-faq">${escapeHtml(support)} <span aria-hidden="true">→</span></a>
+      </div>
+      <textarea rows="6" readonly hidden data-room-copy-text aria-label="${escapeHtml(copy)}"></textarea>
+      <p data-room-copy-status role="status"></p>
+      <fieldset class="room-diagnostic-feedback" data-room-feedback data-recorded="${escapeHtml(recorded)}">
+        <legend>${escapeHtml(feedback)}</legend>
+        <div class="room-diagnostic-actions">
+          <button type="button" class="button button-outline" data-room-vote="solved" aria-pressed="false">${escapeHtml(solved)}</button>
+          <button type="button" class="button button-outline" data-room-vote="unresolved" aria-pressed="false">${escapeHtml(unresolved)}</button>
+        </div>
+        <p data-room-vote-status role="status"></p>
+      </fieldset>
+    </div>
+    <details class="room-diagnostic-checklist">
+      <summary>${escapeHtml(browse)}</summary>
+      <div>${checks}</div>
+      <a class="section-link" href="https://landfall.se/peak-faq">${escapeHtml(support)} <span aria-hidden="true">→</span></a>
+    </details>
+  </section>`;
+}
+
 export function renderArticlePage(locale, slug, options = {}) {
   let article = localizedArticleGuide(locale, slug);
   if (!article) throw new Error(`Missing article configuration: ${slug}`);
+  const roomDiagnostic = slug === 'room-codes' ? roomDiagnosticLocales[locale] : null;
+  if (roomDiagnostic) article = { ...article, meta: { ...article.meta, description: roomDiagnostic.description } };
   const sourceCopy = locales[locale];
   const buildDate = resolveBuildDate(options);
   if (slug === 'peak-game-update') {
@@ -1718,8 +1784,11 @@ export function renderArticlePage(locale, slug, options = {}) {
     const pagePath = String(page).split('#', 1)[0];
     return pagePath === 'map-rotation' || pagePath === 'achievements' || pagePath === 'items' || pagePath === 'badges-guide' || publishedArticles.includes(pagePath);
   }).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
+  const hero = roomDiagnostic
+    ? `<section class="container room-diagnostic-hero" aria-labelledby="article-title"><h1 id="article-title">${escapeHtml(article.h1)}</h1>${renderRoomDiagnostic(locale)}<p class="article-hero-lede">${renderArticleInline(article.intro, locale, publishedArticles)}</p></section>`
+    : `<section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(article.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(article.h1)}</p><h1 id="article-title">${escapeHtml(article.h1)}</h1><p class="article-hero-lede">${renderArticleInline(article.intro, locale, publishedArticles)}</p></div>${renderArticleImage({ ...article.heroImage, loading: 'eager', fetchpriority: 'high' }, false)}</div></section>`;
   const pageHtml = `${head(locale, slug, article.meta.title, article.meta.description, article.meta.schema, { ...options, article, dateModified: buildDate })}
-  <body class="article-page"><div id="top"></div>${header(locale, slug, copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(article.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(article.h1)}</p><h1 id="article-title">${escapeHtml(article.h1)}</h1><p class="article-hero-lede">${renderArticleInline(article.intro, locale, publishedArticles)}</p></div>${renderArticleImage({ ...article.heroImage, loading: 'eager', fetchpriority: 'high' }, false)}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(article.tocLabel)}"><p class="eyebrow">${escapeHtml(article.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#article-faq">${escapeHtml(article.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(article.answerLabel)}</p><h2 id="answer-title">${escapeHtml(article.answerLabel)}</h2><p>${renderArticleInline(article.answer, locale, publishedArticles)}</p></section>${sections}<section id="article-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(article.faq.eyebrow)}</p><h2>${escapeHtml(article.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(article.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(article.source.title)}</h2><p>${renderArticleInline(article.source.body, locale, publishedArticles)}</p><div class="source-links">${sourceLinks}</div></section><nav class="article-related" aria-label="${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}"><p class="eyebrow">${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}</p>${related}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script></body></html>`;
+  <body class="article-page"><div id="top"></div>${header(locale, slug, copy)}<main class="article-main">${hero}<div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(article.tocLabel)}"><p class="eyebrow">${escapeHtml(article.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#article-faq">${escapeHtml(article.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(article.answerLabel)}</p><h2 id="answer-title">${escapeHtml(article.answerLabel)}</h2><p>${renderArticleInline(article.answer, locale, publishedArticles)}</p></section>${sections}<section id="article-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(article.faq.eyebrow)}</p><h2>${escapeHtml(article.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(article.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(article.source.title)}</h2><p>${renderArticleInline(article.source.body, locale, publishedArticles)}</p><div class="source-links">${sourceLinks}</div></section><nav class="article-related" aria-label="${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}"><p class="eyebrow">${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}</p>${related}</nav></article></div></main>${footer(locale, copy)}<script src="/app.js" defer></script>${roomDiagnostic ? '<script src="/room-diagnostic.js?v=20261122" defer></script>' : ''}</body></html>`;
   return normalizeSteamNewsLinks(pageHtml);
 }
 
