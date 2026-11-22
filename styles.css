@@ -37,10 +37,6 @@ body {
   line-height: 1.55;
 }
 
-body.menu-open {
-  overflow: hidden;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -178,6 +174,67 @@ img {
 .site-nav a:focus-visible {
   color: var(--coral-dark);
   border-bottom-color: var(--coral);
+}
+
+.tools-menu {
+  position: relative;
+}
+
+.tools-menu summary {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 5px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 750;
+  list-style: none;
+  white-space: nowrap;
+}
+
+.tools-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.tools-menu summary:hover,
+.tools-menu[open] summary {
+  color: var(--coral-dark);
+}
+
+.tools-menu[open] summary span {
+  rotate: 180deg;
+}
+
+.tools-menu-list {
+  position: absolute;
+  z-index: 30;
+  top: 100%;
+  left: 0;
+  width: min(260px, calc(100vw - 32px));
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+}
+
+.site-nav .tools-menu-list a {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 4px;
+}
+
+.tools-menu-list a:hover,
+.tools-menu-list a:focus-visible,
+.tools-menu-list a[aria-current="page"] {
+  color: var(--ink);
+  background: var(--paper);
 }
 
 .header-source {
@@ -2646,9 +2703,9 @@ img {
   }
 }
 
-@media (max-width: 760px) {
-  .container {
-    width: min(100% - 32px, 620px);
+@media (max-width: 960px) {
+  body.menu-open {
+    overflow: hidden;
   }
 
   .site-header {
@@ -2680,6 +2737,7 @@ img {
 
   .site-nav {
     display: none;
+    order: 3;
     width: 100%;
     flex: 0 0 100%;
     align-items: stretch;
@@ -2696,6 +2754,23 @@ img {
   .site-nav a {
     padding: 11px 0;
   }
+
+  .tools-menu {
+    grid-column: 1 / -1;
+  }
+
+  .tools-menu-list {
+    position: static;
+    width: auto;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .container {
+    width: min(100% - 32px, 620px);
+  }
+
 
   .hero-grid,
   .map-layout,
