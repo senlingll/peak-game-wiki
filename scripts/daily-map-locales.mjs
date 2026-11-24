@@ -1,6 +1,6 @@
 export const dailyMapLocales = {
   en: {
-    description: "See today's PEAK map rotation, the full biome order, your local reset time, and whether to check Mesa for the Tomb.",
+    description: "Check the PEAK map today: live dated biome sequence, 17:00 UTC reset countdown in your local time, Mesa/Tomb check, and recent daily rotation history.",
     date: 'Today', route: 'Biome order', reset: 'Next reset', countdown: 'Time until reset', action: 'What to check today',
     waiting: 'Waiting for a fresh route', confirmed: 'Confirmed in the community route', unconfirmed: 'Unconfirmed', notApplicable: 'Not applicable today',
     mesa: 'Mesa is on the route.', tomb: 'Check for the Tomb when you reach Mesa in-game.', noMesa: 'This route has no Mesa.',

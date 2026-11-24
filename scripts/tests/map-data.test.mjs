@@ -185,4 +185,21 @@ test('homepages avoid title cannibalization, self-looping links, and broken href
   const zhRevive = renderArticlePage('zh', 'peak-revive-guide', { buildDate: '2026-11-24', publishedArticles: DEFAULT_PUBLISHED_ARTICLES });
   const reviveAlternates = [...zhRevive.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)];
   assert.deepEqual(reviveAlternates.map(([, lang, href]) => [lang, href]), [['zh-CN', 'https://peak-game.wiki/zh/peak-revive-guide/']]);
+
+  const deGrossmut = renderArticlePage('de', 'grossmut-des-pfadfinders', {
+    buildDate: '2026-11-24', buildTimestamp: '2026-11-24T12:00:00Z', todayMap: snapshot('2026-11-24T12:00:00Z'), publishedArticles: DEFAULT_PUBLISHED_ARTICLES,
+  });
+  assert.match(deGrossmut, /<title>PEAK Großmut des Pfadfinders:/);
+  assert.match(deGrossmut, /\/de\/beharrlichkeit-des-pfadfinders\//);
+  assert.match(deGrossmut, /Shore \(BlueBeach\)/);
+
+  const enMap = renderMapGuide('en', {
+    buildDate: '2026-11-24', buildTimestamp: '2026-11-24T12:00:00Z',
+    todayMap: snapshot('2026-11-24T12:00:00Z'),
+    mapHistory: [snapshot('2026-11-23T12:00:00Z')],
+    updateData, publishedArticles: DEFAULT_PUBLISHED_ARTICLES,
+  });
+  assert.match(enMap, /<title>PEAK Map Today:/);
+  assert.match(enMap, /id="reset-times"/);
+  assert.match(enMap, /id="rotation-history"/);
 });

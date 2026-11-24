@@ -529,12 +529,12 @@ function replaceGermanAscii(value) {
 
 for (const [code, copy] of Object.entries(dailyMapLocales)) {
   const title = {
-    en: "Today's PEAK Map & Daily Rotation", zh: 'PEAK 今日地图与地图轮换（每日更新）', es: 'Mapa de PEAK hoy y rotación diaria', ko: 'PEAK 오늘의 맵 및 맵 로테이션',
-    ja: 'PEAK 今日のマップ・マップローテーション', de: 'PEAK heutige Karte & Kartenrotation', fr: 'Carte PEAK du jour et rotation quotidienne',
+    en: 'PEAK Map Today: Daily Biomes, Rotation & 17:00 UTC Reset', zh: 'PEAK 今日地图与地图轮换（每日更新）', es: 'Mapa de PEAK hoy y rotación diaria', ko: 'PEAK 오늘의 맵 및 맵 로테이션',
+    ja: 'PEAK 今日のマップ・マップローテーション', de: 'PEAK heutige Karte & Kartenrotation (17:00 UTC Reset)', fr: 'Carte PEAK du jour et rotation quotidienne',
     pt: 'Mapa de PEAK hoje e rotação diária', it: 'Mappa di PEAK di oggi e rotazione giornaliera',
   }[code];
   const h1 = {
-    en: "Today's PEAK Map", zh: 'PEAK 今日地图', es: 'Mapa PEAK hoy', ko: 'PEAK 오늘의 맵',
+    en: 'PEAK Map Today — Daily Biome Rotation', zh: 'PEAK 今日地图', es: 'Mapa PEAK hoy', ko: 'PEAK 오늘의 맵',
     ja: 'PEAK 今日のマップ', de: 'PEAK heutige Karte', fr: 'Carte PEAK du jour',
     pt: 'Mapa de PEAK hoje', it: 'Mappa di PEAK di oggi',
   }[code];
@@ -918,15 +918,28 @@ function renderTodayMapMedia(locale, data) {
   return `<div class="today-map-carousel" data-today-carousel tabindex="0" aria-roledescription="carousel" aria-label="${escapeHtml(copy.title)}"><div class="today-map-carousel-viewport"><div class="today-map-carousel-track" data-carousel-track>${cards}</div>${controls}</div><div class="today-map-carousel-dots" role="group" aria-label="${escapeHtml(copy.mediaSlides)}">${indicators}</div></div>`;
 }
 
-function renderMapSupportingContent(locale, snapshot, updateData, buildDate) {
+function renderMapSupportingContent(locale, snapshot, updateData, buildDate, mapHistory = [], buildTimestamp = null) {
   const labels = dailyMapLocales[locale];
   const copy = todayMapCopy[locale];
   const details = todayMapDetailCopy[locale];
+  const scheduleCopy = articleScheduleDynamicCopy(locale);
   const releases = officialEntries(updateData, buildDate);
+  const resetTable = renderArticleResetTimes({}, locale, snapshot.available ? snapshot : null, buildDate, buildTimestamp);
+  const historyTable = Array.isArray(mapHistory) && mapHistory.length
+    ? `<section id="rotation-history" class="article-section" aria-labelledby="rotation-history-title">
+      <h2 id="rotation-history-title">${escapeHtml(scheduleCopy.historyCaption)}</h2>
+      ${renderArticleHistory(locale, mapHistory, snapshot.available ? snapshot : null, buildDate, buildTimestamp)}
+    </section>`
+    : '';
   return `<div class="container map-supporting">
     ${snapshot.media.length ? `<div data-map-reference>${renderTodayMapMedia(locale, snapshot)}
       <p class="article-data-note">${escapeHtml(copy.attributionPrefix)}<a href="${escapeHtml(snapshot.source.url)}">${escapeHtml(copy.wikiSourceLabel)}</a>${escapeHtml(copy.attributionBetween)}<a href="${escapeHtml(snapshot.license?.url || CC_BY_SA_URL)}" rel="license">${escapeHtml(copy.licenseLabel)}</a></p>
     </div>` : ''}
+    <section id="reset-times" class="article-section" aria-labelledby="reset-times-title">
+      <h2 id="reset-times-title">${escapeHtml(scheduleCopy.resetTableCaption)}</h2>
+      ${resetTable}
+    </section>
+    ${historyTable}
     <section id="version-timeline" class="article-section" aria-labelledby="version-timeline-title">
       <h2 id="version-timeline-title">${escapeHtml(labels.timeline)}</h2>
       ${renderArticleUpdates(locale, { entries: releases })}
@@ -939,12 +952,12 @@ function renderMapSupportingContent(locale, snapshot, updateData, buildDate) {
   </div>`;
 }
 
-const articleLinkPages = new Set(['home', 'map-rotation', 'achievements', 'items', 'badges-guide', ...articleOrder]);
+const articleLinkPages = new Set(['home', 'map-rotation', 'achievements', 'items', 'item-compare', 'badges-guide', 'grossmut-des-pfadfinders', 'beharrlichkeit-des-pfadfinders', ...articleOrder]);
 
 function renderArticleInline(value, locale, publishedArticles = articleOrder) {
   const source = String(value ?? '');
   const pattern = /\[\[link:([a-z0-9-]+)(#[a-z0-9-]+)?\|([\s\S]*?)\]\]/gi;
-  const publishedPages = new Set(['home', 'map-rotation', 'achievements', 'items', 'item-compare', 'badges-guide', ...publishedArticles]);
+  const publishedPages = new Set(['home', 'map-rotation', 'achievements', 'items', 'item-compare', 'badges-guide', ...(locale === 'de' ? Object.keys(germanAmuletPages) : []), ...publishedArticles]);
   let result = '';
   let cursor = 0;
   for (const match of source.matchAll(pattern)) {
@@ -1126,6 +1139,7 @@ const metaDescriptionOverrides = {
     terms: 'Conditions d utilisation de PEAK Game Wiki avec limites des sources, avertissement de site de fans indépendant, données sensibles aux versions, liens externes et usage acceptable.',
   },
   de: {
+    home: 'Deutsche PEAK Wiki: heutige Karte mit 17:00-UTC-Reset, 134 Items, Abzeichen, Amulette (Großmut & Beharrlichkeit des Pfadfinders), Raumcodes und aktuelle Steam-Updates.',
     privacy: 'Datenschutzhinweise der PEAK Game Wiki zu Cloudflare-Auslieferungsdaten, Microsoft-Clarity-Analyse, Google-AdSense-Cookies, Werbesteuerung und externen Links.',
     terms: 'Nutzungsbedingungen der unabhängigen PEAK Game Wiki mit Quellenlimits, Fan-Site-Hinweis, versionsabhängigen Kartendaten, externen Links und erlaubter Nutzung.',
   },
@@ -1708,7 +1722,7 @@ function renderMapGuideHtml(locale, options = {}) {
   const guide = mapGuides[locale];
   const buildTimestamp = options.buildTimestamp ?? new Date().toISOString();
   const snapshot = normalizeTodayMap(options.todayMap, buildDate, buildTimestamp);
-  const supporting = renderMapSupportingContent(locale, snapshot, options.updateData, buildDate);
+  const supporting = renderMapSupportingContent(locale, snapshot, options.updateData, buildDate, options.mapHistory, buildTimestamp);
   activeGuideLocale = locale;
   const toc = guide.sections.map((section, index) => `<li><a href="#${escapeHtml(section.id)}">${index + 1}. ${escapeHtml(section.title)}</a></li>`).join('');
   const sections = guide.sections.map((section) => {
@@ -1915,7 +1929,7 @@ export function renderArticlePage(locale, slug, options = {}) {
   const seenRelated = new Set([selfHref]);
   const related = article.related.filter(([page]) => {
     const pagePath = String(page).split('#', 1)[0];
-    if (!(pagePath === 'map-rotation' || pagePath === 'achievements' || pagePath === 'items' || pagePath === 'item-compare' || pagePath === 'badges-guide' || publishedArticles.includes(pagePath))) return false;
+    if (!(pagePath === 'map-rotation' || pagePath === 'achievements' || pagePath === 'items' || pagePath === 'item-compare' || pagePath === 'badges-guide' || (locale === 'de' && Object.hasOwn(germanAmuletPages, pagePath)) || publishedArticles.includes(pagePath))) return false;
     const resolved = rawRouteFor(locale, page);
     if (isGonePath(resolved)) return false;
     const baseHref = resolved.split('#', 1)[0];
