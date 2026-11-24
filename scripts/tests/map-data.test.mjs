@@ -3,7 +3,8 @@ import test from 'node:test';
 import { access } from 'node:fs/promises';
 import { buildTodayMapSnapshot, isCurrentMapSnapshot, parseWikiRotation, BIOME_DISPLAY_NAMES } from '../today-map-rotation.mjs';
 import { fetchTodayMap } from '../fetch-today-map.mjs';
-import { renderHome, renderMapGuide, localeOrder, renderArticlePage } from '../locales.mjs';
+import { renderHome, renderMapGuide, localeOrder, renderArticlePage, renderItemsPage, renderAchievementGuide } from '../locales.mjs';
+import { DEFAULT_PUBLISHED_ARTICLES, isGonePath } from '../route-policy.mjs';
 import { officialUpdateFacts } from '../official-update-facts.mjs';
 
 // A small source fixture exercises reset boundaries and biome variants without a network dependency.
@@ -151,4 +152,37 @@ test('Tomb is unconfirmed with Mesa and inapplicable on a supported route withou
   assert.match(render(routeWithMesa), /Confirmed in the community route<\/strong> Mesa is on the route/);
   assert.match(render(routeWithMesa), /Unconfirmed<\/strong> Check for the Tomb when you reach Mesa/);
   assert.match(render(routeWithoutMesa), /Not applicable today<\/strong> This route has no Mesa/);
+});
+
+test('homepages avoid title cannibalization, self-looping links, and broken hreflang', () => {
+  for (const locale of localeOrder) {
+    const home = renderHome(locale, { buildDate: '2026-11-24', publishedArticles: DEFAULT_PUBLISHED_ARTICLES });
+    const map = renderMapGuide(locale, { buildDate: '2026-11-24', publishedArticles: DEFAULT_PUBLISHED_ARTICLES });
+    const homeTitle = home.match(/<title>([^<]+)<\/title>/)?.[1];
+    const mapTitle = map.match(/<title>([^<]+)<\/title>/)?.[1];
+    const homeH1 = home.match(/<h1[^>]*>([^<]+)<\/h1>/)?.[1];
+    const mapH1 = map.match(/<h1[^>]*>([^<]+)<\/h1>/)?.[1];
+    assert.notEqual(homeTitle, mapTitle, `${locale} home and map-rotation titles must differ`);
+    assert.notEqual(homeH1, mapH1, `${locale} home and map-rotation H1s must differ`);
+
+    const homePath = locale === 'en' ? '/' : `/${locale}/`;
+    const band = home.match(/<section class="article-link-band"[\s\S]*?<\/section>/)?.[0] ?? '';
+    const bandHrefs = [...band.matchAll(/href="([^"]+)"/g)].map((m) => m[1]);
+    assert.ok(bandHrefs.length >= 4, `${locale} link band should have live guide links`);
+    for (const href of bandHrefs) {
+      assert.notEqual(href, homePath, `${locale} link band must not self-loop to homepage`);
+      assert.equal(isGonePath(href), false, `${locale} link band must not point to 410 path: ${href}`);
+    }
+
+    assert.equal(isGonePath(locale === 'en' ? '/items/' : `/${locale}/items/`), false, `${locale} items should be live`);
+    assert.equal(isGonePath(locale === 'en' ? '/achievements' : `/${locale}/achievements/`), false, `${locale} achievements should be live`);
+    const itemsHtml = renderItemsPage(locale, { buildDate: '2026-11-24', publishedArticles: DEFAULT_PUBLISHED_ARTICLES });
+    const achHtml = renderAchievementGuide(locale, { buildDate: '2026-11-24', publishedArticles: DEFAULT_PUBLISHED_ARTICLES });
+    assert.equal([...itemsHtml.matchAll(/<link rel="alternate" hreflang=/g)].length, 10, `${locale} items hreflang count`);
+    assert.equal([...achHtml.matchAll(/<link rel="alternate" hreflang=/g)].length, 10, `${locale} achievements hreflang count`);
+  }
+
+  const zhRevive = renderArticlePage('zh', 'peak-revive-guide', { buildDate: '2026-11-24', publishedArticles: DEFAULT_PUBLISHED_ARTICLES });
+  const reviveAlternates = [...zhRevive.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)];
+  assert.deepEqual(reviveAlternates.map(([, lang, href]) => [lang, href]), [['zh-CN', 'https://peak-game.wiki/zh/peak-revive-guide/']]);
 });

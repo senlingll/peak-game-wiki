@@ -15,7 +15,7 @@ import { itemsCatalog } from './items-catalog.mjs';
 import { itemsPageCopy } from './items-page-locales.mjs';
 import { badgeGuideCopy, badgeGuideEntries, badgeGuideSource, badgeGrantCopy, badgeCardLabels } from './badges-guide.mjs';
 import { germanAmuletPages } from './german-amulet-pages.mjs';
-import { REDIRECT_ARTICLES, isGonePath, isLocalizedRedirectRoute, isRedirectedArticle } from './route-policy.mjs';
+import { REDIRECT_ARTICLES, getLocalizedRedirectTarget, isGonePath, isLocalizedRedirectRoute, isRedirectedArticle } from './route-policy.mjs';
 
 const BASE_URL = 'https://peak-game.wiki';
 const STYLESHEET_HREF = '/styles.css?v=20261122-tools-menu';
@@ -425,48 +425,48 @@ for (const code of localeOrder) {
 
 const homepageOverrides = {
   en: {
-    title: "Today's PEAK Map",
-    heroTitle: "Today's PEAK Map",
+    title: "PEAK Game Wiki: Today's Map, Items, Badges & Updates",
+    heroTitle: "PEAK Game Wiki — Today's Map & Guide",
     dailyFaq: "PEAK uses a changing map rotation. Check the daily update section at the top of the map rotation guide, then confirm the active route in the game.",
   },
   zh: {
-    title: 'PEAK 今日地图',
-    heroTitle: 'PEAK 今日地图',
+    title: 'PEAK 游戏 Wiki：今日地图（每日更新）· 道具、徽章与更新',
+    heroTitle: 'PEAK 游戏 Wiki：今日地图与道具攻略',
     dailyFaq: 'PEAK 会更换地图轮换。请查看地图轮换指南顶部的每日更新区块，再在游戏中确认当前路线。',
   },
   es: {
-    title: 'Mapa PEAK hoy (diario): objetos, insignias y novedades',
-    heroTitle: 'Mapa PEAK hoy',
+    title: 'PEAK Wiki: Mapa de hoy, objetos, insignias y novedades',
+    heroTitle: 'PEAK Wiki — Mapa de hoy y guía',
     dailyFaq: 'PEAK usa una rotación cambiante. Consulta el bloque de actualización diaria en la parte superior de la guía de rotación y confirma la ruta activa en el juego.',
   },
   ja: {
-    title: 'PEAK 今日のマップ',
-    heroTitle: 'PEAK 今日のマップ',
+    title: 'PEAK Wiki：今日のマップ（毎日更新）・アイテム・バッジ・更新',
+    heroTitle: 'PEAK Wiki：今日のマップとアイテム攻略',
     dailyFaq: 'PEAK のマップローテーションは変化します。ローテーションガイド上部の毎日更新セクションを確認し、ゲーム内で現在のルートを確かめてください。',
   },
   ko: {
-    title: 'PEAK 오늘의 맵',
-    heroTitle: 'PEAK 오늘의 맵',
+    title: 'PEAK 위키: 오늘의 맵(매일 업데이트) · 아이템, 배지, 업데이트',
+    heroTitle: 'PEAK 위키: 오늘의 맵과 아이템 공략',
     dailyFaq: 'PEAK은 변화하는 맵 로테이션을 사용합니다. 맵 로테이션 가이드 상단의 매일 업데이트 영역을 확인한 뒤 게임에서 활성 경로를 확인하세요.',
   },
   de: {
-    title: 'PEAK heutige Karte',
-    heroTitle: 'PEAK heutige Karte',
+    title: 'PEAK Wiki: Heutige Karte, Items, Abzeichen & Updates',
+    heroTitle: 'PEAK Wiki — Heutige Karte & Guide',
     dailyFaq: 'PEAK nutzt eine wechselnde Kartenrotation. Prüfe den täglichen Update-Bereich oben im Kartenrotations-Ratgeber und bestätige die aktive Route im Spiel.',
   },
   fr: {
-    title: 'Carte PEAK du jour',
-    heroTitle: 'Carte PEAK du jour',
+    title: 'PEAK Wiki : Carte du jour, objets, badges et mises à jour',
+    heroTitle: 'PEAK Wiki — Carte du jour et guide',
     dailyFaq: 'PEAK utilise une rotation variable. Consultez la section des mises à jour quotidiennes en haut du guide de rotation, puis confirmez la route active dans le jeu.',
   },
   pt: {
-    title: 'Mapa PEAK de hoje',
-    heroTitle: 'Mapa PEAK de hoje',
+    title: 'PEAK Wiki: Mapa de hoje, itens, insígnias e atualizações',
+    heroTitle: 'PEAK Wiki — Mapa de hoje e guia',
     dailyFaq: 'PEAK usa uma rotação de mapas variável. Consulte a seção de atualização diária no topo do guia de rotação e confirme a rota ativa no jogo.',
   },
   it: {
-    title: 'Mappa PEAK di oggi',
-    heroTitle: 'Mappa PEAK di oggi',
+    title: 'PEAK Wiki: Mappa di oggi, oggetti, badge e aggiornamenti',
+    heroTitle: 'PEAK Wiki — Mappa di oggi e guida',
     dailyFaq: 'PEAK usa una rotazione variabile. Consulta la sezione degli aggiornamenti quotidiani in cima alla guida alla rotazione e conferma il percorso attivo nel gioco.',
   },
 };
@@ -529,11 +529,16 @@ function replaceGermanAscii(value) {
 
 for (const [code, copy] of Object.entries(dailyMapLocales)) {
   const title = {
+    en: "Today's PEAK Map & Daily Rotation", zh: 'PEAK 今日地图与地图轮换（每日更新）', es: 'Mapa de PEAK hoy y rotación diaria', ko: 'PEAK 오늘의 맵 및 맵 로테이션',
+    ja: 'PEAK 今日のマップ・マップローテーション', de: 'PEAK heutige Karte & Kartenrotation', fr: 'Carte PEAK du jour et rotation quotidienne',
+    pt: 'Mapa de PEAK hoje e rotação diária', it: 'Mappa di PEAK di oggi e rotazione giornaliera',
+  }[code];
+  const h1 = {
     en: "Today's PEAK Map", zh: 'PEAK 今日地图', es: 'Mapa PEAK hoy', ko: 'PEAK 오늘의 맵',
     ja: 'PEAK 今日のマップ', de: 'PEAK heutige Karte', fr: 'Carte PEAK du jour',
     pt: 'Mapa de PEAK hoje', it: 'Mappa di PEAK di oggi',
   }[code];
-  mapGuides[code] = { ...mapGuides[code], meta: { ...mapGuides[code].meta, title, description: copy.description }, h1: title };
+  mapGuides[code] = { ...mapGuides[code], meta: { ...mapGuides[code].meta, title, description: copy.description }, h1 };
 }
 
 const roomCodeCurrentCopy = {
@@ -601,21 +606,6 @@ for (const [locale, entries] of Object.entries(shortToolCopies)) {
     }
   }
 }
-for (const locale of ['zh', 'ja']) {
-  if (itemsPageCopy[locale]) {
-    itemsPageCopy[locale] = { ...itemsPageCopy[locale], meta: { ...itemsPageCopy[locale].meta, title: locale === 'zh' ? 'PEAK 今日物品查询' : 'PEAK 今日アイテム検索' }, h1: locale === 'zh' ? 'PEAK 今日物品查询' : 'PEAK 今日アイテム検索', intro: locale === 'zh' ? '先看今日地图和今日护符，再查询与当前生物群系相关的物品。没有今日来源的点位保持待确认。' : '今日のマップとアミュレットを先に確認し、現在のバイオームに関係するアイテムだけを調べます。出典のない場所は未確認です。', answer: locale === 'zh' ? '物品名称和基础字段来自目录；今日能否找到或使用请以地图和游戏内状态为准。' : '名称と基本項目はカタログ、今日の可否はマップとゲーム内の状態を確認してください。' };
-  }
-}
-for (const locale of ['zh', 'es', 'ja']) {
-  const guide = achievementGuides[locale];
-  if (guide) {
-    const title = locale === 'zh' ? 'PEAK 今日成就查询' : locale === 'es' ? 'Consulta de logros de PEAK hoy' : 'PEAK 今日の実績検索';
-    guide.meta = { ...guide.meta, title, description: title };
-    guide.h1 = title;
-    guide.intro = locale === 'zh' ? '按今日生物群系检查被路线锁定的成就或徽章，未确认条件保持待确认。' : locale === 'es' ? 'Comprueba los logros ligados al bioma de hoy y deja pendientes las condiciones no verificadas.' : '今日のバイオームに関係する実績を確認し、未検証の条件は保留にします。';
-    guide.answer = locale === 'zh' ? '先看今日地图，再在游戏内确认条件；Steam 成就与游戏内徽章分开记录。' : locale === 'es' ? 'Mira el mapa de hoy y confirma la condición dentro del juego; los logros de Steam y las insignias son sistemas distintos.' : '今日のマップを確認してゲーム内で条件を確かめ、Steam 実績とゲーム内バッジを分けて記録します。';
-  }
-}
 
 const requiredKeys = ['meta', 'ui', 'hero', 'signal', 'map', 'updates', 'database', 'badges', 'guide', 'faq', 'source', 'legal', 'items'];
 for (const code of localeOrder) {
@@ -635,7 +625,8 @@ function escapeHtml(value) {
 
 function rawRouteFor(code, page) {
   const [pagePath, hash = ''] = String(page).split('#', 2);
-  if (isLocalizedRedirectRoute(code, pagePath)) return `${rawRouteFor(code, 'home')}${hash ? `#${hash}` : ''}`;
+  const localizedTarget = getLocalizedRedirectTarget(code, pagePath);
+  if (localizedTarget) return hash && !localizedTarget.includes('#') ? `${localizedTarget}#${hash}` : localizedTarget;
   const resolvedPagePath = REDIRECT_ARTICLES[pagePath] ?? pagePath;
   const anchor = hash || { 'peak-game-update': 'version-timeline', 'peak-map-rotation-schedule': 'today-map' }[pagePath];
   const suffix = anchor ? `#${anchor}` : '';
@@ -644,17 +635,23 @@ function rawRouteFor(code, page) {
   return `${resolvedPagePath === 'home' ? `/${code}/` : `/${code}/${resolvedPagePath}/`}${suffix}`;
 }
 
+function hasLivePage(code, page) {
+  const [pagePath] = String(page).split('#', 2);
+  if (isRedirectedArticle(pagePath) || isLocalizedRedirectRoute(code, pagePath)) return false;
+  return !isGonePath(rawRouteFor(code, pagePath));
+}
+
 function routeFor(code, page) {
   const href = rawRouteFor(code, page);
   if (!isGonePath(href)) return href;
-  const [, hash = ''] = String(page).split('#', 2);
-  return `${rawRouteFor(code, 'home')}${hash ? `#${hash}` : ''}`;
+  return rawRouteFor(code, 'home');
 }
 
 function alternateLinks(page) {
-  const codes = /^grossmut-des-pfadfinders$|^beharrlichkeit-des-pfadfinders$/.test(String(page)) ? ['de'] : localeOrder;
-  const links = codes.map((code) => `<link rel="alternate" hreflang="${localeMeta[code].lang}" href="${BASE_URL}${routeFor(code, page)}" />`);
-  if (codes.includes('en')) links.push(`<link rel="alternate" hreflang="x-default" href="${BASE_URL}${routeFor('en', page)}" />`);
+  const baseCodes = /^grossmut-des-pfadfinders$|^beharrlichkeit-des-pfadfinders$/.test(String(page)) ? ['de'] : localeOrder;
+  const codes = baseCodes.filter((code) => hasLivePage(code, page));
+  const links = codes.map((code) => `<link rel="alternate" hreflang="${localeMeta[code].lang}" href="${BASE_URL}${rawRouteFor(code, page)}" />`);
+  if (codes.includes('en')) links.push(`<link rel="alternate" hreflang="x-default" href="${BASE_URL}${rawRouteFor('en', page)}" />`);
   return links.join('\n    ');
 }
 
@@ -947,18 +944,19 @@ const articleLinkPages = new Set(['home', 'map-rotation', 'achievements', 'items
 function renderArticleInline(value, locale, publishedArticles = articleOrder) {
   const source = String(value ?? '');
   const pattern = /\[\[link:([a-z0-9-]+)(#[a-z0-9-]+)?\|([\s\S]*?)\]\]/gi;
-  const publishedPages = new Set(['home', 'map-rotation', 'achievements', 'items', 'badges-guide', ...publishedArticles]);
+  const publishedPages = new Set(['home', 'map-rotation', 'achievements', 'items', 'item-compare', 'badges-guide', ...publishedArticles]);
   let result = '';
   let cursor = 0;
   for (const match of source.matchAll(pattern)) {
     result += escapeHtml(source.slice(cursor, match.index));
     const page = match[1].toLowerCase();
+    const targetHref = rawRouteFor(locale, page);
     if (!articleLinkPages.has(page)) {
       result += escapeHtml(match[0]);
-    } else if (!publishedPages.has(page)) {
+    } else if ((!publishedPages.has(page) && !isRedirectedArticle(page) && !isLocalizedRedirectRoute(locale, page)) || isGonePath(targetHref)) {
       result += escapeHtml(match[3]);
     } else {
-      const href = `${routeFor(locale, page)}${match[2] || ''}`;
+      const href = match[2] && !targetHref.includes('#') ? `${targetHref}${match[2]}` : targetHref;
       result += `<a href="${escapeHtml(href)}">${escapeHtml(match[3])}</a>`;
     }
     cursor = match.index + match[0].length;
@@ -1499,8 +1497,12 @@ function renderHomeBase(locale, options = {}) {
   const updateMarkup = copy.updates.rows.map(([month, day, year, tag, title, text], index) => `<article class="update-row${index === 0 ? ' update-row-current' : ''}${index >= 3 ? ' update-row-collapsed' : ''}"><div class="update-date"><span>${escapeHtml(month)}</span><strong>${escapeHtml(day)}</strong><small>${escapeHtml(year)}</small></div><div><span class="update-tag">${escapeHtml(tag)}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p></div><span class="update-arrow" aria-hidden="true">\u2192</span></article>`).join('');
   const updateToggle = copy.updates.rows.length > 3 ? `<button class="text-button update-toggle" type="button" aria-expanded="false" aria-controls="update-list" data-show-all="${escapeHtml(controls.showAllUpdates)}" data-show-fewer="${escapeHtml(controls.showFewerUpdates)}"><span class="toggle-label">${escapeHtml(controls.showAllUpdates)}</span> <span aria-hidden="true">\u2192</span></button>` : '';
   const itemBrowseToggle = `<button class="text-button item-toggle" type="button" aria-expanded="false" aria-controls="item-grid" data-browse-all="${escapeHtml(controls.browseAllItems)}" data-browse-fewer="${escapeHtml(controls.browseFewerItems)}"><span class="toggle-label">${escapeHtml(controls.browseAllItems)}</span> <span aria-hidden="true">\u2192</span></button>`;
-  const itemViewLink = `<a class="button button-outline database-all-items" href="${routeFor(locale, 'items')}">${escapeHtml(controls.viewAllItems)} <span aria-hidden="true">\u2192</span></a>`;
-  const badgeLinks = [routeFor(locale, 'achievements'), routeFor(locale, 'badges-guide'), `${routeFor(locale, 'achievements')}#achievement-meaning`, `${routeFor(locale, 'achievements')}#new-achievements`];
+  const itemViewLink = hasLivePage(locale, 'items')
+    ? `<a class="button button-outline database-all-items" href="${routeFor(locale, 'items')}">${escapeHtml(controls.viewAllItems)} <span aria-hidden="true">\u2192</span></a>`
+    : `<a class="button button-outline database-all-items" href="${routeFor(locale, 'item-compare')}">${escapeHtml(itemCompareLocales[locale].title)} <span aria-hidden="true">\u2192</span></a>`;
+  const badgeLinks = hasLivePage(locale, 'achievements')
+    ? [routeFor(locale, 'achievements'), routeFor(locale, 'achievements'), `${routeFor(locale, 'achievements')}#achievement-meaning`, `${routeFor(locale, 'achievements')}#new-achievements`]
+    : ['#faq', '#faq', '#faq', '#faq'];
   const badgeMarkup = copy.badges.rows.map(([title, text], index) => `<div class="badge-row" role="listitem"><span class="badge-number">0${index + 1}</span><div><strong>${escapeHtml(title)}</strong><p>${escapeHtml(text)}</p></div><a class="badge-symbol" href="${escapeHtml(badgeLinks[index] ?? badgeLinks[0])}" aria-label="${escapeHtml(title)}">\u2192</a></div>`).join('');
   const guideMarkup = copy.guide.points.map(([title, text], index) => `<div><span>0${index + 1}</span><p><strong>${escapeHtml(title)}</strong> ${escapeHtml(text)}</p></div>`).join('');
   const faqMarkup = copy.faq.items.map(([question, answer], index) => {
@@ -1526,13 +1528,19 @@ export function renderHome(locale, options = {}) {
   const mapsMarker = '<section id="maps"';
   const updatesMarker = '<section id="updates"';
   const publishedArticles = options.publishedArticles ?? articleOrder;
-  const articleLinks = publishedArticles.map((slug) => `<a class="section-link" href="${routeFor(locale, slug)}">${escapeHtml(localizedArticleGuide(locale, slug).h1)} <span aria-hidden="true">\u2192</span></a>`).join('');
+  const articleLinks = publishedArticles
+    .filter((slug) => hasLivePage(locale, slug))
+    .map((slug) => `<a class="section-link" href="${routeFor(locale, slug)}">${escapeHtml(localizedArticleGuide(locale, slug).h1)} <span aria-hidden="true">\u2192</span></a>`)
+    .join('');
   const germanAmuletLinks = locale === 'de'
     ? ['grossmut-des-pfadfinders', 'beharrlichkeit-des-pfadfinders'].map((slug) => `<a class="section-link" href="${routeFor(locale, slug)}">${escapeHtml(germanAmuletPages[slug].h1)} <span aria-hidden="true">\u2192</span></a>`).join('')
     : '';
   const bandCopy = articleLinkBandCopy[locale] ?? articleLinkBandCopy.en;
+  const achievementsLink = hasLivePage(locale, 'achievements')
+    ? `<a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a>`
+    : '';
   const compareLink = `<a class="section-link" href="${routeFor(locale, 'item-compare')}">${escapeHtml(itemCompareLocales[locale].title)} <span aria-hidden="true">→</span></a>`;
-  const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(bandCopy.aria)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(bandCopy.eyebrow)}</p><h2>${escapeHtml(bandCopy.title)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a><a class="section-link" href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuide.linkLabel)} <span aria-hidden="true">\u2192</span></a>${compareLink}${articleLinks}${germanAmuletLinks}</div></div></section>`;
+  const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(bandCopy.aria)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(bandCopy.eyebrow)}</p><h2>${escapeHtml(bandCopy.title)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a>${achievementsLink}${compareLink}${articleLinks}${germanAmuletLinks}</div></div></section>`;
   const withSummary = locale === 'es'
     ? html.replace('</h1>', `</h1>${dailySummary}`)
     : html.replace(mapsMarker, `<div class="container home-daily-tool">${dailySummary}</div>${mapsMarker}`);
@@ -1683,8 +1691,8 @@ function renderItemsPageHtml(locale, options = {}) {
   const toc = categories.map((category, index) => `<li><a href="#items-${escapeHtml(category)}">${index + 1}. ${escapeHtml(catalog.categories[category].title)}</a></li>`).join('');
   const faq = catalog.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary><h3>${escapeHtml(question)}</h3></summary><p>${escapeHtml(answer)}</p></details>`).join('');
   const publishedArticles = options.publishedArticles ?? articleOrder;
-  const guidesHref = publishedArticles.includes('peak-game-tips') ? routeFor(locale, 'peak-game-tips') : `${routeFor(locale, 'home')}#guides`;
-  const cookingGuide = publishedArticles.includes('peak-cooking-guide') ? localizedArticleGuide(locale, 'peak-cooking-guide') : null;
+  const guidesHref = publishedArticles.includes('peak-game-tips') && hasLivePage(locale, 'peak-game-tips') ? routeFor(locale, 'peak-game-tips') : `${routeFor(locale, 'home')}#guides`;
+  const cookingGuide = publishedArticles.includes('peak-cooking-guide') && hasLivePage(locale, 'peak-cooking-guide') ? localizedArticleGuide(locale, 'peak-cooking-guide') : null;
   return `${head(locale, 'items', catalog.meta.title, catalog.meta.description, catalog.meta.schema, { ...options, copy, itemsPage: catalog, dateModified: resolveBuildDate(options) })}
   <body class="article-page items-page"><div id="top"></div>${header(locale, 'items', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(catalog.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(catalog.catalog.title)}</p><h1 id="article-title">${escapeHtml(catalog.h1)}</h1><p class="article-hero-lede">${escapeHtml(catalog.intro)}</p><a class="section-link" href="${routeFor(locale, 'item-compare')}">${escapeHtml(itemCompareLocales[locale].title)} <span aria-hidden="true">→</span></a></div>${renderArticleImage({ ...catalog.hero, loading: 'eager', fetchpriority: 'high' }, false)}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(catalog.tocLabel)}"><p class="eyebrow">${escapeHtml(catalog.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#items-faq">${escapeHtml(catalog.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="items-answer-title"><p class="eyebrow">${escapeHtml(catalog.answerLabel)}</p><h2 id="items-answer-title">${escapeHtml(catalog.answerLabel)}</h2><p>${escapeHtml(catalog.answer)}</p></section><section class="article-section items-browser" aria-labelledby="items-catalog-title"><div class="items-browser-heading"><div><p class="eyebrow">${escapeHtml(catalog.catalog.filterLabel)}</p><h2 id="items-catalog-title">${escapeHtml(catalog.catalog.title)}</h2></div><p>${escapeHtml(catalog.catalog.lede)}</p></div><nav class="items-category-nav" aria-label="${escapeHtml(catalog.catalog.filterLabel)}">${categoryLinks}</nav><div class="items-toolbar"><label for="items-search"><span>${escapeHtml(catalog.catalog.searchLabel)}</span><input id="items-search" type="search" placeholder="${escapeHtml(catalog.catalog.searchPlaceholder)}" autocomplete="off" /></label><label for="items-type"><span>${escapeHtml(catalog.catalog.typeLabel)}</span><select id="items-type"><option value="">${escapeHtml(catalog.catalog.typeAll)}</option>${typeOptions}</select></label><label for="items-biome"><span>${escapeHtml(catalog.catalog.biomeLabel)}</span><select id="items-biome"><option value="">${escapeHtml(catalog.catalog.biomeAll)}</option>${biomeOptions}</select></label><div class="items-category-filters" role="group" aria-label="${escapeHtml(catalog.catalog.filterLabel)}"><button class="items-filter-button is-active" type="button" data-catalog-category="all">${escapeHtml(catalog.catalog.categoryLabels.all)}</button>${categories.map((category) => `<button class="items-filter-button" type="button" data-catalog-category="${escapeHtml(category)}">${escapeHtml(catalog.catalog.categoryLabels[category])}</button>`).join('')}</div><span id="items-result-count" class="items-result-count" data-result-label="${escapeHtml(catalog.catalog.resultLabel)}">${itemsCatalog.length} ${escapeHtml(catalog.catalog.resultLabel)}</span></div><p class="items-no-local-names">${escapeHtml(catalog.catalog.noLocalNames)}</p><p id="items-empty" class="items-empty" hidden>${escapeHtml(catalog.catalog.empty)}</p>${categories.map((category) => renderItemsCatalogSection(catalog, category)).join('')}<p class="items-source-note"><span class="note-mark">i</span><span>${escapeHtml(catalog.catalog.sourceNote)}</span></p></section><section id="items-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(catalog.faq.eyebrow)}</p><h2>${escapeHtml(catalog.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="items-sources-title"><p class="eyebrow">${escapeHtml(catalog.sources.eyebrow)}</p><h2 id="items-sources-title">${escapeHtml(catalog.sources.title)}</h2><p>${escapeHtml(catalog.sources.body)}</p><div class="source-links"><a href="https://peak.wiki.gg/wiki/Items" target="_blank" rel="noopener">${escapeHtml(catalog.sources.official)} <span aria-hidden="true">\u2192</span></a><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(catalog.sources.store)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(catalog.catalog.title)}"><p class="eyebrow">${escapeHtml(catalog.catalog.title)}</p><a href="${routeFor(locale, 'home')}#database">${escapeHtml(catalog.related.home)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'map-rotation')}">${escapeHtml(catalog.related.map)} <span aria-hidden="true">\u2192</span></a><a href="${escapeHtml(guidesHref)}">${escapeHtml(catalog.related.guides)} <span aria-hidden="true">\u2192</span></a>${cookingGuide ? `<a href="${routeFor(locale, 'peak-cooking-guide')}">${escapeHtml(cookingGuide.h1)} <span aria-hidden="true">\u2192</span></a>` : ''}</nav></article></div></main>${footer(locale, copy)}<script src="${APP_SCRIPT_HREF}" defer></script><script src="/items.js" defer></script></body></html>`;
 }
@@ -1711,9 +1719,9 @@ function renderMapGuideHtml(locale, options = {}) {
     return `<section id="${escapeHtml(section.id)}" class="article-section"><h2>${escapeHtml(section.title)}</h2>${paragraphs}${image}${bullets}${table}</section>`;
   }).join('');
   const faq = guide.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary><h3>${escapeHtml(question)}</h3></summary><p>${escapeHtml(answer)}</p></details>`).join('');
-  const mapRelatedPages = ['peak-biomes-list', 'peak-gloom-guide', 'peak-citadel-guide', 'items'].filter((page) => page === 'items' || (options.publishedArticles ?? articleOrder).includes(page));
+  const mapRelatedPages = ['peak-gloom-guide', 'peak-citadel-guide', 'items', 'item-compare'].filter((page) => hasLivePage(locale, page) && (page === 'items' || page === 'item-compare' || (options.publishedArticles ?? articleOrder).includes(page)));
   const mapRelatedLinks = mapRelatedPages.map((page) => {
-    const label = page === 'items' ? copy.database.title : localizedArticleGuide(locale, page).h1;
+    const label = page === 'items' ? copy.database.title : page === 'item-compare' ? itemCompareLocales[locale].title : localizedArticleGuide(locale, page).h1;
     return `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`;
   }).join('');
   const germanAmuletLinks = locale === 'de'
@@ -1743,7 +1751,7 @@ function renderAchievementGuideHtml(locale, options = {}) {
   }).join('');
   const faq = guide.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary><h3>${escapeHtml(question)}</h3></summary><p>${escapeHtml(answer)}</p></details>`).join('');
   const badgeGuide = badgeGuideCopy[locale] ?? badgeGuideCopy.en;
-  const badgeBridge = badgeGuide.bridge ? `<p class="article-crosslink">${escapeHtml(badgeGuide.bridge.before)}<a href="${routeFor(locale, 'badges-guide')}">${escapeHtml(badgeGuide.bridge.link)}</a>${escapeHtml(badgeGuide.bridge.after)}</p>` : '';
+  const badgeBridge = badgeGuide.bridge && hasLivePage(locale, 'badges-guide') ? `<p class="article-crosslink">${escapeHtml(badgeGuide.bridge.before)}<a href="${routeFor(locale, 'badges-guide')}">${escapeHtml(badgeGuide.bridge.link)}</a>${escapeHtml(badgeGuide.bridge.after)}</p>` : '';
   return `${head(locale, 'achievements', guide.meta.title, guide.meta.description, guide.meta.schema, options)}
   <body class="article-page"><div id="top"></div>${header(locale, 'achievements', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(guide.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(guide.related.homeAnchor)}</p><h1 id="article-title">${escapeHtml(guide.h1)}</h1><p class="article-hero-lede">${escapeHtml(guide.intro)}</p></div>${renderArticleImage({ ...guide.heroImage, loading: 'eager', fetchpriority: 'high' })}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#achievements-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(guide.answerLabel)}</p><h2 id="answer-title">${escapeHtml(guide.answerLabel)}</h2><p>${escapeHtml(guide.answer)}</p></section>${badgeBridge}${sections}<section id="achievements-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://steamcommunity.com/stats/3527290/achievements/" target="_blank" rel="noopener">${escapeHtml(guide.source.achievement)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#badges">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.related.mapLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a></nav></article></div></main>${footer(locale, copy)}<script src="${APP_SCRIPT_HREF}" defer></script></body></html>`;
 }
@@ -1903,9 +1911,17 @@ export function renderArticlePage(locale, slug, options = {}) {
     const rel = url.includes('steamcommunity.com/') || hostname === 'peak.wiki.gg' || hostname.endsWith('.peak.wiki.gg') || hostname === 'thunderstore.io' || hostname.endsWith('.thunderstore.io') ? 'nofollow noopener' : 'noopener';
     return `<a href="${escapeHtml(url)}" target="_blank" rel="${rel}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`;
   }).join('');
+  const selfHref = rawRouteFor(locale, slug).split('#', 1)[0];
+  const seenRelated = new Set([selfHref]);
   const related = article.related.filter(([page]) => {
     const pagePath = String(page).split('#', 1)[0];
-    return pagePath === 'map-rotation' || pagePath === 'achievements' || pagePath === 'items' || pagePath === 'badges-guide' || publishedArticles.includes(pagePath);
+    if (!(pagePath === 'map-rotation' || pagePath === 'achievements' || pagePath === 'items' || pagePath === 'item-compare' || pagePath === 'badges-guide' || publishedArticles.includes(pagePath))) return false;
+    const resolved = rawRouteFor(locale, page);
+    if (isGonePath(resolved)) return false;
+    const baseHref = resolved.split('#', 1)[0];
+    if (seenRelated.has(baseHref)) return false;
+    seenRelated.add(baseHref);
+    return true;
   }).map(([page, label]) => `<a href="${routeFor(locale, page)}">${escapeHtml(label)} <span aria-hidden="true">\u2192</span></a>`).join('');
   const hero = roomDiagnostic
     ? `<section class="container room-diagnostic-hero" aria-labelledby="article-title"><h1 id="article-title">${escapeHtml(article.h1)}</h1>${renderRoomDiagnostic(locale)}<p class="article-hero-lede">${renderArticleInline(article.intro, locale, publishedArticles)}</p></section>`
@@ -1957,9 +1973,9 @@ export function renderContact(locale, options = {}) {
 }
 
 export function renderSitemap(buildDate = '2026-08-19', publishedArticles = articleOrder) {
-  const pages = ['home', 'about', 'contact', 'privacy', 'terms', 'map-rotation', 'achievements', 'items', 'item-compare', 'badges-guide', ...publishedArticles.filter((slug) => !isRedirectedArticle(slug))];
-  const livePages = (code) => pages.filter((page) => !isLocalizedRedirectRoute(code, page) && !isGonePath(rawRouteFor(code, page)));
-  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'contact', 'map-rotation', 'achievements', 'items', 'item-compare', 'badges-guide', ...publishedArticles].filter((page) => !isLocalizedRedirectRoute(code, page) && !isGonePath(rawRouteFor(code, page))).map((page) => `${BASE_URL}${rawRouteFor(code, page)}`)));
+  const pages = ['home', 'about', 'contact', 'privacy', 'terms', 'map-rotation', 'achievements', 'items', 'item-compare', ...publishedArticles.filter((slug) => !isRedirectedArticle(slug))];
+  const livePages = (code) => pages.filter((page) => hasLivePage(code, page));
+  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'contact', 'map-rotation', 'achievements', 'items', 'item-compare', ...publishedArticles].filter((page) => hasLivePage(code, page)).map((page) => `${BASE_URL}${rawRouteFor(code, page)}`)));
   updatedUrls.add(`${BASE_URL}/de/grossmut-des-pfadfinders/`);
   updatedUrls.add(`${BASE_URL}/de/beharrlichkeit-des-pfadfinders/`);
   const urls = localeOrder.flatMap((code) => livePages(code).map((page) => `${BASE_URL}${rawRouteFor(code, page)}`));

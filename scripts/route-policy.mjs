@@ -2,37 +2,60 @@
  * 路由策略：集中记录需要迁移、保留或返回 410 的旧地址。
  */
 
+export const DEFAULT_PUBLISHED_ARTICLES = [
+  'peak-biomes-list',
+  'peak-game-update',
+  'what-is-peak-game',
+  'peak-game-price',
+  'peak-system-requirements',
+  'peak-map-rotation-schedule',
+  'room-codes',
+  'peak-photon-troubleshooting',
+  'peak-revive-guide',
+  'peak-cooking-guide',
+  'peak-secret-ending-guide',
+  'peak-solo-and-public-lobbies',
+  'peak-multiplayer-mod',
+  'peak-controller-support',
+];
+
 export const REDIRECT_ARTICLES = {
   'peak-map-rotation-schedule': 'map-rotation',
   'peak-biomes-list': 'map-rotation',
   'peak-solo-and-public-lobbies': 'room-codes',
   'peak-game-update': 'map-rotation',
+  'badges-guide': 'achievements',
+  'what-is-peak-game': 'home',
 };
 
 /**
- * 记录仍有搜索价值、但应合并到对应语言首页的旧工具地址。
+ * 记录按语言单独合并到对应工具页的旧文章路径（其余语言保留独立页面）。
  */
 export const LOCALIZED_REDIRECTS = {
-  '/zh/what-is-peak-game': '/zh/',
-  '/es/what-is-peak-game': '/es/',
-  '/pt/what-is-peak-game': '/pt/',
+  '/peak-photon-troubleshooting': '/room-codes/#connection-check',
+  '/de/peak-photon-troubleshooting': '/de/room-codes/#connection-check',
+  '/es/peak-photon-troubleshooting': '/es/room-codes/#connection-check',
+  '/fr/peak-photon-troubleshooting': '/fr/room-codes/#connection-check',
+  '/it/peak-photon-troubleshooting': '/it/room-codes/#connection-check',
+  '/ja/peak-photon-troubleshooting': '/ja/room-codes/#connection-check',
+  '/ko/peak-photon-troubleshooting': '/ko/room-codes/#connection-check',
+  '/pt/peak-photon-troubleshooting': '/pt/room-codes/#connection-check',
+  '/peak-multiplayer-mod': '/room-codes/#connection-check',
+  '/de/peak-multiplayer-mod': '/de/room-codes/#connection-check',
+  '/fr/peak-multiplayer-mod': '/fr/room-codes/#connection-check',
+  '/it/peak-multiplayer-mod': '/it/room-codes/#connection-check',
+  '/ja/peak-multiplayer-mod': '/ja/room-codes/#connection-check',
+  '/ko/peak-multiplayer-mod': '/ko/room-codes/#connection-check',
+  '/pt/peak-multiplayer-mod': '/pt/room-codes/#connection-check',
 };
 
 const gonePaths = [
-  '/achievements',
-  '/de/achievements', '/fr/achievements', '/it/achievements', '/ko/achievements', '/pt/achievements',
-  '/badges', '/de/badges', '/es/badges', '/fr/badges', '/it/badges', '/ja/badges', '/ko/badges', '/pt/badges', '/zh/badges',
-  '/badges-guide', '/de/badges-guide', '/es/badges-guide', '/fr/badges-guide', '/it/badges-guide', '/ja/badges-guide', '/ko/badges-guide', '/pt/badges-guide', '/zh/badges-guide',
-  '/items', '/de/items', '/es/items', '/fr/items', '/it/items', '/ko/items', '/pt/items',
   '/de/peak-controller-support', '/es/peak-controller-support', '/fr/peak-controller-support', '/it/peak-controller-support', '/ko/peak-controller-support', '/peak-controller-support', '/pt/peak-controller-support', '/zh/peak-controller-support',
   '/de/peak-cooking-guide', '/es/peak-cooking-guide', '/fr/peak-cooking-guide', '/it/peak-cooking-guide', '/ja/peak-cooking-guide', '/ko/peak-cooking-guide', '/peak-cooking-guide', '/pt/peak-cooking-guide',
   '/de/peak-game-price', '/es/peak-game-price', '/fr/peak-game-price', '/it/peak-game-price', '/ja/peak-game-price', '/ko/peak-game-price', '/peak-game-price', '/pt/peak-game-price', '/zh/peak-game-price',
-  '/de/peak-multiplayer-mod', '/fr/peak-multiplayer-mod', '/it/peak-multiplayer-mod', '/ja/peak-multiplayer-mod', '/ko/peak-multiplayer-mod', '/peak-multiplayer-mod', '/pt/peak-multiplayer-mod',
-  '/de/peak-photon-troubleshooting', '/es/peak-photon-troubleshooting', '/fr/peak-photon-troubleshooting', '/it/peak-photon-troubleshooting', '/ja/peak-photon-troubleshooting', '/ko/peak-photon-troubleshooting', '/peak-photon-troubleshooting', '/pt/peak-photon-troubleshooting',
   '/de/peak-revive-guide', '/es/peak-revive-guide', '/fr/peak-revive-guide', '/it/peak-revive-guide', '/ja/peak-revive-guide', '/ko/peak-revive-guide', '/peak-revive-guide', '/pt/peak-revive-guide',
   '/de/peak-secret-ending-guide', '/fr/peak-secret-ending-guide', '/it/peak-secret-ending-guide', '/ja/peak-secret-ending-guide', '/ko/peak-secret-ending-guide', '/peak-secret-ending-guide', '/pt/peak-secret-ending-guide',
   '/de/peak-system-requirements', '/es/peak-system-requirements', '/fr/peak-system-requirements', '/it/peak-system-requirements', '/ja/peak-system-requirements', '/ko/peak-system-requirements', '/peak-system-requirements', '/pt/peak-system-requirements', '/zh/peak-system-requirements',
-  '/de/what-is-peak-game', '/fr/what-is-peak-game', '/it/what-is-peak-game', '/ja/what-is-peak-game', '/ko/what-is-peak-game', '/what-is-peak-game',
 ];
 
 export const GONE_PATHS = new Set(gonePaths);
@@ -50,10 +73,10 @@ export function isGonePath(pathname) {
 }
 
 /**
- * 判断路径是否应通过永久重定向合并到语言首页。
+ * 判断路径是否应通过永久重定向合并到目标工具页或首页。
  *
  * @param {string} pathname 站内路径
- * @returns {boolean} 是否属于语言首页重定向
+ * @returns {boolean} 是否属于按语言重定向的路径
  */
 export function isLocalizedRedirect(pathname) {
   const withoutQuery = String(pathname ?? '').split(/[?#]/, 1)[0];
@@ -62,15 +85,27 @@ export function isLocalizedRedirect(pathname) {
 }
 
 /**
- * 判断某语言文章是否已经合并到该语言首页。
+ * 获取某语言文章的重定向目标地址；若未配置按语言重定向则返回 null。
+ *
+ * @param {string} locale 语言代码
+ * @param {string} slug 文章路径
+ * @returns {string | null} 重定向目标路径或 null
+ */
+export function getLocalizedRedirectTarget(locale, slug) {
+  const pagePath = String(slug ?? '').split('#', 1)[0].replace(/^\/+|\/+$/g, '');
+  const normalized = locale === 'en' ? `/${pagePath}` : `/${locale}/${pagePath}`;
+  return LOCALIZED_REDIRECTS[normalized] ?? null;
+}
+
+/**
+ * 判断某语言文章是否已经通过按语言重定向合并到目标页。
  *
  * @param {string} locale 语言代码
  * @param {string} slug 文章路径
  * @returns {boolean} 是否不应生成独立页面
  */
 export function isLocalizedRedirectRoute(locale, slug) {
-  const pagePath = String(slug ?? '').split('#', 1)[0].replace(/^\/+|\/+$/g, '');
-  return isLocalizedRedirect(locale === 'en' ? `/${pagePath}` : `/${locale}/${pagePath}`);
+  return getLocalizedRedirectTarget(locale, slug) !== null;
 }
 
 /**

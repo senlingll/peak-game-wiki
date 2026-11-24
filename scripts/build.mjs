@@ -1,8 +1,8 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { formatSnapshotDate, localeOrder, renderAchievementGuide, renderArticlePage, renderBadgesGuide, renderContact, renderHome, renderItemComparePage, renderItemsPage, renderLegal, renderMapGuide, renderSitemap, STYLESHEET_HREF } from './locales.mjs';
+import { formatSnapshotDate, localeOrder, renderAchievementGuide, renderArticlePage, renderContact, renderHome, renderItemComparePage, renderItemsPage, renderLegal, renderMapGuide, renderSitemap, STYLESHEET_HREF } from './locales.mjs';
 import { articleOrder } from './article-guides.mjs';
-import { GONE_PATHS, isLocalizedRedirectRoute, isRedirectedArticle } from './route-policy.mjs';
+import { DEFAULT_PUBLISHED_ARTICLES, GONE_PATHS, isLocalizedRedirectRoute, isRedirectedArticle } from './route-policy.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const outputRoot = resolve(projectRoot, 'dist');
@@ -17,7 +17,7 @@ const buildDate = /^\d{4}-\d{2}-\d{2}$/.test(process.env.BUILD_DATE ?? '')
   : buildTimestamp.slice(0, 10);
 const requestedArticleOrder = process.env.PUBLISHED_ARTICLES
   ? [...new Set(process.env.PUBLISHED_ARTICLES.split(',').map((slug) => slug.trim().toLowerCase()).filter(Boolean))]
-  : articleOrder;
+  : DEFAULT_PUBLISHED_ARTICLES;
 const publishedArticleOrder = requestedArticleOrder.filter((slug) => !isRedirectedArticle(slug));
 
 if (!publishedArticleOrder.length) {
@@ -123,13 +123,11 @@ await mkdir(contactRoot, { recursive: true });
 await writeFile(resolve(contactRoot, 'index.html'), renderContact('en', renderOptions), 'utf8');
 await writeFile(resolve(outputRoot, 'map-rotation.html'), renderMapGuidePage('en'), 'utf8');
 await writeFile(resolve(outputRoot, 'achievements.html'), renderAchievementGuide('en', renderOptions), 'utf8');
-const badgesGuideRoot = resolve(outputRoot, 'badges-guide');
-await mkdir(badgesGuideRoot, { recursive: true });
-await writeFile(resolve(badgesGuideRoot, 'index.html'), renderBadgesGuide('en', renderOptions), 'utf8');
 const itemsRoot = resolve(outputRoot, 'items');
 await mkdir(itemsRoot, { recursive: true });
 await writeFile(resolve(itemsRoot, 'index.html'), renderItemsPage('en', renderOptions), 'utf8');
 for (const slug of publishedArticleOrder) {
+  if (isLocalizedRedirectRoute('en', slug)) continue;
   if (slug === 'room-codes') {
     const articleRoot = resolve(outputRoot, slug);
     await mkdir(articleRoot, { recursive: true });
@@ -157,9 +155,6 @@ for (const locale of localeOrder.filter((code) => code !== 'en')) {
   const achievementRoot = resolve(localeRoot, 'achievements');
   await mkdir(achievementRoot, { recursive: true });
   await writeFile(resolve(achievementRoot, 'index.html'), renderAchievementGuide(locale, renderOptions), 'utf8');
-  const badgesGuideLocaleRoot = resolve(localeRoot, 'badges-guide');
-  await mkdir(badgesGuideLocaleRoot, { recursive: true });
-  await writeFile(resolve(badgesGuideLocaleRoot, 'index.html'), renderBadgesGuide(locale, renderOptions), 'utf8');
   const itemsLocaleRoot = resolve(localeRoot, 'items');
   await mkdir(itemsLocaleRoot, { recursive: true });
   await writeFile(resolve(itemsLocaleRoot, 'index.html'), renderItemsPage(locale, renderOptions), 'utf8');
