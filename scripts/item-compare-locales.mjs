@@ -1,8 +1,8 @@
 export const itemCompareLocales = {
   en: {
-    title: "PEAK Food & Item Comparison",
-    description: "Compare two PEAK foods or healing items by hunger recovery, poison, injury, bonus stamina, weight and cooking stage.",
-    intro: "Choose two items and their cooking stages. Pick the effect that matters most on this climb.",
+    title: "PEAK Food & Item Comparison Tool: Cooking, Hunger & Healing",
+    description: "Compare 45+ PEAK foods, berries, mushrooms, and healing items side by side by hunger recovery, bonus stamina, poison, injury, weight, and cooking stage.",
+    intro: "Choose two PEAK foods or healing items and their cooking stages to compare hunger recovery, bonus stamina, poison cure, injury heal, and carry weight.",
     ui: ["Compare for","First item","Second item","Preparation","Compare items","Comparison","Base effects and sources","Not applicable","Unknown","All","Up to {n}","Adds {n}","Compare different items or stages.","Checked on","Community sources","Item catalog"],
     metrics: ["Hunger restored","Poison removed","Injury healed","Bonus stamina","Base weight"],
     stages: ["As found / uncooked","Cooked","Well-done","Burnt","Incinerated"],

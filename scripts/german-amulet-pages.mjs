@@ -6,7 +6,7 @@ export const germanAmuletPages = {
     slug: 'grossmut-des-pfadfinders',
     meta: {
       title: 'PEAK Großmut des Pfadfinders: Effekt, Fundort & Versteinerung',
-      description: 'Was bewirkt Großmut des Pfadfinders in PEAK? Amulett-Effekt (Objekt kopieren + Versteinerung), Unterschied zu Abzeichen, blau leuchtende Statue und heutige Biom-Route.',
+      description: 'Großmut des Pfadfinders in PEAK: Amulett-Effekt (Objekt kopieren + Versteinerung), Unterschied zu Abzeichen, blau leuchtende Statue und heutige Route.',
       schema: 'Deutsche Referenz zum PEAK-Amulett Großmut des Pfadfinders: Effekt, Versteinerung, Amulett-Statue und heutige Biom-Rotation.',
     },
     eyebrow: 'PEAK Amulett-Guide · heutige Route inklusive',

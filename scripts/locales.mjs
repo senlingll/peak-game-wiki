@@ -58,6 +58,8 @@ const mapGuideHeroMedia = {
 };
 
 export const localeOrder = ['en', 'zh', 'es', 'ja', 'fr', 'de', 'pt', 'ko', 'it'];
+export const NOINDEX_LOCALES = new Set(['fr', 'pt', 'it']);
+export const INDEXABLE_LOCALES = localeOrder.filter((code) => !NOINDEX_LOCALES.has(code));
 
 const geoFooterCopy = {
   en: { eyebrow: 'AI-readable resources', title: 'Ask with this site as your source', description: 'Use the concise or full context file, or start an assistant with a source-aware prompt.', index: 'llms.txt', full: 'llms-full.txt', chatgpt: 'Ask ChatGPT', claude: 'Ask Claude', perplexity: 'Ask Perplexity' },
@@ -112,11 +114,11 @@ const locales = {
     hero: { eyebrow: 'Independent PEAK reference - research snapshot 17 Aug 2026', title: 'PEAK Game Wiki', lede: 'A calm, useful field guide for the climb: check the current map rhythm, look up equipment before you leave camp, and follow the latest version notes without digging through scattered posts.', primary: "Check today's map", secondary: 'Find an item', players: 'players', achievements: 'Steam achievements', biomes: 'biome slots', imageAlt: 'A PEAK climber facing a towering structure above a misty island', caption: 'Official Steam screenshot - the climb is the route, not a menu.' },
      signal: { patch: 'CURRENT PATCH', patchValue: 'HOTFIX 2.4.b', patchNote: 'Hotfix on top of Patch 2.04.a (THE KILN IS BACK)', update: 'FEATURED UPDATE', updateValue: 'Final Ascent', updateNote: 'new route context to track', source: 'SOURCE POLICY', sourceValue: 'Official first', sourceNote: 'Steam notes before community summaries', view: 'View update log' },
     map: { eyebrow: '01 - Rotation desk', title: "Today's map rotation", kicker: 'Daily map entry point', status: 'Rotation desk', date: '17 Aug 2026', heading: 'Final Ascent cycle', lede: 'The map rotates, while your plan should stay simple: check the route, pack for the hazards you expect, and leave room for a recovery item. The dated daily tool above keeps the route visible; confirm the active route in-game.', steps: [['Read the route', 'Confirm the current biome in-game.', 'ready'], ['Pack for the climb', 'Compare rope, piton and food utility.', 'plan'], ['Log the result', 'Keep a note of hazards and safe rests.', 'next']], copy: 'Copy rotation note', copyValue: 'Final Ascent cycle - confirm the active route in PEAK before climbing', imageAlt: 'A bright PEAK island route with cliffs, palms, and a floating summit', caption: 'Official Steam screenshot - use the in-game route as the final source of truth.', paragraphs: ['For a PEAK player, map today is a practical question rather than a lore question. The route determines how much time you can spend looking for food, how much climbing equipment is worth carrying, and when a team should stop pushing upward.', "This page keeps the rotation language honest. See today's verified map at the top of our map rotation guide, updated daily. The official game and update feed remain the authority for the active route."] },
-    updates: { eyebrow: '02 - Version desk', title: 'Patch notes without the noise', link: 'Official news feed', rows: [['SEP', '02', '2026', 'CURRENT', 'HOTFIX 2.4.b', 'Fixed Render Scales looking bad below Native and fixed Steam Avatars not showing in the right spot in the pause menu.'], ['SEP', '02', '2026', 'PATCH', 'Patch 2.04.a THE KILN IS BACK', 'The CALDERA and THE KILN have been re-added to the map rotation; Condors now fly around the CALDERA, and petrifying rocks plus hot rock bridges have been added to THE KILN.'], ['AUG', '27', '2026', 'PATCH', 'Patch Notes 2.03.a', 'Added a new batch of maps with Gloom/Citadel to the daily rotation.'], ['AUG', '18', '2026', 'PATCH', 'PATCH 2.02.a', 'Reverted the rope change that made starting a grab cost stamina based on distance, and reduced Clown Luggages needed for the Jester Achievement from 3 to 2.'], ['AUG', '14', '2026', 'PATCH', 'Patch 2.01.a: Frog cooldown and bug fixes', 'Track the exact official post first; use the wiki to connect the patch to affected hazards, items, and route advice.'], ['AUG', '12', '2026', 'FEATURE', 'The Final Ascent', 'A larger update milestone that gives the site an anchor for new map, biome, equipment, and badge pages.'], ['AUG', '07', '2026', 'ANNOUNCEMENT', 'The final biome update arrives August 11', 'Use this note as the bridge between announcement coverage and the practical pages players need after an update lands.']], paragraphs: ['Update pages connect a temporary search spike to a durable reference structure. A patch headline can earn the first visit, but a player deciding what to carry next wants a clean item entry, a hazard explanation, and a note about whether an old route tip still applies.', 'The current snapshot favors official names and dates. Community explanations can add practical detail later, but they should be labeled as field notes and checked against the game.'], imageAlt: 'Official PEAK Final Ascent key art showing climbers below the PEAK title', caption: 'Official Steam header art - Final Ascent update context.' },
+    updates: { eyebrow: '02 - Version desk', title: 'Patch notes without the noise', link: 'Official news feed', rows: [['SEP', '02', '2026', 'CURRENT', 'HOTFIX 2.4.b', 'Fixed Render Scales looking bad below Native and fixed Steam Avatars not showing in the right spot in the pause menu.'], ['SEP', '02', '2026', 'PATCH', 'Patch 2.04.a THE KILN IS BACK', 'The CALDERA and THE KILN have been re-added to the map rotation; Condors now fly around the CALDERA, and petrifying rocks plus hot rock bridges have been added to THE KILN.'], ['AUG', '27', '2026', 'PATCH', 'Patch Notes 2.03.a', 'Added a new batch of maps with Gloom/Citadel to the daily rotation.'], ['AUG', '18', '2026', 'PATCH', 'PATCH 2.02.a', 'Reverted the rope change that made starting a grab cost stamina based on distance, and reduced Clown Luggages needed for the Jester Achievement from 3 to 2.'], ['AUG', '14', '2026', 'PATCH', 'Patch 2.01.a: Frog cooldown and bug fixes', 'Track the exact official post first; use the wiki to connect the patch to affected hazards, items, and route advice.'], ['AUG', '12', '2026', 'FEATURE', 'The Final Ascent', 'A larger update milestone that gives the site an anchor for new map, biome, equipment, and badge pages.'], ['AUG', '07', '2026', 'ANNOUNCEMENT', 'The final biome update arrives August 11', 'Use this note as the bridge between announcement coverage and the practical pages players need after an update lands.']], paragraphs: ['Recent PEAK patches directly change daily climb planning: Crossplay expanded the pool to 208 maps, Patch 2.4.c disabled cooking amulets, and Patch 3.1.0 lengthened room codes while switching controller sprint and climb to hold input.', 'Every entry below links straight to official Steam news so you can verify exact balance tweaks and bug fixes before starting a run.'], imageAlt: 'Official PEAK Final Ascent key art showing climbers below the PEAK title', caption: 'Official Steam header art - Final Ascent update context.' },
     database: { eyebrow: '03 - Field database', title: 'Find the right item before you climb', kicker: 'Searchable field notes', search: 'Search items, food, gear...', filters: ['All', 'Gear', 'Food', 'Utility'], empty: 'No matching field notes yet. Try a different item name or category.', note: 'Item entries are concise field notes covering names, categories and route roles. Check exact effects and values in-game, as patches may change them.', type: { gear: 'GEAR', utility: 'UTILITY', food: 'FOOD' }, state: { route: 'route', team: 'team', coop: 'co-op', consumable: 'consumable', camp: 'camp', carry: 'carry' } },
     badges: { eyebrow: '04 - Progress tracker', title: 'Badges and achievements in one place', lede: 'PEAK has two different kinds of progress language: in-game badges and platform achievements. A useful wiki should make that distinction visible, then give each entry a clear unlock condition, related biome, and source note.', stats: [['64', 'Steam achievements'], ['4', 'biome slots to organize'], ['1', 'shared progress index']], button: 'See the FAQ distinction', rows: [['Achievement record', 'Platform-facing completion status and the official achievement name.'], ['Badge collection', 'In-game progress notes grouped by route, hazard, and teamwork.'], ['Cosmetic context', 'Keep unlockable cosmetics connected to the action that earned them.'], ['Version history', 'Mark entries that changed after Final Ascent or a later patch.']] },
-    guide: { eyebrow: '05 - Field notes', title: 'A co-op guide built around decisions', lede: 'PEAK is easier to describe as a climbing problem than a checklist of items. The team decides when to move, who carries the recovery option, which route is worth the risk, and when a summit attempt has become a rescue attempt.', points: [['Scout before spending stamina.', 'A route note should explain what the player can see, not only name the biome.'], ['Share utility across the group.', 'Item pages should show the team role of a slot, not just repeat an inventory label.'], ['Separate facts from field notes.', 'Official update names and dates get a source link; practical advice gets a context label.']], paragraphs: ['The strongest supporting pages answer questions that naturally arrive together: Is PEAK single player? How many people can join? Which equipment is useful when a route changes? What happens after the latest biome update?', 'This is why the wiki does not lead with codes or an invented tier list. The game search surface is built around routes, objects, hazards, and cooperation.'], imageAlt: 'PEAK players using climbing equipment together beside a lava-lit rock face', caption: 'Official Steam screenshot - co-op climbing and equipment context.' },
-     faq: { eyebrow: '06 - Quick answers', title: 'PEAK FAQ', kicker: 'Search intent, answered clearly', items: [['Is PEAK single player?', 'Yes. PEAK can be played solo or cooperatively. The store description presents both options, with a group size of up to four players.'], ['Does PEAK support crossplay?', 'Cross-platform support can change with platform releases and updates. Check the official store and current patch information before organizing a mixed-platform session.'], ['How many players can join a PEAK game?', 'The official Steam description supports a group of up to four players. A future multiplayer page should also document joining and mid-run coordination from current sources.'], ['How does the PEAK daily map work?', 'PEAK uses a changing map rotation. Use the map section as a planning checklist, then confirm the active route in the game because a static screenshot is not a live seed.'], ['Where are the latest PEAK patch notes?', 'The updates section identifies HOTFIX 2.4.b as the current patch, layered on top of Patch 2.04.a THE KILN IS BACK. It fixed Render Scales below Native and Steam Avatars in the pause menu; see the full update log at /peak-game-update and the official Steam News feed for complete details.'], ['Are PEAK badges and Steam achievements the same?', 'No. They are related progress surfaces but should be tracked separately. The wiki keeps platform achievements, in-game badges, and cosmetic context in separate fields.']] },
+    guide: { eyebrow: '05 - Field notes', title: 'A co-op guide built around decisions', lede: 'PEAK is easier to describe as a climbing problem than a checklist of items. The team decides when to move, who carries the recovery option, which route is worth the risk, and when a summit attempt has become a rescue attempt.', points: [['Scout before spending stamina.', 'Check today\'s biome order and spot the first hazard before committing shared ropes or pitons.'], ['Share utility across the group.', 'Split recovery items (Bandages, Antidote, Remedy Fungus) across players so one fall never strands the team.'], ['Separate facts from field notes.', 'Official Steam update notes confirm rules and platform changes; community estimates are always labeled and dated.']], paragraphs: ['Before leaving Shore, assign three clear roles: one scout carrying traversal gear (Rope Spool, Piton, or Chain Launcher), one medic holding poison/injury cures, and shared food cooked at campfires for bonus stamina.', 'For mixed-platform lobbies across Steam, PS5, Xbox Series X|S, and Nintendo Switch 2, use the pause-menu room code in JOIN GAME and confirm every player is on the latest patch.'], imageAlt: 'PEAK players using climbing equipment together beside a lava-lit rock face', caption: 'Official Steam screenshot - co-op climbing and equipment context.' },
+     faq: { eyebrow: '06 - Quick answers', title: 'PEAK FAQ', kicker: 'Search intent, answered clearly', items: [['Is PEAK single player?', 'Yes. PEAK can be played solo or cooperatively. The store description presents both options, with a group size of up to four players.'], ['Does PEAK support crossplay?', 'Cross-platform support can change with platform releases and updates. Check the official store and current patch information before organizing a mixed-platform session.'], ['How many players can join a PEAK game?', 'Up to four players can climb together (one host plus up to three friends) via Steam invites or crossplay room codes. See the Room Codes & Crossplay guide for step-by-step join checks.'], ['How does the PEAK daily map work?', 'PEAK uses a changing map rotation. Use the map section as a planning checklist, then confirm the active route in the game because a static screenshot is not a live seed.'], ['Where are the latest PEAK patch notes?', 'The updates section identifies HOTFIX 2.4.b as the current patch, layered on top of Patch 2.04.a THE KILN IS BACK. It fixed Render Scales below Native and Steam Avatars in the pause menu; see the full update log at /peak-game-update and the official Steam News feed for complete details.'], ['Are PEAK badges and Steam achievements the same?', 'No. They are related progress surfaces but should be tracked separately. The wiki keeps platform achievements, in-game badges, and cosmetic context in separate fields.']] },
     source: { eyebrow: 'Source notes', title: 'Built to stay verifiable', body: 'This independent PEAK Game Wiki uses official Steam media and update names as its primary references. It is not affiliated with the developer, and it does not host the game or promise a direct download.' },
     legal: {
       about: { title: 'About PEAK Game Wiki', description: 'Learn how the independent PEAK Game Wiki organizes source-backed map, item, badge, co-op, and update notes.', eyebrow: 'About the project', h1: 'An independent field guide for PEAK', intro: 'PEAK Game Wiki is a small reference project focused on practical map, item, badge, co-op, and update information. It is designed to help players make a better next attempt, not to replace the game or speak for its developer.', sections: [['What the wiki is for', 'The first version turns useful PEAK search questions into a compact homepage: map rotation context, recent patch notes, equipment categories, progress tracking, and platform questions.'], ['Source policy', 'Official Steam store information and Steam news posts are the starting point for game facts, update names, dates, player counts, and media. Practical recommendations are labeled as field notes rather than official statements.'], ['Corrections', 'Game information can change after an update. Submit source-backed corrections through the public issue tracker; the project team will review and update the affected entry.']] },
@@ -552,18 +554,97 @@ const roomCodeCurrentCopy = {
   pt: { title: 'Códigos de sala de PEAK: regras atuais de crossplay', intro: 'O Patch 3.1.0 alongou os códigos de sala. O anfitrião copia o código no menu de pausa da sala e o jogador usa JOIN GAME. O crossplay liga Steam, PS5, Xbox Series X|S e Nintendo Switch 2, mas o progresso não é transferido. No controle, corrida e escalada usam manter pressionado.', answer: 'Confira o código atual do anfitrião e a plataforma e versão antes de entrar. O código abre uma sala existente; não é matchmaking.' },
   it: { title: 'Codici stanza di PEAK: regole attuali del crossplay', intro: 'La Patch 3.1.0 ha allungato i codici stanza. L’host copia il codice dal menu pausa della lobby e chi entra lo inserisce con JOIN GAME. Il crossplay collega Steam, PS5, Xbox Series X|S e Nintendo Switch 2, ma i progressi non vengono trasferiti. Con il controller corsa e arrampicata richiedono di tenere premuto.', answer: 'Controlla il codice mostrato dall’host, la piattaforma e la versione. Il codice apre una lobby esistente, non è matchmaking.' },
 };
+const roomCodeExtraSections = {
+  en: {
+    platformTitle: 'PEAK crossplay platforms & lobby rules',
+    platformParagraphs: [
+      'Crossplay connects Steam (PC), PS5, Xbox Series X|S, and Nintendo Switch 2 through private room codes. Progress and unlocks stay tied to each platform and do not transfer across accounts.',
+      'PEAK supports up to four players per lobby (one host plus up to three teammates) with no public random matchmaking. Solo runs remain playable offline.',
+    ],
+    platformTable: {
+      caption: 'PEAK crossplay and lobby capabilities by platform',
+      headers: ['Platform', 'Join method', 'Crossplay', 'Cross-progression'],
+      rows: [
+        ['Steam (PC)', 'Room code (JOIN GAME) or Steam invite', 'Yes (all consoles)', 'No'],
+        ['PS5', 'Room code (JOIN GAME)', 'Yes (Steam & consoles)', 'No'],
+        ['Xbox Series X|S', 'Room code (JOIN GAME)', 'Yes (Steam & consoles)', 'No'],
+        ['Nintendo Switch 2', 'Room code (JOIN GAME)', 'Yes (Steam & consoles)', 'No'],
+      ],
+    },
+    fixesTitle: 'Common room-code errors & lobby privacy fixes',
+    fixesParagraphs: [
+      'Patch 3.1.0 lengthened room codes to improve lobby security, so make sure you copy the complete code from the host pause menu instead of typing an older short format. Streamers can toggle room-code visibility in Settings.',
+      'If unexpected players join your room, switch Lobby Mode to Invite Only, set your Steam profile to Private, and recreate the lobby. Kicked players cannot rejoin the same host session.',
+    ],
+    fixesBullets: [
+      ['Code rejected', 'Have the host re-copy the full Patch 3.1.0 code from the pause menu and check that the lobby has an open slot.'],
+      ['Stuck on Loading', 'Verify both devices have installed the latest PEAK update, disable Steam mods when mixing platforms, and check console online multiplayer access.'],
+      ['Steam invite fails', 'Skip the overlay invite and enter the pause-menu room code directly under JOIN GAME.'],
+      ['Photon disconnect', 'Try rejoining while the host is still in the run; if drops repeat, switch to a host with a more stable connection.'],
+    ],
+    sourceBody: 'Crossplay coverage, Patch 3.1.0 room-code length, and controller hold-input updates come from official PEAK Steam announcements; lobby privacy and troubleshooting steps follow the official Landfall PEAK FAQ.',
+  },
+  zh: {
+    platformTitle: 'PEAK 跨平台联机支持与大厅规则',
+    platformParagraphs: [
+      '跨平台联机现已覆盖 Steam（PC）、PS5、Xbox Series X|S 与 Nintendo Switch 2，均通过私密房间码进入同一大厅。各平台进度与解锁相互独立，不会跨平台转移。',
+      '每局大厅最多支持 4 名玩家（1 名房主 + 最多 3 名队友），没有公开随机匹配；单人模式支持离线游玩。',
+    ],
+    platformTable: {
+      caption: 'PEAK 各平台联机与跨平台规则一览',
+      headers: ['平台', '加入方式', '跨平台联机', '跨平台存档'],
+      rows: [
+        ['Steam (PC)', '房间码（JOIN GAME）或 Steam 好友邀请', '支持全平台', '不支持'],
+        ['PS5', '房间码（JOIN GAME）', '支持全平台', '不支持'],
+        ['Xbox Series X|S', '房间码（JOIN GAME）', '支持全平台', '不支持'],
+        ['Nintendo Switch 2', '房间码（JOIN GAME）', '支持全平台', '不支持'],
+      ],
+    },
+    fixesTitle: '常见房间码报错与大厅防陌生人设置',
+    fixesParagraphs: [
+      'Patch 3.1.0 加长了房间码，输入时务必复制完整的最新代码；主播或录屏玩家可在设置中开启隐藏房间码选项。',
+      '若遇到陌生人误入大厅，请按 Landfall 官方 FAQ 将 Lobby Mode 改为 Invite Only，将 Steam 资料设为 Private，并重新创建大厅；被踢出的玩家无法再次加入该房主的对局。',
+    ],
+    fixesBullets: [
+      ['房间码被拒', '让房主从暂停菜单重新复制完整的 3.1.0 房间码，并确认大厅尚未满员。'],
+      ['卡在 Loading', '检查双方游戏版本是否已更新，Steam 端移除模组重试，主机端确认在线联机权限。'],
+      ['Steam 邀请无效', '直接放弃弹窗邀请，改在游戏内 JOIN GAME 输入房主暂停菜单的房间码。'],
+      ['Photon 断线', '若房主仍在本局中可尝试重连；频繁掉线建议下次更换网络更稳的玩家做房主。'],
+    ],
+    sourceBody: '跨平台支持、Patch 3.1.0 房间码加长与手柄按住操作均核对自 PEAK 官方 Steam 公告；大厅隐私与连接排查依据 Landfall 官方 PEAK FAQ。',
+  },
+};
+
 for (const [code, override] of Object.entries(roomCodeCurrentCopy)) {
   const localized = roomDiagnosticLocales[code];
   const pages = code === 'en' ? articleGuides : articleLocaleTranslations[code];
   const existing = pages['room-codes'];
   const [, hostStep, joinStep] = localized.cases.useCode;
+  const extra = roomCodeExtraSections[code] ?? roomCodeExtraSections.en;
+  const isNativeExtra = Object.hasOwn(roomCodeExtraSections, code);
+  const localizedSections = isNativeExtra
+    ? [
+      { id: 'current-room-code-rules', title: localized.questions[1], paragraphs: [hostStep, joinStep] },
+      { id: 'crossplay-platforms', title: extra.platformTitle, paragraphs: extra.platformParagraphs, table: extra.platformTable },
+      { id: 'connection-fixes', title: extra.fixesTitle, paragraphs: extra.fixesParagraphs, bullets: extra.fixesBullets },
+    ]
+    : [
+      { id: 'current-room-code-rules', title: localized.questions[1], paragraphs: [hostStep, joinStep] },
+      { id: 'crossplay-platforms', title: localized.cases.loading[0], paragraphs: localized.cases.loading.slice(1) },
+      { id: 'connection-fixes', title: localized.cases.photon[0], paragraphs: [...localized.cases.photon.slice(1), ...localized.cases.voice.slice(1)] },
+    ];
+  const existingRelated = Array.isArray(existing.related) ? existing.related : [];
+  const hasCompareRelated = existingRelated.some(([slug]) => slug === 'item-compare');
+  const updatedRelated = hasCompareRelated
+    ? existingRelated
+    : [...existingRelated, ['item-compare', itemCompareLocales[code].title]];
   pages['room-codes'] = {
     ...existing,
     meta: { ...existing.meta, title: override.title, description: localized.description },
     h1: override.title,
     intro: override.intro,
     answer: override.answer,
-    sections: [{ id: 'current-room-code-rules', title: localized.questions[1], paragraphs: [hostStep, joinStep] }],
+    sections: localizedSections,
     faq: {
       ...existing.faq,
       items: localized.questions.map((question, index) => [
@@ -572,30 +653,63 @@ for (const [code, override] of Object.entries(roomCodeCurrentCopy)) {
     },
     source: {
       ...existing.source,
-      body: localized.intro,
+      body: isNativeExtra ? extra.sourceBody : `${localized.cases.other[1]} ${localized.cases.code[1]}`,
       links: [
         [localized.sources[0], 'https://steamcommunity.com/app/3527290/announcements/'],
         [localized.sources[1], 'https://store.steampowered.com/app/3527290/PEAK/'],
         [localized.actions[2], 'https://landfall.se/peak-faq'],
       ],
     },
+    related: updatedRelated,
   };
 }
 
 const shortToolCopies = {
   zh: {
-    'peak-revive-guide': ['PEAK 现行复活规则查询', '查看当前复活方式、可确认的限制与官方版本背景。3.1.0 的房间码与跨平台规则不等于复活规则；具体行为以 2.6.b、3.1.0 官方说明和游戏内提示为准。', '需要复活时先确认当前版本、目标状态和游戏内提示，不把旧版 2.04.a 说明当作现行规则。'],
-    'peak-multiplayer-mod': ['PEAK 联机与跨平台查询', '这里按工具页说明现行联机：Steam、PS5、Xbox Series X|S、Nintendo Switch 2 可用房间码跨平台加入，进度不跨平台转移。不要把本页当作模组百科。', '使用最新房间码加入已有大厅；跨平台进度不会同步，控制器按住冲刺和攀爬规则见 3.1.0。'],
-    'peak-photon-troubleshooting': ['PEAK Photon 现行排查', '先确认 3.1.0 后的长房间码、JOIN GAME、平台和版本，再排查 Steam 服务、文件、网络与防火墙。记录错误原文，不把旧版 Photon 文章当成唯一答案。', '排查顺序是：确认代码和平台、重试 JOIN GAME、检查 Steam 与文件、再查看官方公告。'],
-    'peak-cooking-guide': ['PEAK 今日烹饪查询', '烹饪只服务于今天的路线和可见资源。先打开今日地图；页面没有来源支持的当前食谱或点位时，显示今日待确认，不沿用旧版百科。', '今天能推进什么取决于当前生物群系和游戏内可见材料；先查路线，再在游戏中确认食材。'],
-    'peak-secret-ending-guide': ['PEAK 秘密结局任务查询', '把秘密结局当作短任务核对：先看今日路线、版本和官方公告，再按游戏内提示推进。未被官方或当前版本确认的触发条件保持待确认。', '不要把旧补丁的推测条件写成保证；记录版本、路线和实际提示后再复现。'],
+    'peak-revive-guide': [
+      'PEAK 复活机制与救人指南：复活方式、条件与版本规则',
+      '了解 PEAK 合作模式下的复活方式、Scout Effigy 与雕像限制、近期 2.6.b / 3.1.0 补丁修复以及救人常见失误排查。',
+      'PEAK 复活可通过营火祭坛雕像或携带道具 Scout Effigy 完成，但需留意当前版本限制（例如 Ascent 7 起复活会叠加更多诅咒）。',
+    ],
+    'peak-multiplayer-mod': [
+      'PEAK 多人联机、跨平台与模组指南：人数上限与房间码规则',
+      '查看 PEAK 多人联机人数上限、Steam 与主机跨平台房间码规则、无官方创意工坊说明以及使用社区模组前的兼容注意事项。',
+      '官方支持最多 4 人通过 Steam 邀请或房间码跨平台联机（Steam/PS5/Xbox/Switch 2）；模组仅限 PC 社区自建，跨平台联机前建议关闭模组。',
+    ],
+    'peak-photon-troubleshooting': [
+      'PEAK Photon 断线与联机错误排查指南：房间码、网络与版本检查',
+      '遇到 PEAK Disconnected from Photon、卡在 Loading 或联机掉线？按 3.1.0 房间码、版本一致性、Steam 文件验证与房主网络顺序快速排查。',
+      '出现 Photon 断线先确认双方已更新到最新补丁并改用 3.1.0 完整房间码加入；若频繁掉线，建议切换网络稳定的队友做房主并关闭冲突加速/防火墙拦截。',
+    ],
+    'peak-cooking-guide': [
+      'PEAK 烹饪效果大全：16 种食物与道具烹饪结果查询',
+      '整理 PEAK 烹饪系统全部 16 种食物与非食物道具的实测效果：便携炉持续 60 秒、解毒/去孢子清单、爆炸风险与 Patch 2.4.c 护符禁煮规则。',
+      'Portable Stove 放置后持续 60 秒；大多数基础食物烹饪后提升饥饿恢复与额外体力，部分浆果可清除中毒/孢子，而 Antidote、Flare 与炉具加热会爆炸，且 Patch 2.4.c 起护符已无法烹饪。',
+    ],
+    'peak-secret-ending-guide': [
+      'PEAK 秘密结局与隐藏条件指南：版本确认、路线与排查步骤',
+      '梳理 PEAK 秘密结局与隐藏彩蛋的已确认线索、所需今日生物群系检查方法以及常见未触发原因，区分官方补丁事实与社区推测。',
+      '尝试隐藏或秘密结局前先查看今日地图是否包含目标生物群系，并核对当前游戏版本与官方补丁说明，避免沿用旧版失效条件。',
+    ],
   },
   es: {
-    'peak-multiplayer-mod': ['Consulta de multijugador y crossplay de PEAK', 'Steam, PS5, Xbox Series X|S y Nintendo Switch 2 pueden unirse mediante códigos de sala; el progreso no se transfiere entre plataformas. Esta página es una herramienta breve, no una enciclopedia de mods.', 'Usa el código largo actual para entrar en una sala existente y comprueba la versión.'],
-    'peak-secret-ending-guide': ['Consulta de la misión del final secreto de PEAK', 'Comprueba la ruta de hoy, la versión y las indicaciones dentro del juego. Las condiciones no confirmadas por una fuente actual quedan como pendientes.', 'Registra la versión y el mensaje del juego antes de repetir una condición.'],
+    'peak-multiplayer-mod': [
+      'PEAK Multijugador, Crossplay y Mods: Límites y Códigos de Sala',
+      'Guía de multijugador en PEAK: límite de 4 jugadores, crossplay con códigos de sala en Steam y consolas, y precauciones al usar mods en PC.',
+      'PEAK permite hasta 4 jugadores con crossplay entre Steam, PS5, Xbox Series X|S y Switch 2 usando códigos de sala; el progreso no se transfiere y conviene desactivar mods al jugar entre plataformas.',
+    ],
+    'peak-secret-ending-guide': [
+      'Final Secreto de PEAK: Requisitos, Biomas de Hoy y Comprobación',
+      'Consulta cómo verificar el final secreto de PEAK según la ruta de biomas de hoy, el parche actual y los requisitos confirmados dentro del juego.',
+      'Antes de intentar el final secreto, comprueba si la rotación diaria incluye el bioma necesario y verifica la versión actual del juego.',
+    ],
   },
   ja: {
-    'peak-controller-support': ['PEAK コントローラー現行メモ', 'Patch 3.1.0 でコントローラーのダッシュと登攀はボタンを押し続ける操作になりました。ルームコードとクロスプレイは別の確認なので、参加時は [[link:room-codes|ルームコード]] を使い、詳細は Steam の公式告知を確認してください。', '操作表示が違うときはゲーム内設定と現在のバージョンを確認し、古いキー配置を現行仕様とみなさないでください。'],
+    'peak-controller-support': [
+      'PEAK コントローラー対応と操作設定ガイド（Patch 3.1.0）',
+      'PEAK の Steam コントローラー対応、Patch 3.1.0 で長押し仕様になったダッシュ・登攀操作、認識しない時の確認手順をまとめています。',
+      'PEAK は PC でコントローラー操作に対応しています。Patch 3.1.0 以降はダッシュと登攀が長押し操作に変更されたため、反応しない時はゲーム内設定と Steam Input を確認してください。',
+    ],
   },
 };
 for (const [locale, entries] of Object.entries(shortToolCopies)) {
@@ -648,7 +762,7 @@ function routeFor(code, page) {
 }
 
 function alternateLinks(page) {
-  const baseCodes = /^grossmut-des-pfadfinders$|^beharrlichkeit-des-pfadfinders$/.test(String(page)) ? ['de'] : localeOrder;
+  const baseCodes = /^grossmut-des-pfadfinders$|^beharrlichkeit-des-pfadfinders$/.test(String(page)) ? ['de'] : INDEXABLE_LOCALES;
   const codes = baseCodes.filter((code) => hasLivePage(code, page));
   const links = codes.map((code) => `<link rel="alternate" hreflang="${localeMeta[code].lang}" href="${BASE_URL}${rawRouteFor(code, page)}" />`);
   if (codes.includes('en')) links.push(`<link rel="alternate" hreflang="x-default" href="${BASE_URL}${rawRouteFor('en', page)}" />`);
@@ -1073,7 +1187,7 @@ function articleScheduleDynamicCopy(locale) {
 function renderArticleResetTimes(section, locale, data, buildDate, buildTimestamp) {
   const copy = articleScheduleDynamicCopy(locale);
   const snapshot = normalizeTodayMap(data, buildDate, buildTimestamp);
-  const resetDate = parseDateValue(snapshot.resetAt);
+  const resetDate = parseDateValue(snapshot.resetAt || snapshot.nextResetAt || nextObservedReset(buildTimestamp));
   const zones = copy.resetZones || articleScheduleDynamicFallback.resetZones;
   const table = resetDate
     ? {
@@ -1118,56 +1232,57 @@ function renderArticleHistory(locale, data, todayMap, buildDate, buildTimestamp)
 
 const metaDescriptionOverrides = {
   en: {
-    home: "Independent PEAK field guide: today's map rotation, 134 items, badges & patch notes — verified against official Steam sources. Always confirm time-sensitive routes in-game.",
-    privacy: 'Privacy details for PEAK Game Wiki, including Cloudflare delivery data, Microsoft Clarity analytics, Google AdSense cookies, advertising controls, and external service links.',
-    terms: 'Terms for using the independent PEAK Game Wiki, including source limits, fan-site disclaimers, update-sensitive map information, external links, and acceptable use.',
+    home: "PEAK Game Wiki: check today's daily map rotation, 17:00 UTC reset, all 134 items, food comparison, badges, room codes, and official Steam patch notes.",
+    privacy: 'Privacy details for PEAK Game Wiki covering Cloudflare delivery, Clarity analytics, AdSense cookies, ad controls, and external links.',
+    terms: 'Terms of use for the independent PEAK Game Wiki: source limits, fan-site disclaimer, update-sensitive map data, and external links.',
   },
   zh: {
-    home: 'PEAK 游戏中文 Wiki，持续整理今日地图、地图轮换、道具、徽章、生物群系、Steam 成就、联机玩法与版本更新，帮助你在出发前了解路线、装备、危险和队伍配合，并回到游戏内核对当前信息。页面内容区分官方公告、日期记录与玩家经验，过期资料会提示再次确认，适合查询每日地图、补丁背景和下一次登山计划。',
-    about: '了解 PEAK 游戏 Wiki 如何整理每日地图、地图轮换、道具、徽章、生物群系、Steam 成就、联机资料和版本更新，并区分官方信息、版本记录、玩家经验与需要再次核对的内容。',
-    privacy: '查看 PEAK 游戏 Wiki 的隐私说明，了解 Cloudflare 交付数据、Microsoft Clarity 分析、Google AdSense Cookie、广告偏好和外部链接处理方式。',
-    terms: '查看 PEAK 游戏 Wiki 的使用条款，了解独立玩家站点声明、资料来源边界、版本敏感信息、外部链接、合理使用规则、纠错责任、不提供游戏下载以及补丁后信息可能变化的说明。',
+    home: 'PEAK 游戏中文 Wiki：查询今日地图轮换与北京时间 01:00 重置、134 种物品图鉴、食物对比工具、徽章成就解锁条件、跨平台房间码与官方补丁说明。',
+    about: '了解 PEAK 游戏 Wiki 如何整理每日地图、地图轮换、道具、徽章、Steam 成就、联机房间码与官方补丁更新。',
+    privacy: '查看 PEAK 游戏 Wiki 的隐私说明，了解 Cloudflare、Clarity 分析、广告 Cookie 控制与外部链接政策。',
+    terms: '查看 PEAK 游戏 Wiki 使用条款，了解独立玩家资料站声明、官方来源边界与版本敏感信息核对说明。',
     'map-rotation': dailyMapLocales.zh.description,
-    achievements: '查看 PEAK 成就攻略，追踪 Steam 成就、区分游戏内徽章，了解自定义局限制、版本变化、路线影响、解锁条件、资料来源、联机差异、来源核对和成就未解锁时的排查步骤。',
-    'peak-game-update': '跟进 PEAK 游戏更新，查看新地图、补丁说明、地图轮换变化、今日地图入口和官方 Steam 新闻来源，出发前核对当前版本、路线状态、旧攻略适用性和后续调整建议。',
+    achievements: 'PEAK 成就与徽章攻略：查看 19 项核心徽章解锁条件、外观奖励、自定义局规则、联机判定与 Steam 成就未解锁排查。',
+    'peak-game-update': '跟进 PEAK 游戏更新日志：查看最新补丁、地图轮换变动、今日地图入口与官方 Steam 新闻来源。',
   },
   es: {
-    privacy: 'Información de privacidad de PEAK Game Wiki sobre datos técnicos de Cloudflare, analítica de Microsoft Clarity, cookies de Google AdSense, controles de anuncios y enlaces externos.',
-    terms: 'Términos de uso de PEAK Game Wiki con límites de fuentes, aviso de sitio de fans independiente, datos sensibles a versiones, enlaces externos y uso aceptable.',
+    home: 'Wiki de PEAK en español: mapa diario y reinicio 17:00 UTC, 134 objetos, comparador de comida, insignias, logros, códigos de sala y notas de parche.',
+    privacy: 'Privacidad de PEAK Game Wiki: datos técnicos de Cloudflare, analítica de Clarity, cookies publicitarias y enlaces externos.',
+    terms: 'Términos de uso de PEAK Game Wiki: sitio independiente de fans, límites de fuentes oficiales y datos sujetos a parches.',
   },
   fr: {
-    terms: 'Conditions d utilisation de PEAK Game Wiki avec limites des sources, avertissement de site de fans indépendant, données sensibles aux versions, liens externes et usage acceptable.',
+    terms: 'Conditions d utilisation de PEAK Game Wiki : site de fans indépendant, limites des sources et données sensibles aux patchs.',
   },
   de: {
-    home: 'Deutsche PEAK Wiki: heutige Karte mit 17:00-UTC-Reset, 134 Items, Abzeichen, Amulette (Großmut & Beharrlichkeit des Pfadfinders), Raumcodes und aktuelle Steam-Updates.',
-    privacy: 'Datenschutzhinweise der PEAK Game Wiki zu Cloudflare-Auslieferungsdaten, Microsoft-Clarity-Analyse, Google-AdSense-Cookies, Werbesteuerung und externen Links.',
-    terms: 'Nutzungsbedingungen der unabhängigen PEAK Game Wiki mit Quellenlimits, Fan-Site-Hinweis, versionsabhängigen Kartendaten, externen Links und erlaubter Nutzung.',
+    home: 'Deutsche PEAK Wiki: heutige Karte mit 17:00-UTC-Reset, 134 Items, Itemvergleich, Abzeichen, Amulette, Raumcodes und offizielle Steam-Updates.',
+    privacy: 'Datenschutz der PEAK Game Wiki zu Cloudflare, Microsoft Clarity, Werbe-Cookies und externen Steam-Links.',
+    terms: 'Nutzungsbedingungen der unabhängigen PEAK Game Wiki: Quellenlimits, Fan-Site-Hinweis und versionsabhängige Spieldaten.',
   },
   ja: {
-    home: 'PEAK 日本語 Wikiで、今日のマップ、マップローテーション、アイテム、バッジ、バイオーム、Steam実績、協力プレイ、最新アップデートをまとめて確認できます。出発前に現在のルートや装備、危険、チームの役割を整理し、日付のある記録と公式情報を照合しながら、古い攻略が今も使えるかゲーム内で確かめられます。',
-    about: 'PEAK Wiki が今日のマップ、ローテーション、アイテム、バッジ、実績、協力情報、更新メモを整理し、公式情報、バージョン記録、プレイヤー経験を分ける方法を紹介します。',
-    privacy: 'PEAK Wiki のプライバシー説明です。Cloudflare 配信データ、Microsoft Clarity 分析、Google AdSense Cookie、広告設定、外部リンクの扱いを確認できます。',
-    terms: 'PEAK Wiki の利用条件です。独立ファンサイトとしての立場、出典の範囲、更新で変わる情報、外部リンク、許可される利用方法、修正依頼、ゲーム配布を行わない点を説明します。',
-    'map-rotation': 'PEAK 今日のマップとマップローテーションを確認し、現在のルート、バイオームの順番、17:00 UTC のリセット時刻、更新状況、出典をまとめて把握できます。ルートの読み方や装備の準備、日付ごとの記録も整理しています。データが保留中の場合は、古い画像を現在の答えとみなさず、出発前にゲーム内のルートを確認してください。',
-    achievements: 'PEAK 実績攻略として Steam 実績、ゲーム内バッジ、カスタムランの注意点、バージョン変更、ルート差、解除条件、解除されない場合の確認手順を安全に整理します。',
-    'peak-game-update': 'PEAK のゲーム更新を追跡し、新マップ、パッチノート、ローテーション変更、今日のマップ入口、公式 Steam ニュース、出発前の確認ポイントと旧攻略の注意点を整理します。',
+    home: 'PEAK 日本語 Wiki：今日のマップと 17:00 UTC リセット、134 アイテム図鑑、食べ物比較ツール、バッジ・Steam実績条件、ルームコード、最新パッチ情報を掲載。',
+    about: 'PEAK Wiki の運営方針、公式 Steam 情報とコミュニティ資料の区分、マップ・アイテム情報の更新基準を案内します。',
+    privacy: 'PEAK Wiki のプライバシーポリシー：Cloudflare 配信、Clarity 分析、広告 Cookie 設定、外部リンクの取り扱い。',
+    terms: 'PEAK Wiki の利用規約：独立ファンサイトとしての立場、出典範囲、パッチによる仕様変更への注意点を説明します。',
+    'map-rotation': 'PEAK 今日のマップとバイオーム順番、17:00 UTC（日本時間翌2:00）リセット、直近のローテーション履歴とゲーム内確認手順を掲載。',
+    achievements: 'PEAK 実績・バッジ攻略：主要バッジの解除条件とコスメ報酬、カスタム遠征の制限、Steam 実績が解除されない時の確認手順。',
+    'peak-game-update': 'PEAK 最新アップデート・パッチノートまとめ：マッププール変更やクロスプレイ対応、公式 Steam 告知へのリンクを整理。',
   },
   pt: {
-    privacy: 'Informações de privacidade da PEAK Game Wiki sobre dados técnicos da Cloudflare, análise Microsoft Clarity, cookies Google AdSense, controle de anúncios e links externos.',
-    terms: 'Termos de uso da PEAK Game Wiki com limites de fonte, aviso de site de fãs independente, dados sensíveis à versão, links externos e uso aceitável.',
+    privacy: 'Privacidade da PEAK Game Wiki: dados técnicos da Cloudflare, Clarity, cookies de anúncios e links externos.',
+    terms: 'Termos de uso da PEAK Game Wiki: site independente de fãs, limites de fontes e informações sujeitas a patches.',
   },
   ko: {
-    home: 'PEAK 한국어 위키에서 오늘의 맵, 맵 로테이션, 아이템, 배지, 생물군계, Steam 도전 과제, 협동 플레이와 업데이트를 확인하세요. 출발 전 현재 루트와 장비, 위험 요소, 팀 역할을 정리하고, 날짜 기록과 공식 출처를 살피며 오래된 정보는 게임 안에서 다시 점검하세요.',
-    about: 'PEAK 게임 위키가 오늘의 맵, 지도 로테이션, 아이템, 배지, 도전 과제, 협동 정보와 업데이트 노트를 정리하고 공식 정보와 플레이어 경험을 구분하는 방식을 설명합니다.',
-    privacy: 'PEAK 게임 위키의 개인정보 안내입니다. Cloudflare 전달 데이터, Microsoft Clarity 분석, Google AdSense 쿠키, 광고 설정과 외부 링크 처리 방식을 확인하세요.',
-    terms: 'PEAK 게임 위키 이용 조건입니다. 독립 팬 사이트 고지, 출처 범위, 버전에 따라 바뀌는 정보, 외부 링크와 허용되는 이용 방식을 설명합니다.',
-    'map-rotation': 'PEAK 오늘의 맵, 지도 로테이션, 생물군계, 리셋 시간과 출처를 확인하세요. 매일 업데이트 상태를 살피고 출발 전 게임 안에서 현재 루트를 다시 확인하세요.',
-    achievements: 'PEAK 도전 과제 공략으로 Steam 도전 과제, 게임 내 배지, 커스텀 런 제한, 버전 변화와 잠금 해제 오류 확인 절차를 한곳에서 정리합니다.',
-    'peak-game-update': 'PEAK 게임 업데이트를 따라가며 새 지도, 패치 노트, 로테이션 변경, 오늘의 맵 입구와 공식 Steam 뉴스 출처를 함께 확인하고 출발 전 현재 버전을 점검하세요.',
+    home: 'PEAK 한국어 위키: 오늘의 맵과 한국시간 02:00 리셋, 134종 아이템 도감, 음식 비교 도구, 배지·도전 과제 조건, 방 코드와 최신 패치 노트.',
+    about: 'PEAK 게임 위키가 오늘의 맵, 아이템, 배지, 도전 과제, 방 코드와 공식 패치 정보를 정리하고 검증하는 기준을 안내합니다.',
+    privacy: 'PEAK 게임 위키 개인정보 안내: Cloudflare, Microsoft Clarity 분석, 광고 쿠키 관리 및 외부 링크 정책.',
+    terms: 'PEAK 게임 위키 이용 약관: 독립 팬 사이트 고지, 공식 출처 기준 및 패치에 따른 게임 정보 변경 안내.',
+    'map-rotation': 'PEAK 오늘의 맵과 생물군계 순서, 17:00 UTC(한국시간 02:00) 리셋 카운트다운, 최근 로테이션 기록과 게임 내 확인 방법.',
+    achievements: 'PEAK 도전 과제·배지 공략: 주요 배지 해금 조건과 코스메틱 보상, 커스텀 원정 제한 및 미해금 오류 확인 절차.',
+    'peak-game-update': 'PEAK 최신 업데이트 및 패치 노트: 크로스플레이, 맵 풀 변경, 밸런스 수정과 공식 Steam 공지 링크 정리.',
   },
   it: {
-    privacy: 'Informativa privacy di PEAK Game Wiki su dati tecnici Cloudflare, analisi Microsoft Clarity, cookie Google AdSense, controlli pubblicitari e link esterni.',
-    terms: 'Termini d uso di PEAK Game Wiki con limiti delle fonti, avviso di sito fan indipendente, dati sensibili alla versione, link esterni e uso accettabile.',
+    privacy: 'Privacy di PEAK Game Wiki: dati tecnici Cloudflare, analisi Clarity, cookie pubblicitari e link esterni.',
+    terms: 'Termini d uso di PEAK Game Wiki: sito fan indipendente, limiti delle fonti e dati sensibili agli aggiornamenti.',
   },
 };
 
@@ -1373,7 +1488,8 @@ function head(locale, page, title, description, schema, options = {}) {
     scripts.push({ '@context': 'https://schema.org', '@type': 'ContactPage', '@id': `${canonical}#contact`, url: canonical, name: contact.h1, description: pageDescription, inLanguage: meta.lang, isPartOf: { '@id': `${BASE_URL}/#website` }, about: { '@type': 'VideoGame', name: 'PEAK' }, mainEntity: { '@type': 'Organization', name: 'PEAK Game Wiki', url: BASE_URL, email: SUPPORT_EMAIL, contactPoint: { '@type': 'ContactPoint', email: SUPPORT_EMAIL, contactType: contact.emailTitle } } });
     scripts.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: copy.ui.home, item: `${BASE_URL}${routeFor(locale, 'home')}` }, { '@type': 'ListItem', position: 2, name: contact.h1, item: canonical }] });
   }
-  return `<!doctype html>\n<html lang="${meta.lang}" data-locale="${locale}">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <title>${escapeHtml(title)}</title>\n    <meta name="description" content="${escapeHtml(pageDescription)}" />\n    <meta name="theme-color" content="#17212d" />\n    <link rel="canonical" href="${canonical}" />\n    ${alternateLinks(page)}\n    <link rel="icon" href="/assets/favicon.ico" sizes="any" />\n    <link rel="manifest" href="/manifest.webmanifest" />\n    \n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(pageDescription)}" />\n    <meta property="og:image" content="${socialImage}" />\n    <meta property="og:url" content="${canonical}" />\n    <meta property="og:locale" content="${meta.lang}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:title" content="${escapeHtml(title)}" />\n    <meta name="twitter:description" content="${escapeHtml(pageDescription)}" />\n    <meta name="twitter:image" content="${socialImage}" />\n    <link rel="stylesheet" href="${STYLESHEET_HREF}" />\n    \n    <script>\n      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","y3c9ye040x");\n    </script>${scripts.map((value) => `\n    <script type="application/ld+json">${jsonLd(value)}</script>`).join('')}\n  </head>`;
+  const robotsMeta = NOINDEX_LOCALES.has(locale) ? '\n    <meta name="robots" content="noindex, follow" />' : '';
+  return `<!doctype html>\n<html lang="${meta.lang}" data-locale="${locale}">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />${robotsMeta}\n    <title>${escapeHtml(title)}</title>\n    <meta name="description" content="${escapeHtml(pageDescription)}" />\n    <meta name="theme-color" content="#17212d" />\n    <link rel="canonical" href="${canonical}" />\n    ${alternateLinks(page)}\n    <link rel="icon" href="/assets/favicon.ico" sizes="any" />\n    <link rel="manifest" href="/manifest.webmanifest" />\n    \n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="${escapeHtml(title)}" />\n    <meta property="og:description" content="${escapeHtml(pageDescription)}" />\n    <meta property="og:image" content="${socialImage}" />\n    <meta property="og:url" content="${canonical}" />\n    <meta property="og:locale" content="${meta.lang}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:title" content="${escapeHtml(title)}" />\n    <meta name="twitter:description" content="${escapeHtml(pageDescription)}" />\n    <meta name="twitter:image" content="${socialImage}" />\n    <link rel="stylesheet" href="${STYLESHEET_HREF}" />\n    \n    <script>\n      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","y3c9ye040x");\n    </script>${scripts.map((value) => `\n    <script type="application/ld+json">${jsonLd(value)}</script>`).join('')}\n  </head>`;
 }
 
 const NATIVE_BANNER_SRC = 'https://pl30883299.profitableratecpmnetwork.com/3531361214596141d25dc216fd8ebe0f/invoke.js';
@@ -1419,7 +1535,11 @@ function renderHeader(locale, page, copy) {
 }
 
 function header(locale, page, copy) {
-  return `${renderHeader(locale, page, copy)}<div class="ad-slot ad-slot-header">${nativeBanner()}</div>`;
+  return renderHeader(locale, page, copy);
+}
+
+function belowFoldAdSlot() {
+  return `<div class="container ad-slot ad-slot-mid">${nativeBanner()}</div>`;
 }
 
 function renderItemIconCredit(locale) {
@@ -1555,10 +1675,8 @@ export function renderHome(locale, options = {}) {
     : '';
   const compareLink = `<a class="section-link" href="${routeFor(locale, 'item-compare')}">${escapeHtml(itemCompareLocales[locale].title)} <span aria-hidden="true">→</span></a>`;
   const linkBand = `<section class="article-link-band" aria-label="${escapeHtml(bandCopy.aria)}"><div class="container article-link-band-inner"><div><p class="eyebrow">${escapeHtml(bandCopy.eyebrow)}</p><h2>${escapeHtml(bandCopy.title)}</h2></div><div class="article-link-band-actions"><a class="section-link" href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.linkLabel)} <span aria-hidden="true">\u2192</span></a>${achievementsLink}${compareLink}${articleLinks}${germanAmuletLinks}</div></div></section>`;
-  const withSummary = locale === 'es'
-    ? html.replace('</h1>', `</h1>${dailySummary}`)
-    : html.replace(mapsMarker, `<div class="container home-daily-tool">${dailySummary}</div>${mapsMarker}`);
-  return withSummary.replace(updatesMarker, `${linkBand}${updatesMarker}`);
+  const withSummary = html.replace('</h1>', `</h1>${dailySummary}`);
+  return withSummary.replace(updatesMarker, `${linkBand}${belowFoldAdSlot()}${updatesMarker}`);
 }
 
 function renderArticleImage(image, localizeMapMedia = true) {
@@ -1615,6 +1733,29 @@ function renderItemsCatalogSection(copy, category) {
   return `<section id="items-${escapeHtml(category)}" class="items-category" data-items-section="${escapeHtml(category)}" aria-labelledby="${escapeHtml(headingId)}"><div class="items-category-heading"><div><p class="eyebrow">${escapeHtml(copy.catalog.categoryLabels[category])}</p><h2 id="${escapeHtml(headingId)}">${escapeHtml(sectionCopy.title)}</h2></div><p>${escapeHtml(sectionCopy.intro)}</p></div><div class="items-card-grid">${renderItemsCatalogCards(category, copy)}</div></section>`;
 }
 
+const itemCompareGuideCopy = {
+  en: {
+    heading: 'How to use cooking stages and carry weight on a climb',
+    intro: 'Every item slot in PEAK trades carry weight against hunger recovery, bonus stamina, and status cures. Comparing two items before a campfire saves weight on steep climbs.',
+    blocks: [
+      ['Cooking stage rules', 'For standard foods (Airline Food, Granola Bar, Trail Mix, Hot Dog, berries, and mushrooms), both Cooked and Well-done double base hunger recovery and raise bonus stamina. Burnt food loses 5 hunger recovery, while Incinerated food can add poison and hides how many times it burned.'],
+      ['Best weight-to-hunger picks', 'At 2.5 weight, Frog Legs (50 hunger), Hot Dog (30 raw / 60 cooked + stamina), Blue Berrynana (30 / 60), and Honeycomb (50 base / 75 cooked bonus stamina) deliver the strongest output per slot. Airline Food costs 5 weight but reaches 80 hunger and 60 bonus stamina when cooked.'],
+      ['Poison, spores & injury trade-offs', 'Direct-use cures (Antidote, Bandages, First Aid Kit, Cure-All) apply immediately on the target. Heating an Antidote shatters it into a 4.8m cloud for up to 20 poison removal. Cooking poisonous berries (Green/Yellow Kingberry, Green Crispberry, Pink Berrynana) removes their poison penalty.'],
+    ],
+    relatedLabel: 'Related PEAK tools & guides',
+  },
+  zh: {
+    heading: '攀登前如何权衡烹饪阶段、重量与解毒效果',
+    intro: 'PEAK 的背包重量直接决定耐力上限，在营火或便携炉前先对比两件食物的熟度收益，可以避免白白背负低效物品。',
+    blocks: [
+      ['烹饪阶段规律', '常见食物（飞机餐、燕麦棒、什锦果仁、热狗、多数浆果与蘑菇）在「已煮熟」与「全熟」时饥饿恢复翻倍并提高额外体力；「烤焦」少恢复 5 点饥饿；「烧毁」可能附带中毒风险。'],
+      ['高性价比轻装食物', '在 2.5 重量档位，Frog Legs（50 饥饿）、Hot Dog（生 30 / 熟 60 + 体力）、Blue Berrynana（30 / 60）与 Honeycomb（生 50 / 熟 75 额外体力）效率最高；飞机餐虽重 5，但煮熟可达 80 饥饿 + 60 额外体力。'],
+      ['解毒与疗伤取舍', '解毒剂、绷带、急救箱与 Cure-All 直接生效；加热解毒剂会碎裂成 4.8 米解毒云雾；部分带毒浆果（Green/Yellow Kingberry、Green Crispberry、Pink Berrynana）煮熟后可消除毒素。'],
+    ],
+    relatedLabel: '相关 PEAK 工具与攻略',
+  },
+};
+
 export function renderItemComparePage(locale, options = {}) {
   const config = itemCompareLocales[locale];
   const source = locales[locale];
@@ -1626,11 +1767,13 @@ export function renderItemComparePage(locale, options = {}) {
     ['bugle', 'button', 'coconut', 'antidote', 'antidoteCloud', 'bandages', 'firstAid', 'fungus', 'incinerated']
       .map((key, index) => [key, config.notes[index]]),
   );
-  const names = [...new Set(itemCompareRecords.map((item) => item.name))];
+  const names = [...new Set(itemCompareRecords.slice(0, 15).map((item) => item.name))];
   const records = itemCompareRecords.map((item) => {
-    const alias = config.names[names.indexOf(item.name)];
+    const aliasIndex = names.indexOf(item.name);
+    const alias = aliasIndex >= 0 ? config.names[aliasIndex] : null;
     const variant = item.variant ? ` · ${config.variants[['normal', 'poisonous', 'unknown'].indexOf(item.variant)]}` : '';
-    const name = `${locale === 'en' ? item.name : `${alias} (${item.name})`}${variant}`;
+    const baseName = locale === 'en' || !alias ? item.name : `${alias} (${item.name})`;
+    const name = `${baseName}${variant}`;
     const stages = Object.fromEntries(getItemStages(item).map((stage) => {
       const effects = getItemEffects(item, stage);
       const values = itemCompareMetrics.map((metric) => {
@@ -1645,34 +1788,50 @@ export function renderItemComparePage(locale, options = {}) {
     }));
     return { id: item.id, name, stages, url: `https://peak.wiki.gg/wiki/${item.source}` };
   });
-  const slot = (label, id, selected) => `<fieldset class="compare-slot" data-compare-slot>
+  const defaultFirst = records[0];
+  const defaultSecond = records[1];
+  const stageOptionsMarkup = (record) => Object.keys(record.stages).map((key, idx) => `<option value="${key}"${idx === 0 ? ' selected' : ''}>${escapeHtml(stageLabels[key])}</option>`).join('');
+  const slot = (label, id, selectedRecord) => `<fieldset class="compare-slot" data-compare-slot>
     <legend>${escapeHtml(label)}</legend>
-    <select id="compare-${id}" data-compare-item aria-label="${escapeHtml(label)}">${records.map((item) => `<option value="${item.id}"${item.id === selected ? ' selected' : ''}>${escapeHtml(item.name)}</option>`).join('')}</select>
+    <select id="compare-${id}" data-compare-item aria-label="${escapeHtml(label)}">${records.map((item) => `<option value="${item.id}"${item.id === selectedRecord.id ? ' selected' : ''}>${escapeHtml(item.name)}</option>`).join('')}</select>
     <label for="stage-${id}">${escapeHtml(stageLabel)}</label>
-    <select id="stage-${id}" data-compare-stage></select>
+    <select id="stage-${id}" data-compare-stage>${stageOptionsMarkup(selectedRecord)}</select>
   </fieldset>`;
-  const metrics = itemCompareMetrics.map((key, index) => `<tr data-metric="${key}"><th scope="row">${escapeHtml(config.metrics[index])}</th><td></td><td></td></tr>`).join('');
+  const metrics = itemCompareMetrics.map((key, index) => `<tr data-metric="${key}"${index === 0 ? ' class="is-comparison-goal"' : ''}><th scope="row">${escapeHtml(config.metrics[index])}</th><td>${escapeHtml(defaultFirst.stages.base.values[index])}</td><td>${escapeHtml(defaultSecond.stages.base.values[index])}</td></tr>`).join('');
   const staticItems = records.map(({ name, stages, url }) =>
     `<tr><th scope="row"><a href="${url}">${escapeHtml(name)}</a>${stages.base.note ? `<small>${escapeHtml(stages.base.note)}</small>` : ''}</th>${stages.base.values.map((value) => `<td>${escapeHtml(value)}</td>`).join('')}</tr>`,
   ).join('');
   const faq = [0, 2, 4].map((index) => config.faq.slice(index, index + 2));
+  const guide = itemCompareGuideCopy[locale] ?? itemCompareGuideCopy.en;
+  const guideSection = `<section id="compare-guide" class="article-section" aria-labelledby="compare-guide-title">
+      <h2 id="compare-guide-title">${escapeHtml(guide.heading)}</h2>
+      <p>${escapeHtml(guide.intro)}</p>
+      ${guide.blocks.map(([subTitle, text]) => `<div class="article-subsection"><h3>${escapeHtml(subTitle)}</h3><p>${escapeHtml(text)}</p></div>`).join('')}
+    </section>`;
+  const relatedNav = `<nav class="article-related" aria-label="${escapeHtml(guide.relatedLabel)}">
+      <p class="eyebrow">${escapeHtml(guide.relatedLabel)}</p>
+      <a href="${routeFor(locale, 'items')}">${escapeHtml(copy.database.title)} <span aria-hidden="true">→</span></a>
+      <a href="${routeFor(locale, 'map-rotation')}#today-map">${escapeHtml(todayMapCopy[locale].title)} <span aria-hidden="true">→</span></a>
+      <a href="${routeFor(locale, 'room-codes')}">${escapeHtml(roomCodeCurrentCopy[locale].title)} <span aria-hidden="true">→</span></a>
+      <a href="${routeFor(locale, 'achievements')}">${escapeHtml(achievementGuides[locale].linkLabel)} <span aria-hidden="true">→</span></a>
+    </nav>`;
   return `${head(locale, 'item-compare', config.title, config.description, config.description, { ...options, comparisonFaq: faq })}
   <body class="article-page"><div id="top"></div>${header(locale, 'item-compare', copy)}
   <main class="container room-diagnostic-hero compare-page">
     <h1 id="item-compare-title">${escapeHtml(config.title)}</h1>
     <section id="comparison" class="room-diagnostic item-comparison" data-item-comparison aria-labelledby="item-compare-title">
       <p>${escapeHtml(config.intro)}</p>
-      <form data-compare-form hidden>
+      <form data-compare-form>
         <div class="compare-goal"><label for="compare-goal">${escapeHtml(goal)}</label>
           <select id="compare-goal" data-compare-goal>${itemCompareMetrics.map((key, index) => `<option value="${key}">${escapeHtml(config.goals[index])}</option>`).join('')}</select>
         </div>
-        <div class="compare-slots">${slot(first, 'first', 'airline-food')}${slot(second, 'second', 'granola-bar')}</div>
+        <div class="compare-slots">${slot(first, 'first', defaultFirst)}${slot(second, 'second', defaultSecond)}</div>
         <button class="button button-primary" type="submit">${escapeHtml(compare)}</button>
       </form>
-      <section class="compare-result" data-compare-result hidden>
+      <section class="compare-result" data-compare-result>
         <h2 tabindex="-1">${escapeHtml(result)}</h2>
         <table class="compare-table">
-          <thead><tr><th scope="col">${escapeHtml(goal)}</th><th scope="col" data-compare-heading></th><th scope="col" data-compare-heading></th></tr></thead>
+          <thead><tr><th scope="col">${escapeHtml(goal)}</th><th scope="col" data-compare-heading><a href="${escapeHtml(defaultFirst.url)}">${escapeHtml(defaultFirst.name)}</a><small>${escapeHtml(stageLabels.base)}</small></th><th scope="col" data-compare-heading><a href="${escapeHtml(defaultSecond.url)}">${escapeHtml(defaultSecond.name)}</a><small>${escapeHtml(stageLabels.base)}</small></th></tr></thead>
           <tbody>${metrics}</tbody>
         </table>
         <ul class="compare-notes" data-compare-notes hidden></ul>
@@ -1684,11 +1843,13 @@ export function renderItemComparePage(locale, options = {}) {
       <p class="compare-source">${escapeHtml(checked)} <time datetime="${itemCompareSourceDate}">${escapeHtml(formatDateLabel(locale, itemCompareSourceDate))}</time> · ${escapeHtml(sources)} <a href="https://peak.wiki.gg/wiki/Food">PEAK Wiki</a> · <a href="https://peak.wiki.gg/wiki/Cooking">${escapeHtml(stageLabel)}</a></p>
       <script type="application/json" data-compare-data>${jsonLd({ records, stageLabels, duplicate })}</script>
     </section>
+    ${guideSection}
+    ${belowFoldAdSlot()}
     <section class="article-section article-faq" aria-labelledby="compare-faq-title">
       <h2 id="compare-faq-title">${escapeHtml(itemsPageCopy[locale].faq.title)}</h2>
       <div class="faq-grid">${faq.map(([question, answer]) => `<details><summary><h3>${escapeHtml(question)}</h3></summary><p>${escapeHtml(answer)}</p></details>`).join('')}</div>
     </section>
-    <p><a class="section-link" href="${routeFor(locale, 'map-rotation')}#today-map">${escapeHtml(todayMapCopy[locale].title)} <span aria-hidden="true">→</span></a></p>
+    ${relatedNav}
   </main>${footer(locale, copy)}<script src="${APP_SCRIPT_HREF}" defer></script><script src="/item-compare.js?v=20261122" defer></script></body></html>`;
 }
 
@@ -1708,7 +1869,7 @@ function renderItemsPageHtml(locale, options = {}) {
   const guidesHref = publishedArticles.includes('peak-game-tips') && hasLivePage(locale, 'peak-game-tips') ? routeFor(locale, 'peak-game-tips') : `${routeFor(locale, 'home')}#guides`;
   const cookingGuide = publishedArticles.includes('peak-cooking-guide') && hasLivePage(locale, 'peak-cooking-guide') ? localizedArticleGuide(locale, 'peak-cooking-guide') : null;
   return `${head(locale, 'items', catalog.meta.title, catalog.meta.description, catalog.meta.schema, { ...options, copy, itemsPage: catalog, dateModified: resolveBuildDate(options) })}
-  <body class="article-page items-page"><div id="top"></div>${header(locale, 'items', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(catalog.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(catalog.catalog.title)}</p><h1 id="article-title">${escapeHtml(catalog.h1)}</h1><p class="article-hero-lede">${escapeHtml(catalog.intro)}</p><a class="section-link" href="${routeFor(locale, 'item-compare')}">${escapeHtml(itemCompareLocales[locale].title)} <span aria-hidden="true">→</span></a></div>${renderArticleImage({ ...catalog.hero, loading: 'eager', fetchpriority: 'high' }, false)}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(catalog.tocLabel)}"><p class="eyebrow">${escapeHtml(catalog.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#items-faq">${escapeHtml(catalog.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="items-answer-title"><p class="eyebrow">${escapeHtml(catalog.answerLabel)}</p><h2 id="items-answer-title">${escapeHtml(catalog.answerLabel)}</h2><p>${escapeHtml(catalog.answer)}</p></section><section class="article-section items-browser" aria-labelledby="items-catalog-title"><div class="items-browser-heading"><div><p class="eyebrow">${escapeHtml(catalog.catalog.filterLabel)}</p><h2 id="items-catalog-title">${escapeHtml(catalog.catalog.title)}</h2></div><p>${escapeHtml(catalog.catalog.lede)}</p></div><nav class="items-category-nav" aria-label="${escapeHtml(catalog.catalog.filterLabel)}">${categoryLinks}</nav><div class="items-toolbar"><label for="items-search"><span>${escapeHtml(catalog.catalog.searchLabel)}</span><input id="items-search" type="search" placeholder="${escapeHtml(catalog.catalog.searchPlaceholder)}" autocomplete="off" /></label><label for="items-type"><span>${escapeHtml(catalog.catalog.typeLabel)}</span><select id="items-type"><option value="">${escapeHtml(catalog.catalog.typeAll)}</option>${typeOptions}</select></label><label for="items-biome"><span>${escapeHtml(catalog.catalog.biomeLabel)}</span><select id="items-biome"><option value="">${escapeHtml(catalog.catalog.biomeAll)}</option>${biomeOptions}</select></label><div class="items-category-filters" role="group" aria-label="${escapeHtml(catalog.catalog.filterLabel)}"><button class="items-filter-button is-active" type="button" data-catalog-category="all">${escapeHtml(catalog.catalog.categoryLabels.all)}</button>${categories.map((category) => `<button class="items-filter-button" type="button" data-catalog-category="${escapeHtml(category)}">${escapeHtml(catalog.catalog.categoryLabels[category])}</button>`).join('')}</div><span id="items-result-count" class="items-result-count" data-result-label="${escapeHtml(catalog.catalog.resultLabel)}">${itemsCatalog.length} ${escapeHtml(catalog.catalog.resultLabel)}</span></div><p class="items-no-local-names">${escapeHtml(catalog.catalog.noLocalNames)}</p><p id="items-empty" class="items-empty" hidden>${escapeHtml(catalog.catalog.empty)}</p>${categories.map((category) => renderItemsCatalogSection(catalog, category)).join('')}<p class="items-source-note"><span class="note-mark">i</span><span>${escapeHtml(catalog.catalog.sourceNote)}</span></p></section><section id="items-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(catalog.faq.eyebrow)}</p><h2>${escapeHtml(catalog.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="items-sources-title"><p class="eyebrow">${escapeHtml(catalog.sources.eyebrow)}</p><h2 id="items-sources-title">${escapeHtml(catalog.sources.title)}</h2><p>${escapeHtml(catalog.sources.body)}</p><div class="source-links"><a href="https://peak.wiki.gg/wiki/Items" target="_blank" rel="noopener">${escapeHtml(catalog.sources.official)} <span aria-hidden="true">\u2192</span></a><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(catalog.sources.store)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(catalog.catalog.title)}"><p class="eyebrow">${escapeHtml(catalog.catalog.title)}</p><a href="${routeFor(locale, 'home')}#database">${escapeHtml(catalog.related.home)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'map-rotation')}">${escapeHtml(catalog.related.map)} <span aria-hidden="true">\u2192</span></a><a href="${escapeHtml(guidesHref)}">${escapeHtml(catalog.related.guides)} <span aria-hidden="true">\u2192</span></a>${cookingGuide ? `<a href="${routeFor(locale, 'peak-cooking-guide')}">${escapeHtml(cookingGuide.h1)} <span aria-hidden="true">\u2192</span></a>` : ''}</nav></article></div></main>${footer(locale, copy)}<script src="${APP_SCRIPT_HREF}" defer></script><script src="/items.js" defer></script></body></html>`;
+  <body class="article-page items-page"><div id="top"></div>${header(locale, 'items', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(catalog.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(catalog.catalog.title)}</p><h1 id="article-title">${escapeHtml(catalog.h1)}</h1><p class="article-hero-lede">${escapeHtml(catalog.intro)}</p><a class="section-link" href="${routeFor(locale, 'item-compare')}">${escapeHtml(itemCompareLocales[locale].title)} <span aria-hidden="true">→</span></a></div>${renderArticleImage({ ...catalog.hero, loading: 'eager', fetchpriority: 'high' }, false)}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(catalog.tocLabel)}"><p class="eyebrow">${escapeHtml(catalog.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#items-faq">${escapeHtml(catalog.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="items-answer-title"><p class="eyebrow">${escapeHtml(catalog.answerLabel)}</p><h2 id="items-answer-title">${escapeHtml(catalog.answerLabel)}</h2><p>${escapeHtml(catalog.answer)}</p></section><section class="article-section items-browser" aria-labelledby="items-catalog-title"><div class="items-browser-heading"><div><p class="eyebrow">${escapeHtml(catalog.catalog.filterLabel)}</p><h2 id="items-catalog-title">${escapeHtml(catalog.catalog.title)}</h2></div><p>${escapeHtml(catalog.catalog.lede)}</p></div><nav class="items-category-nav" aria-label="${escapeHtml(catalog.catalog.filterLabel)}">${categoryLinks}</nav><div class="items-toolbar"><label for="items-search"><span>${escapeHtml(catalog.catalog.searchLabel)}</span><input id="items-search" type="search" placeholder="${escapeHtml(catalog.catalog.searchPlaceholder)}" autocomplete="off" /></label><label for="items-type"><span>${escapeHtml(catalog.catalog.typeLabel)}</span><select id="items-type"><option value="">${escapeHtml(catalog.catalog.typeAll)}</option>${typeOptions}</select></label><label for="items-biome"><span>${escapeHtml(catalog.catalog.biomeLabel)}</span><select id="items-biome"><option value="">${escapeHtml(catalog.catalog.biomeAll)}</option>${biomeOptions}</select></label><div class="items-category-filters" role="group" aria-label="${escapeHtml(catalog.catalog.filterLabel)}"><button class="items-filter-button is-active" type="button" data-catalog-category="all">${escapeHtml(catalog.catalog.categoryLabels.all)}</button>${categories.map((category) => `<button class="items-filter-button" type="button" data-catalog-category="${escapeHtml(category)}">${escapeHtml(catalog.catalog.categoryLabels[category])}</button>`).join('')}</div><span id="items-result-count" class="items-result-count" data-result-label="${escapeHtml(catalog.catalog.resultLabel)}">${itemsCatalog.length} ${escapeHtml(catalog.catalog.resultLabel)}</span></div><p class="items-no-local-names">${escapeHtml(catalog.catalog.noLocalNames)}</p><p id="items-empty" class="items-empty" hidden>${escapeHtml(catalog.catalog.empty)}</p>${categories.map((category) => renderItemsCatalogSection(catalog, category)).join('')}<p class="items-source-note"><span class="note-mark">i</span><span>${escapeHtml(catalog.catalog.sourceNote)}</span></p></section>${belowFoldAdSlot()}<section id="items-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(catalog.faq.eyebrow)}</p><h2>${escapeHtml(catalog.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="items-sources-title"><p class="eyebrow">${escapeHtml(catalog.sources.eyebrow)}</p><h2 id="items-sources-title">${escapeHtml(catalog.sources.title)}</h2><p>${escapeHtml(catalog.sources.body)}</p><div class="source-links"><a href="https://peak.wiki.gg/wiki/Items" target="_blank" rel="noopener">${escapeHtml(catalog.sources.official)} <span aria-hidden="true">\u2192</span></a><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(catalog.sources.store)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(catalog.catalog.title)}"><p class="eyebrow">${escapeHtml(catalog.catalog.title)}</p><a href="${routeFor(locale, 'home')}#database">${escapeHtml(catalog.related.home)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'map-rotation')}">${escapeHtml(catalog.related.map)} <span aria-hidden="true">\u2192</span></a><a href="${escapeHtml(guidesHref)}">${escapeHtml(catalog.related.guides)} <span aria-hidden="true">\u2192</span></a>${cookingGuide ? `<a href="${routeFor(locale, 'peak-cooking-guide')}">${escapeHtml(cookingGuide.h1)} <span aria-hidden="true">\u2192</span></a>` : ''}</nav></article></div></main>${footer(locale, copy)}<script src="${APP_SCRIPT_HREF}" defer></script><script src="/items.js" defer></script></body></html>`;
 }
 
 export function renderItemsPage(locale, options = {}) {
@@ -1742,7 +1903,7 @@ function renderMapGuideHtml(locale, options = {}) {
     ? ['grossmut-des-pfadfinders', 'beharrlichkeit-des-pfadfinders'].map((page) => `<a href="${routeFor(locale, page)}">${escapeHtml(germanAmuletPages[page].h1)} <span aria-hidden="true">\u2192</span></a>`).join('')
     : '';
   return `${head(locale, 'map-rotation', guide.meta.title, guide.meta.description, guide.meta.schema, options)}
-  <body class="article-page"><div id="top"></div>${header(locale, 'map-rotation', copy)}<main class="article-main"><section class="container map-guide-hero" aria-labelledby="article-title"><h1 id="article-title">${escapeHtml(guide.h1)}</h1>${renderDailyMapSummary(locale, snapshot, buildTimestamp)}</section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#rotation-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a><a class="article-toc-faq" href="#version-timeline">${escapeHtml(dailyMapLocales[locale].timeline)} <span aria-hidden="true">→</span></a></aside><article class="article-copy">${sections}<section id="rotation-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noopener">${escapeHtml(guide.source.news)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#maps">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a>${mapRelatedLinks}${germanAmuletLinks}</nav></article></div>${supporting}</main>${footer(locale, copy)}<script src="${APP_SCRIPT_HREF}" defer></script></body></html>`;
+  <body class="article-page"><div id="top"></div>${header(locale, 'map-rotation', copy)}<main class="article-main"><section class="container map-guide-hero" aria-labelledby="article-title"><h1 id="article-title">${escapeHtml(guide.h1)}</h1>${renderDailyMapSummary(locale, snapshot, buildTimestamp)}</section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#rotation-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a><a class="article-toc-faq" href="#version-timeline">${escapeHtml(dailyMapLocales[locale].timeline)} <span aria-hidden="true">→</span></a></aside><article class="article-copy">${sections}${belowFoldAdSlot()}<section id="rotation-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=3527290&amp;count=20&amp;format=json" target="_blank" rel="noopener">${escapeHtml(guide.source.news)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#maps">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a>${mapRelatedLinks}${germanAmuletLinks}</nav></article></div>${supporting}</main>${footer(locale, copy)}<script src="${APP_SCRIPT_HREF}" defer></script></body></html>`;
 }
 
 export function renderMapGuide(locale, options = {}) {
@@ -1753,8 +1914,26 @@ function renderAchievementGuideHtml(locale, options = {}) {
   const sourceCopy = locales[locale];
   const copy = { ...sourceCopy, ui: { ...sourceCopy.ui, snapshot: formatSnapshotDate(locale, resolveBuildDate(options)) } };
   const guide = achievementGuides[locale];
+  const badgeGuide = badgeGuideCopy[locale] ?? badgeGuideCopy.en;
   activeGuideLocale = locale;
-  const toc = guide.sections.map((section, index) => `<li><a href="#${escapeHtml(section.id)}">${index + 1}. ${escapeHtml(section.title)}</a></li>`).join('');
+  const badgeTocItems = [
+    `<li><a href="#badge-mechanics">1. ${escapeHtml(badgeGuide.mechanics.title)}</a></li>`,
+    ...badgeGuide.groupOrder.map((group, index) => `<li><a href="#${escapeHtml(badgeGuideGroupId(group))}">${index + 2}. ${escapeHtml(badgeGuide.groups[group].title)}</a></li>`),
+  ];
+  const sectionOffset = badgeTocItems.length;
+  const toc = [
+    ...badgeTocItems,
+    ...guide.sections.map((section, index) => `<li><a href="#${escapeHtml(section.id)}">${sectionOffset + index + 1}. ${escapeHtml(section.title)}</a></li>`),
+  ].join('');
+  const mechanicsParagraphs = badgeGuide.mechanics.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('');
+  const mechanicsBullets = `<ul class="article-bullets">${badgeGuide.mechanics.bullets.map(([lead, text]) => `<li><strong>${escapeHtml(lead)}</strong> ${escapeHtml(text)}</li>`).join('')}</ul>`;
+  const badgeMechanicsSection = `<section id="badge-mechanics" class="article-section badge-guide-mechanics" aria-labelledby="badge-mechanics-title"><p class="eyebrow">${escapeHtml(badgeGuide.mechanics.eyebrow)}</p><h2 id="badge-mechanics-title">${escapeHtml(badgeGuide.mechanics.title)}</h2>${mechanicsParagraphs}${mechanicsBullets}</section>`;
+  const badgeGroupsMarkup = badgeGuide.groupOrder.map((group) => {
+    const groupCopy = badgeGuide.groups[group];
+    const entries = badgeGuideEntries.filter((entry) => entry.group === group).map((entry) => renderBadgeGuideCard(locale, entry, badgeGuide)).join('');
+    return `<section id="${escapeHtml(badgeGuideGroupId(group))}" class="article-section badge-guide-group" aria-labelledby="${escapeHtml(badgeGuideGroupId(group))}-title"><h2 id="${escapeHtml(badgeGuideGroupId(group))}-title">${escapeHtml(groupCopy.title)}</h2><p>${escapeHtml(groupCopy.intro)}</p><div class="badge-guide-grid">${entries}</div></section>`;
+  }).join('');
+  const badgeListNote = `<p class="badge-guide-list-note"><span class="note-mark">i</span>${escapeHtml(badgeGuide.listNote)}</p>`;
   const sections = guide.sections.map((section) => {
     const paragraphs = section.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('');
     const subsections = (section.subsections || []).map((subsection) => `<div class="article-subsection"><h3>${escapeHtml(subsection.title)}</h3>${subsection.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div>`).join('');
@@ -1764,10 +1943,8 @@ function renderAchievementGuideHtml(locale, options = {}) {
     return `<section id="${escapeHtml(section.id)}" class="article-section"><h2>${escapeHtml(section.title)}</h2>${paragraphs}${subsections}${image}${bullets}${table}</section>`;
   }).join('');
   const faq = guide.faq.items.map(([question, answer], index) => `<details${index === 0 ? ' open' : ''}><summary><h3>${escapeHtml(question)}</h3></summary><p>${escapeHtml(answer)}</p></details>`).join('');
-  const badgeGuide = badgeGuideCopy[locale] ?? badgeGuideCopy.en;
-  const badgeBridge = badgeGuide.bridge && hasLivePage(locale, 'badges-guide') ? `<p class="article-crosslink">${escapeHtml(badgeGuide.bridge.before)}<a href="${routeFor(locale, 'badges-guide')}">${escapeHtml(badgeGuide.bridge.link)}</a>${escapeHtml(badgeGuide.bridge.after)}</p>` : '';
   return `${head(locale, 'achievements', guide.meta.title, guide.meta.description, guide.meta.schema, options)}
-  <body class="article-page"><div id="top"></div>${header(locale, 'achievements', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(guide.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(guide.related.homeAnchor)}</p><h1 id="article-title">${escapeHtml(guide.h1)}</h1><p class="article-hero-lede">${escapeHtml(guide.intro)}</p></div>${renderArticleImage({ ...guide.heroImage, loading: 'eager', fetchpriority: 'high' })}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#achievements-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(guide.answerLabel)}</p><h2 id="answer-title">${escapeHtml(guide.answerLabel)}</h2><p>${escapeHtml(guide.answer)}</p></section>${badgeBridge}${sections}<section id="achievements-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://steamcommunity.com/stats/3527290/achievements/" target="_blank" rel="noopener">${escapeHtml(guide.source.achievement)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'home')}#badges">${escapeHtml(guide.related.homeLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.related.mapLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#database">${escapeHtml(guide.related.databaseLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'home')}#updates">${escapeHtml(guide.related.updatesLabel)} <span aria-hidden="true">\u2192</span></a></nav></article></div></main>${footer(locale, copy)}<script src="${APP_SCRIPT_HREF}" defer></script></body></html>`;
+  <body class="article-page badges-guide-page"><div id="top"></div>${header(locale, 'achievements', copy)}<main class="article-main"><section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(guide.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(guide.related.homeAnchor)}</p><h1 id="article-title">${escapeHtml(guide.h1)}</h1><p class="article-hero-lede">${escapeHtml(guide.intro)}</p></div>${renderArticleImage({ ...guide.heroImage, loading: 'eager', fetchpriority: 'high' })}</div></section><div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(guide.tocLabel)}"><p class="eyebrow">${escapeHtml(guide.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#achievements-faq">${escapeHtml(guide.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(guide.answerLabel)}</p><h2 id="answer-title">${escapeHtml(guide.answerLabel)}</h2><p>${escapeHtml(badgeGuide.answer)}</p></section>${badgeMechanicsSection}${badgeGroupsMarkup}${badgeListNote}${sections}${belowFoldAdSlot()}<section id="achievements-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(guide.faq.eyebrow)}</p><h2>${escapeHtml(guide.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(guide.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(guide.source.title)}</h2><p>${escapeHtml(guide.source.body)}</p><div class="source-links"><a href="https://store.steampowered.com/app/3527290/PEAK/" target="_blank" rel="noopener">${escapeHtml(guide.source.steam)} <span aria-hidden="true">\u2192</span></a><a href="https://steamcommunity.com/stats/3527290/achievements/" target="_blank" rel="noopener">${escapeHtml(guide.source.achievement)} <span aria-hidden="true">\u2192</span></a><a href="${escapeHtml(badgeGuideSource.wiki)}" target="_blank" rel="nofollow noopener">${escapeHtml(badgeGuide.source.wiki)} <span aria-hidden="true">\u2192</span></a></div></section><nav class="article-related" aria-label="${escapeHtml(guide.related.homeAnchor)}"><p class="eyebrow">${escapeHtml(copy.ui.sourceNotes)}</p><a href="${routeFor(locale, 'map-rotation')}">${escapeHtml(guide.related.mapLabel)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'items')}">${escapeHtml(copy.database.title)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'item-compare')}">${escapeHtml(itemCompareLocales[locale].title)} <span aria-hidden="true">\u2192</span></a><a href="${routeFor(locale, 'room-codes')}">${escapeHtml(roomCodeCurrentCopy[locale].title)} <span aria-hidden="true">\u2192</span></a></nav></article></div></main>${footer(locale, copy)}<script src="${APP_SCRIPT_HREF}" defer></script></body></html>`;
 }
 
 export function renderAchievementGuide(locale, options = {}) {
@@ -1867,7 +2044,7 @@ function renderRoomDiagnostic(locale) {
   return `<section id="connection-check" class="room-diagnostic" data-room-diagnostic aria-labelledby="room-diagnostic-title">
     <h2 id="room-diagnostic-title">${escapeHtml(config.title)}</h2>
     <p>${escapeHtml(config.intro)}</p>
-    <form data-room-form hidden>
+    <form data-room-form>
       <div class="room-diagnostic-fields">
         ${select('host', hostLabel, platformOptions)}
         ${select('guest', guestLabel, platformOptions)}
@@ -1941,7 +2118,7 @@ export function renderArticlePage(locale, slug, options = {}) {
     ? `<section class="container room-diagnostic-hero" aria-labelledby="article-title"><h1 id="article-title">${escapeHtml(article.h1)}</h1>${renderRoomDiagnostic(locale)}<p class="article-hero-lede">${renderArticleInline(article.intro, locale, publishedArticles)}</p></section>`
     : `<section class="article-hero" aria-labelledby="article-title"><div class="container article-hero-grid"><div class="article-hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(article.eyebrow)}</p><p class="article-breadcrumb"><a href="${routeFor(locale, 'home')}">${escapeHtml(copy.ui.home)}</a><span aria-hidden="true">/</span>${escapeHtml(article.h1)}</p><h1 id="article-title">${escapeHtml(article.h1)}</h1><p class="article-hero-lede">${renderArticleInline(article.intro, locale, publishedArticles)}</p></div>${renderArticleImage({ ...article.heroImage, loading: 'eager', fetchpriority: 'high' }, false)}</div></section>`;
   const pageHtml = `${head(locale, slug, article.meta.title, article.meta.description, article.meta.schema, { ...options, article, dateModified: buildDate })}
-  <body class="article-page"><div id="top"></div>${header(locale, slug, copy)}<main class="article-main">${hero}<div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(article.tocLabel)}"><p class="eyebrow">${escapeHtml(article.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#article-faq">${escapeHtml(article.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(article.answerLabel)}</p><h2 id="answer-title">${escapeHtml(article.answerLabel)}</h2><p>${renderArticleInline(article.answer, locale, publishedArticles)}</p></section>${sections}<section id="article-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(article.faq.eyebrow)}</p><h2>${escapeHtml(article.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(article.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(article.source.title)}</h2><p>${renderArticleInline(article.source.body, locale, publishedArticles)}</p><div class="source-links">${sourceLinks}</div></section><nav class="article-related" aria-label="${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}"><p class="eyebrow">${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}</p>${related}</nav></article></div></main>${footer(locale, copy)}<script src="${APP_SCRIPT_HREF}" defer></script>${roomDiagnostic ? '<script src="/room-diagnostic.js?v=20261122" defer></script>' : ''}</body></html>`;
+  <body class="article-page"><div id="top"></div>${header(locale, slug, copy)}<main class="article-main">${hero}<div class="container article-layout"><aside class="article-toc" aria-label="${escapeHtml(article.tocLabel)}"><p class="eyebrow">${escapeHtml(article.tocLabel)}</p><ol>${toc}</ol><a class="article-toc-faq" href="#article-faq">${escapeHtml(article.tocFaq)} <span aria-hidden="true">\u2192</span></a></aside><article class="article-copy"><section class="article-answer" aria-labelledby="answer-title"><p class="eyebrow">${escapeHtml(article.answerLabel)}</p><h2 id="answer-title">${escapeHtml(article.answerLabel)}</h2><p>${renderArticleInline(article.answer, locale, publishedArticles)}</p></section>${sections}${belowFoldAdSlot()}<section id="article-faq" class="article-section article-faq"><p class="eyebrow">${escapeHtml(article.faq.eyebrow)}</p><h2>${escapeHtml(article.faq.title)}</h2><div class="faq-grid">${faq}</div></section><section class="article-sources" aria-labelledby="article-sources-title"><p class="eyebrow">${escapeHtml(article.source.eyebrow)}</p><h2 id="article-sources-title">${escapeHtml(article.source.title)}</h2><p>${renderArticleInline(article.source.body, locale, publishedArticles)}</p><div class="source-links">${sourceLinks}</div></section><nav class="article-related" aria-label="${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}"><p class="eyebrow">${escapeHtml(article.relatedLabel ?? 'Related PEAK guides')}</p>${related}</nav></article></div></main>${footer(locale, copy)}<script src="${APP_SCRIPT_HREF}" defer></script>${roomDiagnostic ? '<script src="/room-diagnostic.js?v=20261122" defer></script>' : ''}</body></html>`;
   return normalizeSteamNewsLinks(pageHtml);
 }
 
@@ -1987,12 +2164,12 @@ export function renderContact(locale, options = {}) {
 }
 
 export function renderSitemap(buildDate = '2026-08-19', publishedArticles = articleOrder) {
-  const pages = ['home', 'about', 'contact', 'privacy', 'terms', 'map-rotation', 'achievements', 'items', 'item-compare', ...publishedArticles.filter((slug) => !isRedirectedArticle(slug))];
+  const pages = ['home', 'map-rotation', 'achievements', 'items', 'item-compare', ...publishedArticles.filter((slug) => !isRedirectedArticle(slug))];
   const livePages = (code) => pages.filter((page) => hasLivePage(code, page));
-  const updatedUrls = new Set(localeOrder.flatMap((code) => ['home', 'contact', 'map-rotation', 'achievements', 'items', 'item-compare', ...publishedArticles].filter((page) => hasLivePage(code, page)).map((page) => `${BASE_URL}${rawRouteFor(code, page)}`)));
+  const updatedUrls = new Set(INDEXABLE_LOCALES.flatMap((code) => pages.filter((page) => hasLivePage(code, page)).map((page) => `${BASE_URL}${rawRouteFor(code, page)}`)));
   updatedUrls.add(`${BASE_URL}/de/grossmut-des-pfadfinders/`);
   updatedUrls.add(`${BASE_URL}/de/beharrlichkeit-des-pfadfinders/`);
-  const urls = localeOrder.flatMap((code) => livePages(code).map((page) => `${BASE_URL}${rawRouteFor(code, page)}`));
+  const urls = INDEXABLE_LOCALES.flatMap((code) => livePages(code).map((page) => `${BASE_URL}${rawRouteFor(code, page)}`));
   urls.push(`${BASE_URL}/de/grossmut-des-pfadfinders/`, `${BASE_URL}/de/beharrlichkeit-des-pfadfinders/`);
   const rows = urls.map((url) => {
     const lastmod = updatedUrls.has(url) ? buildDate : '2026-08-17';

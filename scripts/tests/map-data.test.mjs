@@ -3,7 +3,7 @@ import test from 'node:test';
 import { access } from 'node:fs/promises';
 import { buildTodayMapSnapshot, isCurrentMapSnapshot, parseWikiRotation, BIOME_DISPLAY_NAMES } from '../today-map-rotation.mjs';
 import { fetchTodayMap } from '../fetch-today-map.mjs';
-import { renderHome, renderMapGuide, localeOrder, renderArticlePage, renderItemsPage, renderAchievementGuide } from '../locales.mjs';
+import { renderHome, renderMapGuide, localeOrder, INDEXABLE_LOCALES, NOINDEX_LOCALES, renderArticlePage, renderItemsPage, renderItemComparePage, renderAchievementGuide, renderSitemap } from '../locales.mjs';
 import { DEFAULT_PUBLISHED_ARTICLES, isGonePath } from '../route-policy.mjs';
 import { officialUpdateFacts } from '../official-update-facts.mjs';
 
@@ -36,6 +36,7 @@ const mapsText = JSON.stringify({ biomes: [
 ] });
 const snapshot = (timestamp) => buildTodayMapSnapshot(timestamp, timestamp.slice(0, 10), { timerText, mapsText, sourceFetchedAt: timestamp });
 const updateData = { entries: [
+  { date: '2026-11-09', title: 'PEAK Patch 3.1.0: Longer room codes and fixes', kind: 'PATCH' },
   { date: '2026-10-23', title: 'Patch Notes 3.0.1', kind: 'PATCH' },
   { date: '2026-10-22', title: 'CROSSPLAY HAS ARRIVED TO PEAK', kind: 'UPDATE' },
 ] };
@@ -86,36 +87,36 @@ test('changed algorithm, invalid JSON and unknown biomes fail closed', async () 
 
 test('all nine locales share the official patch, FAQ schema and pending map state', () => {
   for (const locale of localeOrder) {
-    const html = renderHome(locale, { buildDate: '2026-11-03', updateData });
+    const html = renderHome(locale, { buildDate: '2026-11-12', updateData });
     const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]));
     const faq = schemas.flatMap(value => value['@graph'] || [value]).find(value => value['@type'] === 'FAQPage');
     assert.ok(faq, locale);
-    assert.ok(faq.mainEntity.some(item => item.acceptedAnswer.text.includes('3.0.1')), locale);
+    assert.ok(faq.mainEntity.some(item => item.acceptedAnswer.text.includes('3.1.0')), locale);
     assert.ok(faq.mainEntity.some(item => item.acceptedAnswer.text === officialUpdateFacts[locale].crossplay), locale);
     assert.ok(html.includes(officialUpdateFacts[locale].patch), locale);
     const map = renderMapGuide(locale, {
-      buildDate: '2026-11-03', buildTimestamp: '2026-11-03T12:00:00Z',
+      buildDate: '2026-11-12', buildTimestamp: '2026-11-12T12:00:00Z',
       todayMap: snapshot('2026-08-05T12:00:00Z'), updateData, publishedArticles: [],
     });
     assert.match(map, /<h1[^>]*>[^<]+<\/h1><section id="today-map"/, locale);
-    assert.match(map, /id="version-timeline"[\s\S]*?Patch Notes 3\.0\.1[\s\S]*?room-codes\//, locale);
+    assert.match(map, /id="version-timeline"[\s\S]*?PEAK Patch 3\.1\.0[\s\S]*?room-codes\//, locale);
     assert.match(map, /data-map-valid-until=""/, locale);
-    assert.match(map, /data-map-reset[^>]*datetime="2026-11-03T17:00:00.000Z"/, locale);
+    assert.match(map, /data-map-reset[^>]*datetime="2026-11-12T17:00:00.000Z"/, locale);
     assert.ok(!map.includes('BlueBeach'), locale);
     assert.ok(!map.includes('data-carousel-slide'), locale);
     assert.ok(!map.includes('peak-gloom-guide'), locale);
     assert.ok(!map.includes('peak-citadel-guide'), locale);
-    const article = renderArticlePage(locale, 'peak-game-update', { buildDate: '2026-11-03', updateData });
-    assert.match(article, /article-answer[\s\S]*?3\.0\.1/, locale);
+    const article = renderArticlePage(locale, 'peak-game-update', { buildDate: '2026-11-12', updateData });
+    assert.match(article, /article-answer[\s\S]*?3\.1\.0/, locale);
     const current = renderMapGuide(locale, {
-      buildDate: '2026-11-03', buildTimestamp: '2026-11-03T12:01:00Z',
-      todayMap: snapshot('2026-11-03T12:00:00Z'), updateData,
+      buildDate: '2026-11-12', buildTimestamp: '2026-11-12T12:01:00Z',
+      todayMap: snapshot('2026-11-12T12:00:00Z'), updateData,
     });
     assert.equal([...current.matchAll(/data-carousel-slide /g)].length, 5, locale);
     assert.ok(current.includes('https://peak.wiki.gg/wiki/Shore'), locale);
     assert.ok(current.indexOf('id="today-map"') < current.indexOf('data-carousel-slide'), locale);
-    assert.match(current, /data-map-updated datetime="2026-11-03T12:00:00.000Z"/, locale);
-    const missing = renderHome(locale, { buildDate: '2026-11-03' });
+    assert.match(current, /data-map-updated datetime="2026-11-12T12:00:00.000Z"/, locale);
+    const missing = renderHome(locale, { buildDate: '2026-11-12' });
     assert.ok(!missing.includes('Patch Notes 3.0.1'), locale);
   }
 });
@@ -178,9 +179,37 @@ test('homepages avoid title cannibalization, self-looping links, and broken href
     assert.equal(isGonePath(locale === 'en' ? '/achievements' : `/${locale}/achievements/`), false, `${locale} achievements should be live`);
     const itemsHtml = renderItemsPage(locale, { buildDate: '2026-11-24', publishedArticles: DEFAULT_PUBLISHED_ARTICLES });
     const achHtml = renderAchievementGuide(locale, { buildDate: '2026-11-24', publishedArticles: DEFAULT_PUBLISHED_ARTICLES });
-    assert.equal([...itemsHtml.matchAll(/<link rel="alternate" hreflang=/g)].length, 10, `${locale} items hreflang count`);
-    assert.equal([...achHtml.matchAll(/<link rel="alternate" hreflang=/g)].length, 10, `${locale} achievements hreflang count`);
+    const expectedHreflangCount = INDEXABLE_LOCALES.length + 1;
+    assert.equal([...itemsHtml.matchAll(/<link rel="alternate" hreflang=/g)].length, expectedHreflangCount, `${locale} items hreflang count`);
+    assert.equal([...achHtml.matchAll(/<link rel="alternate" hreflang=/g)].length, expectedHreflangCount, `${locale} achievements hreflang count`);
+    if (NOINDEX_LOCALES.has(locale)) {
+      assert.match(home, /<meta name="robots" content="noindex, follow" \/>/, `${locale} should be noindex`);
+    } else {
+      assert.doesNotMatch(home, /noindex/, `${locale} should remain indexable`);
+    }
+    assert.doesNotMatch(home, /ad-slot-header/, `${locale} home should not inject header ad above main`);
   }
+
+  const sitemap = renderSitemap('2026-11-25', DEFAULT_PUBLISHED_ARTICLES);
+  assert.doesNotMatch(sitemap, /\/(about|privacy|terms|contact)(\/|<)/, 'legal pages should be excluded from sitemap');
+  for (const loc of NOINDEX_LOCALES) {
+    assert.doesNotMatch(sitemap, new RegExp(`/${loc}/`), `noindex locale ${loc} should be excluded from sitemap`);
+  }
+
+  const enAch = renderAchievementGuide('en', { buildDate: '2026-11-25', publishedArticles: DEFAULT_PUBLISHED_ARTICLES });
+  assert.match(enAch, /Alpinist Badge/);
+  assert.match(enAch, /Endurance Badge/);
+  assert.match(enAch, /id="badge-mechanics"/);
+
+  const enCompare = renderItemComparePage('en', { buildDate: '2026-11-25', publishedArticles: DEFAULT_PUBLISHED_ARTICLES });
+  assert.match(enCompare, /<form data-compare-form>/);
+  assert.match(enCompare, /id="compare-guide"/);
+  assert.ok((enCompare.match(/<option value="/g) || []).length >= 80, 'expanded compare options');
+
+  const enRoom = renderArticlePage('en', 'room-codes', { buildDate: '2026-11-25', publishedArticles: DEFAULT_PUBLISHED_ARTICLES });
+  assert.match(enRoom, /<form data-room-form>/);
+  assert.match(enRoom, /id="crossplay-platforms"/);
+  assert.match(enRoom, /id="connection-fixes"/);
 
   const zhRevive = renderArticlePage('zh', 'peak-revive-guide', { buildDate: '2026-11-24', publishedArticles: DEFAULT_PUBLISHED_ARTICLES });
   const reviveAlternates = [...zhRevive.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)];
@@ -202,4 +231,5 @@ test('homepages avoid title cannibalization, self-looping links, and broken href
   assert.match(enMap, /<title>PEAK Map Today:/);
   assert.match(enMap, /id="reset-times"/);
   assert.match(enMap, /id="rotation-history"/);
+  assert.doesNotMatch(enMap, /Pending verification/, 'reset times table should always render 17:00 UTC conversions');
 });

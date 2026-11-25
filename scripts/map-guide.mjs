@@ -47,7 +47,7 @@ export const mapGuides = {
         title: "How to plan gear around a changing route",
         paragraphs: [
           "A rotation should change your priorities, not force a completely new inventory every time. Begin with the smallest set that protects the team from the next known decision. Rope and piton are route tools; food and stamina items protect pacing; a recovery item protects the run after a mistake. The best loadout is the one the group can explain before leaving camp.",
-          "The homepage database links equipment to route and team roles, but it intentionally does not pretend that a short prototype list is a complete item table. When an item effect or drop location matters, check the current game and official update information. Use the table below as a planning lens, not as an unsupported tier list.",
+          "Use the full 134-item PEAK Items Database and the Food & Item Comparison tool to check exact weight, hunger, bonus stamina, poison, and cooking stats before locking in a slot. Use the planning table below to assign team roles around today's active biomes.",
         ],
         table: {
           caption: "A simple rotation-planning lens for PEAK equipment",
@@ -78,8 +78,8 @@ export const mapGuides = {
         id: "run-length",
         title: "How many maps are in a PEAK run?",
         paragraphs: [
-          "This question often mixes together maps, biomes, route stages, and the number of places a team passes before the summit. A useful answer should first define which unit it is counting. The site currently uses biome slots as an organizing label on the homepage; that label is not a promise that every run has one fixed number of maps or that every route follows the same sequence.",
-          "For planning, count decisions instead of guessing a universal total. Mark the next safe rest, the next resource check, and the next point where a team can turn around. If a later official source documents a stable route structure, the wiki can add a sourced table. Until then, cautious wording is more useful than a precise number that becomes wrong after a content update.",
+          "A standard PEAK expedition progresses through a 5-biome sequence from Shore to the summit (Shore → Tropics or Roots → Alpine or Mesa → Caldera or Gloom → The Kiln or Citadel). Following the Crossplay update, the daily map pool spans 208 biome and variant combinations that rotate at 17:00 UTC.",
+          "Rather than memorizing every variant seed, plan around the active biome split shown at the top of this page: pack cold management when Alpine is active, heat and Tomb checks when Mesa appears, and spore or poison cures for Roots and Gloom.",
         ],
         bullets: [
           ["Count the route unit", "Say whether you mean a biome, a stage, a map area, or the whole attempt."],

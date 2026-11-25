@@ -2,7 +2,7 @@ export const itemsPageCopy = {
   en: {
     meta: {
       title: 'PEAK Items List: All 134 Items, Stats & Locations',
-      description: 'Browse the complete PEAK item list with 134 official table entries for weight, hunger, stamina, poison, biomes, locations, and notes. Filter the catalog before you climb.',
+      description: 'Browse all 134 PEAK items with official weight, hunger, bonus stamina, poison, biome, and notes. Filter food, gear, and utility tools before you climb.',
       schema: 'A source-aligned PEAK items and equipment catalog covering 134 official table entries, item stats, biomes, locations, notes, and cautious in-game verification guidance.',
     },
     published: '2026-09-08',
